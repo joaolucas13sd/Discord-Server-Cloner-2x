@@ -1,0 +1,428 @@
+[
+ {
+  "t": 0.0667,
+  "frame": 2,
+  "type": "enter",
+  "label": "O"
+ },
+ {
+  "t": 0.0667,
+  "frame": 2,
+  "type": "word",
+  "label": "O"
+ },
+ {
+  "t": 0.2,
+  "frame": 6,
+  "type": "enter",
+  "label": "que"
+ },
+ {
+  "t": 0.2,
+  "frame": 6,
+  "type": "word",
+  "label": "que"
+ },
+ {
+  "t": 0.3333,
+  "frame": 10,
+  "type": "enter",
+  "label": "você"
+ },
+ {
+  "t": 0.3333,
+  "frame": 10,
+  "type": "word",
+  "label": "você"
+ },
+ {
+  "t": 0.5,
+  "frame": 15,
+  "type": "enter",
+  "label": "procura"
+ },
+ {
+  "t": 0.5,
+  "frame": 15,
+  "type": "word",
+  "label": "procura"
+ },
+ {
+  "t": 0.6667,
+  "frame": 20,
+  "type": "enter",
+  "label": "hoje?"
+ },
+ {
+  "t": 0.6667,
+  "frame": 20,
+  "type": "word",
+  "label": "hoje?"
+ },
+ {
+  "t": 3.2,
+  "frame": 96,
+  "type": "cut",
+  "label": "hide #s1 show #s2"
+ },
+ {
+  "t": 4.6,
+  "frame": 138,
+  "type": "press",
+  "label": "#plus2"
+ },
+ {
+  "t": 4.6667,
+  "frame": 140,
+  "type": "press",
+  "label": "à vista no Pix acende"
+ },
+ {
+  "t": 5.2,
+  "frame": 156,
+  "type": "cut",
+  "label": "hide #s2 show #s3"
+ },
+ {
+  "t": 5.2,
+  "frame": 156,
+  "type": "enter",
+  "label": "#qr"
+ },
+ {
+  "t": 5.4333,
+  "frame": 163,
+  "type": "enter",
+  "label": "Pix"
+ },
+ {
+  "t": 5.4333,
+  "frame": 163,
+  "type": "word",
+  "label": "Pix"
+ },
+ {
+  "t": 5.6,
+  "frame": 168,
+  "type": "enter",
+  "label": "na"
+ },
+ {
+  "t": 5.6,
+  "frame": 168,
+  "type": "word",
+  "label": "na"
+ },
+ {
+  "t": 5.7667,
+  "frame": 173,
+  "type": "enter",
+  "label": "hora."
+ },
+ {
+  "t": 5.7667,
+  "frame": 173,
+  "type": "word",
+  "label": "hora."
+ },
+ {
+  "t": 7,
+  "frame": 210,
+  "type": "exit",
+  "label": "#t3a"
+ },
+ {
+  "t": 7.1333,
+  "frame": 214,
+  "type": "enter",
+  "label": "#bolt"
+ },
+ {
+  "t": 7.2667,
+  "frame": 218,
+  "type": "hide",
+  "label": "#q0"
+ },
+ {
+  "t": 7.2667,
+  "frame": 218,
+  "type": "hide",
+  "label": "#q6"
+ },
+ {
+  "t": 7.3,
+  "frame": 219,
+  "type": "hide",
+  "label": "#q1"
+ },
+ {
+  "t": 7.3,
+  "frame": 219,
+  "type": "hide",
+  "label": "#q7"
+ },
+ {
+  "t": 7.3333,
+  "frame": 220,
+  "type": "hide",
+  "label": "#q2"
+ },
+ {
+  "t": 7.3333,
+  "frame": 220,
+  "type": "hide",
+  "label": "#q8"
+ },
+ {
+  "t": 7.3667,
+  "frame": 221,
+  "type": "hide",
+  "label": "#q3"
+ },
+ {
+  "t": 7.3667,
+  "frame": 221,
+  "type": "hide",
+  "label": "#q9"
+ },
+ {
+  "t": 7.4,
+  "frame": 222,
+  "type": "hide",
+  "label": "#q4"
+ },
+ {
+  "t": 7.4,
+  "frame": 222,
+  "type": "hide",
+  "label": "#q10"
+ },
+ {
+  "t": 7.4,
+  "frame": 222,
+  "type": "enter",
+  "label": "Entrega"
+ },
+ {
+  "t": 7.4,
+  "frame": 222,
+  "type": "word",
+  "label": "Entrega"
+ },
+ {
+  "t": 7.4333,
+  "frame": 223,
+  "type": "hide",
+  "label": "#q5"
+ },
+ {
+  "t": 7.4333,
+  "frame": 223,
+  "type": "hide",
+  "label": "#q11"
+ },
+ {
+  "t": 7.6,
+  "frame": 228,
+  "type": "enter",
+  "label": "automática."
+ },
+ {
+  "t": 7.6,
+  "frame": 228,
+  "type": "word",
+  "label": "automática."
+ },
+ {
+  "t": 8.4667,
+  "frame": 254,
+  "type": "exit",
+  "label": "#bolt"
+ },
+ {
+  "t": 8.5333,
+  "frame": 256,
+  "type": "enter",
+  "label": "#ban3"
+ },
+ {
+  "t": 9.2,
+  "frame": 276,
+  "type": "exit",
+  "label": "#t3b"
+ },
+ {
+  "t": 9.2667,
+  "frame": 278,
+  "type": "exit",
+  "label": "#t3c"
+ },
+ {
+  "t": 9.6,
+  "frame": 288,
+  "type": "enter",
+  "label": "#cb3"
+ },
+ {
+  "t": 10.5333,
+  "frame": 316,
+  "type": "exit",
+  "label": "#cb3t"
+ },
+ {
+  "t": 11,
+  "frame": 330,
+  "type": "cut",
+  "label": "hide #s3 show #s4"
+ },
+ {
+  "t": 11,
+  "frame": 330,
+  "type": "enter",
+  "label": "#coin"
+ },
+ {
+  "t": 11.2,
+  "frame": 336,
+  "type": "enter",
+  "label": "#num"
+ },
+ {
+  "t": 11.2667,
+  "frame": 338,
+  "type": "count",
+  "label": "start 0"
+ },
+ {
+  "t": 12.0667,
+  "frame": 362,
+  "type": "count",
+  "label": "land 36"
+ },
+ {
+  "t": 12.2667,
+  "frame": 368,
+  "type": "enter",
+  "label": "Vira"
+ },
+ {
+  "t": 12.2667,
+  "frame": 368,
+  "type": "word",
+  "label": "Vira"
+ },
+ {
+  "t": 12.4333,
+  "frame": 373,
+  "type": "enter",
+  "label": "saldo"
+ },
+ {
+  "t": 12.4333,
+  "frame": 373,
+  "type": "word",
+  "label": "saldo"
+ },
+ {
+  "t": 12.6333,
+  "frame": 379,
+  "type": "enter",
+  "label": "para"
+ },
+ {
+  "t": 12.6333,
+  "frame": 379,
+  "type": "word",
+  "label": "para"
+ },
+ {
+  "t": 12.7667,
+  "frame": 383,
+  "type": "enter",
+  "label": "a"
+ },
+ {
+  "t": 12.7667,
+  "frame": 383,
+  "type": "word",
+  "label": "a"
+ },
+ {
+  "t": 12.9333,
+  "frame": 388,
+  "type": "enter",
+  "label": "próxima."
+ },
+ {
+  "t": 12.9333,
+  "frame": 388,
+  "type": "word",
+  "label": "próxima."
+ },
+ {
+  "t": 13.5333,
+  "frame": 406,
+  "type": "whip",
+  "label": "#cam4"
+ },
+ {
+  "t": 14.5667,
+  "frame": 437,
+  "type": "hide",
+  "label": "#coinW"
+ },
+ {
+  "t": 14.5667,
+  "frame": 437,
+  "type": "land",
+  "label": "moeda pousa no próximo produto"
+ },
+ {
+  "t": 15.5333,
+  "frame": 466,
+  "type": "cut",
+  "label": "hide #s4 show #s5"
+ },
+ {
+  "t": 16.8,
+  "frame": 504,
+  "type": "enter",
+  "label": "#logo5"
+ },
+ {
+  "t": 17.3333,
+  "frame": 520,
+  "type": "enter",
+  "label": "Rei"
+ },
+ {
+  "t": 17.3333,
+  "frame": 520,
+  "type": "word",
+  "label": "Rei"
+ },
+ {
+  "t": 17.4667,
+  "frame": 524,
+  "type": "enter",
+  "label": "Dos"
+ },
+ {
+  "t": 17.4667,
+  "frame": 524,
+  "type": "word",
+  "label": "Dos"
+ },
+ {
+  "t": 17.6,
+  "frame": 528,
+  "type": "enter",
+  "label": "Nitros"
+ },
+ {
+  "t": 17.6,
+  "frame": 528,
+  "type": "word",
+  "label": "Nitros"
+ }
+]
