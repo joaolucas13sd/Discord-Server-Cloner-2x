@@ -267,7 +267,7 @@ function build() {
   M.kf('#lit5', 'opacity', [[0, 0], [492, 0], [524, .55, 'softInOut'], [600, .65]]);
   M.enter('#logo5', { at: 504, frames: 20, ease: 'snapSettle', from: { scale: 3.5, blur: 14 } });
   M.words('#t5', { at: 520, mech: 'rise', dist: 70, frames: 13, gaps: [4, 4], smear: true });
-  M.drift('#lock5', { prop: 'scale', from: 1, to: .965, start: 524, end: 570 });
+  M.kf('#lock5', 'scale', [[0, 1], [524, 1], [572, .93, 'softInOut']]);
 }
 
 window.__ready = Motion.loaded().then(() => { build(); window.__seek(M.f(1)); window.__seek(0); if (/selftest/.test(location.search)) return Motion.selfTest(M, { samples: 24 }); });
