@@ -1,6 +1,6 @@
 # Rei Dos Nitros: filme de lançamento (20 s)
 
-Status: **ideia e storyboard aguardando aprovação. Nada foi produzido ainda.**
+Status: **aprovado pelo usuário (fonte Baloo 2, Nitro com entrega automática, formato 9:16, sem som) e produzido.** Ajustes feitos durante a produção estão marcados com *(produção)*.
 Fonte do material: 7 prints da loja (`film/brand/screens/01-07.jpg`) enviados pelo usuário. O site não pôde ser capturado diretamente porque a rede da sessão bloqueia `blast.erbystores.com`.
 
 ---
@@ -44,10 +44,10 @@ Fonte do material: 7 prints da loja (`film/brand/screens/01-07.jpg`) enviados pe
 
 | Campo | Decisão |
 |---|---|
-| Formato | **1920×1080, 30 fps, 600 quadros (20 s)**. Recomendo também uma versão 1080×1920 para Reels e TikTok (falta confirmar). |
+| Formato | **1080×1920 (9:16), 30 fps, 600 quadros (20 s)**, sem som |
 | Forma do filme | Documentário de UI de uma tarefa. Rejeitadas: montagem (padrão da categoria) e personagem (exigiria redesenhar o logo). |
 | Relógio e movimento | Movimento contínuo com blur de obturador 180° e grão de 0,03 |
-| Tipografia | Títulos em Baloo 2 ExtraBold (a confirmar), em minúsculas normais e no máximo 9% da altura. Preços em Inter Bold. O número de destaque, R$ 0,36, ocupa cerca de 25% da altura e aparece uma única vez. |
+| Tipografia | Títulos em Baloo 2 ExtraBold (confirmado), em minúsculas normais e no máximo 9% da altura. Preços em Inter Bold. O número de destaque, R$ 0,36, ocupa cerca de 25% da altura e aparece uma única vez. |
 | Mundo | **Fundo** quase preto `#08090B` com o **labirinto dos banners em relevo escuro**, nunca uma cor chapada. **Luz** com a cor do produto em cena (magenta no ato do Nitro) e verde só nos momentos de dinheiro. **Profundidade**: a parede de banners em perspectiva, com desfoque nas fileiras distantes. **Textura**: grão. |
 | Cor de destaque | `#34E078`, com um único sentido: **dinheiro a seu favor** (Pix, cashback) |
 | Objeto que conduz o filme | A **moedinha verde do cashback** (o ícone real do site). Ela nasce no card na cena 2 e muda de papel e de posição a cada corte. Nunca fica parada no mesmo lugar. |
@@ -61,12 +61,14 @@ Fonte do material: 7 prints da loja (`film/brand/screens/01-07.jpg`) enviados pe
 | # | Papel | Imp. | Faz o espectador acreditar que… | Imagem sem os textos | Texto na tela | O que se move | Entrada | Saída e transição | Objeto carregado | Quadros |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 1 | gancho | 2 | …a loja tem o que ele procura | Parede inclinada de banners reais rolando rápido, com luz colorida vazando dos banners sobre o relevo de labirinto | "O que você procura hoje?" (H1 real do site), palavra por palavra a cada 4 a 6 quadros, encaixada entre as fileiras do feed (sem bloco de título à esquerda) | O feed rola, freia e para | O filme já abre em movimento, com o feed a toda velocidade | O feed desacelera e o card do **Discord Nitro** chega ao centro, empurrando a câmera para dentro dele | O card do Nitro | 0–96 (96) |
-| 2 | virada | 2 | …comprar é um toque e o preço é real | Macro no card real: banner, "Discord Nitro", a linha verde "4% de cashback", "R$ 8,99 +" e "à vista no Pix" | Só os textos da própria interface | O dedo pousa, espera, toca o "+" (que comprime) e o card responde um quadro depois | A câmera entra pelo card que vem da cena 1, no mesmo enquadramento | No toque, "à vista no Pix" acende em verde e o ícone de QR do Pix invade a tela vindo de 3,5× o tamanho, com corte no meio do movimento | A linha verde do cashback (a moeda ainda dorme ali) | 96–186 (90) |
-| 3 | prova | 2 | …ele paga e recebe sem depender de ninguém | O QR verde gigante vira uma grade de luz. Seus módulos colapsam e formam o raio, que atravessa a tela. O banner do Nitro despenca de 3,5× e assenta, "entregue". | "Pix na hora." → "Entrega automática." (textos reais) | Módulos do QR, raio, banner | O QR desacelerando a partir do tamanho grande | O banner assentado se inclina e a moeda verde se solta dele | O banner do Nitro | 186–330 (144) |
-| 4 | prova (O PONTO) | **3** | …cada compra deixa dinheiro para a próxima | A moeda verde em luz forte sobre o banner desfocado. O contador sobe quadro a quadro de R$ 0,00 a **R$ 0,36** (4% de 8,99). A moeda sai num arco, a câmera faz um chicote atrás dela e ela pousa na linha de cashback do próximo card (**Impulsos Servidor**), que pisca em verde. | "R$ 0,36" → "Vira saldo para a próxima." (texto real) | Moeda, contador, câmera | O número decelera a partir do tamanho grande | O pouso da moeda é a única mola do filme. A câmera começa a recuar. | A moeda | 330–462 (132) |
-| 5 | CTA | 2 | …isso é a Rei Dos Nitros | A câmera recua pela grade de cards até o **cabeçalho real da loja**: logo da caixa com o rei coroado, "Rei Dos Nitros" e a sacola. O badge da sacola sobe para 2. Ao fundo, o labirinto respira. | "Rei Dos Nitros" (o próprio cabeçalho) | O badge sobe e o logo chega de 3,5× | O cabeçalho chega pelo recuo, então o logo aparece por consequência e não como selo | Repouso final de 1,0 s com o labirinto ainda se movendo. Sem URL, botão ou rodapé. | — | 462–600 (138) |
+| 2 | virada | 2 | …comprar é um toque e o preço é real | Macro no card real: banner, "Discord Nitro", a linha verde "4% de cashback", "R$ 8,99 +" e "à vista no Pix" | Só os textos da própria interface | O dedo pousa, espera, toca o "+" (que comprime) e o card responde um quadro depois | A câmera entra pelo card que vem da cena 1, no mesmo enquadramento | No toque, "à vista no Pix" acende em verde e o ícone de QR do Pix invade a tela vindo de 3,5× o tamanho, com corte no meio do movimento | A linha verde do cashback (a moeda ainda dorme ali) | 96–156 (60) *(produção)* |
+| 3 | prova | 2 | …ele paga e recebe sem depender de ninguém | O QR verde gigante vira uma grade de luz. Seus módulos colapsam e formam o raio, que atravessa a tela. O banner do Nitro despenca de 3,5× e assenta, "entregue". | "Pix na hora." → "Entrega automática." (textos reais) | Módulos do QR, raio, banner | O QR desacelerando a partir do tamanho grande | O banner assentado se inclina e a moeda verde se solta dele | O banner do Nitro | 156–330 (174) *(produção)* |
+| 4 | prova (O PONTO) | **3** | …cada compra deixa dinheiro para a próxima | A moeda verde em luz forte sobre o banner desfocado. O contador sobe quadro a quadro de R$ 0,00 a **R$ 0,36** (4% de 8,99). A moeda sai num arco, a câmera faz um chicote atrás dela e ela pousa na linha de cashback do próximo card (**Impulsos Servidor**), que pisca em verde. | "R$ 0,36" → "Vira saldo para a próxima." (texto real) | Moeda, contador, câmera | O número decelera a partir do tamanho grande | O pouso da moeda é a única mola do filme. A câmera começa a recuar. | A moeda | 330–466 (136) |
+| 5 | CTA | 2 | …isso é a Rei Dos Nitros | A câmera recua pela grade de cards até o **cabeçalho real da loja**: logo da caixa com o rei coroado, "Rei Dos Nitros" e a sacola. O badge da sacola sobe para 2. Ao fundo, o labirinto respira. | "Rei Dos Nitros" (o próprio cabeçalho) | O badge sobe e o logo chega de 3,5× | O cabeçalho chega pelo recuo, então o logo aparece por consequência e não como selo | Repouso final de 1,0 s com o labirinto ainda se movendo. Sem URL, botão ou rodapé. | — | 466–600 (134) |
 
-Soma: 96 + 90 + 144 + 132 + 138 = **600 quadros = 20 s**. O CTA tem 138 quadros, 23% do filme (limite de 25%). O repouso final dura 1,0 s.
+Soma: 96 + 60 + 174 + 136 + 134 = **600 quadros = 20 s**. O CTA tem 134 quadros, 22% do filme (limite de 25%).
+
+*(produção)* Na cena 5, o cabeçalho com a sacola (badge 1→2) foi trocado pelo logo, que chega de 3,5× depois que o feed recua e escurece, com "Rei Dos Nitros" embaixo. Uma barra de cabeçalho no quadro final reprova no G5 (C6, barra de cabeçalho) e dividiria o herói em três elementos. A cena 2 ficou mais curta (o toque acontece em 2 s) e o tempo foi para a cena 3.
 
 ## 6. Verificações feitas antes de produzir
 

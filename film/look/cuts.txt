@@ -1,0 +1,11 @@
+# cuts from events draft.mp4.events.json (time s, frame, timecode, source)
+3.200	frame 96	0:03.20	event cut 'hide #s1 show #s2'
+5.200	frame 156	0:05.20	event cut 'hide #s2 show #s3'
+7.267	frame 218	0:07.27	event hide '#q0'
+7.400	frame 222	0:07.40	event hide '#q4'
+11.000	frame 330	0:11.00	event cut 'hide #s3 show #s4'
+14.567	frame 437	0:14.57	event hide '#coinW'
+15.533	frame 466	0:15.53	event cut 'hide #s4 show #s5'
+# detected but not in events:
+8.533	frame 256	0:08.53	scene 0.76
+16.800	frame 504	0:16.80	scene 0.59
