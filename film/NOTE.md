@@ -25,7 +25,19 @@ Escolhi esta ideia porque as três promessas são as palavras exatas do site e o
 - **Repetidos no feed:** alguns cards se repetem nas fileiras de baixo (Netflix, Disney, Jogos Steam, Gamepass, HBO Max), porque os prints tinham só 13 produtos com preço legível. Isso fica visível no recuo da cena 5.
 
 ## Gates (números dos scripts)
-GATES_PLACEHOLDER
+Saídas de `look.py final.mp4 --expect 20` e `lint.mjs index.html`, no render final (1080×1920, obturador de 180° com 8 subquadros, grão de 0,03):
+
+| Gate | Resultado | Número |
+|---|---|---|
+| G0 o render existe | PASS | 20,00 s (esperado 20,00 s), 600 quadros, sem áudio (não planejado) |
+| G1 provas legíveis | por olho, sem número de script | Card do Nitro na cena 2 com ~0,9 W; títulos com ~4,2% H e preço com ~5,7% H. Na cena 2, "à vista no Pix" tem ~3% H, abaixo dos 4%, mas é texto secundário da própria interface. |
+| G2 nenhum quadro vazio | PASS | nenhuma sequência com mais de 3 quadros sem mudança |
+| G3 final curto | PASS | repouso final de 1,03 s (faixa 0,6 a 1,4); último plano de 2,57 s = 13% do filme |
+| G4 um herói por quadro | por olho, sem número de script | um herói em cada um dos 16 quadros da folha de contato (lista abaixo) |
+| G5 sem elementos de página | PASS | `lint.mjs`: todas as regras C, D, P, T e V passam |
+| Movimento | dentro da faixa humana | 5,7/255 de variação média de luminância por quadro (filmes humanos: mediana 6,8, faixa 4,4 a 9,8) |
+
+Histórico: o primeiro render final reprovou no G3 (repouso de 1,47 s), porque o recuo lento do logo não era detectado como movimento. O recuo foi refeito (escala de 1 para 0,93 até o quadro 572) e renderizado de novo. Num rascunho anterior, o G5 reprovou (C1, títulos minúsculos dos cards no topo atrás do logo); o feed agora some por completo antes do logo chegar.
 
 ## Descrição de cada quadro da folha de contato (`look-final/sheet.jpg`)
 1. 0,6 s: feed inclinado com Netflix, Disney, Steam Key e Gamepass; "O que você procura" subindo palavra por palavra. Herói: a pergunta. Não parece slide, porque o feed se move.
