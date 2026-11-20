@@ -5,9 +5,6 @@
   <!-- ===================== REI DOS NITROS: COMUNIDADE + VANTAGENS ===================== -->
   {% include 'rn-comunidade' %}
 
-  <!-- ===================== REI DOS NITROS: CONTAS FULL ACESSO ===================== -->
-  {% include 'rn-full-acesso' %}
-
   {% comment %} Hero removido a pedido. Para voltar: {% include 'hero-banner' %} {% endcomment %}
 
   <!-- ===================== CATEGORIAS MASTER ===================== -->
@@ -185,9 +182,6 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col gap-8 sm:gap-10">
       <!-- Título da seção -->
       {% for category in catalog.categories %}
-        {% assign rn_cat_nome = category.name | downcase %}
-        {% comment %} Contas Full Acesso já têm vitrine própria (components/rn-full-acesso.liquid) {% endcomment %}
-        {% if rn_cat_nome contains 'full acesso' %}{% continue %}{% endif %}
         <div>
           <div class="rn-sec-head">
             <div class="rn-kicker"><i></i>CATÁLOGO</div>
