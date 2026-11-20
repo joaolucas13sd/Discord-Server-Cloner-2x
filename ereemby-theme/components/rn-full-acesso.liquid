@@ -1,0 +1,267 @@
+{% comment %}
+  Rei dos Nitros: vitrine "Contas Full Acesso" (banner roxo + abas por jogo + grade de contas).
+
+  COMO USAR NO PAINEL DA LOJA
+  - Crie uma categoria com "Full Acesso" no nome (ex.: "Contas Full Acesso") e cadastre as contas nela.
+  - Abas: se a categoria tiver SUBCATEGORIAS (Fortnite, Steam, Ubisoft...), cada subcategoria vira uma aba.
+    Sem subcategorias, as abas saem do nome do produto (ex.: "Conta Fortnite | 90 Skins" cai na aba Fortnite).
+  - A imagem do lado direito do banner é a "Imagem/ícone" da categoria. Sem imagem, aparece uma chave desenhada.
+  - Se a categoria não existir, a vitrine não aparece.
+
+  AJUSTES RÁPIDOS (textos abaixo)
+{% endcomment %}
+{% assign rn_fa_busca = 'full acesso' %}
+{% assign rn_fa_selo = 'REI DOS NITROS' %}
+{% assign rn_fa_titulo1 = 'Contas' %}
+{% assign rn_fa_titulo2 = 'Full Acesso' %}
+{% assign rn_fa_texto = 'Contas com acesso completo de Steam, Fortnite, Ubisoft e mais. Escolha a sua e jogue.' %}
+{% assign rn_fa_destaques = 5 %}{% comment %} quantas contas aparecem por aba (o card "Ver mais" completa a grade) {% endcomment %}
+
+{% assign rn_fa_cat = nil %}
+{% for c in catalog.categories_all %}
+  {% assign rn_fa_nome = c.name | downcase %}
+  {% if rn_fa_cat == nil and rn_fa_nome contains rn_fa_busca %}
+    {% assign rn_fa_cat = c %}
+  {% endif %}
+{% endfor %}
+{% if rn_fa_cat == nil %}
+  {% for c in catalog.categories %}
+    {% assign rn_fa_nome = c.name | downcase %}
+    {% if rn_fa_cat == nil and rn_fa_nome contains rn_fa_busca %}
+      {% assign rn_fa_cat = c %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if rn_fa_cat != nil %}
+{% assign rn_fa_link = '/category/' | append: rn_fa_cat.id %}
+{% if rn_fa_cat.slug != blank %}{% assign rn_fa_link = '/category/' | append: rn_fa_cat.slug %}{% endif %}
+{% assign rn_fa_img = rn_fa_cat.icon %}
+
+<section class="rn-fa" id="rn-full-acesso" aria-label="{{ rn_fa_titulo1 }} {{ rn_fa_titulo2 }}">
+  <div class="rn-fa__wrap">
+
+    <!-- Banner -->
+    <div class="rn-fa__hero">
+      <div class="rn-fa__hero-txt">
+        <span class="rn-fa__selo">{{ rn_fa_selo }}</span>
+        <h2 class="rn-fa__title">{{ rn_fa_titulo1 }} <span>{{ rn_fa_titulo2 }}</span></h2>
+        <p class="rn-fa__desc">{{ rn_fa_texto }}</p>
+        <p class="rn-fa__auto">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          Entrega automática
+        </p>
+        <a class="rn-fa__btn" href="#rn-fa-grid">Ver contas <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="rn-fa__hero-art" aria-hidden="true">
+        <span class="rn-fa__orb"></span>
+        <span class="rn-fa__arc"></span>
+        {% if rn_fa_img != blank %}
+          <img src="{{ rn_fa_img }}" alt="" loading="lazy">
+        {% else %}
+          <svg class="rn-fa__key" viewBox="0 0 120 200" fill="none" stroke="#0b0b0b" stroke-width="6" stroke-linejoin="round">
+            <circle cx="60" cy="48" r="38" fill="#2ee86b"/>
+            <circle cx="60" cy="48" r="15" fill="#7a14d6"/>
+            <path d="M48 84h24v92l-12 14-12-14z" fill="#2ee86b"/>
+            <path d="M72 118h22v16H72zM72 146h16v16H72z" fill="#2ee86b"/>
+          </svg>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Abas -->
+    <div class="rn-fa__tabs" id="rn-fa-tabs" role="tablist">
+      <button type="button" class="rn-fa__tab is-on" data-tab="*" data-link="{{ rn_fa_link }}" role="tab" aria-selected="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l1.9 5.6L19.5 9l-5.6 1.9L12 16.5l-1.9-5.6L4.5 9l5.6-1.4zM19 14l.9 2.6 2.6.9-2.6.9L19 21l-.9-2.6-2.6-.9 2.6-.9zM5 15l.7 1.8 1.8.7-1.8.7L5 20l-.7-1.8-1.8-.7 1.8-.7z"/></svg>
+        Destaques
+      </button>
+      {% if rn_fa_cat.sub_categories and rn_fa_cat.sub_categories.size > 0 %}
+        {% for sub in rn_fa_cat.sub_categories %}
+          {% if sub.products.size > 0 %}
+            {% assign rn_fa_sublink = '/category/' | append: sub.id %}
+            {% if sub.slug != blank %}{% assign rn_fa_sublink = '/category/' | append: sub.slug %}{% endif %}
+            <button type="button" class="rn-fa__tab" data-tab="s{{ sub.id }}" data-link="{{ rn_fa_sublink }}" role="tab" aria-selected="false">
+              {{ sub.name }} <b>{{ sub.products.size }}</b>
+            </button>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Grade -->
+    <div class="rn-fa__grid" id="rn-fa-grid" data-max="{{ rn_fa_destaques }}" data-subs="{% if rn_fa_cat.sub_categories.size > 0 %}1{% else %}0{% endif %}">
+      {% for product in rn_fa_cat.products %}
+        {% render 'rn-full-acesso-card', product: product, tab: '' %}
+      {% endfor %}
+      {% for sub in rn_fa_cat.sub_categories %}
+        {% assign rn_fa_tab = 's' | append: sub.id %}
+        {% for product in sub.products %}
+          {% render 'rn-full-acesso-card', product: product, tab: rn_fa_tab %}
+        {% endfor %}
+      {% endfor %}
+
+      <a class="rn-fa__more" id="rn-fa-more" href="{{ rn_fa_link }}">
+        <div class="rn-fa__fan" id="rn-fa-fan"></div>
+        <div class="rn-fa__more-txt">
+          <small>Categoria completa</small>
+          <strong>Ver mais contas</strong>
+        </div>
+        <span class="rn-fa__more-go" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .rn-fa { --fa-roxo: #7a14d6; --fa-roxo2: #5b0aa8; --fa-verde: #2ee86b; --fa-card: #111214; --fa-borda: #1f2125;
+    padding: 40px 0 8px; font-family: var(--rn-font, Inter, system-ui, sans-serif); color: #fff; }
+  .rn-fa__wrap { max-width: 80rem; margin: 0 auto; padding: 0 16px; }
+  @media (min-width: 640px) { .rn-fa__wrap { padding: 0 24px; } }
+  @media (min-width: 1024px) { .rn-fa__wrap { padding: 0 32px; } }
+
+  /* Banner */
+  .rn-fa__hero { position: relative; overflow: hidden; display: flex; align-items: center; gap: 24px;
+    border-radius: 28px; padding: 36px 28px; background: radial-gradient(120% 140% at 85% 50%, #8d1fe8 0%, var(--fa-roxo) 45%, var(--fa-roxo2) 100%); }
+  @media (min-width: 768px) { .rn-fa__hero { padding: 44px 44px; min-height: 340px; } }
+  .rn-fa__hero-txt { position: relative; z-index: 2; flex: 1 1 auto; min-width: 0; }
+  .rn-fa__selo { display: inline-block; padding: 7px 14px; border-radius: 999px; background: var(--fa-verde); color: #06210f;
+    font-weight: 800; font-size: 13px; letter-spacing: .12em; }
+  .rn-fa__title { margin: 14px 0 0; font-family: var(--rn-font-round, system-ui) !important; font-weight: 800 !important;
+    font-size: clamp(34px, 7vw, 60px) !important; line-height: 1 !important; letter-spacing: -.01em; color: #fff; }
+  .rn-fa__title span { color: var(--fa-verde); }
+  .rn-fa__desc { margin: 18px 0 0; max-width: 540px; color: #ece3f7; font-size: 16px; line-height: 1.6; }
+  .rn-fa__auto { margin: 14px 0 0; display: flex; align-items: center; gap: 8px; color: var(--fa-verde); font-weight: 700; font-size: 15px; }
+  .rn-fa__btn { margin-top: 26px; display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; border-radius: 14px;
+    background: #fff; color: #111; font-weight: 700; font-size: 16px; text-decoration: none; transition: transform .2s, background .2s; }
+  .rn-fa__btn:hover { background: #ececec; transform: translateY(-1px); }
+  .rn-fa__hero-art { position: relative; flex: 0 0 auto; width: 300px; height: 280px; display: none; align-items: center; justify-content: center; }
+  @media (min-width: 768px) { .rn-fa__hero-art { display: flex; } }
+  .rn-fa__orb { position: absolute; width: 280px; height: 280px; border-radius: 50%; background: rgba(60, 0, 110, .45); }
+  .rn-fa__arc { position: absolute; width: 330px; height: 330px; border-radius: 50%; border: 5px solid transparent;
+    border-top-color: var(--fa-verde); border-right-color: var(--fa-verde); transform: rotate(10deg); clip-path: inset(0 0 45% 30%); }
+  .rn-fa__hero-art img { position: relative; max-width: 100%; max-height: 300px; object-fit: contain; filter: drop-shadow(0 18px 30px rgba(0,0,0,.35)); }
+  .rn-fa__key { position: relative; height: 230px; transform: rotate(18deg); filter: drop-shadow(0 18px 30px rgba(0,0,0,.35)); }
+
+  /* Abas */
+  .rn-fa__tabs { display: flex; gap: 10px; margin: 28px 0 22px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px;
+    -webkit-mask-image: linear-gradient(90deg, #000 92%, transparent); mask-image: linear-gradient(90deg, #000 92%, transparent); }
+  .rn-fa__tabs::-webkit-scrollbar { display: none; }
+  .rn-fa__tab { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 10px; padding: 13px 20px; border-radius: 999px;
+    background: #111214; border: 1px solid #2a2c31; color: #e6e6e6; font: 600 16px/1 var(--rn-font, system-ui); cursor: pointer; transition: border-color .2s, background .2s; }
+  .rn-fa__tab:hover { border-color: #4a4d55; }
+  .rn-fa__tab b { padding: 4px 9px; border-radius: 999px; background: #24262b; color: #b5b5b5; font-size: 13px; font-weight: 700; }
+  .rn-fa__tab.is-on { background: var(--fa-verde); border-color: var(--fa-verde); color: #06210f; }
+  .rn-fa__tab.is-on b { background: rgba(0,0,0,.15); color: #06210f; }
+
+  /* Grade */
+  .rn-fa__grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+  @media (min-width: 560px) { .rn-fa__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .rn-fa__grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+  .rn-fa__grid > [hidden] { display: none !important; }
+
+  .rn-fa-card { display: flex; flex-direction: column; padding: 8px; border-radius: 20px; background: var(--fa-card);
+    border: 1px solid var(--fa-borda); color: #fff; text-decoration: none; transition: border-color .2s, transform .2s; }
+  .rn-fa-card:hover { border-color: #3a3d44; transform: translateY(-2px); }
+  .rn-fa-card__media { position: relative; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #1a1b1f; }
+  .rn-fa-card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
+  .rn-fa-card:hover .rn-fa-card__media img { transform: scale(1.04); }
+  .rn-fa-card__bolt { position: absolute; top: 10px; left: 10px; width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(10,10,12,.55); border: 1.5px solid rgba(46,232,107,.55); color: var(--fa-verde, #2ee86b); backdrop-filter: blur(4px); }
+  .rn-fa-card__info { display: flex; flex-direction: column; flex: 1; padding: 16px 10px 10px; }
+  .rn-fa-card__title { margin: 0; font-size: 17px; font-weight: 500; line-height: 1.4; color: #f2f2f2;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .rn-fa-card__bottom { margin-top: auto; padding-top: 14px; display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+  .rn-fa-card__from { font-size: 12px; color: #8d8d8d; }
+  .rn-fa-card__price { font-size: 24px; font-weight: 800; letter-spacing: -.01em; line-height: 1.1; }
+  .rn-fa-card__old { font-size: 13px; color: #777; text-decoration: line-through; }
+  .rn-fa-card__pix { margin-top: 3px; font-size: 14px; color: #8d8d8d; }
+  .rn-fa-card__pix.is-off { color: #ef4444; }
+  .rn-fa-card__cart { flex: 0 0 auto; width: 50px; height: 50px; border-radius: 14px; display: grid; place-items: center;
+    background: #18191c; border: 1px solid #2a2c31; color: #e6e6e6; transition: background .2s, color .2s, border-color .2s; }
+  .rn-fa-card:hover .rn-fa-card__cart { background: var(--fa-verde, #2ee86b); border-color: var(--fa-verde, #2ee86b); color: #06210f; }
+
+  /* Ver mais */
+  .rn-fa__more { position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; min-height: 300px;
+    padding: 18px; border-radius: 20px; text-decoration: none; color: #fff;
+    background: linear-gradient(180deg, #7a14d6 0%, #3d0a72 70%, #24074a 100%); box-shadow: inset 0 -4px 0 var(--fa-verde); }
+  .rn-fa__fan { position: absolute; inset: 18px 18px 90px; }
+  .rn-fa__fan span { position: absolute; top: 6%; left: 50%; width: 46%; aspect-ratio: 3 / 4; border-radius: 14px; overflow: hidden;
+    border: 3px solid #fff; background: #1a1b1f center / cover no-repeat; box-shadow: 0 12px 24px rgba(0,0,0,.4); transition: transform .35s; }
+  .rn-fa__fan span:nth-child(1) { transform: translateX(-108%) rotate(-12deg); top: 14%; }
+  .rn-fa__fan span:nth-child(2) { transform: translateX(-50%); z-index: 2; }
+  .rn-fa__fan span:nth-child(3) { transform: translateX(8%) rotate(12deg); top: 14%; }
+  .rn-fa__more:hover .rn-fa__fan span:nth-child(1) { transform: translateX(-116%) rotate(-15deg); }
+  .rn-fa__more:hover .rn-fa__fan span:nth-child(3) { transform: translateX(16%) rotate(15deg); }
+  .rn-fa__more-txt { position: relative; z-index: 3; }
+  .rn-fa__more-txt small { display: block; font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #d9c7f0; }
+  .rn-fa__more-txt strong { display: block; margin-top: 4px; font-family: var(--rn-font-round, system-ui); font-size: 28px; font-weight: 800; line-height: 1.1; }
+  .rn-fa__more-go { position: absolute; z-index: 3; right: 18px; bottom: 22px; width: 54px; height: 54px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--fa-verde); color: #06210f; transition: transform .2s; }
+  .rn-fa__more:hover .rn-fa__more-go { transform: translateX(3px); }
+</style>
+
+<script>
+  (function () {
+    var grid = document.getElementById('rn-fa-grid');
+    if (!grid || grid.dataset.ok) return;
+    grid.dataset.ok = '1';
+    var tabsBox = document.getElementById('rn-fa-tabs');
+    var more = document.getElementById('rn-fa-more');
+    var fan = document.getElementById('rn-fa-fan');
+    var max = parseInt(grid.dataset.max, 10) || 5;
+    var cards = Array.prototype.slice.call(grid.querySelectorAll('.rn-fa-card'));
+
+    // Sem subcategorias: descobre o jogo pelo nome do produto e cria as abas.
+    if (grid.dataset.subs !== '1') {
+      var JOGOS = [
+        ['Fortnite', ['fortnite']], ['Steam', ['steam']], ['Ubisoft', ['ubisoft', 'uplay']],
+        ['Rocket League', ['rocket league']], ['Minecraft', ['minecraft']], ['EA FC / Fifa', ['fifa', 'ea fc', 'fc 2', 'fc2']],
+        ['GTA V e RDR', ['gta', 'red dead', 'rdr']], ['Valorant', ['valorant']], ['Roblox', ['roblox']],
+        ['League of Legends', ['league of legends', ' lol ']], ['Epic Games', ['epic games', 'epic']], ['Xbox', ['xbox']],
+        ['PlayStation', ['playstation', 'psn', 'ps4', 'ps5']], ['Outros', ['']]
+      ];
+      var conta = {};
+      cards.forEach(function (c) {
+        var nome = ' ' + (c.dataset.nome || '').toLowerCase() + ' ';
+        for (var i = 0; i < JOGOS.length; i++) {
+          if (JOGOS[i][1].some(function (k) { return nome.indexOf(k) !== -1; })) {
+            c.dataset.tab = 'j' + i; conta[i] = (conta[i] || 0) + 1; break;
+          }
+        }
+      });
+      JOGOS.forEach(function (j, i) {
+        if (!conta[i]) return;
+        var b = document.createElement('button');
+        b.type = 'button'; b.className = 'rn-fa__tab'; b.dataset.tab = 'j' + i; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', 'false');
+        b.appendChild(document.createTextNode(j[0] + ' '));
+        var n = document.createElement('b'); n.textContent = conta[i]; b.appendChild(n);
+        tabsBox.appendChild(b);
+      });
+    }
+
+    function mostrar(tab, link) {
+      var lista = cards.filter(function (c) { return tab === '*' || c.dataset.tab === tab; });
+      cards.forEach(function (c) { c.hidden = true; });
+      lista.slice(0, max).forEach(function (c) { c.hidden = false; });
+      if (link) more.href = link;
+      fan.innerHTML = '';
+      lista.slice(0, 3).forEach(function (c) {
+        var s = document.createElement('span');
+        if (c.dataset.img) s.style.backgroundImage = 'url("' + c.dataset.img.replace(/"/g, '%22') + '")';
+        fan.appendChild(s);
+      });
+    }
+
+    tabsBox.addEventListener('click', function (ev) {
+      var b = ev.target.closest('.rn-fa__tab');
+      if (!b) return;
+      tabsBox.querySelectorAll('.rn-fa__tab').forEach(function (x) { x.classList.toggle('is-on', x === b); x.setAttribute('aria-selected', x === b ? 'true' : 'false'); });
+      mostrar(b.dataset.tab, b.dataset.link || tabsBox.querySelector('[data-tab="*"]').dataset.link);
+    });
+
+    mostrar('*');
+  })();
+</script>
+{% endif %}

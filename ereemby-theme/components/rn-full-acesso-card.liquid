@@ -1,0 +1,49 @@
+{% comment %}
+  Rei dos Nitros: card de conta da vitrine "Contas Full Acesso" (components/rn-full-acesso.liquid).
+  Recebe: product, tab (id da aba quando a conta está numa subcategoria).
+{% endcomment %}
+<a
+  href="/product/{{ product.slug | default: product.id }}"
+  class="rn-fa-card"
+  data-tab="{{ tab }}"
+  data-nome="{{ product.name | escape }}"
+  data-img="{{ product.images[0] | escape }}"
+  hidden
+>
+  <div class="rn-fa-card__media">
+    {% if product.images[0] %}
+      <img src="{{ product.images[0] }}" alt="{{ product.name | escape }}" loading="lazy">
+    {% endif %}
+    {% if product.automatic %}
+      <span class="rn-fa-card__bolt" title="Entrega automática">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+      </span>
+    {% endif %}
+  </div>
+
+  <div class="rn-fa-card__info">
+    <h3 class="rn-fa-card__title">{{ product.name }}</h3>
+    <div class="rn-fa-card__bottom">
+      <div>
+        {% if product.type == 'variante' and product.variants_values.min %}
+          <div class="rn-fa-card__from">a partir de</div>
+          <div class="rn-fa-card__price">{{ product.variants_values.min.price | priceFormatter }}</div>
+          <div class="rn-fa-card__pix">à vista no Pix</div>
+        {% else %}
+          {% if product.comparison and product.comparison > 0 and product.price < product.comparison %}
+            <div class="rn-fa-card__old">{{ product.comparison | priceFormatter }}</div>
+          {% endif %}
+          <div class="rn-fa-card__price">{% if product.price == 0 %}Grátis{% else %}{{ product.price | priceFormatter }}{% endif %}</div>
+          {% if product.type != 'texto' and product.stock_amount == 0 %}
+            <div class="rn-fa-card__pix is-off">Sem estoque</div>
+          {% else %}
+            <div class="rn-fa-card__pix">à vista no Pix</div>
+          {% endif %}
+        {% endif %}
+      </div>
+      <span class="rn-fa-card__cart" aria-hidden="true">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l-1.2 12.1a2 2 0 0 1-2 1.9H8.2a2 2 0 0 1-2-1.9z"/><path d="M9 10V6a3 3 0 0 1 6 0v4"/></svg>
+      </span>
+    </div>
+  </div>
+</a>
