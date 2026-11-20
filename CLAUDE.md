@@ -24,7 +24,22 @@ O estilo segue o banner "FORTNITE · FULL ACESSO" que o usuário aprovou, **com 
 4. Envie o PNG ao usuário com `SendUserFile` e diga quais skins foram para destaque, renders e ícones, para ele poder pedir troca.
 5. Commit e push do PNG em `banners/`.
 
-Se o usuário pedir, depois dá para usar o banner como imagem de um produto na loja Ereemby (API v2, `images` do produto; a chave de API já fica salva no ambiente e é injetada pelo proxy no header `x-api-key`).
+### Depois do banner: criar o produto na loja (o usuário aprovou fazer sempre)
+
+Crie o produto da conta na loja Ereemby pela API v2. A chave de API já está salva no ambiente e o proxy injeta no header `x-api-key`: mande `-H "x-api-key: proxy-injected"`, nunca peça a chave no chat.
+
+1. **Preço:** se o usuário não disse o preço, **pergunte antes de criar**. Nunca invente preço. Preço "de" (riscado) só se ele informar.
+2. **Imagem:** a API não tem upload, só aceita URL. Depois do commit/push do PNG, use o link raw do GitHub **pelo hash do commit** (o repositório é público):
+   `https://raw.githubusercontent.com/joaolucas13sd/Discord-Server-Cloner-2x/<sha-do-commit>/banners/<arquivo>.png`
+   Confira com `curl -I` que responde 200 antes de usar.
+3. **Criar:** `POST https://api.ereemby.app/api/v2/products` com:
+   - `name`: `Conta Fortnite | <N> Skins | <Destaque 1> + <Destaque 2>`
+   - `description`: HTML curto com skins de destaque, quantidade de skins/picaretas/emotes/V-Bucks, "Full Acesso: e-mail e senha com acesso completo para alterar os dados" e "Entrega automática após o pagamento".
+   - `category_id`: categoria **Contas Full Acesso** = `cat_17952171948422273489682181798` (se der `resource_missing`, liste `GET /api/v2/categories` e procure pelo nome).
+   - `unit_amount` em **centavos** (R$ 89,90 = 8990), `active: true`, `delivery: {"type":"lines","automatic":true}`, `images: [<url raw>]`.
+4. **Estoque:** se o usuário mandou os dados de acesso da conta, adicione como 1 linha com `POST /api/v2/products/<id>/stock` e body `{"lines":["..."]}` (header `Idempotency-Key` com um UUID). Não repita os dados de acesso na resposta do chat. Sem dados de acesso, deixe sem estoque e avise que o produto aparece como "Sem estoque" até ele adicionar a conta no painel.
+5. Veja se a imagem que voltou na resposta é do CDN da loja (`blast.erbystores.com/cdn/...`) ou ainda o link do GitHub, e avise o usuário se for o GitHub (o link quebra se o repositório for apagado ou ficar privado).
+6. Responda com o nome, preço, link do produto (`url` da resposta) e se tem estoque. O produto entra como `pending_review` (normal na loja).
 
 ## Tema da loja (Ereemby)
 
