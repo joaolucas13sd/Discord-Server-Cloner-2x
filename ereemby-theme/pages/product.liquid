@@ -1,0 +1,1195 @@
+{% unless product.id %}
+  {% comment %} Rei dos Nitros: produto não encontrado, com sugestões (os mais vendidos primeiro, depois o resto do catálogo) {% endcomment %}
+  <style>
+    .rn-nf { width: 100%; max-width: 980px; margin: 0 auto; padding: 34px 16px 120px; box-sizing: border-box; color: #fff; text-align: center; }
+    .rn-nf__ico { position: relative; display: grid; place-items: center; width: 92px; height: 92px; margin: 0 auto 18px; border-radius: 28px; background: radial-gradient(circle at 30% 25%, rgba(34,242,106,.25), rgba(34,242,106,.04) 70%); border: 1px solid #1f5a37; color: #22f26a; animation: rnNfFlutua 3.2s ease-in-out infinite; }
+    @keyframes rnNfFlutua { 50% { transform: translateY(-6px) rotate(-3deg); } }
+    .rn-nf__t { margin: 0 0 8px; font-family: var(--rn-font-round, inherit); font-size: clamp(24px, 6.5vw, 34px); font-weight: 800; line-height: 1.1; }
+    .rn-nf__t span { color: #22f26a; }
+    .rn-nf__p { max-width: 430px; margin: 0 auto; color: #a1a2a8; font-size: 15px; line-height: 1.55; }
+    .rn-nf__acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 22px 0 34px; }
+    .rn-nf__b { display: inline-flex; align-items: center; gap: 8px; padding: 13px 20px; border-radius: 14px; font: inherit; font-size: 15px; font-weight: 800; text-decoration: none !important; cursor: pointer; }
+    .rn-nf__b--1 { border: 0; background: #22f26a; color: #04140a !important; box-shadow: 0 5px 0 #0d6b34; }
+    .rn-nf__b--2 { border: 1.5px solid #3a3b42; background: transparent; color: #fff !important; }
+    .rn-nf__k { margin: 0 0 4px; color: #22f26a; font-size: 12px; font-weight: 800; letter-spacing: .14em; }
+    .rn-nf__h { margin: 0 0 14px; font-family: var(--rn-font-round, inherit); font-size: 22px; font-weight: 800; }
+    .rn-nf__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; text-align: left; }
+    @media (min-width: 720px) { .rn-nf__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+    .rn-nf__c { display: flex; flex-direction: column; gap: 6px; padding: 8px; border: 1px solid #23242a; border-radius: 16px; background: #0f1012; color: #fff !important; text-decoration: none !important; transition: border-color .15s, transform .15s; animation: rnNfEntra .45s ease both; }
+    .rn-nf__c:hover { border-color: #22f26a; transform: translateY(-2px); }
+    @keyframes rnNfEntra { from { opacity: 0; transform: translateY(10px); } }
+    .rn-nf__img { display: block; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: #18191c; }
+    .rn-nf__img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .rn-nf__n { font-size: 14px; font-weight: 800; line-height: 1.25; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .rn-nf__pr { margin-top: auto; color: #8d8e93; font-size: 12px; }
+    .rn-nf__pr b { display: block; color: #22f26a; font-size: 15px; }
+  </style>
+  <div class="rn-nf">
+    <div class="rn-nf__ico" aria-hidden="true"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M8.5 9.5h.01M13.5 9.5h.01M8.8 13.6a3.2 3.2 0 0 1 4.4 0"/></svg></div>
+    <h1 class="rn-nf__t">Ops! Esse produto <span>não está aqui</span></h1>
+    <p class="rn-nf__p">Ele pode ter mudado de endereço ou saído da loja. Mas calma: separamos alguns produtos que talvez você goste.</p>
+    <div class="rn-nf__acoes">
+      <a class="rn-nf__b rn-nf__b--1" href="/"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Voltar para a loja</a>
+      <a class="rn-nf__b rn-nf__b--2" href="/categories"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Ver categorias</a>
+    </div>
+    <p class="rn-nf__k">TALVEZ VOCÊ TENHA INTERESSE</p>
+    <h2 class="rn-nf__h">Os favoritos da Rei dos Nitros</h2>
+    <div class="rn-nf__grid">
+      {% assign rn_nf_pri = 'Discord Nitro|Conta Nitrada|Decorações de Perfil|Jogos Steam|Netflix|Combo Assinaturas|Impulsos Servidor|Spotify' | split: '|' %}
+      {% assign rn_nf_n = 0 %}
+      {% for nome in rn_nf_pri %}
+        {% for p in catalog.products %}
+          {% if p.name == nome and rn_nf_n < 8 %}
+            {% assign rn_nf_n = rn_nf_n | plus: 1 %}
+            {% assign rn_nf_preco = p.price %}
+            {% if p.variants_values.min %}{% assign rn_nf_preco = p.variants_values.min.price %}{% endif %}
+            <a class="rn-nf__c" href="/product/{{ p.id }}" style="animation-delay: {{ rn_nf_n | times: 60 }}ms">
+              <span class="rn-nf__img">{% if p.images.size > 0 %}<img src="{{ p.images[0] }}" alt="" loading="lazy">{% endif %}</span>
+              <span class="rn-nf__n">{{ p.name }}</span>
+              <span class="rn-nf__pr">{% if p.variants.size > 1 %}a partir de{% endif %}<b>{{ rn_nf_preco | priceFormatter }}</b></span>
+            </a>
+          {% endif %}
+        {% endfor %}
+      {% endfor %}
+      {% for p in catalog.products %}
+        {% if rn_nf_n >= 8 %}{% break %}{% endif %}
+        {% unless rn_nf_pri contains p.name %}
+          {% if p.images.size > 0 %}
+            {% assign rn_nf_n = rn_nf_n | plus: 1 %}
+            {% assign rn_nf_preco = p.price %}
+            {% if p.variants_values.min %}{% assign rn_nf_preco = p.variants_values.min.price %}{% endif %}
+            <a class="rn-nf__c" href="/product/{{ p.id }}" style="animation-delay: {{ rn_nf_n | times: 60 }}ms">
+              <span class="rn-nf__img"><img src="{{ p.images[0] }}" alt="" loading="lazy"></span>
+              <span class="rn-nf__n">{{ p.name }}</span>
+              <span class="rn-nf__pr">{% if p.variants.size > 1 %}a partir de{% endif %}<b>{{ rn_nf_preco | priceFormatter }}</b></span>
+            </a>
+          {% endif %}
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+  {% break %}
+{% endunless %}
+
+{% if product.type == 'variante' and product.variants.size > 0 %}
+  {% assign _v0 = product.variants[0] %}
+  {% assign display_price = _v0.price %}
+  {% assign display_comparison = _v0.comparison %}
+  {% assign display_stock = _v0.stock_amount %}
+  {% assign display_qty_min = _v0.quantity.min %}
+  {% assign display_qty_max = _v0.quantity.max %}
+  {% assign display_discount_percentage = _v0.discount_percentage %}
+{% else %}
+  {% assign display_price = product.price %}
+  {% assign display_comparison = product.comparison %}
+  {% assign display_stock = product.stock_amount %}
+  {% assign display_qty_min = product.quantity.min %}
+  {% assign display_qty_max = product.quantity.max %}
+  {% assign display_discount_percentage = product.discount_percentage %}
+{% endif %}
+
+{% if product.type == 'variante' and product.variants.size > 0 %}
+  {% assign effective_type = _v0.type %}
+  {% assign effective_automatic = _v0.automatic %}
+  {% if _v0.embed_video and _v0.embed_video != '' %}
+    {% assign effective_embed = _v0.embed_video %}
+  {% else %}
+    {% assign effective_embed = product.embed_video %}
+  {% endif %}
+{% else %}
+  {% assign effective_type = product.type %}
+  {% assign effective_automatic = product.automatic %}
+  {% assign effective_embed = product.embed_video %}
+{% endif %}
+
+{% comment %} Normalize embed URL for YouTube / Vimeo {% endcomment %}
+{% assign embed_src = '' %}
+{% if effective_embed and effective_embed != '' %}
+  {% if effective_embed contains 'youtube.com/watch' %}
+    {% assign _yt = effective_embed | split: 'v=' | last | split: '&' | first %}
+    {% assign embed_src = 'https://www.youtube.com/embed/' | append: _yt %}
+  {% elsif effective_embed contains 'youtu.be/' %}
+    {% assign _yt = effective_embed | split: 'youtu.be/' | last | split: '?' | first %}
+    {% assign embed_src = 'https://www.youtube.com/embed/' | append: _yt %}
+  {% elsif effective_embed contains 'youtube.com/embed/' %}
+    {% assign embed_src = effective_embed %}
+  {% elsif effective_embed contains 'youtube.com/shorts/' %}
+    {% assign _yt = effective_embed | split: 'shorts/' | last | split: '?' | first %}
+    {% assign embed_src = 'https://www.youtube.com/embed/' | append: _yt %}
+  {% elsif effective_embed contains 'vimeo.com' %}
+    {% assign _vm = effective_embed | split: 'vimeo.com/' | last | split: '?' | first %}
+    {% assign embed_src = 'https://player.vimeo.com/video/' | append: _vm %}
+  {% else %}
+    {% assign embed_src = effective_embed %}
+  {% endif %}
+{% endif %}
+
+{% if effective_type == 'texto' %}
+  {% assign is_out_of_stock = false %}
+{% elsif display_stock <= 0 %}
+  {% assign is_out_of_stock = true %}
+{% else %}
+  {% assign is_out_of_stock = false %}
+{% endif %}
+
+{% comment %} Rei dos Nitros: dados estruturados para o Google mostrar preço, estoque e nota no resultado da busca {% endcomment %}
+{% assign _ld_total = product.feedback.stats.total | default: 0 %}
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Product","name":{{ product.name | json }},"image":{{ product.images | json }},"brand":{"@type":"Brand","name":{{ store.name | json }}},
+"offers":{"@type":"Offer","priceCurrency":"BRL","price":{{ display_price | json }},"availability":"https://schema.org/{% if is_out_of_stock %}OutOfStock{% else %}InStock{% endif %}","seller":{"@type":"Organization","name":{{ store.name | json }}}}{% if options.feedback_status and _ld_total > 0 %},
+"aggregateRating":{"@type":"AggregateRating","ratingValue":{{ product.feedback.stats.average | json }},"reviewCount":{{ _ld_total | json }}}{% endif %}}
+</script>
+
+<script>
+    window.PRODUCT_DATA = {
+      id:            {{ product.id | json }},
+      category_id:   {{ product.category_id | json }},
+      title:         {{ product.name | json }},
+      price:         {{ product.price | json }},
+      originalPrice: {{ product.comparison | json }},
+      description:   {{ product.description | json }},
+      images:        {{ product.images | json }},
+      stock_amount:  {{ product.stock_amount | json }},
+      type:          {{ product.type | json }},
+      variants:      {{ product.variants | json }},
+      quantity:      {{ product.quantity | json }},
+      embed_video:   {{ product.embed_video | json }},
+    };
+</script>
+
+<script id="product-data" type="application/json">
+  {{ product | json }}
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="{{ 'product.js' | asset_url }}"></script>
+<script src="{{ 'feedback.js' | asset_url }}"></script>
+
+<style>
+  .related-products-nav-wrapper {
+    position: relative;
+  }
+  .related-products-nav-prev,
+  .related-products-nav-next {
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+  }
+  .related-products-nav-prev::after,
+  .related-products-nav-next::after {
+    display: none !important;
+  }
+  .related-products-nav-prev {
+    left: -20px;
+  }
+  .related-products-nav-next {
+    right: -20px;
+  }
+  @media (max-width: 639px) {
+    .related-products-nav-prev,
+    .related-products-nav-next {
+      display: none !important;
+    }
+  }
+  .related-products-nav-prev.swiper-button-lock,
+  .related-products-nav-next.swiper-button-lock {
+    display: none !important;
+  }
+  .related-products-swiper .swiper-pagination-lock {
+    display: none !important;
+  }
+  .related-products-swiper .swiper-pagination-bullet {
+    background: #444 !important;
+    opacity: 1;
+  }
+  .related-products-swiper .swiper-pagination-bullet-active {
+    background: #fff !important;
+  }
+  .related-products-swiper .swiper-slide {
+    height: auto !important;
+  }
+  .related-products-swiper .swiper-slide > a {
+    height: 100% !important;
+  }
+
+  .related-products-swiper:not(.swiper-initialized) .swiper-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    gap: 24px;
+  }
+  .related-products-swiper:not(.swiper-initialized) .swiper-slide {
+    flex: 0 0 calc((100% - 12px) / 1.8);
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .related-products-swiper:not(.swiper-initialized) .swiper-slide {
+      flex: 0 0 calc(50% - 10px);
+    }
+  }
+  @media (min-width: 1024px) {
+    .related-products-swiper:not(.swiper-initialized) .swiper-slide {
+      flex: 0 0 calc(25% - 18px);
+    }
+  }
+</style>
+
+<div class="min-h-screen bg-black">
+
+  <!-- Product Section -->
+  <div class="max-w-7xl mx-auto p-4 sm:p-6">
+
+    <nav class="flex items-center space-x-2 text-sm text-neutral-500 sm:mb-6 mb-4">
+      <a href="/" class="hover:text-white transition-colors">Início</a>
+      <svg
+        class="w-4 h-4 min-w-[16px] min-h-[16px]"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7" /></svg>
+      <a href="/category/{{ product.category_id }}" class="hover:text-white transition-colors">Produtos</a>
+      <svg
+        class="w-4 h-4 min-w-[16px] min-h-[16px]"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M9 5l7 7-7 7" /></svg>
+      <span class="text-neutral-200 font-medium line-clamp-1">{{ product.name }}</span>
+    </nav>
+
+    {% comment %} Rei dos Nitros: fundo desfocado com a imagem do produto (computador) {% endcomment %}
+    {% if product.images[0] %}<div class="rn-pp-bg" aria-hidden="true" style="background-image:url('{{ product.images[0] }}')"></div>{% endif %}
+    <div class="bg-neutral-950 rounded-2xl shadow-xl shadow-black/40 overflow-hidden border border-neutral-800 rn-pp">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-0 rn-pp__grid">
+
+        <!-- Image Gallery -->
+        <div class="rn-pp__left">
+        <div class="p-4 sm:p-6 lg:p-10 rn-pp__gal">
+          <!-- Main Image -->
+          <div class="relative rounded-xl overflow-hidden bg-neutral-950 shadow-md mb-4 border border-neutral-800" style="aspect-ratio: 16 / 9;">
+            {% if product.images[0] %}
+              <img
+                id="main-product-image"
+                src="{{ product.images[0] }}"
+                alt="{{ product.name }}"
+                class="w-full h-full object-cover transition-opacity duration-300" />
+              {% comment %} Rei dos Nitros: vídeos do YouTube + banner {% endcomment %}
+              <span hidden data-rn-pnome="{{ product.name | escape }}"></span>
+              {% include 'rn-midia' %}
+            {% else %}
+              <div class="w-full h-full flex flex-col items-center justify-center bg-neutral-950 text-neutral-500">
+                <div class="relative">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-20 h-20 opacity-10"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1"
+                      d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-8 h-8 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+                  </svg>
+                </div>
+                <span class="text-xs font-bold tracking-widest uppercase opacity-30 mt-2">Sem Imagem</span>
+              </div>
+            {% endif %}
+          </div>
+
+          <!-- Thumbnails -->
+          {% if product.images.size > 1 %}
+            <div class="grid grid-cols-4 gap-3">
+              {% for image in product.images %}
+                <button
+                  style="aspect-ratio: 16 / 9;"
+                  data-src="{{ image }}"
+                  class="product-thumb {% if forloop.first %}active-thumb border-white{% else %}border-transparent{% endif %} rounded-lg overflow-hidden border-2 aspect-square bg-neutral-950 shadow-sm transition-all duration-300">
+                  <img
+                    src="{{ image }}"
+                    class="w-full h-full object-cover"
+                    alt="Imagem {{ forloop.index }}" />
+                </button>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+
+        <div id="rn-pp-slot"></div>
+        </div>
+
+        <!-- Product Details (Rei dos Nitros) -->
+        {% comment %} ---- CONFIGURAÇÃO DO PAINEL DE COMPRA ---- {% endcomment %}
+        {% assign rn_cashback = 4 %}{% comment %} mesmo valor dos cards e da home {% endcomment %}
+        {% comment %}
+          Selo de avaliações. Se preencher o link do Trustpilot, mostra a nota abaixo.
+          Se deixar vazio, mostra a nota do próprio produto (avaliações da Ereemby), quando houver.
+        {% endcomment %}
+        {% assign rn_trustpilot_url = '' %}
+        {% assign rn_trustpilot_nota = '4,9' %}
+        {% assign rn_trustpilot_texto = 'Excelente' %}
+        {% comment %} ----------------------------------------- {% endcomment %}
+
+        <div class="px-3 pb-3 sm:p-6 lg:p-8 flex flex-col rn-pp__buy">
+          <div class="rn-buy">
+
+            <!-- Título -->
+            <div class="rn-buy__head">
+              <h1 class="rn-buy__title">{{ product.name }}</h1>
+              {% if product.type == 'variante' and product.variants.size > 0 %}
+                <p data-liquid="title" class="rn-buy__sub">{{ _v0.name }}</p>
+              {% endif %}
+            </div>
+
+            <!-- Estoque + Entrega -->
+            {% if effective_type == 'texto' %}
+              {% assign _stock_label = 'Disponível' %}
+            {% elsif is_out_of_stock %}
+              {% assign _stock_label = 'Esgotado' %}
+            {% else %}
+              {% assign _stock_label = display_stock | append: ' em estoque' %}
+            {% endif %}
+            <div class="rn-tiles">
+              <div class="rn-tile">
+                <span class="rn-tile__ico">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"></path><path d="m3 8 9 5 9-5M12 13v8"></path></svg>
+                </span>
+                <div class="min-w-0">
+                  <div class="rn-tile__k">Estoque</div>
+                  <div id="stock-display" class="rn-tile__v {% if is_out_of_stock %}text-red-400{% else %}text-green-400{% endif %}">{{ _stock_label }}</div>
+                </div>
+              </div>
+              <div class="rn-tile">
+                <span class="rn-tile__ico">
+                  <svg id="delivery-icon" width="18" height="18" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 256 256" aria-hidden="true">
+                    {% if effective_automatic %}
+                      <path d="M213.85,125.46l-112,120a8,8,0,0,1-13.69-7l14.66-73.33L45.19,143.49a8,8,0,0,1-3-13l112-120a8,8,0,0,1,13.69,7L153.18,90.9l57.63,21.61a8,8,0,0,1,3,12.95Z"/>
+                    {% else %}
+                      <path d="M120,140a12,12,0,0,1-12-12V45l-7.51,7.51a12,12,0,0,1-17-17l28-28a12,12,0,0,1,17,0l28,28a12,12,0,1,1-17,17L132,45v83A12,12,0,0,1,120,140Zm76-18.48V96a20,20,0,0,0-20-20H164a12,12,0,0,0,0,24h8v68.3A32,32,0,0,0,128.29,212c.11.2.23.39.35.58l22.26,34A12,12,0,1,0,171,233.43l-22-33.66a8,8,0,0,1,14-7.77c.11.2.23.39.36.58L174,208.88a12,12,0,0,0,22-6.57V154a70.66,70.66,0,0,1,16,44.61V240a12,12,0,0,0,24,0V198.65A94.91,94.91,0,0,0,196,121.52ZM76,76H64A20,20,0,0,0,44,96V200a12,12,0,0,0,24,0V100h8a12,12,0,0,0,0-24Z"/>
+                    {% endif %}
+                  </svg>
+                </span>
+                <div class="min-w-0">
+                  <div class="rn-tile__k">Entrega</div>
+                  <div id="delivery-label" class="rn-tile__v">{% if effective_automatic %}Automática{% else %}Manual{% endif %}</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Avaliações -->
+            {% assign _rv_total = product.feedback.stats.total | default: 0 %}
+            {% if rn_trustpilot_url != '' %}
+              <a class="rn-rating" href="{{ rn_trustpilot_url }}" target="_blank" rel="noopener">
+                <span class="rn-rating__stars" aria-hidden="true">{% for i in (1..5) %}<span class="rn-rating__star rn-rating__star--tp"><svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L1.3 7.7l6.1-.6z"/></svg></span>{% endfor %}</span>
+                <span class="rn-rating__t">{{ rn_trustpilot_texto }}, {{ rn_trustpilot_nota }} de 5</span>
+                <span class="rn-rating__link">Veja nossas avaliações no Trustpilot ↗</span>
+              </a>
+            {% elsif options.feedback_status and _rv_total > 0 %}
+              {% assign _rv_avg = product.feedback.stats.average | default: 0 %}
+              {% assign _rv_floor = _rv_avg | round %}
+              <button type="button" class="rn-rating" onclick="document.getElementById('tab-rev') && document.getElementById('tab-rev').click(); document.getElementById('product-tabs') && document.getElementById('product-tabs').scrollIntoView({behavior:'smooth'})">
+                <span class="rn-rating__stars" aria-hidden="true">{% for i in (1..5) %}<span class="rn-rating__star{% if i > _rv_floor %} rn-rating__star--off{% endif %}"><svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path d="M10 1.5l2.6 5.6 6.1.6-4.6 4.1 1.3 6-5.4-3.1-5.4 3.1 1.3-6L1.3 7.7l6.1-.6z"/></svg></span>{% endfor %}</span>
+                <span class="rn-rating__t">{{ _rv_avg | round: 1 | replace: '.', ',' }} de 5</span>
+                <span class="rn-rating__link">Veja as {{ _rv_total }} avaliações deste produto ↓</span>
+              </button>
+            {% endif %}
+
+            <!-- Preço (Rei dos Nitros: preço + desconto + preço antigo na mesma linha e quanto economiza) -->
+            <div class="rn-buy__price rn-buy__price--row">
+              <div class="rn-buy__row">
+                <div data-liquid="price" class="rn-buy__value">{{ display_price | priceFormatter }}</div>
+                {% if display_discount_percentage and display_discount_percentage > 0 %}
+                  <span id="discount-badge" class="rn-buy__off"><span id="discount-label">-{{ display_discount_percentage }}% OFF</span></span>
+                {% else %}
+                  <span id="discount-badge" class="rn-buy__off hidden"><span id="discount-label"></span></span>
+                {% endif %}
+                {% if display_comparison > display_price %}
+                  <span data-liquid="original-price" class="rn-buy__strike">{{ display_comparison | priceFormatter }}</span>
+                {% else %}
+                  <span data-liquid="original-price" class="rn-buy__strike hidden"></span>
+                {% endif %}
+              </div>
+              <p class="rn-buy__pix">À vista no Pix</p>
+              <p class="rn-buy__save" id="rn-economia" hidden><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.6-1-1.7-1.5-3-1.5-1.7 0-3 .9-3 2.2 0 3 6 1.6 6 4.6 0 1.3-1.3 2.2-3 2.2-1.4 0-2.6-.6-3.1-1.6M12 6.5v1.5M12 16v1.5"/></svg><span>Você economiza <b id="rn-economia-v"></b></span></p>
+              <script>
+                (function () {
+                  // "Você economiza": diferença entre o preço antigo e o atual (atualiza ao trocar de opção)
+                  var box = document.getElementById('rn-economia'); if (!box) return;
+                  var pr = document.querySelector('[data-liquid="price"]'), old = document.querySelector('[data-liquid="original-price"]');
+                  function num(t) { var m = String(t || '').replace(/[^0-9,]/g, '').replace(',', '.'); return parseFloat(m) || 0; }
+                  function atualizar() {
+                    var p = num(pr && pr.textContent), o = old && !old.classList.contains('hidden') ? num(old.textContent) : 0;
+                    var d = o - p;
+                    box.hidden = !(d > 0.009);
+                    if (d > 0) document.getElementById('rn-economia-v').textContent = d.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                  }
+                  atualizar();
+                  [pr, old].forEach(function (el) { if (el) new MutationObserver(atualizar).observe(el, { childList: true, characterData: true, subtree: true, attributes: true }); });
+                })();
+              </script>
+            </div>
+
+            <!-- Variações -->
+            {% assign rn_pnome_free = product.name | downcase %}
+            {% if rn_pnome_free contains 'jogos' and product.type == 'variante' %}
+              {% include 'rn-gratis' %}
+            {% endif %}
+            {% if product.type == 'variante' and product.variants.size > 0 %}
+              <div class="rn-opts">
+                <div class="rn-opts__head">
+                  <span class="rn-opts__t">Escolha sua opção</span>
+                  <span class="rn-opts__s">Selecione a variação</span>
+                </div>
+                {% comment %}
+                  Rei dos Nitros: grade com capas + busca só nos produtos de jogos (nome com "jogos", ex.: Jogos Steam).
+                  Os demais produtos (Steam Key, Discord Nitro...) usam a lista normal.
+                {% endcomment %}
+                {% assign rn_pnome = product.name | downcase %}
+                {% if rn_pnome contains 'jogos' and product.variants.size >= 6 %}
+                  <label class="rn-vg__search">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                    <input type="search" id="rn-vg-busca" placeholder="Buscar entre {{ product.variants.size }} opções…" autocomplete="off" aria-label="Buscar opção">
+                  </label>
+                  {% include 'rn-cat-jogos' %}
+                  <div class="rn-vg__cats" id="rn-vg-cats" role="tablist" aria-label="Categorias" hidden></div>
+                  <div id="variants-list" class="rn-vg">
+                    {% for variant in product.variants %}
+                      {% if variant.type == 'texto' %}
+                        {% assign _v_out = false %}
+                      {% elsif variant.stock_amount <= 0 %}
+                        {% assign _v_out = true %}
+                      {% else %}
+                        {% assign _v_out = false %}
+                      {% endif %}
+                      {% assign _v_img = '' %}
+                      {% if variant.images.size > 0 %}{% assign _v_img = variant.images[0] %}{% elsif variant.icon %}{% assign _v_img = variant.icon %}{% endif %}
+                      {% assign _v_off = 0 %}
+                      {% if variant.comparison > variant.price %}
+                        {% assign _v_off = variant.comparison | minus: variant.price | times: 100 | divided_by: variant.comparison | round %}
+                      {% endif %}
+                      {% comment %} Relâmpago da Black Friday: os jogos que estão por R$ 10 {% endcomment %}
+                      {% assign _v_rl = false %}
+                      {% unless _v_out %}{% if variant.price > 0 and variant.price <= 10.5 %}{% assign _v_rl = true %}{% endif %}{% endunless %}
+                      <button type="button" class="variant-btn rn-vg__card{% if forloop.first %} rn-opt--on{% endif %}{% if _v_out %} rn-vg__card--out{% endif %}{% if _v_rl %} rn-vg__card--rl{% endif %}" data-variant-index="{{ forloop.index0 }}" data-nome="{{ variant.name }}">
+                        <span class="rn-vg__cover">
+                          {% if _v_img != '' %}
+                            <img src="{{ _v_img }}" alt="" loading="lazy">
+                          {% else %}
+                            <span class="rn-vg__ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg></span>
+                          {% endif %}
+                          {% if _v_off > 0 %}<span class="rn-vg__off">-{{ _v_off }}%</span>{% endif %}
+                          {% if _v_rl %}<span class="rn-vg__rl"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.2 4.6 13a.8.8 0 0 0 .6 1.3h5.4l-1.4 7.1c-.1.8.9 1.2 1.4.6L19.4 11a.8.8 0 0 0-.6-1.3h-5.4l1.4-6.9c.1-.8-.9-1.2-1.6-.6Z"/></svg>Relâmpago</span>{% endif %}
+                          {% if _v_out %}<span class="rn-vg__esg">Esgotado</span>{% endif %}
+                          <span class="variant-check rn-vg__check{% if forloop.first %} border-white{% endif %}" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+                        </span>
+                        <span class="rn-vg__name">{{ variant.name }}</span>
+                        <span class="rn-vg__price">{{ variant.price | priceFormatter }}{% if variant.comparison > variant.price %} <s>{{ variant.comparison | priceFormatter }}</s>{% endif %}</span>
+                      </button>
+                    {% endfor %}
+                  </div>
+                  <p class="rn-vg__vazio" id="rn-vg-vazio" hidden>Nenhuma opção encontrada.</p>
+                  <button type="button" class="rn-vg__more" id="rn-vg-more" hidden>
+                    <span id="rn-vg-more-t">Ver mais jogos</span>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                  </button>
+                  <script>
+                    (function () {
+                      var LIMITE = 6;
+                      var grade = document.getElementById('variants-list');
+                      var inp = document.getElementById('rn-vg-busca');
+                      var btn = document.getElementById('rn-vg-more');
+                      if (!grade || !btn) return;
+                      var cards = [].slice.call(grade.querySelectorAll('.rn-vg__card'));
+                      // ordem: combos, depois os jogos do Relâmpago (R$ 10), depois o resto na ordem da loja
+                      // (window.rnVgOrdenar é chamada de novo quando o Relâmpago troca com a página aberta)
+                      function ordenar() {
+                        function rank(c) { return /^\s*combo/i.test(c.getAttribute('data-nome') || '') ? 0 : c.classList.contains('rn-vg__card--rl') ? 1 : 2; }
+                        cards = cards.slice().sort(function (a, b) { return rank(a) - rank(b) || (+a.getAttribute('data-variant-index')) - (+b.getAttribute('data-variant-index')); });
+                        cards.forEach(function (c) { grade.appendChild(c); });
+                        // o limite antes do "Ver mais jogos" sempre inclui os combos e os 3 do Relâmpago (número par, por causa das 2 colunas)
+                        var topo = cards.filter(function (c) { return rank(c) < 2; }).length;
+                        LIMITE = Math.max(6, topo + (topo % 2));
+                      }
+                      ordenar();
+                      var aberto = false;
+                      function norm(t) { return (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+                      // Categorias (Ação, Aventura...): vêm de RN_CAT_JOGOS (componente rn-cat-jogos); a ordem dentro de cada uma é a da loja (mais jogados primeiro).
+                      var CATS = [['todos', 'Todos'], ['combos', 'Combos'], ['acao', 'Ação'], ['aventura', 'Aventura'], ['corrida', 'Corrida'], ['rpg', 'RPG'], ['simulacao', 'Simulação'], ['terror', 'Terror']];
+                      var MAPA = window.RN_CAT_JOGOS || {};
+                      var cat = 'todos';
+                      function catsDe(c) {
+                        var n = String(c.getAttribute('data-nome') || '').trim().toLowerCase(), r = ['todos'];
+                        if (n.indexOf('combo') === 0) r.push('combos');
+                        if (MAPA[n]) r.push(MAPA[n]);
+                        return r;
+                      }
+                      cards.forEach(function (c) { c._cats = catsDe(c); });
+                      var boxCats = document.getElementById('rn-vg-cats');
+                      if (boxCats && Object.keys(MAPA).length) {
+                        CATS.forEach(function (k) {
+                          var n = cards.filter(function (c) { return c._cats.indexOf(k[0]) !== -1; }).length;
+                          if (!n) return;
+                          var b = document.createElement('button');
+                          b.type = 'button'; b.className = 'rn-vg__cat' + (k[0] === cat ? ' rn-vg__cat--on' : '');
+                          b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', k[0] === cat ? 'true' : 'false');
+                          b.setAttribute('data-cat', k[0]);
+                          b.innerHTML = k[1] + ' <span>' + n + '</span>';
+                          boxCats.appendChild(b);
+                        });
+                        // Rei dos Nitros: "Franquias" abre uma segunda fileira com cada franquia/coleção (dados de RN_FRANQUIAS)
+                        var bFr = document.createElement('button');
+                        bFr.type = 'button'; bFr.className = 'rn-vg__cat rn-vg__cat--fr'; bFr.setAttribute('role', 'tab'); bFr.setAttribute('data-cat', 'franquias');
+                        bFr.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/></svg>Franquias';
+                        boxCats.insertBefore(bFr, boxCats.children[1] || null);
+                        var boxFr = document.createElement('div'); boxFr.className = 'rn-vg__frs'; boxFr.id = 'rn-vg-frs'; boxFr.hidden = true;
+                        boxCats.insertAdjacentElement('afterend', boxFr);
+                        function montarFr() {
+                          var FR = window.RN_FRANQUIAS || []; if (!FR.length) return false;
+                          var temNome = {}; cards.forEach(function (c) { temNome[String(c.getAttribute('data-nome') || '').trim().toLowerCase()] = c; c._fr = []; });
+                          var html = '';
+                          FR.forEach(function (f) {
+                            var n = 0; (f.j || []).forEach(function (nome) { var c = temNome[String(nome).trim().toLowerCase()]; if (c) { c._fr.push(f.s); n++; } });
+                            if (n) html += '<button type="button" class="rn-vg__fr" data-fr="' + f.s + '">' + f.n + ' <span>' + n + '</span></button>';
+                          });
+                          boxFr.innerHTML = html + '<a class="rn-vg__frall" href="/franquias">Ver todas as franquias →</a>';
+                          return true;
+                        }
+                        boxCats.hidden = false;
+                        boxCats.addEventListener('click', function (e) {
+                          var b = e.target.closest('.rn-vg__cat'); if (!b) return;
+                          cat = b.getAttribute('data-cat'); aberto = false;
+                          [].forEach.call(boxCats.children, function (x) { var on = x === b; x.classList.toggle('rn-vg__cat--on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
+                          boxFr.hidden = cat !== 'franquias';
+                          if (cat === 'franquias' && !boxFr.children.length) {
+                            boxFr.innerHTML = '<span class="rn-vg__frload">Carregando franquias…</span>';
+                            var pronto = function () { montarFr(); aplicar(); };
+                            if (window.RN_FRANQUIAS) pronto(); else if (window.rnJogos) window.rnJogos(pronto);
+                          }
+                          [].forEach.call(boxFr.querySelectorAll('.rn-vg__fr'), function (x) { x.classList.remove('rn-vg__fr--on'); });
+                          aplicar();
+                        });
+                        boxFr.addEventListener('click', function (e) {
+                          var b = e.target.closest('.rn-vg__fr'); if (!b) return;
+                          var ja = b.classList.contains('rn-vg__fr--on');
+                          [].forEach.call(boxFr.querySelectorAll('.rn-vg__fr'), function (x) { x.classList.toggle('rn-vg__fr--on', x === b && !ja); });
+                          cat = ja ? 'franquias' : 'fr:' + b.getAttribute('data-fr'); aberto = true; aplicar();
+                        });
+                      }
+                      function aplicar() {
+                        var q = inp ? norm(inp.value.trim()) : '';
+                        var vis = 0, total = 0;
+                        cards.forEach(function (c) {
+                          var naCat = cat === 'franquias' ? !!(c._fr && c._fr.length) : cat.indexOf('fr:') === 0 ? !!(c._fr && c._fr.indexOf(cat.slice(3)) !== -1) : c._cats.indexOf(cat) !== -1;
+                          var combina = (!q || norm(c.getAttribute('data-nome')).indexOf(q) !== -1) && (q || naCat);
+                          var escondidoPeloLimite = combina && !q && !aberto && total >= LIMITE && !c.classList.contains('rn-opt--on');
+                          if (combina) total++;
+                          c.style.display = combina && !escondidoPeloLimite ? '' : 'none';
+                          if (combina) vis++;
+                        });
+                        document.getElementById('rn-vg-vazio').hidden = vis > 0;
+                        var resto = total - LIMITE;
+                        btn.hidden = !!q || resto <= 0;
+                        grade.classList.toggle('rn-vg--fechado', !q && !aberto && resto > 0);
+                        btn.classList.toggle('rn-vg__more--aberto', aberto);
+                        document.getElementById('rn-vg-more-t').textContent = aberto ? 'Ver menos' : 'Ver mais jogos (+' + resto + ')';
+                      }
+                      btn.addEventListener('click', function () {
+                        aberto = !aberto; aplicar();
+                        if (!aberto) grade.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      });
+                      if (inp) inp.addEventListener('input', aplicar);
+                      // mantém visível o jogo escolhido quando a seleção muda
+                      new MutationObserver(function () { if (!aberto) aplicar(); }).observe(grade, { attributes: true, subtree: true, attributeFilter: ['class'] });
+                      aplicar();
+                      window.rnVgOrdenar = function () { if (document.body.contains(grade)) { ordenar(); aplicar(); } };
+                    })();
+                  </script>
+                {% else %}
+                <div id="variants-list" class="rn-opts__list">
+                  {% for variant in product.variants %}
+                    {% if variant.type == 'texto' %}
+                      {% assign _v_out = false %}
+                    {% elsif variant.stock_amount <= 0 %}
+                      {% assign _v_out = true %}
+                    {% else %}
+                      {% assign _v_out = false %}
+                    {% endif %}
+                    <button type="button" class="variant-btn rn-opt{% if forloop.first %} rn-opt--on{% endif %}{% if _v_out %} rn-opt--out{% endif %}" data-variant-index="{{ forloop.index0 }}">
+                      <span class="variant-check rn-opt__radio{% if forloop.first %} border-white{% endif %}"></span>
+                      <span class="rn-opt__body">
+                        <span class="rn-opt__name">{{ variant.name }}</span>
+                        {% if variant.type == 'texto' %}
+                          <span class="rn-opt__stock">Disponível</span>
+                        {% elsif _v_out %}
+                          <span class="rn-opt__stock rn-opt__stock--out">Esgotado</span>
+                        {% else %}
+                          <span class="rn-opt__stock">{{ variant.stock_amount }} em estoque</span>
+                        {% endif %}
+                        <span class="rn-opt__price">
+                          {{ variant.price | priceFormatter }}
+                          {% if variant.comparison > variant.price %}<s>{{ variant.comparison | priceFormatter }}</s>{% endif %}
+                        </span>
+                      </span>
+                    </button>
+                  {% endfor %}
+                </div>
+                {% endif %}
+              </div>
+            {% endif %}
+
+            <!-- Quantidade -->
+            <div id="qty-section" class="rn-qty{% if is_out_of_stock %} hidden{% endif %}">
+              <span class="rn-qty__t">Quantidade</span>
+              <div class="rn-qty__box">
+                <button id="btn-decrease" type="button" aria-label="Diminuir">−</button>
+                <input id="qty-input" type="text" inputmode="numeric" aria-label="Quantidade" value="{% if display_qty_min > 1 %}{{ display_qty_min }}{% else %}1{% endif %}">
+                <button id="btn-increase" type="button" aria-label="Aumentar">+</button>
+              </div>
+              {% if display_qty_max > 0 %}
+                <span id="qty-max-label" class="rn-qty__max">Máx. {{ display_qty_max }} por pedido</span>
+              {% else %}
+                <span id="qty-max-label" class="rn-qty__max hidden"></span>
+              {% endif %}
+            </div>
+
+            <!-- Cashback -->
+            {% if rn_cashback > 0 %}
+              <div class="rn-acc">
+                <details class="rn-acc__item">
+                  <summary class="rn-acc__sum">
+                    <span class="rn-acc__ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"></path><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"></path></svg></span>
+                    <span class="rn-acc__t">Ganhe {{ rn_cashback }}% de cashback</span>
+                    <span class="rn-acc__more">Detalhes <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></span>
+                  </summary>
+                  <div class="rn-acc__body">
+                    Depois que o pagamento é aprovado, {{ rn_cashback }}% do valor da compra volta para você como saldo na loja. Use o saldo para pagar parte da sua próxima compra.
+                  </div>
+                </details>
+              </div>
+            {% endif %}
+
+            <!-- Botões -->
+            <div class="rn-actions">
+              {% unless is_out_of_stock %}
+                <button id="btn-buy-now" type="button" class="rn-btn rn-btn--buy">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 11-1 9M19 11l-4-7M2 11h20M3.5 11l1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4M4.5 15.5h15M5 11l4-7M9 11l1 9"></path></svg>
+                  <span id="btn-buy-label">Comprar agora</span>
+                </button>
+                <button id="btn-add-cart" type="button" class="rn-btn rn-btn--cart">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                  <span id="btn-cart-label">Adicionar ao carrinho</span>
+                </button>
+              {% else %}
+                <button id="btn-buy-now" type="button" disabled class="rn-btn rn-btn--buy rn-btn--off">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 11-1 9M19 11l-4-7M2 11h20M3.5 11l1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4M4.5 15.5h15M5 11l4-7M9 11l1 9"></path></svg>
+                  <span id="btn-buy-label">Produto esgotado</span>
+                </button>
+                <button id="btn-add-cart" type="button" disabled class="rn-btn rn-btn--cart rn-btn--off">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+                  <span id="btn-cart-label">Indisponível</span>
+                </button>
+              {% endunless %}
+            </div>
+
+            <a class="rn-gift-link" id="rn-gift-link" href="/presente">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
+              Presentear um amigo
+            </a>
+
+            <!-- Garantias -->
+            <ul class="rn-trust">
+              <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><path d="M14 14h3v3h-3zM20 14v.01M20 20v.01M14 20h3"></path></svg><span><b>Pix</b> com aprovação rápida</span></li>
+              <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 8 12 3 3 8v8l9 5 9-5z"></path><path d="m3 8 9 5 9-5M12 13v8"></path></svg><span><b>Entrega</b> na página do seu pedido</span></li>
+              <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.7a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg><span><b>7 dias</b> para pedir suporte em caso de falha técnica</span></li>
+              <li><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg><span><b>Suporte humano</b> no WhatsApp e Discord</span></li>
+            </ul>
+
+            <!-- Favoritos e compartilhar -->
+            <div class="rn-buy__extra">
+              <button id="btn-wishlist" type="button">
+                <svg id="heart-icon" width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                Favoritar
+              </button>
+              <button id="btn-share" type="button">
+                <svg width="17" height="17" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+                Compartilhar
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% include 'rn-buybar' %}
+    <script>
+      (function () {
+        // Rei dos Nitros (computador): "Sobre este produto" vai para a coluna da esquerda, embaixo das imagens
+        var mq = window.matchMedia('(min-width: 860px)');
+        function posicionar() {
+          var det = document.querySelector('.rn-det'), slot = document.getElementById('rn-pp-slot');
+          if (!det || !slot) return;
+          if (!det.__casa) { det.__casa = document.createComment('rn-det'); det.parentNode.insertBefore(det.__casa, det); }
+          if (mq.matches) { if (det.parentNode !== slot) slot.appendChild(det); }
+          else if (det.__casa.parentNode && det.previousSibling !== det.__casa) det.__casa.parentNode.insertBefore(det, det.__casa.nextSibling);
+        }
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', posicionar); else setTimeout(posicionar, 0);
+        (mq.addEventListener ? mq.addEventListener('change', posicionar) : mq.addListener(posicionar));
+        // descrição longa: mostra o começo e o botão "Ver descrição completa"
+        function recolher() {
+          var d = document.querySelector('#tab-content-desc [data-liquid="description"]'); if (!d) return;
+          var btn = document.getElementById('rn-desc-more');
+          if (!btn) { btn = document.createElement('button'); btn.type = 'button'; btn.id = 'rn-desc-more'; btn.className = 'rn-desc-more'; d.insertAdjacentElement('afterend', btn); btn.addEventListener('click', function () { d.classList.toggle('rn-desc--open'); recolher(); }); }
+          var longa = d.scrollHeight > 340;
+          d.classList.toggle('rn-desc--fold', longa && !d.classList.contains('rn-desc--open'));
+          btn.hidden = !longa;
+          btn.innerHTML = (d.classList.contains('rn-desc--open') ? 'Mostrar menos' : 'Ver descrição completa') + ' <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" style="transform:rotate(' + (d.classList.contains('rn-desc--open') ? 180 : 0) + 'deg)"><path d="m6 9 6 6 6-6"/></svg>';
+        }
+        window.addEventListener('load', recolher); setTimeout(recolher, 400);
+        var dsc = document.querySelector('#tab-content-desc [data-liquid="description"]');
+        // só fecha quando a descrição troca de verdade (outra opção); efeitos de toque (onda) e animações não contam
+        function soEfeito(ms) { return ms.every(function (m) { var ns = [].slice.call(m.addedNodes).concat([].slice.call(m.removedNodes)); return m.type === 'childList' && ns.length && ns.every(function (n) { return n.nodeType === 1 && (n.classList.contains('rn-fx-box') || n.classList.contains('rn-fx-wave')); }); }); }
+        if (dsc) new MutationObserver(function (ms) { if (soEfeito(ms)) return; dsc.classList.remove('rn-desc--open'); setTimeout(recolher, 50); }).observe(dsc, { childList: true, characterData: true, subtree: true });
+      })();
+    </script>
+
+    <!-- Tabs: Description / Specs / Reviews (Rei dos Nitros: cabeçalho "Sobre este produto") -->
+    <div class="mt-6 sm:mt-8 bg-neutral-950 rounded-2xl shadow-xl shadow-black/40 border border-neutral-800 rn-det">
+      <div class="rn-det__head">
+        <span class="rn-det__ico" id="rn-det-ico" aria-hidden="true">
+          <svg class="rn-det__i-desc" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="m10 7.5 4.5 2.5-4.5 2.5z"/></svg>
+          <svg class="rn-det__i-rev" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+        </span>
+        <div class="min-w-0">
+          <div class="rn-det__k" id="rn-det-k">DETALHES DO PRODUTO</div>
+          <h2 class="rn-det__t" id="rn-det-t">Sobre este produto</h2>
+        </div>
+      </div>
+      {% if options.feedback_status %}
+        <nav class="rn-det__tabs" id="product-tabs">
+          <button id="tab-desc" class="product-tab active-tab rn-det__tab border-white text-white">Descrição</button>
+          <button id="tab-rev" class="product-tab rn-det__tab border-transparent text-neutral-500">Avaliações ({{ product.feedback.stats.total }})</button>
+        </nav>
+      {% else %}
+        <nav class="hidden" id="product-tabs"><button id="tab-desc" class="product-tab active-tab border-white text-white">Descrição</button></nav>
+      {% endif %}
+      <script>
+        (function () {
+          var box = document.querySelector('.rn-det');
+          function rot(rev) {
+            box.classList.toggle('rn-det--rev', rev);
+            document.getElementById('rn-det-k').textContent = rev ? 'AVALIAÇÕES' : 'DETALHES DO PRODUTO';
+            document.getElementById('rn-det-t').textContent = rev ? 'O que dizem os clientes' : 'Sobre este produto';
+          }
+          document.addEventListener('click', function (e) {
+            if (e.target.closest('#tab-rev')) setTimeout(function () { rot(true); }, 0);
+            else if (e.target.closest('#tab-desc')) setTimeout(function () { rot(false); }, 0);
+          });
+        })();
+      </script>
+
+      <div class="p-4 sm:p-6 lg:p-8">
+        <!-- Description Tab -->
+        <div id="tab-content-desc">
+          <div data-liquid="description" class="reset-content-css">{{ product.description }}</div>
+
+          <!-- Embedded Video -->
+          <div id="embed-video-wrapper" class="mt-6{% if embed_src == '' %} hidden{% endif %}">
+            <div class="relative w-full max-w-xl overflow-hidden rounded-xl border border-neutral-800 bg-black" style="aspect-ratio: 16 / 9;">
+              <iframe
+                id="embed-video-frame"
+                src="{{ embed_src }}"
+                title="Vídeo do produto"
+                class="absolute inset-0 w-full h-full"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen
+                referrerpolicy="strict-origin-when-cross-origin"
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reviews Tab -->
+        {% if options.feedback_status %}
+          <div id="tab-content-rev" class="hidden">
+            {% render 'feedback', product: product %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto flex flex-col gap-10 mt-10">
+
+      {% assign current_category_id = product.category_id %}
+      {% assign current_product_name = product.name %}
+
+      {% for category in catalog.categories %}
+
+        {% if category.id == current_category_id %}
+          {% assign related_count = 0 %}
+          {% for item in category.products %}
+            {% if item.id != product.id %}
+              {% assign related_count = related_count | plus: 1 %}
+            {% endif %}
+          {% endfor %}
+
+          {% if related_count > 0 %}
+            <div>
+              <div class="rn-rel-head">
+                <div class="min-w-0">
+                  <div class="rn-rel-kicker">CONTINUE EXPLORANDO</div>
+                  <h2 class="rn-rel-title">Você também pode gostar</h2>
+                </div>
+                <div class="rn-rel-nav">
+                  <button type="button" class="rn-rel-btn" id="rn-rel-prev" aria-label="Anteriores">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"></path></svg>
+                  </button>
+                  <button type="button" class="rn-rel-btn" id="rn-rel-next" aria-label="Próximos">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"></path></svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Slider de produtos da mesma categoria -->
+              <div class="related-products-nav-wrapper">
+                <div class="swiper related-products-swiper !pb-12">
+                  <div class="swiper-wrapper">
+                    {% for item in category.products %}
+                      {% if item.id != product.id %}
+                        <div class="swiper-slide !h-auto">
+                          {% render 'product-card', product: item %}
+                        </div>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+
+          <script>
+            (function () {
+              var tries = 0;
+              (function ligar() {
+                var el = document.querySelector('.related-products-swiper');
+                var prev = document.getElementById('rn-rel-prev');
+                var next = document.getElementById('rn-rel-next');
+                if (!el || !prev || !next) return;
+                var sw = el.swiper;
+                if (!sw) { if (tries++ < 100) setTimeout(ligar, 100); return; }
+                function estado() {
+                  prev.disabled = sw.isBeginning;
+                  next.disabled = sw.isEnd;
+                  var nada = sw.isBeginning && sw.isEnd;
+                  prev.parentNode.style.display = nada ? 'none' : '';
+                }
+                prev.onclick = function () { sw.slidePrev(); };
+                next.onclick = function () { sw.slideNext(); };
+                sw.on('slideChange', estado); sw.on('reachEnd', estado); sw.on('reachBeginning', estado); sw.on('resize', estado);
+                estado();
+              })();
+            })();
+          </script>
+
+          {% break %}
+        {% endif %}
+
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+  <!-- ===================== SHARE SHEET / MODAL ===================== -->
+  <style>
+    @keyframes shareBackdropIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes shareSheetUp {
+      from { transform: translateY(100%); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes shareModalIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    #share-backdrop.open { animation: shareBackdropIn .25s ease-out forwards; }
+    #share-panel.open    { animation: shareSheetUp .35s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+    @media (min-width: 640px) {
+      #share-panel.open  { animation: shareModalIn .25s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+    }
+    .share-option:active { transform: scale(0.93); }
+  </style>
+
+  <div id="share-root" class="hidden">
+    <!-- Backdrop -->
+    <div id="share-backdrop" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[200]"></div>
+
+    <!-- Panel: bottom-sheet on mobile, centered modal on sm+ -->
+    <div
+      id="share-panel"
+      class="fixed left-0 right-0 bottom-0 z-[201] bg-neutral-950 border-t border-neutral-800 rounded-t-3xl shadow-2xl shadow-black/80
+             sm:top-1/2 sm:left-1/2 sm:bottom-auto sm:right-auto sm:-translate-x-1/2 sm:-translate-y-1/2
+             sm:w-[440px] sm:max-w-[92vw] sm:rounded-2xl sm:border sm:border-neutral-800"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="share-title"
+    >
+      <!-- Drag handle (mobile only) -->
+      <div class="sm:hidden flex justify-center pt-3 pb-1">
+        <div class="w-10 h-1 rounded-full bg-neutral-700"></div>
+      </div>
+
+      <!-- Header -->
+      <div class="flex items-center justify-between px-5 pt-3 pb-2 sm:pt-5">
+        <div>
+          <p class="text-[10px] sm:text-xs font-bold uppercase tracking-[0.2em] text-neutral-500 mb-0.5">Compartilhar</p>
+          <h3 id="share-title" class="text-base sm:text-lg font-bold text-white line-clamp-1">{{ product.name }}</h3>
+        </div>
+        <button id="share-close" type="button" class="p-2 rounded-xl hover:bg-neutral-900 text-neutral-400 hover:text-white transition-colors" aria-label="Fechar">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Network grid -->
+      <div class="px-4 sm:px-5 pt-2 pb-3">
+        <div class="grid grid-cols-4 gap-2">
+          <button class="share-option flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl hover:bg-neutral-900 transition-colors group" data-share="whatsapp" aria-label="WhatsApp">
+            <span class="w-11 h-11 rounded-full flex items-center justify-center bg-[#25D366]">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            </span>
+            <span class="text-[10px] sm:text-xs text-neutral-400 group-hover:text-white transition-colors">WhatsApp</span>
+          </button>
+
+          <button class="share-option flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl hover:bg-neutral-900 transition-colors group" data-share="telegram" aria-label="Telegram">
+            <span class="w-11 h-11 rounded-full flex items-center justify-center bg-[#229ED9]">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+            </span>
+            <span class="text-[10px] sm:text-xs text-neutral-400 group-hover:text-white transition-colors">Telegram</span>
+          </button>
+
+          <button class="share-option flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl hover:bg-neutral-900 transition-colors group" data-share="x" aria-label="X (Twitter)">
+            <span class="w-11 h-11 rounded-full flex items-center justify-center bg-black border border-neutral-700">
+              <svg class="w-[18px] h-[18px] text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </span>
+            <span class="text-[10px] sm:text-xs text-neutral-400 group-hover:text-white transition-colors">X</span>
+          </button>
+
+          <button class="share-option flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl hover:bg-neutral-900 transition-colors group" data-share="facebook" aria-label="Facebook">
+            <span class="w-11 h-11 rounded-full flex items-center justify-center bg-[#1877F2]">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </span>
+            <span class="text-[10px] sm:text-xs text-neutral-400 group-hover:text-white transition-colors">Facebook</span>
+          </button>
+
+          <button class="share-option flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl hover:bg-neutral-900 transition-colors group" data-share="linkedin" aria-label="LinkedIn">
+            <span class="w-11 h-11 rounded-full flex items-center justify-center bg-[#0A66C2]">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.063 2.063 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </span>
+            <span class="text-[10px] sm:text-xs text-neutral-400 group-hover:text-white transition-colors">LinkedIn</span>
+          </button>
+
+          <button class="share-option flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl hover:bg-neutral-900 transition-colors group" data-share="pinterest" aria-label="Pinterest">
+            <span class="w-11 h-11 rounded-full flex items-center justify-center bg-[#E60023]">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.162-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.347-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.401.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.747-1.378l-.749 2.848c-.269 1.045-1.004 2.352-1.498 3.146 1.123.345 2.306.535 3.55.535 6.607 0 11.985-5.365 11.985-11.987C23.97 5.39 18.592.026 11.985.026L12.017 0z"/></svg>
+            </span>
+            <span class="text-[10px] sm:text-xs text-neutral-400 group-hover:text-white transition-colors">Pinterest</span>
+          </button>
+
+          <button class="share-option flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl hover:bg-neutral-900 transition-colors group" data-share="reddit" aria-label="Reddit">
+            <span class="w-11 h-11 rounded-full flex items-center justify-center bg-[#FF4500]">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.04 1.605a3.32 3.32 0 01.045.45c0 2.293-2.677 4.152-5.978 4.152-3.301 0-5.979-1.859-5.979-4.152 0-.151.016-.3.041-.449-.61-.271-1.044-.888-1.044-1.605 0-.968.786-1.754 1.754-1.754.477 0 .898.182 1.207.49 1.207-.86 2.878-1.424 4.744-1.493l.899-4.206a.342.342 0 01.434-.244l2.953.628a1.25 1.25 0 011.221-.949zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 00-.231.094.33.33 0 000 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 00.029-.463.33.33 0 00-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 00-.232-.095z"/></svg>
+            </span>
+            <span class="text-[10px] sm:text-xs text-neutral-400 group-hover:text-white transition-colors">Reddit</span>
+          </button>
+
+          <button class="share-option flex flex-col items-center justify-center gap-1.5 py-3 rounded-xl hover:bg-neutral-900 transition-colors group" data-share="email" aria-label="Email">
+            <span class="w-11 h-11 rounded-full flex items-center justify-center bg-neutral-800">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </span>
+            <span class="text-[10px] sm:text-xs text-neutral-400 group-hover:text-white transition-colors">E-mail</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Copy link bar -->
+      <div class="px-4 sm:px-5 pb-5 sm:pb-5 pt-1" style="padding-bottom: max(1.25rem, env(safe-area-inset-bottom));">
+        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-500 mb-2">Link do produto</p>
+        <div class="flex items-stretch gap-2 bg-neutral-900 border border-neutral-800 rounded-xl p-1.5">
+          <input
+            id="share-url-input"
+            type="text"
+            readonly
+            class="flex-1 bg-transparent text-xs sm:text-sm text-neutral-300 px-2 focus:outline-none truncate"
+            value=""
+          >
+          <button id="share-copy" type="button" class="flex-shrink-0 inline-flex items-center gap-1.5 px-3 sm:px-4 py-2 bg-white hover:bg-neutral-200 text-black text-xs sm:text-sm font-bold rounded-lg transition-colors active:scale-95">
+            <svg id="share-copy-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+            </svg>
+            <span id="share-copy-label">Copiar</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function initShare() {
+      var btn = document.getElementById('btn-share');
+      var root = document.getElementById('share-root');
+      var backdrop = document.getElementById('share-backdrop');
+      var panel = document.getElementById('share-panel');
+      var closeBtn = document.getElementById('share-close');
+      var copyBtn = document.getElementById('share-copy');
+      var copyLabel = document.getElementById('share-copy-label');
+      var urlInput = document.getElementById('share-url-input');
+      if (!btn || !root) return;
+
+      var productTitle = (window.PRODUCT_DATA && window.PRODUCT_DATA.title) || document.title || '';
+      var productImage = (window.PRODUCT_DATA && window.PRODUCT_DATA.images && window.PRODUCT_DATA.images[0]) || '';
+      var shareText = productTitle ? ('Confira: ' + productTitle) : 'Confira este produto';
+
+      function getUrl() { return window.location.href; }
+
+      function openSheet() {
+        var url = getUrl();
+        if (urlInput) urlInput.value = url;
+        root.classList.remove('hidden');
+        // Force reflow then animate
+        requestAnimationFrame(function () {
+          backdrop.classList.add('open');
+          panel.classList.add('open');
+        });
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeSheet() {
+        backdrop.classList.remove('open');
+        panel.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(function () { root.classList.add('hidden'); }, 250);
+      }
+
+      function tryNativeShare() {
+        if (navigator.share) {
+          navigator.share({ title: productTitle, text: shareText, url: getUrl() })
+            .catch(function () { openSheet(); });
+          return true;
+        }
+        return false;
+      }
+
+      btn.addEventListener('click', function () {
+        if (!tryNativeShare()) openSheet();
+      });
+
+      closeBtn.addEventListener('click', closeSheet);
+      backdrop.addEventListener('click', closeSheet);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !root.classList.contains('hidden')) closeSheet();
+      });
+
+      var targets = {
+        whatsapp:  function (u, t) { return 'https://wa.me/?text=' + encodeURIComponent(t + ' ' + u); },
+        telegram:  function (u, t) { return 'https://t.me/share/url?url=' + encodeURIComponent(u) + '&text=' + encodeURIComponent(t); },
+        x:         function (u, t) { return 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(t) + '&url=' + encodeURIComponent(u); },
+        facebook:  function (u)    { return 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(u); },
+        linkedin:  function (u)    { return 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(u); },
+        pinterest: function (u, t, img) { return 'https://pinterest.com/pin/create/button/?url=' + encodeURIComponent(u) + '&description=' + encodeURIComponent(t) + (img ? '&media=' + encodeURIComponent(img) : ''); },
+        reddit:    function (u, t) { return 'https://reddit.com/submit?url=' + encodeURIComponent(u) + '&title=' + encodeURIComponent(t); },
+        email:     function (u, t) { return 'mailto:?subject=' + encodeURIComponent(t) + '&body=' + encodeURIComponent(t + '\n\n' + u); },
+      };
+
+      document.querySelectorAll('.share-option').forEach(function (opt) {
+        opt.addEventListener('click', function () {
+          var key = opt.getAttribute('data-share');
+          var fn = targets[key];
+          if (!fn) return;
+          var href = fn(getUrl(), shareText, productImage);
+          if (key === 'email') {
+            window.location.href = href;
+          } else {
+            window.open(href, '_blank', 'noopener,noreferrer');
+          }
+          setTimeout(closeSheet, 150);
+        });
+      });
+
+      function copyToClipboard(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(text);
+        }
+        return new Promise(function (resolve, reject) {
+          try {
+            urlInput.removeAttribute('readonly');
+            urlInput.select();
+            urlInput.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+            urlInput.setAttribute('readonly', '');
+            urlInput.blur();
+            resolve();
+          } catch (err) { reject(err); }
+        });
+      }
+
+      copyBtn.addEventListener('click', function () {
+        copyToClipboard(getUrl()).then(function () {
+          var prev = copyLabel.textContent;
+          copyLabel.textContent = 'Copiado!';
+          copyBtn.classList.add('!bg-green-500', 'hover:!bg-green-500');
+          setTimeout(function () {
+            copyLabel.textContent = prev;
+            copyBtn.classList.remove('!bg-green-500', 'hover:!bg-green-500');
+          }, 1500);
+        }).catch(function () {
+          copyLabel.textContent = 'Erro';
+          setTimeout(function () { copyLabel.textContent = 'Copiar'; }, 1500);
+        });
+      });
+    })();
+  </script>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 hidden">
+    <div class="flex items-center gap-3 bg-neutral-900 border border-neutral-700 text-neutral-100 px-5 py-3.5 rounded-xl shadow-2xl shadow-black/60 text-sm font-medium">
+      <svg
+        class="w-5 h-5 text-white flex-shrink-0"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"><path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 13l4 4L19 7" />
+        </svg>
+      <span id="toast-message">Produto adicionado ao carrinho!</span>
+    </div>
+  </div>
+
+</div>

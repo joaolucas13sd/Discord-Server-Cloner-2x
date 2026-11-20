@@ -1,0 +1,144 @@
+
+<style>
+  @keyframes heroSlideUp {
+    from { opacity: 0; transform: translateY(22px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes heroFloat {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-13px); }
+  }
+  @keyframes heroOrb {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50%       { opacity: 1;   transform: scale(1.12); }
+  }
+  @keyframes heroIconShine {
+    0%, 100% { box-shadow: 0 0 30px 6px rgba(255,255,255,0.05); }
+    50%       { box-shadow: 0 0 60px 14px rgba(255,255,255,0.10); }
+  }
+  @keyframes heroOrbit {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @keyframes heroPing {
+    0%   { transform: scale(1); opacity: 0.7; }
+    70%  { transform: scale(2); opacity: 0; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+
+  .hu { animation: heroSlideUp 0.65s ease-out both; }
+  .hu1 { animation-delay: 0.05s; }
+  .hu2 { animation-delay: 0.17s; }
+  .hu3 { animation-delay: 0.28s; }
+  .hu4 { animation-delay: 0.39s; }
+  .hu5 { animation-delay: 0.50s; }
+</style>
+
+<section class="relative overflow-hidden bg-black min-h-[88vh] sm:min-h-0 flex items-center">
+
+  <!-- Dot grid -->
+  <div class="absolute inset-0 z-0" style="background-image: radial-gradient(rgba(255,255,255,0.055) 1px, transparent 1px); background-size: 28px 28px; opacity:0.8;"></div>
+
+  <!-- Glow orb — text side -->
+  <div class="absolute z-0 pointer-events-none" style="width:700px;height:700px;left:-220px;top:-220px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.055) 0%,transparent 65%);animation:heroOrb 7s ease-in-out infinite;"></div>
+
+  <!-- Glow orb — icon side -->
+  <div class="absolute z-0 pointer-events-none" style="width:480px;height:480px;right:-80px;bottom:-80px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.04) 0%,transparent 65%);animation:heroOrb 9s ease-in-out 3s infinite;"></div>
+
+  <!-- Banner image (ultra-subtle texture) -->
+  {% if store.banner %}
+  <div class="absolute inset-0 z-0">
+    <img fetchpriority="high" src="{{ store.banner }}" alt="" class="w-full h-full object-cover" style="opacity:0.055;filter:blur(3px) saturate(0);" />
+  </div>
+  {% endif %}
+
+  <!-- Bottom fade -->
+  <div class="absolute inset-x-0 bottom-0 h-28 z-0 pointer-events-none" style="background:linear-gradient(to top,#000 0%,transparent 100%);"></div>
+
+  <!-- ── Content ── -->
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-28">
+    <div class="grid lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+
+      <!-- Left: text -->
+      <div>
+
+        <!-- Heading -->
+        <h1 class="hu hu2 font-black tracking-tight leading-none text-4xl sm:text-5xl lg:text-[3.6rem]">
+          <span class="text-white">{{ store.name }}</span>
+        </h1>
+
+        <!-- Accent line -->
+        <div class="hu hu2 mt-5 w-10 h-0.5 bg-neutral-700 rounded-full"></div>
+
+        <!-- Description -->
+        <p class="hu hu3 mt-5 text-sm sm:text-lg leading-relaxed text-neutral-400 max-w-lg">
+          {{ store.description | default: 'Encontre os melhores produtos com qualidade e preços especiais para você.' }}
+        </p>
+
+        <!-- CTAs -->
+        <div class="hu hu4 mt-8 sm:mt-10 flex flex-wrap gap-3">
+
+          <!-- Primary button -->
+          <a href="#produtos" class="group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base font-semibold overflow-hidden transition-all duration-200 active:scale-[0.97]" style="background:linear-gradient(135deg,#ffffff 0%,#e8e8e8 100%);color:#000;box-shadow:0 1px 0 rgba(255,255,255,0.3) inset,0 8px 24px rgba(0,0,0,0.35),0 2px 8px rgba(0,0,0,0.2);">
+            <!-- Shine sweep on hover -->
+            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style="background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.45) 50%,transparent 60%);"></span>
+            <svg class="relative h-4 sm:h-[18px] w-4 sm:w-[18px] flex-shrink-0 transition-transform duration-200 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#000000" viewBox="0 0 256 256"><path d="M236,96a12,12,0,0,0-.44-3.3L221.2,42.51A20.08,20.08,0,0,0,202,28H54A20.08,20.08,0,0,0,34.8,42.51L20.46,92.7A12,12,0,0,0,20,96h0v16a43.94,43.94,0,0,0,16,33.92V216a12,12,0,0,0,12,12H208a12,12,0,0,0,12-12V145.92A43.94,43.94,0,0,0,236,112V96ZM57.05,52H199l9.14,32H47.91Zm91,56v4a20,20,0,0,1-40,0v-4ZM53,128.71A20,20,0,0,1,44,112v-4H84v4a20,20,0,0,1-20,20,19.76,19.76,0,0,1-9.07-2.2A11.54,11.54,0,0,0,53,128.71ZM196,204H60V155.81c1.32.12,2.65.19,4,.19a43.86,43.86,0,0,0,32-13.85,43.89,43.89,0,0,0,64,0A43.86,43.86,0,0,0,192,156c1.35,0,2.68-.07,4-.19Zm16-92a20,20,0,0,1-9,16.71,11.66,11.66,0,0,0-1.88,1.09A20,20,0,0,1,172,112v-4h40Z"></path></svg>
+            <span class="relative">Ver Produtos</span>
+          </a>
+
+          <!-- Secondary button -->
+          <a href="/categories" class="group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-2xl text-sm sm:text-base font-semibold text-neutral-300 overflow-hidden transition-all duration-200 active:scale-[0.97] hover:text-white" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);box-shadow:0 1px 0 rgba(255,255,255,0.06) inset,0 4px 16px rgba(0,0,0,0.3);backdrop-filter:blur(8px);">
+            <!-- Hover fill -->
+            <span class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200" style="background:rgba(255,255,255,0.06);"></span>
+            <span class="relative">Categorias</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="relative h-4 w-4 flex-shrink-0 transition-transform duration-200 group-hover:translate-x-0.5" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+            </svg>
+          </a>
+
+        </div>
+
+      </div>
+
+      <!-- Right: icon showcase (desktop only) -->
+      {% if store.icon %}
+      <div class="hidden lg:flex items-center justify-center" style="animation:heroSlideUp 0.8s 0.25s ease-out both;">
+        <div class="relative flex items-center justify-center" style="width:360px;height:360px;">
+
+          <!-- Radial glow -->
+          <div class="absolute inset-0 rounded-full pointer-events-none" style="animation:heroOrb 5s ease-in-out infinite;"></div>
+
+          <!-- Outer orbit ring with spinning dot -->
+          <div class="absolute rounded-full border border-neutral-800/70" style="width:340px;height:340px;"></div>
+          <div style="position:absolute;width:340px;height:340px;top:50%;left:50%;margin:-170px;animation:heroOrbit 22s linear infinite;">
+            <div style="position:absolute;width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.28);top:-4px;left:50%;margin-left:-4px;box-shadow:0 0 8px 2px rgba(255,255,255,0.15);"></div>
+          </div>
+
+          <!-- Inner ring with reverse orbit -->
+          <div class="absolute rounded-full border border-neutral-800/50" style="width:276px;height:276px;"></div>
+          <div style="position:absolute;width:276px;height:276px;top:50%;left:50%;margin:-138px;animation:heroOrbit 32s linear infinite reverse;">
+            <div style="position:absolute;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.18);bottom:-2.5px;left:50%;margin-left:-2.5px;"></div>
+          </div>
+
+          <!-- Floating icon card -->
+          <div class="relative z-10" style="animation:heroFloat 5s ease-in-out infinite;">
+
+            <!-- Card -->
+            <div class="relative rounded-[2rem] overflow-hidden" style="4.5s ease-in-out infinite">
+              <img
+                src="{{ store.icon }}"
+                alt="{{ store.name }}"
+                class="relative z-10 w-52 h-52 object-cover"
+              />
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+
+</section>

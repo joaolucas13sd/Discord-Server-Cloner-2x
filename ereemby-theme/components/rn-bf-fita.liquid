@@ -1,0 +1,50 @@
+{% comment %}
+  Rei dos Nitros: fitinha com contador da Black Friday no topo de todas as páginas.
+  Some sozinha a partir de 01/12 00:00 (Brasília). O ✕ esconde até o dia seguinte para aquele visitante.
+{% endcomment %}
+{% assign rn_fita_agora = 'now' | date: '%s' | plus: 0 %}
+{% if rn_fita_agora < 1796094000 %}
+<div class="rn-fita" id="rn-fita" hidden>
+  <a class="rn-fita__link" href="/black-friday" aria-label="Ver a página da Black Friday">
+    <span class="rn-fita__badge">BLACK FRIDAY</span>
+    <span class="rn-fita__txt" id="rn-fita-txt">Começa em</span>
+    <span class="rn-fita__cd" id="rn-fita-cd"></span>
+  </a>
+  <button type="button" class="rn-fita__x" id="rn-fita-x" aria-label="Fechar">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>
+  </button>
+</div>
+<script>
+  (function () {
+    var fita = document.getElementById('rn-fita');
+    if (!fita) return;
+    var INICIO = 1795575600, FIM = 1796094000, DIA = 86400;
+    var cupons = [1795575600, 1795662000, 1795748400, 1795834800, 1795921200, 1796007600];
+    var hoje = new Date().toISOString().slice(0, 10);
+    try { if (localStorage.getItem('rnFitaFechada') === hoje) { fita.remove(); return; } } catch (_) {}
+    fita.hidden = false;
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function tick() {
+      var agora = Date.now() / 1000;
+      if (!document.getElementById('rn-fita')) return;
+      if (agora >= FIM) { fita.remove(); return; }
+      var alvo = INICIO, txt = 'Começa em';
+      if (agora >= INICIO) {
+        alvo = cupons.filter(function (t) { return t > agora; })[0] || FIM;
+        txt = alvo === FIM ? 'Último dia · acaba em' : 'Rolando · próximo cupom em';
+      }
+      var r = Math.max(0, Math.floor(alvo - agora));
+      var d = Math.floor(r / DIA);
+      document.getElementById('rn-fita-txt').textContent = txt;
+      document.getElementById('rn-fita-cd').innerHTML = (d > 0 ? '<b>' + d + '</b>d ' : '') +
+        '<b>' + pad(Math.floor(r % DIA / 3600)) + '</b>:<b>' + pad(Math.floor(r % 3600 / 60)) + '</b>:<b>' + pad(r % 60) + '</b>';
+    }
+    tick(); setInterval(tick, 1000);
+    document.getElementById('rn-fita-x').addEventListener('click', function () {
+      try { localStorage.setItem('rnFitaFechada', hoje); } catch (_) {}
+      fita.classList.add('rn-fita--saindo');
+      setTimeout(function () { fita.remove(); }, 250);
+    });
+  })();
+</script>
+{% endif %}

@@ -1,0 +1,116 @@
+{% comment %}
+  Rei dos Nitros: galeria de mídia no topo da página do produto.
+  Mostra primeiro os vídeos do YouTube sobre o produto e, no final, o banner normal do produto.
+  De onde vêm os vídeos (na ordem):
+    1) a lista RN_MIDIA abaixo (nome do produto em minúsculas -> códigos de vídeos do YouTube);
+    2) o campo "Vídeo" do produto ou da variação no painel da Ereemby (link do YouTube);
+    3) em "Jogos Steam", o trailer do jogo selecionado.
+  Mostra 1 vídeo por produto, a não ser que a lista RN_MIDIA do produto tenha vários (ex.: Combo Assinaturas mostra todos).
+  RN_MIDIA_NOMES dá o nome que aparece no vídeo (ex.: "Trailer Netflix").
+  Para adicionar um vídeo: copie o código do link (youtube.com/watch?v=CODIGO) e coloque na lista do produto.
+{% endcomment %}
+<script>
+  window.RN_MIDIA = {
+    // 'nome do produto em minúsculas': ['CODIGO'],  (vários códigos = vários vídeos)
+    'combo assinaturas': ['KvMY1uzSC1E', '7TavVZMewpY', '7UIBOsuUwc4', 'Dj2Q_Xw_tY0', '_7EyUMaYqoE'], // Netflix, Disney+, HBO Max, Prime Video, Crunchyroll
+    'discord nitro': ['v2i6nu2OYfY'],
+    'impulsos servidor': ['zGV1Ui4jgKI'],
+    'netflix': ['KvMY1uzSC1E'],
+    'disney': ['7TavVZMewpY'],
+    'hbo max': ['7UIBOsuUwc4'],
+    'prime video': ['Dj2Q_Xw_tY0'],
+    'spotify': ['wMhJBYWl2Hc'],
+    'canva pro': ['rFIWFoTOwfo'],
+    'premiere': ['OJSVolOTb9Y'],
+    'conta ubsoft': ['7-wAzlqzXH0'],
+    'conta rockstar': ['QdBZY2fkU-0'],   // Rockstar Games: GTA VI Trailer 1
+    'xbox gamepass': ['DaUMF59K66k'],    // Xbox Game Pass "Gives You More"
+    'minecraft': ['F2ilGe8stA8'],        // Minecraft: Java & Bedrock Edition - Official Launch Trailer
+    'ps plus': ['lAelfuGE_vM'],          // PlayStation Plus 15 anos
+    'crunchyroll': ['_7EyUMaYqoE']       // Crunchyroll Originals (português)
+  };
+  window.RN_MIDIA_NOMES = { 'KvMY1uzSC1E': 'Netflix', '7TavVZMewpY': 'Disney+', '7UIBOsuUwc4': 'HBO Max', 'Dj2Q_Xw_tY0': 'Prime Video', '_7EyUMaYqoE': 'Crunchyroll' };
+  window.RN_MIDIA_JOGOS = {"f1 24": "sYNetqBbVoc", "the alters": "965Km7t6KwM", "silent hill 2": "0TarpIrIbaI", "resident evil 6": "-xZ5uHEBUBw", "assassin's creed iv black flag": "dd0DUaBog5A", "combo: todos os farcry": "mbGbLWevpC4", "watch dogs: legion": "qxkM9ddLkl8", "watch dogs": "ZXjE1aB0P1c", "spiderman miles morales": "IyqSXo6ePjQ", "terraria": "w2bFxdmwWKc", "streamer life simulator 2": "8DZHvGbPdR8", "subnautica bellow zero": "c2xO53yjhTg", "subnautica": "C9tc8t4jOo0", "resident evil village": "u-CRFFcfg6k", "little nightmares 3": "5oBm5IN4lW8", "little nightmares 2": "UdiWqFJA7eE", "little nightmares": "aOadxZBsPiA", "hogwarts legacy": "P54idPyazqw", "ghost of tsushima": "Xjs16rP6x_w", "ghostrunner 2": "vWNdylBd854", "ghostrunner": "m0ZqcnX59X8", "god of war ragnarok": "ufsad9ENvFA", "gorilla tag": "t3Lsxq7dAO8", "fear therapy": "gRBacFlSAQA", "elden ring: nightreign": "BMZqKwLghRg", "dead by daylight": "pBQXlsRWV0Q", "death stranding": "1kPdvJWhXAA", "dying light": "NMunBZHYeH0", "cyberpunk 2077": "8X2kIfS6fb8", "cuphead": "3vn-F0aZ7pY", "assassin's creed syndicate": "8JqSdvOM6ms", "assassin's creed unity": "Yvy-WDC1kEk", "silent hill f": "0NMoPvqaz10", "dark souls iii": "jDMj2m50QrM", "dragon ball fighterz": "lGSuuJoL6RM", "dead island definitive edition": "0Z-b-1LQ1sI", "forza horizon 4": "VmQNo8xtcAg", "detroit: become human": "MkmVsCj1xEQ", "euro truck simulator 2": "d3GuiADdiEg", "five nights at freddy's: security breach": "ke8cYgkhVl8", "garry's mod": "kgXVLw6qpFM", "grand theft auto: vice city": "Ae9-f7lFoM4", "it takes two": "GAWHzGNcTEw", "left 4 dead 2": "y0sJ5s7fUMQ", "no man's sky": "-sK7EGiJSDk", "mortal kombat x": "s5M39oRnySA", "mortal kombat 11": "PFe7O0xTwkk", "no, i'm not a human": "tOVB4wAWlbE", "microsoft flight simulator 40th anniversary edition": "QgPOmlO_xks", "r.e.p.o.": "oSfoK8eSeD8", "red dead redemption 2": "g-WKpapqVU8", "resident evil 7: biohazard": "RgYqQsbKn6w", "palworld": "1fpGg9wNM9A", "payday 2": "a_shWyHZoLk", "phasmophobia": "Cb9nMp7vGlk", "project zomboid": "1gftz-lDWhA", "the forest": "lfHIqAzN5gk", "the last of us": "7MIv2mNPohE", "the last of us 2": "oqO-NLBv8Oo", "combo: todos os poppy playtime": "diifI5wF6_M", "titan souls": "hBKwTFtr5o4", "the planet crafter": "gBVoyQBWqpM", "the callisto protocol": "IT7swHyN8FQ", "subnautica 2": "25Inxsdv9aQ", "assassin's creed origins": "uUKMc2LbsUw", "black mesa": "4pY27scXP14", "bully scholarship edition": "sg02Dv0Jmro", "castlevania: lords of shadow – ultimate edition": "UF1oD168LLI", "castlevania: lords of shadow 2": "FGRipzDePT4", "celeste": "70d9irlxiB4", "days gone": "gl1Pw97whJg", "dead space": "BIKmoJfYCzw", "dying light 2 stay human: reloaded edition": "kH41ESKMiuY", "dying light: the beast": "T41PyJBWI_k", "gris": "xtWnBHG6dis", "hellblade: senua's sacrifice": "Q6YaVY8foUQ", "horizon forbidden west edição completa": "MakUD8lJFMc", "indiana jones and the great circle": "mkzeoNvYhSo", "inside": "5ABy76KTMe8", "lies of p": "qVERYWuJkIs", "limbo": "R1pwLq2-RV8", "ori and the will of the wisps": "JbGpCIk_htE", "outer wilds": "W43k_WG0NsA", "planet of lana": "2EfNzVYdhl8", "reanimal": "wjFCUNXkybw", "rise of the tomb raider": "_RNApTFI1MQ", "slime rancher 2": "cBgKTOYkpM8", "split fiction": "VuE0hicLDx4", "stray": "QET-k0NXe6w", "uncharted: coleção legado dos ladrões": "v5y54ZBwPuU", "black myth: wukong": "rmYeH19db0Q", "marvel's spider-man 2": "ffsIyLvm8dQ", "disney's hercules": "sSOYYCzHhv8", "naruto shippuden: ultimate ninja storm 4": "J3AMRznTIkU", "half-life 2": "iABUHt-Z9Gc", "schedule i": "SeekDq3f9UE", "enter x exit the gungeon": "vYpSoiNdrZw", "beyond: two souls": "WLHPpeeNOlM", "hotline miami": "mg5s5Dq50Rg", "just cause 3": "lqk71-DKd9s", "castle crashers": "BsLHvg93bX4", "one piece pirate warriors 3 - gold edition": "cBfZr_tI0Ko", "doom": "6cFX5RPXYMY", "dead cells": "gX4cGcwmdsY", "the evil within": "H2qITQHud2I", "cult of the lamb": "HqaHnAw9MSk", "vampire survivors": "oG4Sx0HlX3o", "katana zero": "-MvvmPKGEHA", "hollow knight": "dQQ5FQTD9bk", "blasphemous 2": "Dc-1h5f-fqY", "borderlands 3": "2VSClEbzUmU", "one piece: pirate warriors 4": "J7rfZ_YHcxg", "blasphemous": "Ctm-GClM6wo", "the evil within 2": "aEBnIsVvECA", "evil west": "J6PSVs41MjE", "marvel's guardians of the galaxy": "8KSxzPDuNx4", "devil may cry 5 deluxe + vergil": "izY0cIOQ5ds", "robocop: rogue city": "lXxkoiVuROg", "god of war": "snoXnOo63xQ", "combo: grand theft auto: the trilogy – the definitive edition": "bZ_0E4yWbBI", "grand theft auto v": "NXTlh31ZWZ4", "elden ring": "i1x0ZmD1VY8", "sekiro: shadows die twice - goty edition": "uhsuZMyKVOo", "the elder scrolls iv: oblivion remastered deluxe edition": "FbohbX33pvg", "mafia: definitive edition": "3a5cqV8PUQs", "combo: crash bandicoot n. sane trilogy": "r2uPbH6Nvdk", "assetto corsa": "TDFN-E30jhU", "descenders": "yv1Goix3ZSg", "v-rally 4": "7ydcFS3j3i0", "mx vs atv legends": "xttzAPLf9Yw", "automobilista 2": "rRJMU1jKu4Y", "forza horizon 5": "W-SpP-Z0Uu8", "forza horizon 6": "c6O5J-8dz90", "riders republic skate edition": "O2HD0b1Ia8A", "9 kings": "0sH3n4KkFgk", "fallout 4": "X5aJfebzkrM", "hades": "zEuv4aSQOS8", "the elder scrolls v: skyrim special edition": "z-4Xh7QOr5g", "kingdom come: deliverance": "RAV7ba6f7Wo", "wuchang: fallen feathers deluxe edition": "7EUHGvT6ZB8", "dark souls: remastered": "KfjG9ZLGBHE", "dark souls ii: deluxe edition": "tDHyIKlWcys", "the witcher 3": "XHrskkHf958", "oxygen not included": "rSssgXeN1rE", "session: skate sim": "lLiTR4DIumE", "ranch simulator: build, hunt, farm": "lp1C3eYH6rg", "planet coaster": "91Kli1Uwk9g", "thehunter: call of the wild": "bbGm9jW1r_o", "scribblenauts unmasked - a dc comics adventure + scribblenauts unlimited": "NYCoiTwU6yw", "potion craft: alchemist simulator": "mNXTnpSG_Ws", "astroneer": "UMLwzt5t9bs", "ultimate fishing simulator": "YyB9zaBwjN0", "streamer life simulator": "YqSmVmoos8o", "stardew valley": "ot7uXNQskhs", "house flipper": "qhgdPcXoUko", "car mechanic simulator 2021": "z4G7sPiMh5E", "kerbal space program": "7kTbo1wmN-w", "dave the diver": "aoZeuLfFxW4", "rimworld": "Wdhu8omH_ZQ", "planet zoo": "WNucNfgr1nw", "jurassic world evolution 2": "XFZmkS-SlYk", "cities: skylines": "0gI2N10QyRA", "snowrunner": "3XNMsD4Kf_A", "sid meier's civilization vi": "5KdE0p2joJw", "resident evil 4 remake": "isN_Y9ULtXY", "milk inside a bag of milk inside a bag of milk": "OE39GZ343Xk", "miside": "kGSKBo98jJ0", "buckshot roulette": "WdfTz5VHgPI", "the binding of isaac": "27Le3kOOFQk", "outlast 2": "5x4d7AIuXC4", "inscryption": "BRlnP67TAf4", "resident evil 0": "R4HVh7AIjQI", "manhunt": "kUv40WsaTcs", "7 days to die": "kikTJaVBank", "resident evil revelations": "KgnZpfoR4Hk", "sons of the forest": "A_E4eCwUEqg", "resident evil 5": "RulcBNMiTXE", "resident evil 3": "auuqdLPty_g", "resident evil 2": "KHaGZ4yamRM", "resident evil 4": "YRCO0VtlhQQ"};
+  (function () {
+    var img = document.getElementById('main-product-image');
+    if (!img || img.dataset.rnMidia) return;
+    img.dataset.rnMidia = '1';
+    var box = img.parentElement;
+    var PD = window.PRODUCT_DATA || {};
+    function idDe(url) {
+      var m = String(url || '').match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);
+      return m ? m[1] : (/^[A-Za-z0-9_-]{11}$/.test(String(url || '')) ? url : null);
+    }
+    function norm(t) { return String(t || '').trim().toLowerCase(); }
+    function videos() {
+      var lista = [];
+      var doProduto = window.RN_MIDIA[norm(PD.title_base || PD.title)] || window.RN_MIDIA[norm(PD._nome)] || [];
+      doProduto.forEach(function (v) { var i = idDe(v); if (i) lista.push(i); });
+      var sv = PD.selectedVariant;
+      var emb = (sv && sv.embed_video) || PD.embed_video;
+      var e = idDe(emb); if (e && lista.indexOf(e) < 0) lista.push(e);
+      if (sv && window.RN_MIDIA_JOGOS[norm(sv.name)]) { var t = window.RN_MIDIA_JOGOS[norm(sv.name)]; if (lista.indexOf(t) < 0) lista.unshift(t); }
+      return lista.slice(0, Math.max(1, doProduto.length)); // 1 vídeo por produto, ou todos os da lista quando o produto tem vários
+    }
+    PD._nome = PD._nome || document.querySelector('[data-rn-pnome]') && document.querySelector('[data-rn-pnome]').getAttribute('data-rn-pnome');
+
+    // camadas
+    var stage = document.createElement('div'); stage.className = 'rn-md'; box.appendChild(stage);
+    var strip = document.createElement('div'); strip.className = 'rn-md__strip'; box.insertAdjacentElement('afterend', strip);
+    var slides = [], atual = 0;
+    var NOMES = window.RN_MIDIA_NOMES || {};
+    var PLAY = '<svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.6v12.8a1 1 0 0 0 1.5.9l10.2-6.4a1 1 0 0 0 0-1.8L9.5 4.7A1 1 0 0 0 8 5.6Z"/></svg>';
+    var YT = '<svg width="18" height="13" viewBox="0 0 28 20" aria-hidden="true"><rect width="28" height="20" rx="5" fill="#ff0033"/><path d="M11 5.5v9l7.5-4.5z" fill="#fff"/></svg>';
+
+    function montar(irPara) {
+      var vids = videos();
+      slides = vids.map(function (id) { return { tipo: 'video', id: id }; }).concat([{ tipo: 'banner' }]);
+      strip.innerHTML = slides.length < 2 ? '' : slides.map(function (s, i) {
+        var bg = s.tipo === 'video' ? 'https://i.ytimg.com/vi/' + s.id + '/mqdefault.jpg' : img.src;
+        return '<button type="button" class="rn-md__th' + (s.tipo === 'video' ? ' rn-md__th--v' : '') + '" data-i="' + i + '" aria-label="' + (s.tipo === 'video' ? (NOMES[s.id] ? 'Trailer ' + NOMES[s.id] : 'Vídeo ' + (i + 1)) : 'Imagem do produto') + '"><img src="' + bg + '" alt="" loading="lazy">' + (s.tipo === 'video' ? '<span class="rn-md__thp">' + PLAY + '</span>' : '') + '</button>';
+      }).join('');
+      strip.hidden = slides.length < 2;
+      ir(irPara === 'banner' ? slides.length - 1 : Math.min(irPara || 0, slides.length - 1), false);
+    }
+    function ir(i, tocar) {
+      atual = (i + slides.length) % slides.length;
+      var s = slides[atual];
+      if (!s || s.tipo === 'banner') { stage.innerHTML = slides.length > 1 ? setas() : ''; stage.classList.toggle('rn-md--banner', true); }
+      else {
+        stage.classList.remove('rn-md--banner');
+        stage.innerHTML = tocar
+          ? '<iframe src="https://www.youtube-nocookie.com/embed/' + s.id + '?autoplay=1&rel=0&playsinline=1&modestbranding=1" title="Vídeo do produto" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>' + setas()
+          : '<button type="button" class="rn-md__poster" data-play="1" aria-label="Assistir ao vídeo"><img src="https://i.ytimg.com/vi/' + s.id + '/hqdefault.jpg" alt=""><span class="rn-md__play">' + PLAY + '</span><span class="rn-md__yt">' + YT + (NOMES[s.id] ? 'Trailer ' + NOMES[s.id] : 'Vídeo oficial') + '</span></button>' + setas();
+      }
+      strip.querySelectorAll('.rn-md__th').forEach(function (b, j) { b.classList.toggle('rn-md__th--on', j === atual); });
+      var on = strip.querySelector('.rn-md__th--on'); if (on) strip.scrollTo({ left: on.offsetLeft - strip.clientWidth / 2 + on.offsetWidth / 2, behavior: 'smooth' });
+    }
+    function setas() {
+      if (slides.length < 2) return '';
+      return '<button type="button" class="rn-md__nav rn-md__nav--p" data-nav="-1" aria-label="Anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>' +
+        '<button type="button" class="rn-md__nav rn-md__nav--n" data-nav="1" aria-label="Próximo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>' +
+        '<span class="rn-md__count">' + (atual + 1) + ' / ' + slides.length + '</span>';
+    }
+    stage.addEventListener('click', function (e) {
+      var n = e.target.closest('[data-nav]'); if (n) { e.preventDefault(); ir(atual + (+n.dataset.nav), false); return; }
+      if (e.target.closest('[data-play]')) { e.preventDefault(); ir(atual, true); }
+    });
+    strip.addEventListener('click', function (e) { var b = e.target.closest('.rn-md__th'); if (b) ir(+b.dataset.i, false); });
+    // arrastar para o lado troca de mídia
+    var x0 = null;
+    stage.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 50 && !stage.querySelector('iframe')) ir(atual + (dx < 0 ? 1 : -1), false); }, { passive: true });
+
+    // quando a imagem do topo muda: outro jogo -> mostra o vídeo dele primeiro; jogo grátis escolhido -> mostra o banner
+    function inicio() { return document.getElementById('rn-free-banner-tag') ? 'banner' : 0; }
+    var ultimo = img.src, ultimaVar = PD.selectedVariant && PD.selectedVariant.id;
+    new MutationObserver(function () {
+      if (img.src === ultimo) return; ultimo = img.src; montar(inicio());
+    }).observe(img, { attributes: true, attributeFilter: ['src'] });
+    setInterval(function () {
+      var v = PD.selectedVariant && PD.selectedVariant.id;
+      if (v !== ultimaVar) { ultimaVar = v; montar(inicio()); }
+    }, 400);
+    montar(0);
+  })();
+</script>

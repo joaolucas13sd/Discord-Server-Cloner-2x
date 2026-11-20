@@ -1,0 +1,99 @@
+{% comment %}
+  Rei dos Nitros: teste "Qual streaming combina com você?" (endereço /qual-streaming, definido em routes/routes.json).
+  2 perguntas; o resultado aponta os produtos de streaming da loja (nome, foto e preço vêm do catálogo).
+  Pesos de cada resposta: lista GOSTOS abaixo.
+{% endcomment %}
+<div class="rn-terms rnqs">
+  <nav class="rn-terms__crumb"><a href="/">Início</a><span aria-hidden="true">›</span><span>Qual streaming?</span></nav>
+  <div class="rn-fr__hero">
+    <div class="rn-fr__badge">TESTE RÁPIDO</div>
+    <h1 class="rn-fr__title">Qual streaming <span>combina com você?</span></h1>
+    <p class="rn-fr__lead">Responda 2 perguntas e veja a assinatura certa para o que você gosta de assistir e ouvir.</p>
+  </div>
+  <div id="rnqs-app"><p class="rn-fr__load">Carregando…</p></div>
+</div>
+<script>
+  (function () {
+    var app = document.getElementById('rnqs-app'); if (!app) return;
+    var GOSTOS = [
+      { k: 'momento', n: 'Séries e filmes do momento', s: 'Os lançamentos que todo mundo comenta', p: { 'netflix': 3, 'prime video': 1, 'hbo max': 1 } },
+      { k: 'anime', n: 'Animes', s: 'Episódios novos logo depois do Japão', p: { 'crunchyroll': 3 } },
+      { k: 'disney', n: 'Marvel, Star Wars e Pixar', s: 'Heróis, sagas e animações para a família', p: { 'disney': 3 } },
+      { k: 'hbo', n: 'Séries da HBO, DC e Harry Potter', s: 'Séries premiadas e grandes franquias', p: { 'hbo max': 3 } },
+      { k: 'amazon', n: 'Originais da Amazon', s: 'The Boys, Reacher e filmes do Prime', p: { 'prime video': 3 } },
+      { k: 'musica', n: 'Música e podcasts', s: 'Playlists sem anúncio e no modo offline', p: { 'spotify': 3 } },
+      { k: 'youtube', n: 'YouTube sem anúncios', s: 'Vídeos sem propaganda e em segundo plano', p: { 'youtube premium': 3 } }
+    ];
+    var MODOS = [
+      { k: 'um', n: 'Só um serviço', s: 'Quero o que mais combina comigo' },
+      { k: 'varios', n: 'Vários serviços juntos', s: 'Quero economizar com um combo' }
+    ];
+    var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+    var brl = function (v) { return window.rnBrl ? window.rnBrl(v) : 'R$ ' + Number(v).toFixed(2).replace('.', ','); };
+    function norm(t) { return String(t || '').toLowerCase().replace(/\s+/g, ' ').trim(); }
+    function produto(n) { var ps = window.CATALOG_PRODUCTS || []; for (var i = 0; i < ps.length; i++) if (ps[i] && norm(ps[i].name) === n) return ps[i]; return null; }
+    function aPartir(p) {
+      var cat = {}; (window.CATALOG_VARIANTS || []).forEach(function (v) { if (v) cat[String(v.id)] = v; });
+      var l = (p.variants || []).map(function (v) { var x = v && (cat[String(v.id)] || v); return x && Number(x.price); }).filter(function (n) { return n > 0; });
+      return l.length ? Math.min.apply(null, l) : Number(p.price) || 0;
+    }
+    function link(p) { return '/product/' + (p.slug || p.id); }
+    var ICO = {
+      ok: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>'
+    };
+    var gostos = [], modo = '', passo = 1;
+    document.title = 'Qual streaming combina com você?';
+
+    function render() {
+      if (passo === 1) {
+        app.innerHTML = '<div class="rnqs__q"><p class="rnqs__step">PERGUNTA 1 DE 2</p><h2 class="rnqs__t">O que você mais gosta?</h2><p class="rnqs__h">Pode marcar mais de um.</p>' +
+          '<div class="rnqs__ops">' + GOSTOS.map(function (g) {
+            var on = gostos.indexOf(g.k) !== -1;
+            return '<button type="button" class="rnqs__op' + (on ? ' rnqs__op--on' : '') + '" data-g="' + g.k + '" aria-pressed="' + on + '"><span class="rnqs__chk">' + ICO.ok + '</span><span><b>' + esc(g.n) + '</b><small>' + esc(g.s) + '</small></span></button>';
+          }).join('') + '</div>' +
+          '<button type="button" class="rnqs__next" data-ir="2"' + (gostos.length ? '' : ' disabled') + '>Continuar</button></div>';
+        return;
+      }
+      if (passo === 2) {
+        app.innerHTML = '<div class="rnqs__q"><p class="rnqs__step">PERGUNTA 2 DE 2</p><h2 class="rnqs__t">Você prefere…</h2>' +
+          '<div class="rnqs__ops">' + MODOS.map(function (m) {
+            return '<button type="button" class="rnqs__op rnqs__op--um' + (modo === m.k ? ' rnqs__op--on' : '') + '" data-m="' + m.k + '"><span class="rnqs__chk">' + ICO.ok + '</span><span><b>' + esc(m.n) + '</b><small>' + esc(m.s) + '</small></span></button>';
+          }).join('') + '</div>' +
+          '<button type="button" class="rnqs__back" data-ir="1">← Voltar</button></div>';
+        return;
+      }
+      // resultado
+      var pts = {};
+      GOSTOS.forEach(function (g) { if (gostos.indexOf(g.k) === -1) return; Object.keys(g.p).forEach(function (n) { pts[n] = (pts[n] || 0) + g.p[n]; }); });
+      var ordem = Object.keys(pts).sort(function (a, b) { return pts[b] - pts[a]; });
+      var lista = ordem.map(produto).filter(Boolean);
+      var combo = produto('combo assinaturas');
+      if (combo && (modo === 'varios' || lista.length >= 3)) lista.unshift(combo);
+      if (!lista.length) { app.innerHTML = '<p class="rn-fr__load">Não encontramos assinaturas disponíveis agora. Veja todas em <a href="/categories">Categorias</a>.</p><button type="button" class="rnqs__back" data-ir="1">Refazer o teste</button>'; return; }
+      var top = lista[0], resto = lista.slice(1, 4);
+      var porque = top === combo
+        ? 'Você curte ' + (gostos.length > 1 ? 'várias coisas' : 'bastante coisa') + ': com o combo você assina mais de um serviço e paga menos do que separado.'
+        : 'Combina com o que você marcou: ' + GOSTOS.filter(function (g) { return gostos.indexOf(g.k) !== -1 && g.p[norm(top.name)]; }).map(function (g) { return g.n.toLowerCase(); }).join(', ') + '.';
+      function img(p) { return (p.images && p.images[0]) || ''; }
+      app.innerHTML = '<div class="rnqs__res">' +
+        '<p class="rnqs__step">O SEU RESULTADO</p>' +
+        '<a class="rnqs__top" href="' + esc(link(top)) + '"><span class="rnqs__img">' + (img(top) ? '<img src="' + esc(img(top)) + '" alt="">' : '') + '</span>' +
+        '<span class="rnqs__tx"><small>Combina mais com você</small><b>' + esc(top.name) + '</b><span class="rnqs__pq">' + esc(porque) + '</span>' +
+        (aPartir(top) ? '<span class="rnqs__pr">A partir de <b>' + brl(aPartir(top)) + '</b></span>' : '') + '<span class="rnqs__btn">Ver planos →</span></span></a>' +
+        (resto.length ? '<p class="rnqs__also">Também combina com você</p><div class="rnqs__mini">' + resto.map(function (p) {
+          return '<a class="rnqs__m" href="' + esc(link(p)) + '"><span class="rnqs__img">' + (img(p) ? '<img src="' + esc(img(p)) + '" alt="" loading="lazy">' : '') + '</span><b>' + esc(p.name) + '</b>' + (aPartir(p) ? '<small>a partir de ' + brl(aPartir(p)) + '</small>' : '') + '</a>';
+        }).join('') + '</div>' : '') +
+        '<button type="button" class="rnqs__back" data-ir="1">Refazer o teste</button></div>';
+      if (window.rnBurst) setTimeout(function () { var t = app.querySelector('.rnqs__top b'); if (t) window.rnBurst(t, true); }, 200);
+    }
+    app.addEventListener('click', function (e) {
+      var g = e.target.closest('[data-g]');
+      if (g) { var k = g.getAttribute('data-g'), i = gostos.indexOf(k); if (i === -1) gostos.push(k); else gostos.splice(i, 1); render(); return; }
+      var m = e.target.closest('[data-m]');
+      if (m) { modo = m.getAttribute('data-m'); passo = 3; render(); window.scrollTo({ top: app.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' }); return; }
+      var ir = e.target.closest('[data-ir]');
+      if (ir && !ir.disabled) { passo = Number(ir.getAttribute('data-ir')); if (passo === 1) modo = ''; render(); }
+    });
+    (function pronto() { if (window.CATALOG_PRODUCTS) render(); else setTimeout(pronto, 60); })();
+  })();
+</script>

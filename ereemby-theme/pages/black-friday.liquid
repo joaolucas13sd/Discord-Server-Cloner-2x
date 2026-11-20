@@ -1,0 +1,368 @@
+{% comment %}
+  Rei dos Nitros: página "Black Friday" (endereço /black-friday, definido em routes/routes.json).
+  Os códigos dos cupons só são colocados na página pelo servidor depois do horário de liberação
+  (meia-noite de Brasília de cada dia), então ninguém consegue ver o código antes, nem pelo código-fonte.
+{% endcomment %}
+{% assign rn_agora = 'now' | date: '%s' | plus: 0 %}
+<div class="rn-terms rn-bf">
+  <nav class="rn-terms__crumb"><a href="/">Início</a><span aria-hidden="true">›</span><span>Black Friday</span></nav>
+
+  <div class="rn-bf__hero">
+    <div class="rn-bf__badge">BLACK FRIDAY 2026</div>
+    <h1 class="rn-bf__title">6 dias de <span>cupons secretos</span></h1>
+    <p class="rn-bf__lead">De 25 a 30 de novembro, um cupom novo é revelado todo dia à meia-noite. Volte aqui todos os dias e aproveite. Na sexta da Black tem o cupom dourado!</p>
+    <div class="rn-bf__timer" id="rn-bf-timer">
+      <div class="rn-bf__timerk" id="rn-bf-timerk">Próximo cupom em</div>
+      <div class="rn-bf__clock"><div><b id="rn-bf-d">00</b><span>dias</span></div><div><b id="rn-bf-h">00</b><span>horas</span></div><div><b id="rn-bf-m">00</b><span>min</span></div><div><b id="rn-bf-s">00</b><span>seg</span></div></div>
+    </div>
+  </div>
+
+  <section class="rn-bf__days" aria-label="Calendário de cupons">
+      <a class="rn-bf__day" href="#cupom-qua" data-t="1795575600">
+        <div class="rn-bf__dk">QUARTA</div>
+        <div class="rn-bf__dd">25/11</div>
+        <span class="rn-bf__ds" data-ult="">Em breve</span>
+        <span class="rn-bf__dq" aria-hidden="true">?</span>
+      </a>
+      <a class="rn-bf__day" href="#cupom-qui" data-t="1795662000">
+        <div class="rn-bf__dk">QUINTA</div>
+        <div class="rn-bf__dd">26/11</div>
+        <span class="rn-bf__ds" data-ult="">Em breve</span>
+        <span class="rn-bf__dq" aria-hidden="true">?</span>
+      </a>
+      <a class="rn-bf__day rn-bf__day--gold" href="#cupom-sex" data-t="1795748400">
+        <div class="rn-bf__dk">SEXTA DA BLACK</div>
+        <div class="rn-bf__dd">27/11</div>
+        <span class="rn-bf__ds" data-ult="">Em breve</span>
+        <span class="rn-bf__dq" aria-hidden="true">?</span>
+      </a>
+      <a class="rn-bf__day" href="#cupom-sab" data-t="1795834800">
+        <div class="rn-bf__dk">SÁBADO</div>
+        <div class="rn-bf__dd">28/11</div>
+        <span class="rn-bf__ds" data-ult="">Em breve</span>
+        <span class="rn-bf__dq" aria-hidden="true">?</span>
+      </a>
+      <a class="rn-bf__day" href="#cupom-dom" data-t="1795921200">
+        <div class="rn-bf__dk">DOMINGO</div>
+        <div class="rn-bf__dd">29/11</div>
+        <span class="rn-bf__ds" data-ult="">Em breve</span>
+        <span class="rn-bf__dq" aria-hidden="true">?</span>
+      </a>
+      <a class="rn-bf__day" href="#cupom-seg" data-t="1796007600">
+        <div class="rn-bf__dk">SEGUNDA</div>
+        <div class="rn-bf__dd">30/11</div>
+        <span class="rn-bf__ds" data-ult="1">Último dia</span>
+        <span class="rn-bf__dq" aria-hidden="true">?</span>
+      </a>
+  </section>
+
+  <section class="rn-bf__rl" id="rn-bf-rl" aria-label="Ofertas relâmpago" hidden>
+    <div class="rn-bf__rlh">
+      <div><div class="rn-bf__rlk"><svg class="rn-ico-raio" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.2 4.6 13a.8.8 0 0 0 .6 1.3h5.4l-1.4 7.1c-.1.8.9 1.2 1.4.6L19.4 11a.8.8 0 0 0-.6-1.3h-5.4l1.4-6.9c.1-.8-.9-1.2-1.6-.6Z"/></svg> RELÂMPAGO</div><h2 class="rn-bf__rlt">3 jogos por R$ 10 cada, trocam a cada 3 horas</h2><p class="rn-bf__rlsub">1 de Ação, 1 de Aventura e 1 surpresa de outra categoria</p></div>
+      <div class="rn-bf__rlc">Trocam em <b id="rn-bf-rlc">--:--:--</b></div>
+    </div>
+    <p class="rn-bf__rlcup" id="rn-bf-rlcup"></p>
+    <div class="rn-bf__rlg" id="rn-bf-rlg"></div>
+  </section>
+  {% assign rn_presente_api = 'https://presente-rei-dos-nitros.juanlauncherpikadasgalaxias.workers.dev' %}
+  <script>
+    (function () {
+      // Rei dos Nitros: "Relâmpago" - a cada 3 horas (horário de Brasília) 3 jogos ficam por R$ 10 cada.
+      // Quem escolhe os 3 é o servidor (o mesmo do presente), que também troca os preços na loja.
+      // Se o servidor não responder, a página faz a mesma conta sozinha (mesma regra, mesmo resultado).
+      // Botão "Adicionar ao carrinho": com 2 jogos pagos no carrinho, o próximo entra como brinde
+      // (cupom RELAMPAGO quando o brinde é um jogo de R$ 10) e o cliente pode trocá-lo no carrinho.
+      var SLOT = 10800, BRT = 3 * 3600, INICIO = 1795575600, FIM = 1796094000, PRECO = 10, NORMAL = 15.99;
+      var API = '{{ rn_presente_api }}'.replace(/\/+$/, '');
+      var sec = document.getElementById('rn-bf-rl'); if (!sec) return;
+      function pronto(cb) { if (window.rnJogos && window.CATALOG_PRODUCTS && window.RNB) cb(); else setTimeout(function () { pronto(cb); }, 80); }
+      function pad(n) { return (n < 10 ? '0' : '') + n; }
+      function cupomHoje(agora) {
+        var cod = '';
+        document.querySelectorAll('.rn-bf__tk').forEach(function (t) {
+          var c = t.querySelector('.rn-bf__code--on .rn-bf__codev');
+          var ini = Number(t.getAttribute('data-t'));
+          if (c && agora >= ini && agora < ini + 86400) cod = c.textContent.trim();
+        });
+        return cod;
+      }
+      var ICO_ADD = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"/></svg>';
+      var ICO_OK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>';
+      var slotVisto = -1, doServidor = null, hoje = [];
+      function calcular(slot) {
+        var p = window.rnProdJogos(); if (!p) return [];
+        var ordem = {}; (p.variants || []).forEach(function (v, i) { if (v) ordem[String(v.id)] = i; });
+        var pool = window.rnVarsJogos().filter(function (v) { return String(v.name).toLowerCase().indexOf('combo') !== 0 && window.rnTemEstoque(v); })
+          .sort(function (a, b) { return (ordem[String(a.id)] || 0) - (ordem[String(b.id)] || 0); });
+        // mesma regra do servidor: 1 de Ação, 1 de Aventura e 1 de outra categoria (os 20 mais jogados de cada grupo)
+        function c(v) { return (window.rnJogo(v.name) || {}).c; }
+        var grupos = [
+          pool.filter(function (v) { return c(v) === 'acao'; }),
+          pool.filter(function (v) { return c(v) === 'aventura'; }),
+          pool.filter(function (v) { return c(v) !== 'acao' && c(v) !== 'aventura'; })
+        ].map(function (g) { return g.slice(0, 20); });
+        if (grupos.some(function (g) { return !g.length; })) return [];
+        return grupos.map(function (g) { return g[slot % g.length]; });
+      }
+      function perguntar(slot) {
+        if (!API || !window.fetch) return;
+        fetch(API + '/relampago', { cache: 'no-store' }).then(function (r) { return r.json(); }).then(function (d) {
+          if (!d || !d.ok || !d.itens || d.itens.length !== 3) return;
+          var l = d.itens.map(function (x) { return window.RNB.porId(x.id) || window.RNB.porNome(x.nome); });
+          if (l.some(function (v) { return !v; })) return;
+          doServidor = { slot: slot, itens: l }; montar(true);
+        }).catch(function () {});
+      }
+      function botao(v) {
+        var dentro = window.RNB.noCarrinho(v), gratis = dentro && window.RNB.ehBrinde(v.id);
+        if (!window.RNB.temEstoque(v)) return '<button type="button" class="rn-bf__rladd rn-bf__rladd--off" disabled>Esgotado</button>';
+        return '<button type="button" class="rn-bf__rladd' + (dentro ? ' rn-bf__rladd--in' : '') + '" data-vid="' + window.rnEsc(v.id) + '">' +
+          (dentro ? ICO_OK + '<span>' + (gratis ? 'No carrinho (grátis)' : 'No carrinho') + '</span>' : ICO_ADD + '<span>Adicionar ao carrinho</span>') + '</button>';
+      }
+      function pintarBotoes() {
+        document.querySelectorAll('#rn-bf-rlg .rn-bf__rli').forEach(function (c) {
+          var v = window.RNB.porId(c.getAttribute('data-vid')); if (!v) return;
+          var b = c.querySelector('.rn-bf__rladd'), t = document.createElement('div'); t.innerHTML = botao(v);
+          if (b && b.outerHTML !== t.firstChild.outerHTML) b.replaceWith(t.firstChild);
+        });
+      }
+      function montar(manter) {
+        var esc = window.rnEsc, brl = window.rnBrl;
+        var agora = Date.now() / 1000, slot = Math.floor((agora - BRT) / SLOT);
+        if (!manter && slot !== slotVisto) { doServidor = null; perguntar(slot); }
+        // 1º: os jogos que estão de fato por R$ 10 na loja agora (é o preço que vale no checkout)
+        var reais = window.rnVarsJogos().filter(function (v) { var x = Number(v.price) || 0; return x > 0 && x <= PRECO + .5 && String(v.name).toLowerCase().indexOf('combo') !== 0; });
+        var ORD = { acao: 0, aventura: 1 };
+        reais.sort(function (a, b) { var ca = ORD[(window.rnJogo(a.name) || {}).c], cb = ORD[(window.rnJogo(b.name) || {}).c]; return (ca == null ? 2 : ca) - (cb == null ? 2 : cb); });
+        hoje = reais.length >= 3 ? reais.slice(0, 3) : (doServidor && doServidor.slot === slot ? doServidor.itens : calcular(slot));
+        if (hoje.length < 3) return;
+        slotVisto = slot;
+        var cod = cupomHoje(agora);
+        var todosDez = hoje.every(function (v) { var x = Number(v.price) || 0; return x > 0 && x <= PRECO + .5; });
+        document.getElementById('rn-bf-rlcup').innerHTML =
+          (todosDez ? 'Cada um por <b>R$ 10</b>. ' : '') + 'Leve os 3 e <b>1 sai de graça</b> (você pode trocar o brinde por outro jogo no carrinho).' +
+          (cod ? ' Cupom de hoje: <b>' + esc(cod) + '</b>.' : (agora < INICIO ? ' Os cupons secretos começam em 25/11 à meia-noite.' : ''));
+        document.getElementById('rn-bf-rlg').innerHTML = hoje.map(function (v) {
+          var j = window.rnJogo(v.name) || {}, img = (v.images && v.images[0]) || v.icon || '';
+          // mostra o preço real da loja: R$ 10 só depois que o servidor trocou o preço (nunca anuncia antes)
+          var atual = Number(v.price) || 0, rel = atual > 0 && atual <= PRECO + .5;
+          var de = rel ? NORMAL : (Number(v.comparison) > atual ? Number(v.comparison) : 0), off = de ? Math.round((1 - atual / de) * 100) : 0;
+          return '<div class="rn-bf__rli" data-vid="' + esc(v.id) + '"><a class="rn-bf__rla" href="' + esc(window.rnLinkVar(v)) + '"><span class="rn-bf__rlimg"><img src="' + esc(img) + '" alt="" loading="lazy">' + (off > 0 ? '<span class="rn-bf__rloff">-' + off + '%</span>' : '') + '</span>' +
+            '<span class="rn-bf__rln">' + esc(v.name) + '</span><span class="rn-bf__rlm">' + (j.r ? window.rnNota(j) : '') + '</span>' +
+            '<span class="rn-bf__rlp">' + (off > 0 ? '<s>' + brl(de) + '</s>' : '') + '<b>' + brl(atual) + '</b></span></a>' + botao(v) + '</div>';
+        }).join('');
+        sec.hidden = false;
+        // veio de um link para o Relâmpago (ex.: Novidades): rola até aqui, uma vez
+        var ir = location.hash === '#rn-bf-rl'; try { ir = ir || sessionStorage.getItem('rn_ir_relampago') === '1'; sessionStorage.removeItem('rn_ir_relampago'); } catch (x) {}
+        if (ir && !sec.__rolou) { sec.__rolou = 1; setTimeout(function () { window.scrollTo({ top: sec.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' }); }, 350); }
+      }
+      document.addEventListener('click', function (e) {
+        var b = e.target.closest && e.target.closest('.rn-bf__rladd'); if (!b || !window.RNB) return;
+        e.preventDefault(); e.stopPropagation();
+        var R = window.RNB, v = R.porId(b.getAttribute('data-vid')); if (!v || !R.temEstoque(v)) return;
+        if (R.noCarrinho(v)) {
+          if (R.ehBrinde(v.id)) R.remover(v.id);
+          R.itens().forEach(function (i) { if (String(i.variant) === String(v.id)) window.EreembyCart.removeItem(i.product, i.variant); });
+          R.toast(v.name + ' tirado do carrinho.');
+        } else if (R.livres() > 0) {
+          R.escolher(v); // 2 jogos pagos já no carrinho: este entra como brinde
+        } else {
+          R.addItem(v, false);
+          var f = R.faltaPara();
+          R.toast(R.livres() > 0 ? v.name + ' adicionado! O próximo jogo sai de graça.' : v.name + ' adicionado! Falta ' + f + ' para ganhar 1 grátis.');
+        }
+        setTimeout(pintarBotoes, 50);
+      }, true);
+      pronto(function () {
+        window.rnJogos(function () { montar(true); }); montar();
+        window.addEventListener('cart-sync', function () { setTimeout(pintarBotoes, 30); });
+        setInterval(function () {
+          var agora = Date.now() / 1000, slot = Math.floor((agora - BRT) / SLOT);
+          if (slot !== slotVisto) montar();
+          var r = Math.max(0, Math.floor((slot + 1) * SLOT + BRT - agora));
+          var el = document.getElementById('rn-bf-rlc'); if (el) el.textContent = pad(Math.floor(r / 3600)) + ':' + pad(Math.floor(r % 3600 / 60)) + ':' + pad(r % 60);
+          pintarBotoes();
+        }, 1000);
+      });
+    })();
+  </script>
+
+  <section class="rn-bf__tks" aria-label="Cupons">
+    <h2 class="rn-faq__title">Cupons da semana</h2>
+    <article class="rn-bf__tk" id="cupom-qua" data-t="1795575600">
+      <div class="rn-bf__tkl">
+        <div class="rn-bf__pct">??%</div>
+        <div class="rn-bf__off">OFF</div>
+      </div>
+      <div class="rn-bf__tkr">
+        <div class="rn-bf__tkk">CUPOM SECRETO · QUARTA-FEIRA</div>
+        <h3 class="rn-bf__tkt">Desconto em todos os produtos</h3>
+        <div class="rn-bf__li"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Liberado em 25/11, a partir das 00:00</span></div>
+        <div class="rn-bf__li rn-bf__li--b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><span>Vale para todos os produtos da loja</span></div>
+        {% if rn_agora >= 1795575600 %}
+          <div class="rn-bf__code rn-bf__code--on">
+            <div><div class="rn-bf__codek">SEU CUPOM</div><div class="rn-bf__codev">QUARTA-FEIRA</div></div>
+            <button type="button" class="rn-bf__copy" data-code="QUARTA-FEIRA"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button>
+          </div>
+        {% else %}
+          <div class="rn-bf__code" data-lock="1795575600"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div>Código revelado em <b>25/11, 00:00</b><div class="rn-bf__cd" data-cd="1795575600"></div></div></div>
+        {% endif %}
+      </div>
+    </article>
+    <article class="rn-bf__tk" id="cupom-qui" data-t="1795662000">
+      <div class="rn-bf__tkl">
+        <div class="rn-bf__pct">??%</div>
+        <div class="rn-bf__off">OFF</div>
+      </div>
+      <div class="rn-bf__tkr">
+        <div class="rn-bf__tkk">CUPOM SECRETO · QUINTA-FEIRA</div>
+        <h3 class="rn-bf__tkt">Desconto em todos os produtos</h3>
+        <div class="rn-bf__li"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Liberado em 26/11, a partir das 00:00</span></div>
+        <div class="rn-bf__li rn-bf__li--b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><span>Vale para todos os produtos da loja</span></div>
+        {% if rn_agora >= 1795662000 %}
+          <div class="rn-bf__code rn-bf__code--on">
+            <div><div class="rn-bf__codek">SEU CUPOM</div><div class="rn-bf__codev">QUINTA-FEIRA</div></div>
+            <button type="button" class="rn-bf__copy" data-code="QUINTA-FEIRA"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button>
+          </div>
+        {% else %}
+          <div class="rn-bf__code" data-lock="1795662000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div>Código revelado em <b>26/11, 00:00</b><div class="rn-bf__cd" data-cd="1795662000"></div></div></div>
+        {% endif %}
+      </div>
+    </article>
+    <article class="rn-bf__tk rn-bf__tk--gold" id="cupom-sex" data-t="1795748400">
+      <div class="rn-bf__tkl">
+        <div class="rn-bf__pct">??%</div>
+        <div class="rn-bf__off">OFF</div>
+      </div>
+      <div class="rn-bf__tkr">
+        <div class="rn-bf__tkk">CUPOM SECRETO · SEXTA DA BLACK</div>
+        <h3 class="rn-bf__tkt">Desconto em todos os produtos</h3>
+        <div class="rn-bf__li"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Liberado em 27/11, a partir das 00:00</span></div>
+        <div class="rn-bf__li rn-bf__li--b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><span>Vale para todos os produtos da loja</span></div>
+        {% if rn_agora >= 1795748400 %}
+          <div class="rn-bf__code rn-bf__code--on">
+            <div><div class="rn-bf__codek">SEU CUPOM</div><div class="rn-bf__codev">BLACKFRIDAY</div></div>
+            <button type="button" class="rn-bf__copy" data-code="BLACKFRIDAY"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button>
+          </div>
+        {% else %}
+          <div class="rn-bf__code" data-lock="1795748400"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div>Código revelado em <b>27/11, 00:00</b><div class="rn-bf__cd" data-cd="1795748400"></div></div></div>
+        {% endif %}
+      </div>
+    </article>
+    <article class="rn-bf__tk" id="cupom-sab" data-t="1795834800">
+      <div class="rn-bf__tkl">
+        <div class="rn-bf__pct">??%</div>
+        <div class="rn-bf__off">OFF</div>
+      </div>
+      <div class="rn-bf__tkr">
+        <div class="rn-bf__tkk">CUPOM SECRETO · SÁBADO</div>
+        <h3 class="rn-bf__tkt">Desconto em todos os produtos</h3>
+        <div class="rn-bf__li"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Liberado em 28/11, a partir das 00:00</span></div>
+        <div class="rn-bf__li rn-bf__li--b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><span>Vale para todos os produtos da loja</span></div>
+        {% if rn_agora >= 1795834800 %}
+          <div class="rn-bf__code rn-bf__code--on">
+            <div><div class="rn-bf__codek">SEU CUPOM</div><div class="rn-bf__codev">SÁBADO</div></div>
+            <button type="button" class="rn-bf__copy" data-code="SÁBADO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button>
+          </div>
+        {% else %}
+          <div class="rn-bf__code" data-lock="1795834800"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div>Código revelado em <b>28/11, 00:00</b><div class="rn-bf__cd" data-cd="1795834800"></div></div></div>
+        {% endif %}
+      </div>
+    </article>
+    <article class="rn-bf__tk" id="cupom-dom" data-t="1795921200">
+      <div class="rn-bf__tkl">
+        <div class="rn-bf__pct">??%</div>
+        <div class="rn-bf__off">OFF</div>
+      </div>
+      <div class="rn-bf__tkr">
+        <div class="rn-bf__tkk">CUPOM SECRETO · DOMINGO</div>
+        <h3 class="rn-bf__tkt">Desconto em todos os produtos</h3>
+        <div class="rn-bf__li"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Liberado em 29/11, a partir das 00:00</span></div>
+        <div class="rn-bf__li rn-bf__li--b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><span>Vale para todos os produtos da loja</span></div>
+        {% if rn_agora >= 1795921200 %}
+          <div class="rn-bf__code rn-bf__code--on">
+            <div><div class="rn-bf__codek">SEU CUPOM</div><div class="rn-bf__codev">DOMINGO</div></div>
+            <button type="button" class="rn-bf__copy" data-code="DOMINGO"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button>
+          </div>
+        {% else %}
+          <div class="rn-bf__code" data-lock="1795921200"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div>Código revelado em <b>29/11, 00:00</b><div class="rn-bf__cd" data-cd="1795921200"></div></div></div>
+        {% endif %}
+      </div>
+    </article>
+    <article class="rn-bf__tk" id="cupom-seg" data-t="1796007600">
+      <div class="rn-bf__tkl">
+        <div class="rn-bf__pct">??%</div>
+        <div class="rn-bf__off">OFF</div>
+      </div>
+      <div class="rn-bf__tkr">
+        <div class="rn-bf__tkk">CUPOM SECRETO · SEGUNDA-FEIRA</div>
+        <h3 class="rn-bf__tkt">Desconto em todos os produtos</h3>
+        <div class="rn-bf__li"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Liberado em 30/11, a partir das 00:00</span></div>
+        <div class="rn-bf__li rn-bf__li--b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><span>Vale para todos os produtos da loja</span></div>
+        {% if rn_agora >= 1796007600 %}
+          <div class="rn-bf__code rn-bf__code--on">
+            <div><div class="rn-bf__codek">SEU CUPOM</div><div class="rn-bf__codev">SEGUNDA</div></div>
+            <button type="button" class="rn-bf__copy" data-code="SEGUNDA"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>Copiar</span></button>
+          </div>
+        {% else %}
+          <div class="rn-bf__code" data-lock="1796007600"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><div>Código revelado em <b>30/11, 00:00</b><div class="rn-bf__cd" data-cd="1796007600"></div></div></div>
+        {% endif %}
+      </div>
+    </article>
+  </section>
+
+  <div class="rn-terms__end">
+    <p>Use o cupom no checkout, no campo "Aplicar cupom de desconto".</p>
+    <a class="rn-terms__back" href="/categories">Ver produtos</a>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var dias = [].slice.call(document.querySelectorAll('.rn-bf__day')).map(function (el) { return +el.getAttribute('data-t'); });
+    var DIA = 86400;
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function tick() {
+      var agora = Date.now() / 1000;
+      // status de cada dia
+      document.querySelectorAll('.rn-bf__day').forEach(function (el) {
+        var t = +el.getAttribute('data-t'), s = el.querySelector('.rn-bf__ds');
+        el.classList.remove('rn-bf__day--hoje', 'rn-bf__day--foi');
+        if (agora >= t && agora < t + DIA) { s.textContent = 'Liberado hoje'; el.classList.add('rn-bf__day--hoje'); }
+        else if (agora >= t + DIA) { s.textContent = 'Liberado'; el.classList.add('rn-bf__day--foi'); }
+        else { s.textContent = s.getAttribute('data-ult') ? 'Último dia' : 'Em breve'; }
+      });
+      // contagem para o próximo cupom
+      var prox = dias.filter(function (t) { return t > agora; })[0];
+      if (!prox) { document.getElementById('rn-bf-timer').hidden = true; }
+      else {
+        var r = Math.max(0, Math.floor(prox - agora));
+        document.getElementById('rn-bf-d').textContent = pad(Math.floor(r / DIA));
+        document.getElementById('rn-bf-h').textContent = pad(Math.floor(r % DIA / 3600));
+        document.getElementById('rn-bf-m').textContent = pad(Math.floor(r % 3600 / 60));
+        document.getElementById('rn-bf-s').textContent = pad(r % 60);
+      }
+      // contagem dentro de cada cupom bloqueado
+      document.querySelectorAll('.rn-bf__cd').forEach(function (el) {
+        var r = Math.max(0, Math.floor(+el.getAttribute('data-cd') - agora));
+        el.textContent = r > 0 ? 'Faltam ' + (r >= DIA ? Math.floor(r / DIA) + 'd ' : '') + pad(Math.floor(r % DIA / 3600)) + ':' + pad(Math.floor(r % 3600 / 60)) + ':' + pad(r % 60) : 'Liberando…';
+      });
+      // chegou a hora de um cupom ainda bloqueado: recarrega para o servidor revelar o código
+      var vencido = [].some.call(document.querySelectorAll('[data-lock]'), function (el) { return agora >= +el.getAttribute('data-lock') + 2; });
+      if (vencido && !window.__rnBfReload) {
+        window.__rnBfReload = true;
+        setTimeout(function () { location.reload(); }, 1500);
+        setTimeout(function () { window.__rnBfReload = false; }, 25000);
+      }
+    }
+    tick(); setInterval(tick, 1000);
+
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('.rn-bf__copy'); if (!b) return;
+      var code = b.getAttribute('data-code');
+      var ok = function () { var s = b.querySelector('span'); s.textContent = 'Copiado!'; b.classList.add('rn-bf__copy--ok'); setTimeout(function () { s.textContent = 'Copiar'; b.classList.remove('rn-bf__copy--ok'); }, 1800); };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(ok, function () {});
+      else { var t = document.createElement('textarea'); t.value = code; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); ok(); } catch (_) {} t.remove(); }
+    });
+  })();
+</script>

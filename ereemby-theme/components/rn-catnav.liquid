@@ -1,0 +1,98 @@
+{% comment %}
+  Rei dos Nitros: barra de atalhos abaixo do cabeçalho (Todas, Black Friday e cada categoria da loja).
+  As categorias vêm do catálogo automaticamente. O atalho da página atual fica verde.
+  Na página de um produto, só aparecem Afiliado, Regras e Cashback.
+{% endcomment %}
+{% assign rn_cn_agora = 'now' | date: '%s' | plus: 0 %}
+<nav class="rn-catnav" id="rn-catnav" aria-label="Atalhos da loja">
+  <div class="rn-catnav__track" id="rn-catnav-track">
+    <a class="rn-catnav__chip rn-catnav__chip--cat" href="/categories" data-match="^/categories$">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+      Todas
+    </a>
+    {% if rn_cn_agora < 1796094000 %}
+      <a class="rn-catnav__chip rn-catnav__chip--cat rn-catnav__chip--bf" href="/black-friday" data-match="^/black-friday$">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor"/></svg>
+        Black Friday
+      </a>
+    {% endif %}
+    {% comment %} Novidades: troque rn_nv_ultimo pelo id da atualização mais nova (assets/rn-novidades.js) {% endcomment %}
+    {% assign rn_nv_ultimo = 'molduras' %}
+    <a class="rn-catnav__chip rn-catnav__chip--cat rn-catnav__chip--nv" href="/novidades" data-match="^/novidades$" data-nv="{{ rn_nv_ultimo }}">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3"/></svg>
+      Novidades
+    </a>
+    <script>
+      (function () {
+        var a = document.currentScript && document.currentScript.previousElementSibling; if (!a || !a.getAttribute('data-nv')) return;
+        var visto = ''; try { visto = localStorage.getItem('rn_novidades_visto') || ''; } catch (e) {}
+        if (visto !== a.getAttribute('data-nv') && location.pathname !== '/novidades') a.insertAdjacentHTML('beforeend', '<i class="rn-catnav__nv-dot" aria-label="tem novidade"></i>');
+      })();
+    </script>
+    <a class="rn-catnav__chip rn-catnav__chip--cat" href="/franquias" data-match="^/franquias$">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="6" height="16" rx="1.5"/><rect x="9" y="4" width="6" height="16" rx="1.5"/><path d="m16.5 5.2 3.4-.9a1 1 0 0 1 1.2.7l3 13a1 1 0 0 1-.7 1.2l-3.4.9"/></svg>
+      Franquias
+    </a>
+    <a class="rn-catnav__chip rn-catnav__chip--cat" href="/colecoes" data-match="^/colecoes$">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 2.9 6.9 7.1.6-5.4 4.7 1.6 7L12 17.5 5.8 21.2l1.6-7L2 9.5l7.1-.6z"/></svg>
+      Coleções
+    </a>
+    {% for cat in catalog.categories_all %}
+      {% if cat.parent_category %}{% continue %}{% endif %}
+      <a class="rn-catnav__chip rn-catnav__chip--cat" href="/category/{{ cat.slug | default: cat.id }}" data-match="^/category/({{ cat.slug | default: cat.id }}|{{ cat.id }})$">
+        {% comment %} ícone conforme o nome da categoria (sem emoji); nome sem palavra conhecida usa a etiqueta {% endcomment %}
+        {% assign rn_cn = cat.name | downcase %}
+        {% if rn_cn contains 'discord' %}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M9 11.5h.01M15 11.5h.01"/></svg>
+        {% elsif rn_cn contains 'stream' or rn_cn contains 'assinatura' %}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2.5"/><path d="M8 21h8M12 17v4"/><path d="m10 8 4 2.5-4 2.5z" fill="currentColor"/></svg>
+        {% elsif rn_cn contains 'jogo' or rn_cn contains 'steam' or rn_cn contains 'game' %}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
+        {% elsif rn_cn contains 'conta' %}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        {% elsif rn_cn contains 'todo' or rn_cn contains 'tutorial' or rn_cn contains 'curso' %}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        {% elsif rn_cn contains 'sorte' or rn_cn contains 'roleta' or rn_cn contains 'raspa' or rn_cn contains 'robux' %}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.2" fill="currentColor"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>
+        {% elsif rn_cn contains 'surpresa' or rn_cn contains 'mio' or rn_cn contains 'presente' or rn_cn contains 'brinde' %}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>
+        {% else %}<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.6 2.6A2 2 0 0 0 11.2 2H4a2 2 0 0 0-2 2v7.2a2 2 0 0 0 .6 1.4l8.7 8.7a2.4 2.4 0 0 0 3.4 0l6.6-6.6a2.4 2.4 0 0 0 0-3.4z"/><circle cx="7.5" cy="7.5" r="1.2" fill="currentColor"/></svg>
+        {% endif %}
+        {{ cat.name }}
+      </a>
+    {% endfor %}
+    <span class="rn-catnav__sep" aria-hidden="true"></span>
+    <a class="rn-catnav__chip rn-catnav__chip--aff" href="/account/affiliate" data-match="^/(account/affiliate|affiliate|como-vender)$">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+      Torne-se um afiliado
+    </a>
+    <a class="rn-catnav__chip rn-catnav__chip--rules" href="/regras" data-match="^/regras$">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      Regras
+    </a>
+    <a class="rn-catnav__chip rn-catnav__chip--cash" href="/cashback" data-match="^/cashback$">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="5"/><path d="M18.1 10.4A5 5 0 1 1 10.4 18.1"/><path d="M7 6h1v4"/><path d="m16.7 13.9.7.7-2.8 2.8"/></svg>
+      Cashback
+    </a>
+  </div>
+</nav>
+<script>
+  (function () {
+    var track = document.getElementById('rn-catnav-track');
+    if (!track) return;
+    var ultimo = null;
+    function marcar() {
+      var path = location.pathname.replace(/\/+$/, '') || '/';
+      if (path === ultimo) return;
+      ultimo = path;
+      document.getElementById('rn-catnav').classList.toggle('rn-catnav--produto', /^\/product\//.test(path));
+      var ativo = null;
+      track.querySelectorAll('.rn-catnav__chip').forEach(function (a) {
+        var ok = false;
+        try { ok = new RegExp(a.getAttribute('data-match')).test(path); } catch (_) {}
+        a.classList.toggle('rn-catnav__chip--on', ok);
+        if (ok) ativo = a;
+      });
+      // centraliza o atalho ativo na barra
+      if (ativo) track.scrollTo({ left: ativo.offsetLeft - track.clientWidth / 2 + ativo.offsetWidth / 2, behavior: 'smooth' });
+    }
+    function fim() { document.getElementById('rn-catnav').classList.toggle('rn-catnav--fim', track.scrollLeft + track.clientWidth >= track.scrollWidth - 4); }
+    track.addEventListener('scroll', fim, { passive: true });
+    window.addEventListener('rn:rota', marcar);
+    setInterval(marcar, 500);
+    marcar(); fim();
+  })();
+</script>
