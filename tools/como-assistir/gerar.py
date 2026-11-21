@@ -582,3 +582,22 @@ TEMAS2 = {
 .sv--canva .sv-pctl{display:none}
 """,
 }
+
+
+def conta_tela(titulo, campos, btn='Editar', btn2='Salvo', ok='Dados trocados: a conta é sua'):
+    """Tela 3 dos produtos full access: a página de conta/segurança do app, com o botão de editar ao lado do e-mail."""
+    linhas = ''.join(f'<div class="sv-cfg-r"><small>{esc(a)}</small><span>{esc(b)}</span></div>' for a, b in campos)
+    return (f'<div class="sv-cfg-w"><b class="sv-cfg-t">{esc(titulo)}</b><div class="sv-cfg">{linhas}</div>'
+            f'<span class="sv-inv-btn sv-cfg-btn"><em class="sv-ib1">{esc(btn)}</em><em class="sv-ib2">{esc(btn2)}</em></span>'
+            f'<span class="sv-inv-ok sv-cfg-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>{esc(ok)}</span></div>')
+
+INV_CSS += """
+.sv-cfg-w{position:absolute;inset:0;padding:43px 14px 0}
+.sv-cfg-t{position:absolute;left:14px;top:16px;color:#fff;font-size:12px}
+.sv-cfg{padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.06);max-width:260px}
+.sv-cfg-r+.sv-cfg-r{margin-top:6px}
+.sv-cfg-r small{display:block;color:#9aa0a6;font-size:7.5px;font-weight:800;text-transform:uppercase}
+.sv-cfg-r span{color:#f2f3f5;font-size:9.5px}
+.sv-cfg-btn{position:absolute !important;left:calc(50% + 28px);top:81px;width:96px !important;height:24px !important;margin-left:-48px;border-radius:4px !important}
+.sv-cfg-ok{position:absolute;left:0;right:0;top:152px;justify-content:center;margin:0 !important}
+"""

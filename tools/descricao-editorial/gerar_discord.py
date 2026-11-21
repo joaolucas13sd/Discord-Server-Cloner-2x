@@ -77,7 +77,7 @@ for id, dur, plano in [('var_AfmTPTQa0sU', '1 mês', 'Código Nitro 1 Mês + Ati
            [LOJA + '\n<p>O Nitro é ativado na <strong>sua conta</strong>, sem precisar de cartão: você <strong>não troca de conta</strong> nem passa a sua senha. As instruções de ativação chegam junto com o pedido.</p>',
             '<p><strong>Seu perfil no próximo nível.</strong> Avatar e banner animados, cores de perfil, emojis e figurinhas personalizados em qualquer servidor, Super Reações e temas exclusivos do app.</p>'],
            '', NITRO_SPECS,
-           dict(pedido=plano, img=IMG['nitro'], tipo='presente', final='perfil', plano=f'Discord Nitro · {dur}', nitro=True, ty1='seuemail@gmail.com', ok='Nitro ativo na sua conta',
+           dict(pedido=plano, img=IMG['nitro'], tipo='presente', final='perfil', plano=f'Nitro · {dur}', nitro=True, ty1='seuemail@gmail.com', ok='Nitro ativo na sua conta',
                 rows=[('Presente', 'link de ativação'), ('Plano', f'Nitro · {dur}'), ('Conta', 'a sua conta Discord')],
                 linhas=[('Assinante Nitro desde', f'<img src="{NITRO}" alt="">Hoje')],
                 steps=[('Abra o link no pedido', 'Na página do seu pedido aparece o link de ativação do Nitro.'), ('Entre na sua conta', 'Abra o link e entre com a sua própria conta Discord.'),

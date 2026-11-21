@@ -266,6 +266,15 @@
 .sv-inv-ok svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 @keyframes svInvOk{0%,58.5%{opacity:0;transform:translateY(4px)}60%,100%{opacity:1;transform:none}}
 
+.sv-cfg-w{position:absolute;inset:0;padding:43px 14px 0}
+.sv-cfg-t{position:absolute;left:14px;top:16px;color:#fff;font-size:12px}
+.sv-cfg{padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.06);max-width:260px}
+.sv-cfg-r+.sv-cfg-r{margin-top:6px}
+.sv-cfg-r small{display:block;color:#9aa0a6;font-size:7.5px;font-weight:800;text-transform:uppercase}
+.sv-cfg-r span{color:#f2f3f5;font-size:9.5px}
+.sv-cfg-btn{position:absolute !important;left:calc(50% + 28px);top:81px;width:96px !important;height:24px !important;margin-left:-48px;border-radius:4px !important}
+.sv-cfg-ok{position:absolute;left:0;right:0;top:152px;justify-content:center;margin:0 !important}
+
 .sv--discord{--sp:#5865f2}
 .sv--discord .sv-word{color:#fff;font-weight:800;letter-spacing:-.01em;align-items:center}
 .dz-clyde{display:inline-grid;place-items:center;width:1.25em;height:1em;margin-right:.25em}
@@ -285,8 +294,8 @@
 .dz-chat b,.dz-msg b{color:#f2f3f5;font-size:10px}
 .dz-chat i{font-style:normal;padding:0 3px;border-radius:3px;background:#5865f2;color:#fff;font-size:7px;font-weight:800;vertical-align:1px}
 .dz-chat p,.dz-msg p{margin:1px 0 0 !important;color:#dbdee1 !important;font-size:9.5px !important;line-height:1.35 !important}
-.dz-gift{margin:9px 0 0 29px;padding:8px 9px;border-radius:6px;background:#2b2d31;max-width:260px}
-.dz-gift-r>div{max-width:74px;min-width:0}
+.dz-gift{margin:0;padding:7px 9px 40px;border-radius:6px;background:#2b2d31;max-width:260px}
+.dz-gift-r>div{min-width:0;max-width:84px}
 .dz-gift-r b,.dz-gift-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .dz-gift small{display:block;color:#b5bac1;font-size:7.5px;font-weight:800;letter-spacing:.04em}
 .dz-gift-r{display:flex;gap:7px;align-items:center;margin-top:5px}
@@ -320,7 +329,23 @@
 .dz-main{position:absolute;left:34px;right:0;top:0;bottom:0}
 .dz-top{height:22px;padding:0 10px;display:flex;align-items:center;color:#f2f3f5;font-size:10px;font-weight:700;border-bottom:1px solid #26272b}
 .dz-msg{padding:10px}
-.dz-ver{position:absolute;left:4px;top:107px;padding:5px 9px;border-radius:3px;background:#5865f2;color:#fff;font-size:9px;font-weight:700}
+.dz-msg{padding:8px 10px 0}
+.dz-bot .dz-av{background:#5865f2}
+.dz-tag{font-style:normal;padding:0 3px;border-radius:3px;background:#5865f2;color:#fff;font-size:7px;font-weight:800;vertical-align:1px}
+.dz-ver{display:inline-block;margin-top:5px;padding:5px 10px;border-radius:3px;background:#5865f2;color:#fff;font-size:9px;font-weight:700}
+.sv-card.sv--discord .sv-cur,.sv-card.sv--discord:has(.sv-splash) .sv-cur{animation:dzCur var(--sv-t) infinite,svCurHide var(--sv-t) infinite}
+@keyframes dzCur{
+  0%,3%{left:calc(50% + 120px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  8%{left:calc(50% + 46px);top:116px}10%{left:calc(50% + 46px);top:116px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  12.5%{left:calc(50% + 46px);top:148px}14%{left:calc(50% + 46px);top:148px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  16.5%{left:calc(50% + 46px);top:180px}23%{left:calc(50% + 46px);top:180px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  27.5%{left:calc(50% - 40px);top:100px}36%{left:calc(50% - 40px);top:100px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  37%{left:calc(50% - 40px);top:130px}42.5%{left:calc(50% - 40px);top:130px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  44.5%{left:calc(50% + 4px);top:161px}49%{left:calc(50% + 4px);top:161px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  55%{left:calc(50% + 28px);top:93px}58%{left:calc(50% + 28px);top:93px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  62%{left:calc(50% + 70px);top:178px}72%{left:calc(50% + 70px);top:178px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  80%{left:var(--dz-vx,103px);top:var(--dz-vy,124px)}84%{left:var(--dz-vx,103px);top:var(--dz-vy,124px);animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  92%,100%{left:calc(50% + 120px);top:186px}}
 .dz-final{position:absolute;inset:0;z-index:3;display:grid;place-items:center;background:rgba(0,0,0,.55) !important}
 .dz-final .sv-sun,.dz-final .sv-mt{display:none}
 .dz-prof{width:172px;border-radius:8px;overflow:hidden;background:#232428;box-shadow:0 8px 24px rgba(0,0,0,.5);animation:dzPop var(--sv-t) infinite}
@@ -380,7 +405,7 @@
             <div class="sv-in"><span class="sv-ty sv-ty2">••••••••••</span></div>
             <div class="sv-btn"><span class="sv-b1">Entrar</span><span class="sv-b2">Entrando...</span></div></div><div class="sv-load"><i></i></div><div class="sv-splash"><span class="sv-word"><b class="dz-clyde"><svg viewBox="0 0 127 96" aria-hidden="true"><path fill="currentColor" d="M107.7 8.1A105 105 0 0 0 81.5 0a72 72 0 0 0-3.4 6.8 97.7 97.7 0 0 0-29.1 0A72 72 0 0 0 45.6 0a105.9 105.9 0 0 0-26.3 8.1C2.8 32.7-1.7 56.6.5 80.2a105.7 105.7 0 0 0 32.2 16.2 77.7 77.7 0 0 0 6.9-11.2 68.4 68.4 0 0 1-10.9-5.2l2.7-2.1a75.6 75.6 0 0 0 64.3 0l2.7 2.1a68.7 68.7 0 0 1-10.9 5.2 77 77 0 0 0 6.9 11.2 105.3 105.3 0 0 0 32.2-16.2c2.6-27.3-4.5-51-18.9-72.1ZM42.5 65.7c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Zm42.2 0c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Z"/></svg></b>Discord</span></div></div>
           <div class="sv-sc sv-sc3"><div class="dz3 dz3--cfg"><b class="dz-cfg-t">Minha conta</b><div class="dz-cfg"><div class="dz-cfg-r"><small>E-MAIL</small><span>og••••••@email.com</span></div><div class="dz-cfg-r"><small>SENHA</small><span>••••••••••</span></div></div><span class="sv-inv-btn dz-btn"><em class="sv-ib1">Editar</em><em class="sv-ib2">Salvo</em></span><span class="sv-inv-ok dz-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Dados trocados: a conta é sua</span></div></div>
-          <div class="sv-sc sv-sc4"><div class="dz-rail"><i class="dz-home"><svg viewBox="0 0 127 96" aria-hidden="true"><path fill="currentColor" d="M107.7 8.1A105 105 0 0 0 81.5 0a72 72 0 0 0-3.4 6.8 97.7 97.7 0 0 0-29.1 0A72 72 0 0 0 45.6 0a105.9 105.9 0 0 0-26.3 8.1C2.8 32.7-1.7 56.6.5 80.2a105.7 105.7 0 0 0 32.2 16.2 77.7 77.7 0 0 0 6.9-11.2 68.4 68.4 0 0 1-10.9-5.2l2.7-2.1a75.6 75.6 0 0 0 64.3 0l2.7 2.1a68.7 68.7 0 0 1-10.9 5.2 77 77 0 0 0 6.9 11.2 105.3 105.3 0 0 0 32.2-16.2c2.6-27.3-4.5-51-18.9-72.1ZM42.5 65.7c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Zm42.2 0c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Z"/></svg></i><i></i><i></i><i></i></div><div class="dz-main"><div class="dz-top"># geral</div><div class="dz-msg"><span class="dz-av"></span><div><b>você</b><p>tudo pronto por aqui ✨</p></div></div><span class="sv-as dz-ver">Ver perfil</span></div><div class="sv-play dz-final"><div class="dz-prof"><div class="dz-pban"></div><span class="dz-pav"><i></i></span><div class="dz-pb"><b>você</b><span class="dz-pu">voce </span><div class="dz-pr"><small>Membro desde</small><span>13 de mar. de 2019</span></div><div class="dz-pr"><small>Conta</small><span>Veterana · 7 anos de Discord</span></div></div></div></div></div>
+          <div class="sv-sc sv-sc4"><div class="dz-rail"><i class="dz-home"><svg viewBox="0 0 127 96" aria-hidden="true"><path fill="currentColor" d="M107.7 8.1A105 105 0 0 0 81.5 0a72 72 0 0 0-3.4 6.8 97.7 97.7 0 0 0-29.1 0A72 72 0 0 0 45.6 0a105.9 105.9 0 0 0-26.3 8.1C2.8 32.7-1.7 56.6.5 80.2a105.7 105.7 0 0 0 32.2 16.2 77.7 77.7 0 0 0 6.9-11.2 68.4 68.4 0 0 1-10.9-5.2l2.7-2.1a75.6 75.6 0 0 0 64.3 0l2.7 2.1a68.7 68.7 0 0 1-10.9 5.2 77 77 0 0 0 6.9 11.2 105.3 105.3 0 0 0 32.2-16.2c2.6-27.3-4.5-51-18.9-72.1ZM42.5 65.7c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Zm42.2 0c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Z"/></svg></i><i></i><i></i><i></i></div><div class="dz-main"><div class="dz-top"># geral</div><div class="dz-msg"><span class="dz-av"></span><div><b>você</b><p>tudo pronto por aqui ✨</p></div></div><div class="dz-msg dz-bot"><span class="dz-av"></span><div><b>Rei dos Nitros</b> <i class="dz-tag">BOT</i><p>Tudo certo! Confira o resultado:</p><span class="sv-as dz-ver">Ver perfil</span></div></div></div><div class="sv-play dz-final"><div class="dz-prof"><div class="dz-pban"></div><span class="dz-pav"><i></i></span><div class="dz-pb"><b>você</b><span class="dz-pu">voce </span><div class="dz-pr"><small>Membro desde</small><span>13 de mar. de 2019</span></div><div class="dz-pr"><small>Conta</small><span>Veterana · 7 anos de Discord</span></div></div></div></div></div>
           <span class="sv-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>
         </div>
       </div>
