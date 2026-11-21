@@ -627,3 +627,122 @@ def sensi_videos(plat, passos, base):
 @media (max-width:560px){.vt--sv2 .sv2-grid{grid-template-columns:1fr;gap:14px}.vt--sv2 .sv2-vs{top:50%}}
 """
     return html, BASE + css
+
+
+# ---------------------------------------------------------------- Steam offline (Jogos Steam): login → Steam Guard → instalar → ficar offline → jogar
+def steam_offline(nome, hero, passos):
+    n = esc(nome)
+    st = ''.join(f'<div class="so-st so-s{i}"><i>{i + 1}</i><div><b>{esc(t)}</b><span>{esc(d)}</span></div></div>' for i, (t, d) in enumerate(passos))
+    code = ''.join(f'<u><b class="so-c{k}">{c}</b></u>' for k, c in enumerate('NX7K2'))
+    jan = (
+        '<div class="so-top"><b>Steam</b><span>Exibir</span><span>Amigos</span><span>Jogos</span><span>Ajuda</span></div>'
+        # 1. login
+        '<div class="so-sc so-login"><div class="so-box"><span class="so-lt"><i class="so-logo"></i>Iniciar sessão</span>'
+        '<small>Nome da conta</small><span class="so-in"><em class="so-ty1">conta_do_pedido</em></span>'
+        '<small>Senha</small><span class="so-in"><em class="so-ty2">••••••••••</em></span>'
+        '<span class="so-btn so-b1">Iniciar sessão</span></div></div>'
+        # 2. Steam Guard
+        '<div class="so-sc so-guard"><i class="so-shield"></i><b>Steam Guard</b><small>Digite o código que aparece na página do seu pedido</small>'
+        f'<div class="so-code">{code}</div></div>'
+        # 3-5. biblioteca
+        '<div class="so-sc so-lib"><div class="so-tabs"><span>LOJA</span><span class="on">BIBLIOTECA</span><span>COMUNIDADE</span>'
+        '<em class="so-on">● Online</em><em class="so-off">● Modo offline</em></div>'
+        f'<div class="so-side"><small>JOGOS</small><span>{n}</span></div>'
+        f'<div class="so-hero" style="background-image:url({hero})"><b>{n}</b></div>'
+        '<div class="so-act"><span class="so-btn so-inst">INSTALAR</span><span class="so-bar"><i></i></span><small class="so-dl">Baixando...</small>'
+        '<span class="so-btn so-play">JOGAR</span><small class="so-ready">Pronto para jogar</small><span class="so-btn so-run">EXECUTANDO</span></div>'
+        '<div class="so-menu"><span>Alterar conta...</span><span class="so-mo">Ficar offline...</span><span>Configurações</span><span>Sair</span></div>'
+        '<div class="so-dlg"><b>Ficar offline</b><small>A Steam vai reiniciar no modo offline.</small><span class="so-btn so-b2">Reiniciar no modo offline</span></div>'
+        '<div class="so-load"><i></i></div></div>'
+        '<span class="so-cur"></span>')
+    html = (f'<div class="ed-card vt vt--so" style="--vc:#21e065"><span class="vt-k">Passo a passo</span><h2 class="vt-t">Como jogar no modo offline</h2>'
+            f'<div class="vt-win" role="img" aria-label="Como jogar {n} no modo offline">{jan}</div>'
+            f'<div class="so-steps">{st}</div></div>')
+    css = """
+.vt--so{--vt:22s}
+.vt--so .vt-win{height:250px;background:#16191f;font-family:inherit}
+.vt--so .vt-win *{box-sizing:border-box}
+.vt--so .vt-win span,.vt--so .vt-win small,.vt--so .vt-win b,.vt--so .vt-win em,.vt--so .vt-win i,.vt--so .vt-win u{display:block;font-style:normal;text-decoration:none}
+.vt--so .so-top{position:absolute;left:0;right:0;top:0;height:22px;display:flex;gap:12px;align-items:center;padding:0 10px;background:#0f1115;border-bottom:1px solid #23262d;z-index:4}
+.vt--so .so-top b,.vt--so .so-top span{color:#8f98a0;font-size:9px;font-weight:600}.vt--so .so-top b{color:#c7d5e0;animation:soTopB var(--vt) infinite}
+@keyframes soTopB{0%,58%{background:none}59%,66%{background:#2a2f38;border-radius:3px}67%,100%{background:none}}
+.vt--so .so-sc{position:absolute;inset:22px 0 0;opacity:0}
+.vt--so .so-login{animation:soA var(--vt) infinite}.vt--so .so-guard{animation:soB var(--vt) infinite}.vt--so .so-lib{animation:soC var(--vt) infinite}
+@keyframes soA{0%,15%{opacity:1}16.5%,100%{opacity:0}}
+@keyframes soB{0%,16%{opacity:0}17.5%,32%{opacity:1}33.5%,100%{opacity:0}}
+@keyframes soC{0%,33%{opacity:0}34.5%,96%{opacity:1}98%,100%{opacity:0}}
+.vt--so .so-box{position:absolute;left:50%;top:22px;width:200px;margin-left:-100px;padding:10px 12px;border-radius:8px;background:#1d2128;border:1px solid #2a2f38}
+.vt--so .so-lt{display:flex !important;align-items:center;gap:6px;color:#fff;font-size:12px;font-weight:800;margin-bottom:6px}
+.vt--so .so-logo{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 65% 35%,#fff 0 3px,#1b2838 3.5px 5px,#fff 5.5px)}
+.vt--so .so-box small{color:#8f98a0;font-size:8px;font-weight:700;margin-top:5px}
+.vt--so .so-in{height:20px;margin-top:2px;padding:0 6px;border-radius:3px;background:#2a2f38;display:flex !important;align-items:center;overflow:hidden}
+.vt--so .so-in em{color:#e5e7eb;font-size:9.5px;white-space:nowrap;overflow:hidden;width:0}
+.vt--so .so-ty1{animation:soTy1 var(--vt) infinite steps(15)}.vt--so .so-ty2{animation:soTy2 var(--vt) infinite steps(10)}
+@keyframes soTy1{0%,2%{width:0}8%,100%{width:92px}}@keyframes soTy2{0%,9%{width:0}12.5%,100%{width:60px}}
+.vt--so .so-btn{border-radius:3px;background:#21e065;color:#06150b;font-size:9px;font-weight:900;text-align:center;line-height:22px;height:22px}
+.vt--so .so-b1{margin-top:9px;animation:soPress1 var(--vt) infinite}
+@keyframes soPress1{0%,13.6%{transform:none}14%{transform:scale(.95);filter:brightness(.85)}14.6%,100%{transform:none}}
+.vt--so .so-guard{text-align:center;padding-top:30px}
+.vt--so .so-shield{width:24px;height:28px;margin:0 auto 6px;background:#a78bfa;clip-path:polygon(50% 0,100% 18%,100% 55%,50% 100%,0 55%,0 18%)}
+.vt--so .so-guard b{color:#fff;font-size:12px;font-weight:800}.vt--so .so-guard small{margin-top:3px;color:#8f98a0;font-size:8.5px}
+.vt--so .so-code{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.vt--so .so-code u{width:26px;height:30px;border-radius:4px;background:#2a2f38;border:1px solid #3a404b;display:grid !important;place-items:center}
+.vt--so .so-code b{color:#fff;font-size:13px;font-weight:900;opacity:0}
+.vt--so .so-c0{animation:soK0 var(--vt) infinite}.vt--so .so-c1{animation:soK1 var(--vt) infinite}.vt--so .so-c2{animation:soK2 var(--vt) infinite}.vt--so .so-c3{animation:soK3 var(--vt) infinite}.vt--so .so-c4{animation:soK4 var(--vt) infinite}
+@keyframes soK0{0%,20%{opacity:0}20.5%,100%{opacity:1}}@keyframes soK1{0%,22%{opacity:0}22.5%,100%{opacity:1}}@keyframes soK2{0%,24%{opacity:0}24.5%,100%{opacity:1}}
+@keyframes soK3{0%,26%{opacity:0}26.5%,100%{opacity:1}}@keyframes soK4{0%,28%{opacity:0}28.5%,100%{opacity:1}}
+.vt--so .so-tabs{position:absolute;left:0;right:0;top:0;height:22px;display:flex;gap:10px;align-items:center;padding:0 10px}
+.vt--so .so-tabs span{color:#8f98a0;font-size:8px;font-weight:800}.vt--so .so-tabs span.on{color:#fff;border-bottom:2px solid #21e065}
+.vt--so .so-tabs em{position:absolute;right:10px;font-size:8px;font-weight:800}
+.vt--so .so-on{color:#21e065;animation:soOn var(--vt) infinite}.vt--so .so-off{color:#fbbf24;opacity:0;animation:soOff var(--vt) infinite}
+@keyframes soOn{0%,72%{opacity:1}73%,100%{opacity:0}}@keyframes soOff{0%,72%{opacity:0}73%,100%{opacity:1}}
+.vt--so .so-side{position:absolute;left:8px;top:28px;width:66px}
+.vt--so .so-side small{color:#6b7280;font-size:7px;font-weight:800}
+.vt--so .so-side span{margin-top:4px;padding:3px 5px;border-radius:3px;background:#2a3a5a;color:#fff;font-size:7.5px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vt--so .so-hero{position:absolute;left:82px;right:8px;top:28px;height:118px;border-radius:6px;background:#2a2f38 center/cover no-repeat;overflow:hidden}
+.vt--so .so-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.75),transparent 70%)}
+.vt--so .so-hero b{position:absolute;left:10px;bottom:10px;right:10px;z-index:1;color:#fff;font-size:15px;font-weight:900;line-height:1.1 !important;text-shadow:0 2px 6px #000}
+.vt--so .so-act{position:absolute;left:82px;right:8px;top:156px;height:24px}
+.vt--so .so-act>*{position:absolute;left:0;top:0}
+.vt--so .so-act .so-btn{width:78px}
+.vt--so .so-inst{background:#7c3aed;color:#fff;animation:soInst var(--vt) infinite}
+@keyframes soInst{0%,37.6%{opacity:1;transform:none}38%{transform:scale(.94)}38.6%,100%{opacity:0}}
+.vt--so .so-bar{left:0 !important;top:9px !important;width:78px;height:6px;border-radius:3px;background:#2a2f38;overflow:hidden;opacity:0;animation:soBarW var(--vt) infinite}
+.vt--so .so-bar i{height:100%;width:0;background:#7c3aed;animation:soBar var(--vt) infinite}
+@keyframes soBarW{0%,38.4%{opacity:0}38.6%,50%{opacity:1}50.5%,100%{opacity:0}}@keyframes soBar{0%,39%{width:0}50%,100%{width:100%}}
+.vt--so .so-dl{left:88px !important;top:6px !important;color:#8f98a0;font-size:8.5px;opacity:0;animation:soBarW var(--vt) infinite}
+.vt--so .so-play{opacity:0;animation:soPlay var(--vt) infinite}
+@keyframes soPlay{0%,50%{opacity:0}50.6%,79.6%{opacity:1;transform:none}80%{opacity:1;transform:scale(.94)}80.6%,100%{opacity:0}}
+.vt--so .so-ready{left:88px !important;top:6px !important;color:#8f98a0;font-size:8.5px;opacity:0;animation:soPlay var(--vt) infinite}
+.vt--so .so-run{background:transparent;border:1.5px solid #21e065;color:#21e065;line-height:19px;opacity:0;animation:soRun var(--vt) infinite}
+@keyframes soRun{0%,80.4%{opacity:0}80.8%,96%{opacity:1}98%,100%{opacity:0}}
+.vt--so .so-menu{position:absolute;left:6px;top:0;width:118px;padding:4px;border-radius:4px;background:#23262d;border:1px solid #3a404b;box-shadow:0 8px 20px rgba(0,0,0,.5);z-index:5;opacity:0;animation:soMenu var(--vt) infinite}
+@keyframes soMenu{0%,59%{opacity:0}59.6%,65.4%{opacity:1}66%,100%{opacity:0}}
+.vt--so .so-menu span{padding:4px 6px;border-radius:3px;color:#c7d5e0;font-size:8.5px}
+.vt--so .so-mo{animation:soMo var(--vt) infinite}@keyframes soMo{0%,62%{background:none}62.5%,100%{background:#7c3aed;color:#fff}}
+.vt--so .so-dlg{position:absolute;left:50%;top:52px;width:210px;margin-left:-105px;padding:12px;border-radius:6px;background:#23262d;border:1px solid #3a404b;box-shadow:0 0 0 400px rgba(0,0,0,.45);z-index:5;opacity:0;animation:soDlg var(--vt) infinite}
+@keyframes soDlg{0%,65.6%{opacity:0}66.2%,70.4%{opacity:1}71%,100%{opacity:0}}
+.vt--so .so-dlg b{color:#fff;font-size:11px;font-weight:800}.vt--so .so-dlg small{margin-top:4px;color:#8f98a0;font-size:8.5px}
+.vt--so .so-b2{margin-top:10px;animation:soPress2 var(--vt) infinite}
+@keyframes soPress2{0%,69.4%{transform:none}69.8%{transform:scale(.95);filter:brightness(.85)}70.4%,100%{transform:none}}
+.vt--so .so-load{position:absolute;inset:0;background:#16191f;z-index:6;opacity:0;display:grid;place-items:center;animation:soLoad var(--vt) infinite}
+.vt--so .so-load i{width:22px;height:22px;border-radius:50%;border:3px solid #2a2f38;border-top-color:#21e065;animation:soSpin .8s linear infinite}
+@keyframes soLoad{0%,70.6%{opacity:0}71%,73%{opacity:1}74%,100%{opacity:0}}@keyframes soSpin{to{transform:rotate(360deg)}}
+.vt--so .so-cur{position:absolute;z-index:9;width:14px;height:20px;margin:-2px 0 0 -2px;background:#fff;clip-path:polygon(0 0,0 80%,22% 62%,38% 98%,52% 92%,38% 58%,70% 58%);filter:drop-shadow(0 1px 2px #000);animation:soCur var(--vt) infinite}
+@keyframes soCur{0%{left:70%;top:85%}2%{left:calc(50% - 60px);top:84px}9%{left:calc(50% - 60px);top:84px}11%{left:calc(50% - 40px);top:116px}12.5%{left:calc(50% - 40px);top:116px}
+  14%{left:calc(50% + 10px);top:156px}16%{left:calc(50% + 10px);top:156px}19%{left:calc(50% + 50px);top:200px}33%{left:calc(50% + 60px);top:210px}
+  36%{left:122px;top:190px}38%{left:122px;top:190px}48%{left:200px;top:220px}
+  57%{left:18px;top:11px}59%{left:18px;top:11px}62%{left:40px;top:50px}63%{left:40px;top:50px}
+  67%{left:calc(50% + 20px);top:108px}70%{left:calc(50% + 20px);top:108px}74%{left:calc(50% + 50px);top:215px}
+  78%{left:122px;top:190px}81%{left:122px;top:190px}90%{left:200px;top:225px}100%{left:70%;top:85%}}
+.vt--so .so-steps{display:grid;gap:6px;margin-top:12px}
+.vt--so .so-st{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.vt--so .so-st i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#2a2f38;color:#c7d5e0;font-style:normal;font-size:11px;font-weight:900}
+.vt--so .so-st b{display:block;color:#fff;font-size:13.5px}.vt--so .so-st span{display:block;margin-top:1px;color:#9aa0a6;font-size:12px;line-height:1.45}
+.vt--so .so-s0{animation:soS0 var(--vt) infinite}.vt--so .so-s1{animation:soS1 var(--vt) infinite}.vt--so .so-s2{animation:soS2 var(--vt) infinite}.vt--so .so-s3{animation:soS3 var(--vt) infinite}.vt--so .so-s4{animation:soS4 var(--vt) infinite}
+.vt--so .so-s0 i{animation:soI0 var(--vt) infinite}.vt--so .so-s1 i{animation:soI1 var(--vt) infinite}.vt--so .so-s2 i{animation:soI2 var(--vt) infinite}.vt--so .so-s3 i{animation:soI3 var(--vt) infinite}.vt--so .so-s4 i{animation:soI4 var(--vt) infinite}
+"""
+    for k, (a, b) in enumerate([(0, 16), (16, 34), (34, 56), (56, 74), (74, 97)]):
+        css += (f'@keyframes soS{k}{{0%,{a}%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}{a + .5}%,{b}%{{border-color:rgba(33,224,101,.5);background:rgba(33,224,101,.07)}}{b + .5}%,100%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}}}\n'
+                f'@keyframes soI{k}{{0%,{a}%{{background:#2a2f38;color:#c7d5e0}}{a + .5}%,100%{{background:#21e065;color:#06150b}}}}\n')
+    return html, BASE + css

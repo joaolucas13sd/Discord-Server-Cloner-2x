@@ -3,6 +3,8 @@
 # Uso: python3 tools/descricao-editorial/gerar_jogos_steam.py <pasta-dos-originais> <pasta-de-saida>
 import sys, os, re, json, html as H, importlib.util, subprocess
 AQUI = os.path.dirname(os.path.abspath(__file__))
+sv = importlib.util.spec_from_file_location('vt', os.path.join(AQUI, '..', 'como-assistir', 'vitrine.py'))
+vt = importlib.util.module_from_spec(sv); sv.loader.exec_module(vt)
 sp = importlib.util.spec_from_file_location('j', os.path.join(AQUI, '..', 'como-assistir', 'jogos.py'))
 j = importlib.util.module_from_spec(sp); sp.loader.exec_module(j)
 g = j.g
@@ -74,20 +76,12 @@ def gerar(v, vizinhos):
     id, nome = v['id'], v['name']
     d = dados(id); app = d['app']
     css = ED_CSS.replace('--ed-ac:#e50914', f'--ed-ac:{AC}').replace('rgba(229,9,20', f'rgba({rgb(AC)}').replace('#2a1012', AC2).replace('#1d0b0d', AC2)
-    thumbs = tuple(j.capa(a) for a in [app] + [x for x in vizinhos if x != app][:4])
-    anim = dict(P='ed', PEDIDO=nome, MARCA='steam', COR=AC, SITE='store.steampowered.com', COR2='#2d73ff', TEMA='steam', WORD=g.WORDS['steam'],
-                HERO=hero(app), THUMBS=thumbs, TITULO=nome, SUB='Modo offline', BADGE='', AS='Jogar',
-                ROWS=[('Conta', 'compartilhada'), ('Senha', '••••••••••'), ('Modo', 'Offline')], PAG=('Entrar', 'Modo offline', 'Biblioteca'),
-                SC3=g.conta_tela('Steam › Modo offline', [('Status', 'Conectado'), ('Opção', 'Ficar offline')], 'Ficar offline', 'Offline ✓', 'Modo offline ativado'),
-                STEPS=[('Veja os dados no pedido', 'Na página do seu pedido aparecem o login e a senha da conta.'),
-                       ('Entre na Steam', 'Abra a Steam e inicie sessão com esses dados.'),
-                       ('Ative o modo offline', 'No menu Steam, escolha "Ficar offline" (modo offline).'),
-                       ('Jogue', f'Na biblioteca, instale {nome} e clique em Jogar.')],
-                WARN='Conta compartilhada: use só no modo offline e não altere o e-mail nem a senha. As instruções completas vêm no seu pedido.',
-                LOGIN_T='Iniciar sessão', BTN='Iniciar sessão', LOGIN_SUB='INICIE SESSÃO COM O NOME DE CONTA', TITULO_CARD='Como começar a jogar',
-                GERENCIAR=False)
-    card, acss = g.bloco(**anim)
-    card = card.replace('<!-- COMO UTILIZAR -->\n    ', '')
+    card, acss = vt.steam_offline(nome, hero(app), [
+        ('Entre na conta', 'Abra a Steam e use o login e a senha que aparecem no seu pedido.'),
+        ('Confirme o Steam Guard', 'Se a Steam pedir, digite o código que aparece na página do seu pedido.'),
+        ('Baixe o jogo', 'Na Biblioteca, clique em Instalar e espere o download terminar.'),
+        ('Ative o modo offline', 'Clique em Steam › Ficar offline... › Reiniciar no modo offline.'),
+        ('Jogue', 'Clique em Jogar e aproveite. Use sempre no modo offline.')])
     aqui = v['unit_amount']
     preco = ''
     if d['steam']:
