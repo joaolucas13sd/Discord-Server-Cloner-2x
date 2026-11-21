@@ -1,0 +1,599 @@
+<div class="sk-wrapper">
+
+<style>
+.sk-wrapper{
+    --sk-accent:#cbd5e1;
+    --sk-bg:#0d0f12;
+    --sk-card:#14171c;
+    --sk-item:#1b1f26;
+    --sk-border:rgba(255,255,255,.07);
+    --sk-text:#f5f5f6;
+    --sk-muted:#a1a1aa;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--sk-text);
+}
+.sk-wrapper *{box-sizing:border-box}
+
+.sk-container{
+    background:var(--sk-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.sk-card{
+    background:var(--sk-card);
+    border:1px solid var(--sk-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+.sk-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.sk-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--sk-accent);
+    flex-shrink:0;
+}
+
+.sk-quote{
+    border-left:3px solid var(--sk-accent);
+    padding-left:14px;
+    margin:0;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.sk-quote strong{color:#fff}
+
+/* BANNER (OPCIONAL) */
+.sk-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.sk-list{display:grid;gap:10px}
+.sk-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--sk-item);
+    border:1px solid var(--sk-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.sk-item-hl{
+    border-color:rgba(203,213,225,.45);
+    background:rgba(203,213,225,.07);
+}
+.sk-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(203,213,225,.10);
+    border:1px solid rgba(203,213,225,.38);
+}
+.sk-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#e2e8f0;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.sk-item-label{
+    display:block;
+    color:var(--sk-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.sk-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.5;
+}
+
+/* COMO FUNCIONA */
+.sk-how{text-align:center}
+.sk-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:6px 14px;
+    border-radius:999px;
+    border:1px solid rgba(203,213,225,.45);
+    background:rgba(203,213,225,.10);
+    color:var(--sk-accent);
+    font-size:12.5px;
+    font-weight:700;
+}
+.sk-how-title{
+    font-size:23px;
+    font-weight:900;
+    line-height:1.2;
+    margin:16px 0 10px;
+}
+.sk-how-sub{
+    color:var(--sk-muted);
+    font-size:14px;
+    line-height:1.6;
+    margin:0 0 22px;
+}
+
+/* MOCKUP STEAM */
+.sk-mock{
+    position:relative;
+    height:250px;
+    border-radius:12px;
+    background:#121821;
+    border:1px solid var(--sk-border);
+    overflow:hidden;
+    text-align:left;
+    margin-bottom:18px;
+}
+.sk-mock-bar{
+    display:flex;
+    gap:14px;
+    padding:11px 14px 11px 78px;
+    font-size:11px;
+    color:#9aa7b5;
+    border-bottom:1px solid var(--sk-border);
+}
+.sk-mock-bar span:first-child{color:#66c0f4;font-weight:700}
+
+.sk-grid{
+    position:absolute;
+    left:78px;
+    right:12px;
+    top:50px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+.sk-tile{
+    height:56px;
+    border-radius:6px;
+    background:rgba(102,192,244,.08);
+    border:1px solid rgba(102,192,244,.10);
+}
+
+.sk-add{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:34px;
+    display:flex;
+    align-items:center;
+    padding:0 14px 0 78px;
+    border-top:1px solid var(--sk-border);
+    font-size:10.5px;
+    color:#9aa7b5;
+}
+
+/* CARTA MISTERIOSA */
+.sk-card-mystery{
+    position:absolute;
+    left:12px;
+    top:56px;
+    width:56px;
+    height:80px;
+    border-radius:8px;
+    transform:rotate(-7deg);
+    background:linear-gradient(160deg,#2b313c,#151920);
+    border:2px solid var(--sk-accent);
+    box-shadow:0 8px 20px rgba(0,0,0,.5);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--sk-accent);
+    font-size:34px;
+    font-weight:900;
+    z-index:2;
+}
+
+.sk-dialog,
+.sk-success{
+    position:absolute;
+    right:12px;
+    top:54px;
+    width:62%;
+    border-radius:10px;
+    padding:13px;
+    background:#25303d;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+    z-index:3;
+}
+.sk-dialog{animation:skDialog 10s infinite}
+.sk-success{animation:skSuccess 10s infinite;opacity:0}
+
+.sk-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.sk-dlg-desc{font-size:10.5px;color:#9aa7b5;line-height:1.4;margin-bottom:4px}
+.sk-dlg-hint{
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:10px;
+    color:#6b7886;
+    margin-bottom:8px;
+}
+
+.sk-field{
+    background:#111821;
+    border:1px solid #66c0f4;
+    border-radius:6px;
+    padding:7px 9px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.sk-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid #66c0f4;
+    animation:skType 10s steps(17,end) infinite;
+}
+
+.sk-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.sk-btn-cancel,
+.sk-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 10px;
+    border-radius:6px;
+}
+.sk-btn-cancel{background:#3a4553;color:#d4d8de}
+.sk-btn-go{
+    position:relative;
+    background:#1a9fff;
+    color:#fff;
+    min-width:70px;
+    text-align:center;
+}
+.sk-btn-go span{display:block}
+.sk-btn-a{animation:skBtnA 10s infinite}
+.sk-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:skBtnB 10s infinite;
+}
+
+.sk-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.sk-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.sk-ok-name{font-size:11px;color:#66c0f4;font-weight:700;margin-bottom:3px}
+.sk-ok-desc{font-size:10.5px;color:#9aa7b5;line-height:1.4}
+
+@keyframes skDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes skSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes skType{
+    0%,10%{width:0}
+    38%,92%{width:17ch}
+    100%{width:0}
+}
+@keyframes skBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes skBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS */
+.sk-steps{display:grid;gap:10px;text-align:left}
+.sk-step{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--sk-item);
+    border:1px solid var(--sk-border);
+    border-radius:12px;
+    padding:13px 14px;
+}
+.sk-step-num{
+    width:34px;
+    height:34px;
+    flex-shrink:0;
+    border-radius:9px;
+    background:var(--sk-accent);
+    color:#111;
+    font-weight:900;
+    font-size:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.sk-step-title{font-size:14.5px;font-weight:800;line-height:1.3}
+.sk-step-desc{font-size:12.5px;color:var(--sk-muted);line-height:1.4;margin-top:2px}
+
+@media(max-width:380px){
+    .sk-how-title{font-size:20px}
+    .sk-card{padding:18px 14px}
+    .sk-dialog,.sk-success{width:70%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .sk-dialog,.sk-success,.sk-type,.sk-btn-a,.sk-btn-b{animation:none}
+    .sk-dialog{opacity:1}
+    .sk-type{width:17ch}
+}
+
+/* ===== DESTAQUE ===== */
+.sk-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.sk-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--sk-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.sk-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.sk-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sk-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.sk-hero-s strong{color:#fff}
+.sk-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--sk-border)}
+.sk-price-k{display:block;color:var(--sk-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.sk-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.sk-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.sk-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.sk-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.sk-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.sk-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sk-ben{background:var(--sk-item);border:1px solid var(--sk-border);border-radius:14px;padding:14px 12px}
+.sk-ben svg{width:26px;height:26px;fill:none;stroke:var(--sk-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.sk-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.sk-ben small{display:block;color:var(--sk-muted);font-size:12.5px;line-height:1.45}
+.sk-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.sk-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--sk-item);border:1px solid var(--sk-border);text-align:center}
+.sk-plan b{display:block;font-size:13px;color:var(--sk-muted);margin-bottom:6px}
+.sk-plan strong{display:block;font-size:22px;color:#fff}
+.sk-plan small{display:block;margin-top:4px;color:var(--sk-muted);font-size:12px}
+.sk-plan--on{border-color:var(--sk-accent);background:rgba(240,77,200,.10)}
+.sk-plan--on b{color:#ff7ad9}
+.sk-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--sk-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.sk-trust{display:grid;gap:10px}
+.sk-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.sk-trust strong{color:#fff}
+.sk-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.sk-info-title{display:flex;align-items:center;gap:8px}
+.sk-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.sk-nzgrid,.sk-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.sk-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.sk-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.sk-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.sk-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.sk-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.sk-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.sk-prof-body{padding:30px 12px 12px}
+.sk-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.sk-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.sk-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.sk-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.sk-prof-user b{color:#ff7ad9}
+.sk-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.sk-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.sk-mock:has(.sk-nzprof){height:auto !important;padding-bottom:16px}
+.sk-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.sk-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.sk-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.sk-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.sk-prof-name{white-space:nowrap}
+.sk-nzprof .sk-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.sk-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.sk-prof-av,.sk-prof-av span,.sk-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.sk-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.sk-rows{display:grid;gap:8px}
+.sk-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--sk-item);border:1px solid var(--sk-border);font-size:14px;color:#e4e4e7}
+.sk-row b{color:#fff;white-space:nowrap}
+.sk-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.sk-row--on{border-color:var(--sk-accent);background:rgba(240,77,200,.10)}
+.sk-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--sk-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.sk-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+
+.sk-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.sk-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+</style>
+
+
+<div class="sk-container">
+    <div class="sk-hero"><span class="sk-tag">KEY ALEATÓRIA STEAM</span><h2 class="sk-hero-t">Steam Key Aleatória por <span>R$ 3,99</span></h2><p class="sk-hero-s">Receba uma key para Steam com <strong>um jogo surpresa</strong>. Você só descobre o jogo quando revelar a sua key.</p><div class="sk-price sk-pulse"><div><span class="sk-price-k">Preço</span><span class="sk-price-new">R$ 3,99</span></div></div></div>
+    <div class="sk-card"><h2 class="sk-h2">Compare as keys</h2><div class="sk-rows"><div class="sk-row"><span>Steam Key Rubi</span><b>R$ 10,99</b></div><div class="sk-row"><span>Steam Key Triple AAA</span><b>R$ 32,99</b></div><div class="sk-row"><span>Steam Key Black</span><b>R$ 19,99</b></div><div class="sk-row"><span>Steam Key Diamante</span><b>R$ 12,99</b></div><div class="sk-row"><span>Steam Key Jade</span><b>R$ 7,99</b></div><div class="sk-row"><span>Steam Key +18</span><b>R$ 1,99</b></div><div class="sk-row sk-row--on"><span>Steam Key Aleatória<span class="sk-row-tag">VOCÊ ESTÁ AQUI</span></span><b>R$ 3,99</b></div></div><p class="sk-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p></div>
+    <!-- VANTAGENS -->
+    <div class="sk-card">
+
+        <h2 class="sk-h2">Por que comprar</h2>
+
+        <div class="sk-list">
+
+            <div class="sk-item">
+                <span class="sk-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"></rect><path d="M12 8v13"></path><path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"></path><path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"></path></svg></span>
+                <div>
+                    <span class="sk-item-label">Surpresa a cada compra</span>
+                    <span class="sk-item-text">Você recebe uma key aleatória e só descobre qual título ganhou quando revelar sua chave.</span>
+                </div>
+            </div>
+
+            <div class="sk-item">
+                <span class="sk-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" x2="10" y1="12" y2="12"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="15" x2="15.01" y1="13" y2="13"></line><line x1="18" x2="18.01" y1="11" y2="11"></line><rect width="20" height="12" x="2" y="6" rx="2"></rect></svg></span>
+                <div>
+                    <span class="sk-item-label">Para todos os gostos</span>
+                    <span class="sk-item-text">Pode vir ação, aventura, RPG, corrida, FPS, terror, estratégia, indie e diversos outros estilos disponíveis na Steam.</span>
+                </div>
+            </div>
+
+            <div class="sk-item sk-item-hl">
+                <span class="sk-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <div>
+                    <span class="sk-item-label">Valor garantido</span>
+                    <span class="sk-item-text">Garantimos que o valor de referência do jogo recebido será superior ao valor pago pela Key Aleatória.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO FUNCIONA -->
+    <div class="sk-card sk-how">
+
+        <span class="sk-pill">⚡ Como funciona</span>
+
+        <h2 class="sk-how-title">Sua key ativada direto na sua conta Steam</h2>
+
+        <p class="sk-how-sub">
+            Abra o seu pedido, ative a key e o jogo aparece na sua
+            biblioteca em segundos.
+        </p>
+
+        <div class="sk-mock">
+
+            <div class="sk-mock-bar">
+                <span>Steam</span>
+                <span>Exibir</span>
+                <span>Amigos</span>
+                <span>Jogos</span>
+            </div>
+
+            <div class="sk-card-mystery">?</div>
+
+            <div class="sk-grid">
+                <div class="sk-tile"></div>
+                <div class="sk-tile"></div>
+                <div class="sk-tile"></div>
+                <div class="sk-tile"></div>
+                <div class="sk-tile"></div>
+                <div class="sk-tile"></div>
+            </div>
+
+            <div class="sk-add">+ Adicionar um jogo...</div>
+
+            <div class="sk-dialog">
+                <div class="sk-dlg-title">Ativar key</div>
+                <div class="sk-dlg-desc">Cole a key que chegou no seu pedido.</div>
+                <div class="sk-dlg-hint">XXXXX-XXXXX-XXXXX</div>
+                <div class="sk-field"><span class="sk-type">A1B2C-D3E4F-G5H6I</span></div>
+                <div class="sk-dlg-actions">
+                    <span class="sk-btn-cancel">Cancelar</span>
+                    <span class="sk-btn-go">
+                        <span class="sk-btn-a">Ativar</span>
+                        <span class="sk-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="sk-cur sk-cur2" aria-hidden="true" style="--x1:54.5%;--y1:155px;--x2:54.5%;--y2:155px;--x3:82.5%;--y3:193px;--x4:44.4%;--y4:84px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="sk-success">
+                <div class="sk-check">✓</div>
+                <div class="sk-ok-title">Ativação concluída</div>
+                <div class="sk-ok-name">Seu jogo surpresa</div>
+                <div class="sk-ok-desc">O jogo foi adicionado à sua conta Steam e já pode ser baixado.</div>
+            </div>
+
+        </div>
+
+        <div class="sk-steps">
+
+            <div class="sk-step">
+                <div class="sk-step-num">1</div>
+                <div>
+                    <div class="sk-step-title">Pague no Pix</div>
+                    <div class="sk-step-desc">Aprovação na hora.</div>
+                </div>
+            </div>
+
+            <div class="sk-step">
+                <div class="sk-step-num">2</div>
+                <div>
+                    <div class="sk-step-title">Receba a key</div>
+                    <div class="sk-step-desc">Na página do pedido, com o passo a passo.</div>
+                </div>
+            </div>
+
+            <div class="sk-step">
+                <div class="sk-step-num">3</div>
+                <div>
+                    <div class="sk-step-title">Ative e jogue</div>
+                    <div class="sk-step-desc">O jogo entra na sua biblioteca.</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="sk-card"><h2 class="sk-h2">Compre com tranquilidade</h2><div class="sk-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Key</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Como eu ativo a key?</summary><p>Na Steam, vá em <strong>Adicionar um jogo → Ativar um produto</strong> e cole a key que chegou no seu pedido.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="sk-hero rn-cta2"><span class="sk-tag">PRONTO PARA GARANTIR?</span><h2 class="sk-hero-t">Steam Key Aleatória</h2><div class="sk-price sk-pulse"><div><span class="sk-price-k">Preço</span><span class="sk-price-new">R$ 3,99</span></div></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

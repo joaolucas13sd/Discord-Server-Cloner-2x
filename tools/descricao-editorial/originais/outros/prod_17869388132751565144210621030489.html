@@ -1,0 +1,258 @@
+<div class="hs-wrapper">
+
+<style>
+.hs-wrapper{--hs-accent:#f2994a;--hs-bg:#120a16;--hs-card:#1c1222;--hs-item:#2a1a33;--hs-border:rgba(255,255,255,.08);--hs-text:#f5f5f6;--hs-muted:#c9bccf;width:100%;max-width:500px;margin:0 auto;font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--hs-text)}
+.hs-wrapper *{box-sizing:border-box}
+.hs-container{background:var(--hs-bg);padding:14px 12px 10px;border-radius:16px}
+.hs-card{background:var(--hs-card);border:1px solid var(--hs-border);border-radius:18px;padding:22px 18px;margin-bottom:14px}
+.hs-h2{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;line-height:1.3;margin:0 0 16px}
+.hs-h2::before{content:"";width:4px;height:22px;border-radius:3px;background:var(--hs-accent);flex-shrink:0}
+.hs-quote{border-left:3px solid var(--hs-accent);padding-left:14px;margin:0 0 16px;font-size:15px;line-height:1.65;color:#e4e4e7}
+.hs-quote strong{color:#fff}
+.hs-text{color:var(--hs-muted);font-size:13.5px;line-height:1.7;margin:0 0 12px}
+.hs-text:last-child{margin-bottom:0}
+.hs-text strong{color:#fff}
+.hs-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.hs-chips span{background:var(--hs-item);border:1px solid rgba(242,153,74,.38);color:#ffd0a0;font-size:12px;font-weight:800;padding:7px 12px;border-radius:999px}
+.hs-list{display:grid;gap:10px}
+.hs-item{display:flex;align-items:center;gap:14px;background:var(--hs-item);border:1px solid var(--hs-border);border-radius:12px;padding:13px 15px}
+.hs-item-hl{border-color:rgba(242,153,74,.5);background:rgba(242,153,74,.09)}
+.hs-item-icon{width:50px;height:50px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:14px;background:rgba(242,153,74,.10);border:1px solid rgba(242,153,74,.38)}
+.hs-item-icon svg{width:26px;height:26px;fill:none;stroke:#ffd0a0;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hs-item-label{display:block;color:var(--hs-accent);font-size:12px;font-weight:800;margin-bottom:3px}
+.hs-item-text{color:#e4e4e7;font-size:14px;line-height:1.45}
+
+/* faixa de criadoras: rola sozinha, nome sobre a imagem */
+.hs-photos{overflow:hidden;margin:0 -6px;padding:6px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.hs-ptrack{display:flex;gap:12px;width:max-content;animation:hsScroll 32s linear infinite}
+.hs-photos:hover .hs-ptrack,.hs-photos:active .hs-ptrack{animation-play-state:paused}
+.hs-ph{position:relative;flex-shrink:0;width:170px;height:240px;margin:0;border-radius:14px;overflow:hidden;background:#2a1a33;border:1px solid var(--hs-border)}
+.hs-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.hs-ph figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 10px 10px;background:linear-gradient(to top,rgba(0,0,0,.9),rgba(0,0,0,0));font-size:14px;font-weight:800;line-height:1.15;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.7)}
+@keyframes hsScroll{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 6px))}}
+@media(prefers-reduced-motion:reduce){.hs-ptrack{animation:none}.hs-photos{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.hs-ph:nth-child(n+5){display:none}}
+
+.hs-info-box{background:rgba(120,30,20,.30);border:1px solid rgba(239,68,68,.38);border-radius:12px;padding:16px}
+.hs-info-title{color:#ef6b6b;font-size:13px;font-weight:800;margin:0 0 12px}
+.hs-info{color:#c9c3c3;font-size:13px;line-height:1.65;margin:0 0 12px}
+.hs-info:last-child{margin-bottom:0}
+.hs-highlight{color:#ef6b6b;font-weight:800}
+@media(max-width:380px){.hs-card{padding:18px 14px}}
+
+.hs-scratch{position:relative;width:100%;max-width:340px;height:150px;margin:0 auto 12px;border-radius:16px;overflow:hidden;border:1px solid rgba(242,153,74,.5);background:linear-gradient(135deg,#3b2147,#1c1222)}
+.hs-scratch-res{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10px}
+.hs-scratch-res small{font-size:11px;letter-spacing:.14em;color:#ffd0a0;font-weight:800}
+.hs-scratch-res b{font-size:30px;font-weight:900;color:#fff;line-height:1.2}
+.hs-scratch-res span{font-size:11.5px;color:var(--hs-muted);margin-top:2px}
+.hs-sc-chk{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.hs-sc-cover{position:absolute;inset:0;display:flex;flex-direction:column;cursor:pointer;z-index:2}
+.hs-sc-cover i{flex:1;background:repeating-linear-gradient(135deg,#8a8f98 0 6px,#a4a9b2 6px 12px);transition:transform .45s ease-in;transform-origin:left}
+.hs-sc-cover i:nth-child(even){transform-origin:right}
+.hs-sc-cover b{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#2a2d33;font-size:20px;font-weight:900;letter-spacing:.08em;text-align:center;transition:opacity .2s}
+.hs-sc-cover b small{font-size:12px;font-weight:700;letter-spacing:0;margin-top:4px}
+.hs-sc-chk:checked~.hs-sc-cover{pointer-events:none}
+.hs-sc-chk:checked~.hs-sc-cover b{opacity:0}
+.hs-sc-chk:checked~.hs-sc-cover i{transform:scaleX(0)}
+.hs-sc-chk:checked~.hs-sc-cover i:nth-child(2){transition-delay:.1s}.hs-sc-chk:checked~.hs-sc-cover i:nth-child(3){transition-delay:.2s}.hs-sc-chk:checked~.hs-sc-cover i:nth-child(4){transition-delay:.3s}.hs-sc-chk:checked~.hs-sc-cover i:nth-child(5){transition-delay:.4s}.hs-sc-chk:checked~.hs-sc-cover i:nth-child(6){transition-delay:.5s}
+.hs-sc-chk:focus-visible~.hs-sc-cover{outline:3px solid #fff;outline-offset:-3px}
+.hs-scratch-note{text-align:center;font-size:12px;color:var(--hs-muted);margin:0}
+.hs-chips span:first-child{border-color:rgba(95,211,192,.5);color:#8fe6d7}
+.hs-btn{display:block;width:100%;max-width:340px;margin:12px auto 0;padding:12px;border:0;border-radius:12px;background:var(--hs-accent);color:#1a0b04;font-weight:800;font-size:14px;cursor:pointer}
+
+/* ===== DESTAQUE ===== */
+.hs-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.hs-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--hs-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.hs-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.hs-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hs-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.hs-hero-s strong{color:#fff}
+.hs-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--hs-border)}
+.hs-price-k{display:block;color:var(--hs-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.hs-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.hs-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.hs-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.hs-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.hs-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.hs-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hs-ben{background:var(--hs-item);border:1px solid var(--hs-border);border-radius:14px;padding:14px 12px}
+.hs-ben svg{width:26px;height:26px;fill:none;stroke:var(--hs-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.hs-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.hs-ben small{display:block;color:var(--hs-muted);font-size:12.5px;line-height:1.45}
+.hs-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.hs-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--hs-item);border:1px solid var(--hs-border);text-align:center}
+.hs-plan b{display:block;font-size:13px;color:var(--hs-muted);margin-bottom:6px}
+.hs-plan strong{display:block;font-size:22px;color:#fff}
+.hs-plan small{display:block;margin-top:4px;color:var(--hs-muted);font-size:12px}
+.hs-plan--on{border-color:var(--hs-accent);background:rgba(240,77,200,.10)}
+.hs-plan--on b{color:#ff7ad9}
+.hs-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--hs-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.hs-trust{display:grid;gap:10px}
+.hs-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.hs-trust strong{color:#fff}
+.hs-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.hs-info-title{display:flex;align-items:center;gap:8px}
+.hs-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.hs-nzgrid,.hs-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.hs-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.hs-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.hs-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.hs-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.hs-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.hs-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.hs-prof-body{padding:30px 12px 12px}
+.hs-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.hs-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.hs-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.hs-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.hs-prof-user b{color:#ff7ad9}
+.hs-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.hs-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.hs-mock:has(.hs-nzprof){height:auto !important;padding-bottom:16px}
+.hs-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.hs-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.hs-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.hs-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.hs-prof-name{white-space:nowrap}
+.hs-nzprof .hs-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.hs-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.hs-prof-av,.hs-prof-av span,.hs-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.hs-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.hs-rows{display:grid;gap:8px}
+.hs-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--hs-item);border:1px solid var(--hs-border);font-size:14px;color:#e4e4e7}
+.hs-row b{color:#fff;white-space:nowrap}
+.hs-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.hs-row--on{border-color:var(--hs-accent);background:rgba(240,77,200,.10)}
+.hs-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--hs-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.hs-sbox{position:relative;height:178px;margin:6px 0 4px}
+.hs-sres{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:16px;background:radial-gradient(circle at 50% 40%,rgba(34,197,94,.35),transparent 65%),#0c1a12;border:2px solid #22c55e}
+.hs-sres small{font-size:10px !important;font-weight:800;letter-spacing:.6px;color:#86efac}
+.hs-sres b{font-size:34px !important;line-height:1.1 !important;font-weight:900;color:#fff;animation:nzSpop 10s infinite}
+.hs-sres span{font-size:12px !important;color:#bbf7d0}
+@keyframes nzSpop{0%,58%{transform:scale(.85)}62%{transform:scale(1.12)}66%,100%{transform:scale(1)}}
+.hs-scov{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(3,1fr);border-radius:16px;overflow:hidden}
+.hs-scov i{display:block;margin:-1px;background:radial-gradient(circle,rgba(255,255,255,.95) 0 1px,transparent 1.6px) 0 0/14px 14px,radial-gradient(circle,rgba(255,255,255,.55) 0 1px,transparent 1.6px) 7px 7px/14px 14px,linear-gradient(120deg,#8e8f99 0%,#e9eaee 18%,#a3a4ad 34%,#f6f6f8 50%,#9c9da6 66%,#dcdde2 82%,#8e8f99 100%);background-size:14px 14px,14px 14px,600% 300%}
+.hs-stx{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#3f3f46;font-size:26px !important;line-height:1 !important;font-weight:900;letter-spacing:1.5px;text-shadow:0 1px 0 rgba(255,255,255,.7);pointer-events:none;animation:nzStx 10s infinite}
+.hs-stx small{font-size:10.5px !important;letter-spacing:.5px;font-weight:800;color:#52525b}
+.hs-scov{box-shadow:inset 0 0 0 2px rgba(255,255,255,.35),0 6px 18px rgba(0,0,0,.45)}
+@keyframes nzStx{0%,10%{opacity:1}13%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-coin{position:absolute;z-index:3;width:26px;height:26px;margin:-4px 0 0 -5px;filter:drop-shadow(0 2px 3px rgba(0,0,0,.65));animation:nzCoin 10s infinite}
+.hs-coin svg{display:block;width:26px !important;height:26px !important;max-width:none !important;animation:nzCoinW 10s infinite}
+@keyframes nzCoinW{0%,9%,62%,100%{transform:rotate(0)}10%,14%,18%,22%,26%,30%,34%,38%,42%,46%,50%,54%,58%{transform:rotate(-8deg) scale(.92)}12%,16%,20%,24%,28%,32%,36%,40%,44%,48%,52%,56%,60%{transform:rotate(6deg) scale(.92)}}
+@keyframes nzSc0{0%,10.0%{opacity:1}11.5%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c0{animation:nzSc0 10s infinite}
+@keyframes nzSc1{0%,12.5%{opacity:1}14.0%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c1{animation:nzSc1 10s infinite}
+@keyframes nzSc2{0%,15.0%{opacity:1}16.5%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c2{animation:nzSc2 10s infinite}
+@keyframes nzSc3{0%,17.5%{opacity:1}19.0%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c3{animation:nzSc3 10s infinite}
+@keyframes nzSc4{0%,20.0%{opacity:1}21.5%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c4{animation:nzSc4 10s infinite}
+@keyframes nzSc5{0%,22.5%{opacity:1}24.0%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c5{animation:nzSc5 10s infinite}
+@keyframes nzSc6{0%,25.0%{opacity:1}26.5%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c6{animation:nzSc6 10s infinite}
+@keyframes nzSc7{0%,27.5%{opacity:1}29.0%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c7{animation:nzSc7 10s infinite}
+@keyframes nzSc8{0%,30.0%{opacity:1}31.5%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c8{animation:nzSc8 10s infinite}
+@keyframes nzSc9{0%,32.5%{opacity:1}34.0%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c9{animation:nzSc9 10s infinite}
+@keyframes nzSc10{0%,35.0%{opacity:1}36.5%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c10{animation:nzSc10 10s infinite}
+@keyframes nzSc11{0%,37.5%{opacity:1}39.0%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c11{animation:nzSc11 10s infinite}
+@keyframes nzSc12{0%,40.0%{opacity:1}41.5%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c12{animation:nzSc12 10s infinite}
+@keyframes nzSc13{0%,42.5%{opacity:1}44.0%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c13{animation:nzSc13 10s infinite}
+@keyframes nzSc14{0%,45.0%{opacity:1}46.5%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c14{animation:nzSc14 10s infinite}
+@keyframes nzSc15{0%,47.5%{opacity:1}49.0%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c15{animation:nzSc15 10s infinite}
+@keyframes nzSc16{0%,50.0%{opacity:1}51.5%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c16{animation:nzSc16 10s infinite}
+@keyframes nzSc17{0%,52.5%{opacity:1}54.0%,94%{opacity:0}97%,100%{opacity:1}}
+.hs-scov .hs-c17{animation:nzSc17 10s infinite}
+@keyframes nzCoin{0%{left:105%;top:-10%;opacity:0}8%{opacity:1}10.0%{left:8.3%;top:16.7%;opacity:1}12.5%{left:25.0%;top:16.7%;opacity:1}15.0%{left:41.7%;top:16.7%;opacity:1}17.5%{left:58.3%;top:16.7%;opacity:1}20.0%{left:75.0%;top:16.7%;opacity:1}22.5%{left:91.7%;top:16.7%;opacity:1}25.0%{left:91.7%;top:50.0%;opacity:1}27.5%{left:75.0%;top:50.0%;opacity:1}30.0%{left:58.3%;top:50.0%;opacity:1}32.5%{left:41.7%;top:50.0%;opacity:1}35.0%{left:25.0%;top:50.0%;opacity:1}37.5%{left:8.3%;top:50.0%;opacity:1}40.0%{left:8.3%;top:83.3%;opacity:1}42.5%{left:25.0%;top:83.3%;opacity:1}45.0%{left:41.7%;top:83.3%;opacity:1}47.5%{left:58.3%;top:83.3%;opacity:1}50.0%{left:75.0%;top:83.3%;opacity:1}52.5%{left:91.7%;top:83.3%;opacity:1}61.0%,100%{left:105%;top:110%;opacity:0}}
+</style>
+
+<div class="hs-container">
+    <div class="hs-hero"><span class="hs-tag">SALDO NA LOJA</span><h2 class="hs-hero-t">Teste da Sorte por <span>R$ 3,99</span></h2><p class="hs-hero-s">Raspe e receba <strong>de R$ 0,20 até R$ 1.000,00</strong> em saldo para usar na loja. Todo participante recebe saldo, mas o valor é aleatório e pode ser menor do que o que você pagou.</p><div class="hs-price hs-pulse"><div><span class="hs-price-k">Preço</span><span class="hs-price-new">R$ 3,99</span></div></div></div>
+    <!-- COMO FUNCIONA -->
+    <div class="hs-card">
+        <h2 class="hs-h2">Como o Teste da Sorte funciona</h2>
+        <div class="hs-list">
+
+            <div class="hs-item hs-item-hl">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="5" rx="2"></rect><path d="M2 10h20"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Saldo na loja</span>
+                    <span class="hs-item-text">O prêmio é pago em saldo para você usar na loja, de R$ 0,20 até R$ 1.000,00</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">100% de ganho</span>
+                    <span class="hs-item-text">Todo participante recebe saldo, o que muda é o valor</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Resultado</span>
+                    <span class="hs-item-text">A raspadinha revela o seu resultado</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- RASPADINHA -->
+    <div class="hs-card">
+        <h2 class="hs-h2">Veja a raspadinha sendo raspada</h2>
+        <div class="hs-sbox">
+            <div class="hs-sres"><small>EXEMPLO · PRÊMIO MÁXIMO</small><b>R$ 1.000,00</b><span>de saldo na loja</span></div>
+            <div class="hs-scov"><i class="hs-c0" style="background-position:0 0,7px 7px,0% 0%"></i><i class="hs-c1" style="background-position:0 0,7px 7px,20% 0%"></i><i class="hs-c2" style="background-position:0 0,7px 7px,40% 0%"></i><i class="hs-c3" style="background-position:0 0,7px 7px,60% 0%"></i><i class="hs-c4" style="background-position:0 0,7px 7px,80% 0%"></i><i class="hs-c5" style="background-position:0 0,7px 7px,100% 0%"></i><i class="hs-c11" style="background-position:0 0,7px 7px,0% 50%"></i><i class="hs-c10" style="background-position:0 0,7px 7px,20% 50%"></i><i class="hs-c9" style="background-position:0 0,7px 7px,40% 50%"></i><i class="hs-c8" style="background-position:0 0,7px 7px,60% 50%"></i><i class="hs-c7" style="background-position:0 0,7px 7px,80% 50%"></i><i class="hs-c6" style="background-position:0 0,7px 7px,100% 50%"></i><i class="hs-c12" style="background-position:0 0,7px 7px,0% 100%"></i><i class="hs-c13" style="background-position:0 0,7px 7px,20% 100%"></i><i class="hs-c14" style="background-position:0 0,7px 7px,40% 100%"></i><i class="hs-c15" style="background-position:0 0,7px 7px,60% 100%"></i><i class="hs-c16" style="background-position:0 0,7px 7px,80% 100%"></i><i class="hs-c17" style="background-position:0 0,7px 7px,100% 100%"></i><b class="hs-stx">RASPE AQUI<small>e descubra o seu saldo</small></b></div>
+            <span class="hs-coin" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
+        </div>
+        <p class="hs-scratch-note">Exemplo ilustrativo. O valor mostrado aqui não é o seu resultado.</p>
+    </div>
+
+        <div class="hs-card"><h2 class="hs-h2">Compre com tranquilidade</h2><div class="hs-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Resgate em até 5 dias</strong> falando com o suporte.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Menores de idade:</strong> só com autorização de um responsável.</span></div></div></div>
+<!-- INFORMAÇÕES IMPORTANTES -->
+    <div class="hs-card">
+        <div class="hs-info-box">
+            <p class="hs-info-title">LEIA ANTES DE PARTICIPAR</p>
+            <p class="hs-info"><span class="hs-highlight">Recompensas:</span> o prêmio é pago em saldo para usar na loja, de R$ 0,20 até R$ 1.000,00, conforme o resultado.</p>
+            <p class="hs-info"><span class="hs-highlight">Prazo para resgate:</span> até 5 dias após o resultado.</p>
+            <p class="hs-info"><span class="hs-highlight">Suporte:</span> em caso de dúvidas, fale com a nossa equipe de atendimento.</p>
+        </div>
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Como eu resgato o prêmio?</summary><p>Depois do resultado, fale com o suporte em até <strong>5 dias</strong> para solicitar o resgate.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="hs-hero rn-cta2"><span class="hs-tag">PRONTO PARA GARANTIR?</span><h2 class="hs-hero-t">Raspadinha Pix</h2><div class="hs-price hs-pulse"><div><span class="hs-price-k">Preço</span><span class="hs-price-new">R$ 3,99</span></div></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

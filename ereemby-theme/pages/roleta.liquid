@@ -1,0 +1,153 @@
+{% comment %}
+  Rei dos Nitros: página "Roleta Robux" (endereço /roleta, definido em routes/routes.json).
+  O cliente digita um código e gira a roleta 1 vez. O prêmio de cada código já foi sorteado quando o código foi criado,
+  então girar de novo com o mesmo código sempre cai no mesmo valor (não dá para "tentar a sorte" outra vez).
+  Os códigos NÃO ficam escritos aqui: a página guarda só uma impressão digital (SHA-256) de cada um.
+  A lista de códigos e prêmios fica com o dono da loja. Para criar novos códigos, peça ao Claude.
+  Prêmios da roleta (ordem dos números em RN_ROLETA): 0=10, 1=50, 2=100, 3=500, 4=1000, 5=5000, 6=10000 Robux.
+{% endcomment %}
+{% assign rn_rl_discord = 'https://discord.gg/dFr88Y8rJb' %}
+<style>
+  .rn-rl { overflow-x: clip; width: 100%; box-sizing: border-box; max-width: 560px; margin: 0 auto; padding: 22px 16px 40px; color: #fff; font-family: var(--rn-font); text-align: center; }
+  .rn-rl__kick { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .16em; color: #22f26a; }
+  .rn-rl__kick i { width: 22px; height: 3px; border-radius: 3px; background: #22f26a; }
+  .rn-rl__title { margin: 10px 0 6px; font-family: var(--rn-font-round); font-size: clamp(30px, 9vw, 44px); font-weight: 800; line-height: 1.02; }
+  .rn-rl__title span { color: #22f26a; }
+  .rn-rl__lead { margin: 0 auto; max-width: 420px; font-size: 15px; line-height: 1.5; color: #a1a2a8; }
+  .rn-rl__stage { position: relative; width: min(92vw, 380px); aspect-ratio: 1; margin: 26px auto 8px; }
+  .rn-rl__glow { position: absolute; inset: -8%; border-radius: 50%; background: radial-gradient(circle, rgba(34,242,106,.28), transparent 62%); filter: blur(6px); animation: rnRlGlow 3s ease-in-out infinite; }
+  @keyframes rnRlGlow { 50% { opacity: .55; transform: scale(.96); } }
+  .rn-rl__wheel { position: relative; width: 100%; height: 100%; border-radius: 50%; transition: transform 5.2s cubic-bezier(.12,.75,.12,1); will-change: transform; filter: drop-shadow(0 18px 40px rgba(0,0,0,.6)); }
+  .rn-rl__wheel svg { width: 100%; height: 100%; display: block; }
+  .rn-rl__pin { position: absolute; left: 50%; top: -6px; z-index: 3; width: 34px; height: 44px; transform: translateX(-50%); filter: drop-shadow(0 4px 8px rgba(0,0,0,.6)); }
+  .rn-rl__hub { position: absolute; left: 50%; top: 50%; z-index: 2; display: grid; place-items: center; width: 22%; aspect-ratio: 1; transform: translate(-50%, -50%); border: 4px solid #0c0d0f; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #7dffad, #22f26a 55%, #129a43); color: #04140a; font-family: var(--rn-font-round); font-weight: 800; font-size: clamp(11px, 3.4vw, 14px); line-height: 1; box-shadow: 0 0 0 4px rgba(34,242,106,.25), 0 8px 20px rgba(0,0,0,.5); }
+  .rn-rl__box { margin: 22px auto 0; max-width: 420px; padding: 16px; border: 1px solid #26272c; border-radius: 20px; background: #0f1012; text-align: left; }
+  .rn-rl__label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: #c4c5ca; }
+  .rn-rl__row { display: flex; gap: 8px; }
+  .rn-rl__input { flex: 1; min-width: 0; padding: 14px; border: 1px solid #2c2d33; border-radius: 14px; background: #18191c; color: #fff; font: inherit; font-size: 17px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; outline: none; }
+  .rn-rl__input:focus { border-color: #22f26a; box-shadow: 0 0 0 3px rgba(34,242,106,.18); }
+  .rn-rl__btn { flex: none; padding: 0 20px; border: 0; border-radius: 14px; background: #22f26a; color: #04140a; font: inherit; font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 0 5px 0 #129a43; transition: transform .1s, box-shadow .1s; }
+  .rn-rl__btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #129a43; }
+  .rn-rl__btn:disabled { opacity: .6; cursor: default; }
+  .rn-rl__msg { min-height: 20px; margin: 10px 2px 0; font-size: 14px; color: #a1a2a8; }
+  .rn-rl__msg--err { color: #f87171; }
+  .rn-rl__box.rn-rl--shake { animation: rnFreeNo .35s; }
+  .rn-rl__win { display: none; margin: 20px auto 0; max-width: 420px; padding: 22px 18px; border: 1px solid #1f5a37; border-radius: 22px; background: radial-gradient(120% 90% at 50% 0%, rgba(34,242,106,.22), transparent 60%), #0f1012; }
+  .rn-rl__win.rn-rl--on { display: block; animation: rnFreePop .45s cubic-bezier(.2,1.4,.4,1); }
+  .rn-rl__wint { margin: 0; font-size: 14px; font-weight: 700; letter-spacing: .12em; color: #a1a2a8; }
+  .rn-rl__winv { margin: 6px 0 4px; font-family: var(--rn-font-round); font-size: clamp(40px, 12vw, 56px); font-weight: 800; color: #22f26a; line-height: 1; }
+  .rn-rl__wins { margin: 0 0 16px; font-size: 14px; color: #a1a2a8; }
+  .rn-rl__winc { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; padding: 8px 14px; border: 2px dashed #22f26a; border-radius: 12px; font-weight: 800; letter-spacing: .08em; }
+  .rn-rl__dc { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 14px; background: #5865f2; color: #fff !important; font-weight: 800; text-decoration: none !important; }
+  .rn-rl__how { margin: 28px auto 0; max-width: 420px; display: grid; gap: 10px; text-align: left; }
+  .rn-rl__step { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border: 1px solid #222328; border-radius: 16px; background: #0f1012; font-size: 14px; line-height: 1.45; color: #c4c5ca; }
+  .rn-rl__step b { color: #fff; }
+  .rn-rl__n { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: #22f26a; color: #04140a; font-weight: 800; font-size: 14px; }
+</style>
+
+<div class="rn-rl">
+  <div class="rn-rl__kick"><i></i>ROLETA ROBUX</div>
+  <h1 class="rn-rl__title">Gire e ganhe <span>Robux</span></h1>
+  <p class="rn-rl__lead">Digite o seu código e gire a roleta. Cada código vale <b>1 rodada</b>, com prêmios de 10 até 10.000 Robux.</p>
+
+  <div class="rn-rl__stage">
+    <div class="rn-rl__glow" aria-hidden="true"></div>
+    <svg class="rn-rl__pin" viewBox="0 0 34 44" aria-hidden="true"><path d="M17 42 3 14a14 14 0 1 1 28 0z" fill="#fff"/><circle cx="17" cy="14" r="6" fill="#22f26a"/></svg>
+    <div class="rn-rl__wheel" id="rn-rl-wheel"></div>
+    <div class="rn-rl__hub" aria-hidden="true">GIRAR</div>
+  </div>
+
+  <form class="rn-rl__box" id="rn-rl-form" autocomplete="off">
+    <label class="rn-rl__label" for="rn-rl-code">Código da rodada</label>
+    <div class="rn-rl__row">
+      <input class="rn-rl__input" id="rn-rl-code" placeholder="RN-XXXX-XXXX" maxlength="16" spellcheck="false" autocapitalize="characters">
+      <button class="rn-rl__btn" id="rn-rl-go" type="submit">Girar</button>
+    </div>
+    <p class="rn-rl__msg" id="rn-rl-msg" role="status"></p>
+  </form>
+
+  <div class="rn-rl__win" id="rn-rl-win" role="status" aria-live="polite">
+    <p class="rn-rl__wint">VOCÊ GANHOU</p>
+    <div class="rn-rl__winv" id="rn-rl-winv"></div>
+    <p class="rn-rl__wins">Para receber, abra um ticket no nosso Discord e envie o seu código.</p>
+    <div class="rn-rl__winc" id="rn-rl-winc"></div>
+    <a class="rn-rl__dc" href="{{ rn_rl_discord }}" target="_blank" rel="noopener">Resgatar no Discord <span aria-hidden="true">→</span></a>
+  </div>
+
+  <div class="rn-rl__how">
+    <div class="rn-rl__step"><span class="rn-rl__n">1</span><span>Consiga um <b>código da roleta</b> com a Rei dos Nitros.</span></div>
+    <div class="rn-rl__step"><span class="rn-rl__n">2</span><span>Digite o código acima e toque em <b>Girar</b>. Cada código gira <b>uma vez</b>.</span></div>
+    <div class="rn-rl__step"><span class="rn-rl__n">3</span><span>Abra um <b>ticket no Discord</b> com o código para receber os seus Robux.</span></div>
+  </div>
+</div>
+
+<script>
+  // códigos já resgatados (impressão digital): não giram mais
+  window.RN_ROLETA_USADOS = ["a4015bf336b360ea6fc99111ecdee24fac4ab5408807287f9cf8a1afd5d63365"];
+  window.RN_ROLETA = {"cf0af4d5d8b65430d979c4d8b03f99940aceb7fe4e2c23c17f0812f6bcf1cc0c": 3, "60a76a973ead2a3c07caccbbf778c412912e2635f2acfd4f6524031f1caf967d": 1, "a4015bf336b360ea6fc99111ecdee24fac4ab5408807287f9cf8a1afd5d63365": 0, "c81e100faabf05300de8009b53569cc8a86003865608f12284cddea4fe81117f": 0, "f70264e948a4af02277868dd22c13e0de782803b0b280813c5582d9e21145889": 0, "32d4b6f2961b1371ae04aad7759de8a69114432d80895e8f3d488be87c5746ee": 2, "35a25f4b4809ecd3f87e934b4837273849b9401bec8feb22142124a34116ac81": 1, "0fd4aea2b30d66d1b52ce7616d6da6c35b39e437183510ba5633f4ecc94df17c": 2, "a880babaf0c0d92f71f7ccec2e3e84735d9201dabf06d6a9a0273d8407a3d04d": 0, "c4a5b255945e15532ea64758512f72e832dd8b04068945a17c6c384dfbfd4e3a": 1, "f91a98eb416124e8264178cf69e6f42cbbc46430c7480dce8a370376a042c2a9": 4, "975b5fba41237cf8a59f6e8c7b33c7f8da34cc63afe94a81783cff62609db555": 0, "32d7089f1b1bd50a5fbca9cbe25846eb7c2c7950828c920b8f1a74a181dbadf4": 0, "f78090590f07ea5f2e1e0954904d7821036bcdfe01972d25e981500dcdee6cca": 0, "8e587d87e9eab43fba552a3b9ccec1f468ce396f0ff8d663104992fcec8e2215": 5, "239ce8bf88c6d0a6f0a318a6b0b1069e9f26e6a95956dfb51e88a1be603420c9": 0, "c8eaa3bec2bb4c37fef39f954248c03e1196a93a5cd5783137641830f95e7502": 2, "a895a7832256f01244c25b160b5b454a021d5025d9081d8741a865d3a59c3db8": 1, "6974be57e695bd06baf5efb30cb122a53869f2b9da4d956dba904bda67a163ae": 4, "ebfe44ba8ea9cd829ab80672a58138a84664739ae4236157704650413efef39d": 4};
+  (function () {
+    var PREMIOS = [10, 50, 100, 500, 1000, 5000, 10000];
+    var N = PREMIOS.length, FATIA = 360 / N;
+    var wheel = document.getElementById('rn-rl-wheel');
+    if (!wheel) return;
+    function fmt(v) { return v.toLocaleString('pt-BR'); }
+
+    // desenha a roleta
+    var cores = ['#22f26a', '#16171a', '#129a43', '#1f2024', '#7dffad', '#16171a', '#facc15'];
+    var txt = ['#04140a', '#fff', '#fff', '#fff', '#04140a', '#fff', '#3b2a00'];
+    var svg = '<svg viewBox="-110 -110 220 220"><circle r="108" fill="#0c0d0f"/><circle r="104" fill="none" stroke="#2a2b31" stroke-width="2"/>';
+    for (var i = 0; i < N; i++) {
+      var a0 = (i * FATIA - 90 - FATIA / 2) * Math.PI / 180, a1 = ((i + 1) * FATIA - 90 - FATIA / 2) * Math.PI / 180;
+      var x0 = Math.cos(a0) * 100, y0 = Math.sin(a0) * 100, x1 = Math.cos(a1) * 100, y1 = Math.sin(a1) * 100;
+      svg += '<path d="M0 0L' + x0.toFixed(2) + ' ' + y0.toFixed(2) + 'A100 100 0 0 1 ' + x1.toFixed(2) + ' ' + y1.toFixed(2) + 'Z" fill="' + cores[i] + '" stroke="#0c0d0f" stroke-width="1.5"/>';
+      svg += '<g transform="rotate(' + (i * FATIA) + ')"><text x="0" y="-62" text-anchor="middle" font-family="Baloo 2, system-ui, sans-serif" font-weight="800" font-size="' + (PREMIOS[i] >= 1000 ? 15 : 18) + '" fill="' + txt[i] + '">' + fmt(PREMIOS[i]) + '</text>' +
+             '<text x="0" y="-46" text-anchor="middle" font-family="system-ui, sans-serif" font-weight="700" font-size="8" letter-spacing="1" fill="' + txt[i] + '" opacity=".8">ROBUX</text></g>';
+    }
+    for (var k = 0; k < N * 2; k++) { var a = (k * FATIA / 2 - 90) * Math.PI / 180; svg += '<circle cx="' + (Math.cos(a) * 104).toFixed(2) + '" cy="' + (Math.sin(a) * 104).toFixed(2) + '" r="2.4" fill="' + (k % 2 ? '#22f26a' : '#fff') + '"/>'; }
+    wheel.innerHTML = svg + '</svg>';
+
+    var form = document.getElementById('rn-rl-form'), input = document.getElementById('rn-rl-code'), go = document.getElementById('rn-rl-go');
+    var msg = document.getElementById('rn-rl-msg'), win = document.getElementById('rn-rl-win');
+    var giro = 0, girando = false;
+    function aviso(t, erro) { msg.textContent = t; msg.classList.toggle('rn-rl__msg--err', !!erro); if (erro) { form.classList.remove('rn-rl--shake'); void form.offsetWidth; form.classList.add('rn-rl--shake'); } }
+    function limpar(v) { return String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '').replace(/^RN/, '').replace(/^(.{4})(.{1,4}).*$/, 'RN-$1-$2'); }
+    input.addEventListener('input', function () { var p = input.selectionStart === input.value.length; var v = String(input.value).toUpperCase().replace(/[^A-Z0-9-]/g, ''); input.value = v; if (p) input.selectionStart = input.selectionEnd = v.length; });
+    function sha(t) {
+      if (!window.crypto || !crypto.subtle) return Promise.reject();
+      return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)).then(function (b) { return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); });
+    }
+    function mostrar(codigo, idx) {
+      document.getElementById('rn-rl-winv').textContent = fmt(PREMIOS[idx]) + ' Robux';
+      document.getElementById('rn-rl-winc').textContent = codigo;
+      win.classList.remove('rn-rl--on'); void win.offsetWidth; win.classList.add('rn-rl--on');
+      if (window.rnBurst) setTimeout(function () { window.rnBurst(document.getElementById('rn-rl-winv'), true); }, 350);
+      win.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (girando) return;
+      var codigo = limpar(input.value);
+      if (!/^RN-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(codigo)) { aviso('Digite o código completo, no formato RN-XXXX-XXXX.', true); return; }
+      go.disabled = true; aviso('Conferindo o código…');
+      sha(codigo).then(function (h) {
+        var idx = window.RN_ROLETA[h];
+        if (idx === undefined) { go.disabled = false; aviso('Código inválido. Confira as letras e tente de novo.', true); return; }
+        if ((window.RN_ROLETA_USADOS || []).indexOf(h) >= 0) { go.disabled = false; aviso('Esse código já foi resgatado e não pode ser usado de novo.', true); return; }
+        var usados = {}; try { usados = JSON.parse(localStorage.getItem('rn_roleta_usados') || '{}'); } catch (x) {}
+        if (usados[h]) { go.disabled = false; aviso('Esse código já foi girado. O prêmio dele está abaixo.'); mostrar(codigo, idx); return; }
+        // gira: várias voltas e para no meio (com variação) da fatia do prêmio
+        girando = true; aviso('Girando… boa sorte!'); win.classList.remove('rn-rl--on');
+        var desvio = (Math.random() - .5) * FATIA * 0.6;
+        var alvo = 360 - idx * FATIA - desvio;
+        giro = giro - (giro % 360) + 360 * 6 + alvo;
+        wheel.style.transform = 'rotate(' + giro + 'deg)';
+        setTimeout(function () {
+          girando = false; go.disabled = false;
+          usados[h] = 1; try { localStorage.setItem('rn_roleta_usados', JSON.stringify(usados)); } catch (x) {}
+          aviso('');
+          mostrar(codigo, idx);
+        }, 5400);
+      }, function () { go.disabled = false; aviso('Seu navegador não conseguiu conferir o código. Atualize a página e tente de novo.', true); });
+    });
+  })();
+</script>

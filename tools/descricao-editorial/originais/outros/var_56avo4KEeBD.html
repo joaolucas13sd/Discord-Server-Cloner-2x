@@ -1,0 +1,607 @@
+<div class="tl-wrapper">
+
+<style>
+.tl-wrapper{
+    --tl-accent:#fe2c55;
+    --tl-bg:#0a0a0c;
+    --tl-card:#131316;
+    --tl-item:#1c1c21;
+    --tl-border:rgba(255,255,255,.08);
+    --tl-text:#f5f5f6;
+    --tl-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--tl-text);
+}
+.tl-wrapper *{box-sizing:border-box}
+
+.tl-container{
+    background:var(--tl-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.tl-card{
+    background:var(--tl-card);
+    border:1px solid var(--tl-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.tl-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.tl-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--tl-accent);
+    flex-shrink:0;
+}
+
+.tl-quote{
+    border-left:3px solid var(--tl-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.tl-quote strong{color:#fff}
+
+.tl-text{
+    color:var(--tl-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.tl-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.tl-list{display:grid;gap:10px}
+.tl-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--tl-item);
+    border:1px solid var(--tl-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.tl-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(254,44,85,.10);
+    border:1px solid rgba(254,44,85,.38);
+}
+.tl-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#ff8fa6;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.tl-item-label{
+    display:block;
+    color:var(--tl-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.tl-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP VIDEO TIKTOK */
+.tl-mock{
+    position:relative;
+    height:300px;
+    border-radius:12px;
+    background:linear-gradient(170deg,#1b1030 0%,#0d1a2b 50%,#2b1020 100%);
+    border:1px solid var(--tl-border);
+    overflow:hidden;
+    margin-bottom:18px;
+}
+.tl-tabs{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    padding:10px 0;
+    font-size:12px;
+    font-weight:700;
+    color:rgba(255,255,255,.55);
+}
+.tl-tabs span:nth-child(2){color:#fff;border-bottom:2px solid #fff;padding-bottom:2px}
+.tl-note{
+    position:absolute;
+    left:36px;
+    top:120px;
+    font-size:46px;
+    opacity:.16;
+}
+.tl-rail{
+    position:absolute;
+    right:12px;
+    bottom:58px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+}
+.tl-rail-avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:2px solid #fff;
+    background:#2a2a33;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    overflow:hidden;
+}
+.tl-rail-avatar svg{width:80%;height:80%;fill:#6b6b78}
+.tl-act{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+    font-size:11px;
+    font-weight:700;
+}
+.tl-heart{
+    position:relative;
+    width:32px;
+    height:32px;
+}
+.tl-heart svg{
+    position:absolute;
+    inset:0;
+    width:32px;
+    height:32px;
+}
+.tl-heart-off{fill:#fff}
+.tl-heart-on{
+    fill:#fe2c55;
+    opacity:0;
+    animation:tlBeat 2s ease-out infinite;
+}
+@keyframes tlBeat{
+    0%{opacity:0;transform:scale(.6)}
+    15%{opacity:1;transform:scale(1.3)}
+    30%,100%{opacity:1;transform:scale(1)}
+}
+.tl-act svg.tl-ic{
+    width:30px;
+    height:30px;
+    fill:#fff;
+}
+.tl-count-win{
+    height:16px;
+    overflow:hidden;
+}
+.tl-count-col{
+    display:block;
+    animation:tlCount 8s steps(1,end) infinite;
+}
+.tl-count-col b{
+    display:block;
+    height:16px;
+    line-height:16px;
+    font-size:11.5px;
+    font-variant-numeric:tabular-nums;
+}
+.tl-count-col b:last-child{color:#ff8fa6}
+@keyframes tlCount{
+    0%,10%{transform:translateY(0)}
+    22%{transform:translateY(-16px)}
+    34%{transform:translateY(-32px)}
+    46%{transform:translateY(-48px)}
+    58%{transform:translateY(-64px)}
+    70%,100%{transform:translateY(-80px)}
+}
+.tl-caption{
+    position:absolute;
+    left:12px;
+    right:70px;
+    bottom:12px;
+    text-align:left;
+}
+.tl-caption b{display:block;font-size:12.5px;margin-bottom:3px}
+.tl-caption span{font-size:11.5px;color:rgba(255,255,255,.8)}
+
+/* CORAÇÕES SUBINDO A PARTIR DO ÍCONE */
+.tl-fly{
+    position:absolute;
+    right:16px;
+    bottom:128px;
+    width:22px;
+    height:22px;
+    fill:#fe2c55;
+    opacity:0;
+    animation:tlFly 2.4s ease-out infinite;
+    z-index:2;
+}
+.tl-fly:nth-of-type(1){animation-delay:0s;margin-right:34px}
+.tl-fly:nth-of-type(2){animation-delay:.6s;margin-right:56px}
+.tl-fly:nth-of-type(3){animation-delay:1.2s;margin-right:44px}
+.tl-fly:nth-of-type(4){animation-delay:1.8s;margin-right:68px}
+@keyframes tlFly{
+    0%{opacity:0;transform:translateY(8px) scale(.7)}
+    20%{opacity:1}
+    100%{opacity:0;transform:translateY(-120px) scale(1.2)}
+}
+
+.tl-gain{
+    position:absolute;
+    left:12px;
+    top:44px;
+    padding:5px 10px;
+    border-radius:999px;
+    background:#22c55e;
+    color:#06210f;
+    font-size:12px;
+    font-weight:900;
+    opacity:0;
+    animation:tlGain 8s infinite;
+}
+@keyframes tlGain{
+    0%,66%{opacity:0;transform:translateY(8px) scale(.8)}
+    74%,94%{opacity:1;transform:translateY(0) scale(1)}
+    98%,100%{opacity:0;transform:translateY(-4px) scale(1)}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .tl-count-col,.tl-gain,.tl-heart-on,.tl-fly{animation:none}
+    .tl-count-col{transform:translateY(-80px)}
+    .tl-gain,.tl-heart-on{opacity:1}
+    .tl-fly{display:none}
+}
+
+.tl-disclaimer{
+    margin:14px 0 0;
+    text-align:center;
+    font-size:11.5px;
+    line-height:1.5;
+    color:#8b8d93;
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.tl-steps{display:grid;gap:10px}
+.tl-step{
+    background:var(--tl-item);
+    border:1px solid var(--tl-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.tl-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--tl-muted);
+    margin-bottom:8px;
+}
+.tl-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--tl-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.tl-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--tl-text);
+    margin:0;
+}
+.tl-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.tl-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.tl-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.tl-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.tl-info:last-child{margin-bottom:0}
+.tl-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .tl-card{padding:18px 14px}
+}
+
+/* ===== DESTAQUE ===== */
+.tl-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.tl-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--tl-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.tl-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.tl-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tl-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.tl-hero-s strong{color:#fff}
+.tl-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--tl-border)}
+.tl-price-k{display:block;color:var(--tl-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.tl-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.tl-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.tl-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.tl-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.tl-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.tl-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tl-ben{background:var(--tl-item);border:1px solid var(--tl-border);border-radius:14px;padding:14px 12px}
+.tl-ben svg{width:26px;height:26px;fill:none;stroke:var(--tl-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.tl-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.tl-ben small{display:block;color:var(--tl-muted);font-size:12.5px;line-height:1.45}
+.tl-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.tl-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--tl-item);border:1px solid var(--tl-border);text-align:center}
+.tl-plan b{display:block;font-size:13px;color:var(--tl-muted);margin-bottom:6px}
+.tl-plan strong{display:block;font-size:22px;color:#fff}
+.tl-plan small{display:block;margin-top:4px;color:var(--tl-muted);font-size:12px}
+.tl-plan--on{border-color:var(--tl-accent);background:rgba(240,77,200,.10)}
+.tl-plan--on b{color:#ff7ad9}
+.tl-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--tl-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.tl-trust{display:grid;gap:10px}
+.tl-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.tl-trust strong{color:#fff}
+.tl-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.tl-info-title{display:flex;align-items:center;gap:8px}
+.tl-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.tl-nzgrid,.tl-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.tl-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.tl-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.tl-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.tl-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.tl-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.tl-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.tl-prof-body{padding:30px 12px 12px}
+.tl-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.tl-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.tl-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.tl-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.tl-prof-user b{color:#ff7ad9}
+.tl-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tl-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.tl-mock:has(.tl-nzprof){height:auto !important;padding-bottom:16px}
+.tl-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.tl-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.tl-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.tl-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.tl-prof-name{white-space:nowrap}
+.tl-nzprof .tl-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.tl-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.tl-prof-av,.tl-prof-av span,.tl-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.tl-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.tl-rows{display:grid;gap:8px}
+.tl-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--tl-item);border:1px solid var(--tl-border);font-size:14px;color:#e4e4e7}
+.tl-row b{color:#fff;white-space:nowrap}
+.tl-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.tl-row--on{border-color:var(--tl-accent);background:rgba(240,77,200,.10)}
+.tl-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--tl-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.tl-en{height:300px !important;padding:0 !important;background:#0b0b0f !important;overflow:hidden}
+.tl-en *{box-sizing:border-box}
+.tl-en svg{max-width:none !important}
+.tl-enbar{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.tl-enbar b{font-size:12.5px !important;color:#fff}
+.tl-enbar span{font-size:10.5px !important;font-weight:800;background:linear-gradient(90deg,#f58529,#dd2a7b,#8134af);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tl-en-tt .tl-enbar span{background:none;color:#25f4ee}
+.tl-enprof{display:flex;align-items:center;gap:12px;padding:12px 12px 6px}
+.tl-enav{display:grid;place-items:center;flex:0 0 auto;width:58px;height:58px;border-radius:50%;background:#26282e}
+.tl-enav svg{width:28px !important;height:28px !important;fill:none;stroke:#a1a1aa;stroke-width:2}
+.tl-enav-ig{box-shadow:0 0 0 2px #0b0b0f,0 0 0 4px #dd2a7b}
+.tl-enav-tt{box-shadow:0 0 0 2px #25f4ee}
+.tl-enst{flex:1;display:flex;justify-content:space-around;text-align:center}
+.tl-enst b{display:block;font-size:14px !important;line-height:18px !important;color:#fff}
+.tl-enst small{display:block;font-size:9.5px !important;color:#a1a1aa}
+.tl-hot b{color:#fff}
+.tl-hot small{color:#f472b6 !important;font-weight:700}
+.tl-en-tt .tl-hot small{color:#25f4ee !important}
+.tl-cnt{display:inline-block;height:18px;overflow:hidden;vertical-align:bottom}
+.tl-col{display:block;animation:nzEnCol 10s infinite}
+.tl-col b{display:block;height:18px;line-height:18px !important}
+.tl-likes .tl-col b,.tl-ttviews .tl-col b{text-align:right}
+.tl-likes .tl-cnt{margin-right:3px}
+@keyframes nzEnCol{0%,12%{transform:translateY(0)}20%,24%{transform:translateY(-18px)}32%,36%{transform:translateY(-36px)}44%,48%{transform:translateY(-54px)}56%,60%{transform:translateY(-72px)}68%,95%{transform:translateY(-90px)}100%{transform:translateY(0)}}
+.tl-hot b,.tl-likes .tl-cnt b{animation:nzEnHot 10s infinite}
+@keyframes nzEnHot{0%,12%{color:#fff}20%,95%{color:#22c55e}100%{color:#fff}}
+.tl-enname{display:block;padding:0 12px;font-size:12px !important;color:#fff}
+.tl-enbtn{display:block;margin:8px 12px;padding:6px;border-radius:7px;background:#26282e;text-align:center;font-size:11px !important;font-weight:700;color:#e4e4e7}
+.tl-engrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 0 0}
+.tl-engrid i{display:block;height:58px;background:linear-gradient(135deg,#3b0764,#9d174d)}
+.tl-engrid i:nth-child(2){background:linear-gradient(135deg,#1e3a8a,#0e7490)}.tl-engrid i:nth-child(3){background:linear-gradient(135deg,#7c2d12,#ca8a04)}.tl-engrid i:nth-child(4){background:linear-gradient(135deg,#14532d,#0d9488)}.tl-engrid i:nth-child(5){background:linear-gradient(135deg,#831843,#f59e0b)}.tl-engrid i:nth-child(6){background:linear-gradient(135deg,#312e81,#7c3aed)}
+.tl-ttprof{display:flex;flex-direction:column;align-items:center;padding:10px 12px 0}
+.tl-ttprof .tl-enav{width:50px;height:50px}
+.tl-ttprof .tl-enname{margin-top:5px}
+.tl-ttst{width:100%;margin-top:6px}
+.tl-ttbtn{align-self:stretch;margin:7px 30px}
+.tl-ttgrid i{height:44px}
+.tl-post{position:relative;height:150px;background:linear-gradient(135deg,#f58529 0%,#dd2a7b 50%,#515bd4 100%)}
+.tl-bigh{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;opacity:0;animation:nzEnBig 10s infinite}
+.tl-bigh svg{width:64px !important;height:64px !important;fill:#fff;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+@keyframes nzEnBig{0%,10%{opacity:0;transform:scale(.3)}13%{opacity:1;transform:scale(1.15)}16%{transform:scale(1)}22%,100%{opacity:0;transform:scale(1)}}
+.tl-acts{display:flex;gap:14px;padding:9px 12px 4px}
+.tl-acts i svg{width:21px !important;height:21px !important;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.tl-h1 svg{animation:nzEnH1 10s infinite}
+@keyframes nzEnH1{0%,11%{fill:none;stroke:#fff;transform:scale(1)}13%{fill:#ff3040;stroke:#ff3040;transform:scale(1.3)}16%,95%{fill:#ff3040;stroke:#ff3040;transform:scale(1)}100%{fill:none;stroke:#fff}}
+.tl-likes{display:block;padding:0 12px;font-size:12.5px !important;line-height:18px !important;color:#fff}
+.tl-ttvid{position:relative;height:100%;background:linear-gradient(180deg,#1f1144,#3b0764 40%,#0f172a)}
+.tl-tttabs{position:absolute;left:0;right:0;top:9px;display:flex;justify-content:center;gap:14px}
+.tl-tttabs small{font-size:11.5px !important;color:#a1a1aa}
+.tl-tttabs b{font-size:11.5px !important;color:#fff;border-bottom:2px solid #fff}
+.tl-ttside{position:absolute;right:9px;bottom:52px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.tl-ttside .tl-enav{width:36px;height:36px}
+.tl-ttside .tl-enav svg{width:18px !important;height:18px !important}
+.tl-ttic{display:flex;flex-direction:column;align-items:center;gap:2px}
+.tl-ttic svg{width:24px !important;height:24px !important;fill:#fff;stroke:none}
+.tl-ttic small{font-size:10px !important;line-height:18px !important;font-weight:700;color:#fff}
+.tl-ttic.tl-h1 svg{stroke:#fff;stroke-width:2}
+.tl-ttinfo{position:absolute;left:12px;bottom:22px;max-width:70%}
+.tl-ttinfo b{display:block;font-size:12px !important;color:#fff}
+.tl-ttinfo small{display:block;font-size:10.5px !important;color:#d4d4d8}
+.tl-ttviews{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.5);font-size:11px !important;line-height:18px !important;font-weight:800;color:#fff}
+.tl-ttviews svg{width:14px !important;height:14px !important;fill:none;stroke:#25f4ee;stroke-width:2.2}
+.tl-ttplay{position:absolute;left:50%;top:42%;width:44px;height:44px;margin:-22px 0 0 -22px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.15)}
+.tl-ttplay svg{width:20px !important;height:20px !important;fill:#fff}
+.tl-ttprog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.2)}
+.tl-ttprog i{display:block;height:100%;width:0;background:#fff;animation:nzEnMusBar 10s linear infinite}
+.tl-tsts{position:absolute;left:12px;right:12px;top:44px;height:0}
+.tl-tst{position:absolute;left:0;top:calc(var(--d) * 34px);display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 5px;border-radius:999px;background:rgba(24,24,27,.92);border:1px solid rgba(255,255,255,.1);font-size:10.5px !important;font-weight:700;color:#fff;opacity:0;animation:nzEnTst 10s infinite;animation-delay:calc(var(--d) * 1.3s + 1.6s)}
+.tl-tst i{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#dd2a7b}
+.tl-en-tt .tl-tst i{background:#fe2c55}
+.tl-tst svg{width:11px !important;height:11px !important;fill:#fff;stroke:#fff;stroke-width:1}
+@keyframes nzEnTst{0%{opacity:0;transform:translateX(-12px)}4%,16%{opacity:1;transform:none}21%,100%{opacity:0;transform:translateX(-6px)}}
+.tl-enok{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:6px 13px;border-radius:999px;background:#22c55e;color:#04140a;font-size:12px !important;font-weight:900;white-space:nowrap;box-shadow:0 6px 18px rgba(34,197,94,.35);opacity:0;animation:nzEnEnOk 10s infinite}
+@keyframes nzEnEnOk{0%,68%{opacity:0;transform:translate(-50%,10px)}72%,94%{opacity:1;transform:translate(-50%,0)}98%,100%{opacity:0}}
+.tl-en-prof .tl-tsts{top:182px}
+.tl-en-vid .tl-enok{bottom:auto;top:40px}
+@keyframes nzEnMusBar{0%{width:0}100%{width:100%}}
+</style>
+
+
+<div class="tl-container">
+    <div class="tl-hero"><span class="tl-tag">ENGAJAMENTO · TIKTOK</span><h2 class="tl-hero-t">1.000 curtidas no TikTok por <span>R$ 10,99</span></h2><p class="tl-hero-s">Receba <strong>1.000 curtidas</strong> no seu vídeo do TikTok e dê mais força ao seu conteúdo.</p><div class="tl-price tl-pulse"><div><span class="tl-price-k">Preço</span><span class="tl-price-new">R$ 10,99</span></div></div></div>
+    <div class="tl-card"><h2 class="tl-h2">Compare os pacotes</h2><div class="tl-rows"><div class="tl-row"><span>TIKTOK / 1K DE VISUALIZACOES</span><b>R$ 5,99</b></div><div class="tl-row tl-row--on"><span>TIKTOK / 1K DE CURTIDAS<span class="tl-row-tag">VOCÊ ESTÁ AQUI</span></span><b>R$ 10,99</b></div><div class="tl-row"><span>TIKTOK / 1K DE SEGUIDORES</span><b>R$ 45,99</b></div><div class="tl-row"><span>INSTAGRAM / 1K DE CURTIDAS 100% BR</span><b>R$ 15,99</b></div><div class="tl-row"><span>INSTAGRAM / 1K DE SEGUIDORES 50% BR</span><b>R$ 25,99</b></div></div><p class="tl-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p></div>
+    <!-- O QUE VOCÊ RECEBE -->
+    <div class="tl-card">
+
+        <h2 class="tl-h2">O que você recebe</h2>
+
+        <div class="tl-list">
+
+            <div class="tl-item">
+                <span class="tl-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></svg></span>
+                <div>
+                    <span class="tl-item-label">1.000 curtidas</span>
+                    <span class="tl-item-text">1.000 curtidas nos seus vídeos do TikTok.</span>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <span class="tl-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg></span>
+                <div>
+                    <span class="tl-item-label">Boost no conteúdo</span>
+                    <span class="tl-item-text">Dê mais força às suas postagens e aumente o alcance.</span>
+                </div>
+            </div>
+
+            <div class="tl-item">
+                <span class="tl-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="14" x="2" y="5" rx="2"></rect><path d="m22 8-6 4 6 4V8z"></path></svg></span>
+                <div>
+                    <span class="tl-item-label">Para seus vídeos</span>
+                    <span class="tl-item-text">Aplicado nos vídeos TikTok que você escolher.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="tl-card">
+
+        <h2 class="tl-h2">Como utilizar</h2>
+
+        <div class="tl-mock tl-en tl-en-tt tl-en-vid"><div class="tl-ttvid"><span class="tl-tttabs"><small>Seguindo</small><b>Para você</b></span><div class="tl-ttside"><i class="tl-enav tl-enav-tt"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></i><span class="tl-ttic tl-h1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.1 5.2 3 1.6-1.9 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg><small><span class="tl-cnt"><span class="tl-col"><b>85</b><b>285</b><b>485</b><b>685</b><b>885</b><b>1.085</b></span></span></small></span><span class="tl-ttic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><small>96</small></span><span class="tl-ttic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4l7 7-7 7v-4c-5 0-8 1.5-10 5 .5-5.5 3.5-10 10-11z"/></svg><small>41</small></span></div><div class="tl-ttinfo"><b>@seu.perfil</b><small>Meu novo vídeo #fyp</small></div><i class="tl-ttplay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></i><div class="tl-ttprog"><i></i></div></div><div class="tl-tsts"><span class="tl-tst" style="--d:0"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.1 5.2 3 1.6-1.9 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></i>Curtiu o seu vídeo</span><span class="tl-tst" style="--d:1"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.1 5.2 3 1.6-1.9 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></i>Curtiu o seu vídeo</span><span class="tl-tst" style="--d:2"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.1 5.2 3 1.6-1.9 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg></i>Curtiu o seu vídeo</span></div><span class="tl-enok">+1.000 curtidas</span></div>
+
+
+        <div class="tl-steps">
+
+            <div class="tl-step">
+                <div class="tl-step-label"><span class="tl-step-num">1</span> Passo 1</div>
+                <p class="tl-step-text">
+                    Finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="tl-step">
+                <div class="tl-step-label"><span class="tl-step-num">2</span> Passo 2</div>
+                <p class="tl-step-text">
+                    Informe o <strong>link do seu vídeo</strong> pelo pedido.
+                </p>
+            </div>
+
+            <div class="tl-step">
+                <div class="tl-step-label"><span class="tl-step-num">3</span> Passo 3</div>
+                <p class="tl-step-text">
+                    Acompanhe as <strong>curtidas</strong> chegando ao seu vídeo.
+                </p>
+            </div>
+
+        </div>
+
+        <p class="tl-disclaimer">
+            Animação ilustrativa.
+        </p>
+
+    </div>
+
+    <div class="tl-card"><h2 class="tl-h2">Compre com tranquilidade</h2><div class="tl-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Acompanhe o pedido</strong> pela página da compra.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="tl-hero rn-cta2"><span class="tl-tag">PRONTO PARA GARANTIR?</span><h2 class="tl-hero-t">TIKTOK / 1K DE CURTIDAS</h2><div class="tl-price tl-pulse"><div><span class="tl-price-k">Preço</span><span class="tl-price-new">R$ 10,99</span></div></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

@@ -1,0 +1,217 @@
+<div class="ed">
+<style>
+.ed{--ed-ac:#fb7185;--ed-tx:#c4c7cc;--ed-mut:#8b8f96;--ed-card:#131418;--ed-bd:#24262b;max-width:560px;margin:0 auto;color:var(--ed-tx);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.7}
+.ed *{box-sizing:border-box}
+.ed p{margin:0 0 14px !important;color:var(--ed-tx) !important;font-size:14px !important;line-height:1.7 !important}
+.ed strong{color:#fff;font-weight:700}
+.ed-box{margin:0 0 18px;padding:16px 18px;border-radius:14px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-box p{margin:0 !important}
+.ed-h{margin:26px 0 12px !important;padding:0 !important;border:0 !important;color:#fff !important;font-size:16px !important;font-weight:800 !important;line-height:1.3 !important}
+.ed-h::before{display:none !important}
+.ed-img{display:block;width:100%;height:auto;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd)}
+/* ilustração: aparelhos */
+.ed-dev{display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:26px 14px 18px;background:radial-gradient(100% 120% at 50% 100%,#2a0a14,#0c0c0e 70%)}
+.ed-dev span{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-dev svg{fill:none;stroke:#e6e7e9;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ed-dev .ed-scr{fill:url(#edG)}
+/* ficha do plano */
+.ed-spec{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 18px}
+.ed-spec div{padding:11px 12px;border-radius:12px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-spec small{display:block;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-spec b{display:block;color:#fff;font-size:13.5px;font-weight:700;margin-top:2px}
+@media (min-width:520px){.ed-dev{gap:26px}}
+.ed-art{position:relative;overflow:hidden;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd)}
+.ed-fig{margin:4px 0 18px !important;padding:0 !important}
+.ed-fig .ed-img{margin:0 !important}
+.ed-fig figcaption{margin-top:6px;color:var(--ed-mut);font-size:11.5px;text-align:center}
+.ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-cfg-r span,.dz-cfg-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-ord>b{display:block !important}
+.ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-fig{margin:4px 0 18px !important;padding:0 !important}.ed-fig .ed-img{margin:0 !important}
+.ed-spec .ed-w{grid-column:1 / -1}
+.ed-alert{margin:0 0 18px;padding:12px 14px;border-radius:12px;background:rgba(225,29,72,.12);border:1px solid rgba(251,113,133,.5);color:#fecdd3;font-size:13px;line-height:1.55}
+.ed-alert strong{color:#fff}.ed-alert ol{margin:6px 0 0;padding-left:18px}
+.ed-nums{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 18px}
+.ed-nums div{padding:12px;border-radius:12px;background:var(--ed-card);border:1px solid var(--ed-bd);text-align:center}
+.ed-nums b{display:block;color:#fff;font-size:20px}.ed-nums small{color:var(--ed-mut);font-size:11px}
+.vt,.vt *{box-sizing:border-box;line-height:normal}
+.vt{--vt:10s;margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card,#131418);border:1px solid var(--ed-bd,#24262b)}
+.vt-k{display:block;color:var(--vc);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.vt-t{margin:3px 0 12px !important;padding:0 !important;border:0 !important;color:#fff !important;font-size:18px !important;font-weight:800 !important;line-height:1.2 !important}
+.vt-t::before{display:none !important}
+.vt-win{position:relative;height:240px;border-radius:14px;overflow:hidden;background:#0c0d10;border:1px solid rgba(255,255,255,.08)}
+.vt-note{margin:8px 0 0 !important;color:#8b8f96 !important;font-size:11.5px !important;line-height:1.45 !important;text-align:center}
+.vt-steps{display:grid;gap:6px;margin-top:12px}
+.vt-st{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.vt-st i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--vc);color:#06110a;font-style:normal;font-size:11px;font-weight:900}
+.vt-st b{display:block;color:#fff;font-size:13.5px}
+.vt-st span{display:block;margin-top:1px;color:#9aa0a6;font-size:12px;line-height:1.45}
+.vt-conf{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.vt-conf i{position:absolute;top:-10px;width:6px;height:10px;border-radius:2px;opacity:0}
+@media (prefers-reduced-motion:reduce){.vt *{animation-duration:0s !important;animation-iteration-count:1 !important}}
+
+.vt--fn{--vt:24s}
+.vt--fn .vt-win{height:250px;background:#16191f}
+.vt--fn .vt-win *{box-sizing:border-box}
+.vt--fn .vt-win span,.vt--fn .vt-win small,.vt--fn .vt-win b,.vt--fn .vt-win em,.vt--fn .vt-win i,.vt--fn .vt-win u{display:block;font-style:normal;text-decoration:none}
+.vt--fn .fn-top{position:absolute;left:0;right:0;top:0;height:22px;display:flex;gap:12px;align-items:center;padding:0 10px;background:#0f1115;border-bottom:1px solid #23262d;z-index:4}
+.vt--fn .fn-top b,.vt--fn .fn-top span{color:#8f98a0;font-size:9px;font-weight:600}.vt--fn .fn-top b{color:#c7d5e0}
+.vt--fn .fn-sc{position:absolute;inset:22px 0 0;opacity:0}
+.vt--fn .fn-box{position:absolute;left:50%;top:22px;margin-left:-105px;width:210px;padding:10px 12px;border-radius:8px;background:#1d2128;border:1px solid #2a2f38}
+.vt--fn .fn-in{height:22px;margin-top:3px;padding:0 7px;border-radius:3px;background:#2a2f38;display:flex !important;align-items:center;overflow:hidden}
+.vt--fn .fn-in em{font-family:ui-monospace,Menlo,monospace;color:#e5e7eb;font-size:10px;white-space:nowrap;overflow:hidden;width:0;letter-spacing:.03em}
+.vt--fn .fn-bt{border-radius:4px;color:#fff;font-size:9.5px;font-weight:900;text-align:center;line-height:22px;height:22px}
+
+.vt--fn .fn-steps{display:grid;gap:6px;margin-top:12px}
+.vt--fn .fn-st{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.vt--fn .fn-st i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#2a2f38;color:#c7d5e0;font-style:normal;font-size:11px;font-weight:900}
+.vt--fn .fn-st b{display:block;color:#fff;font-size:13.5px}.vt--fn .fn-st span{display:block;margin-top:1px;color:#9aa0a6;font-size:12px;line-height:1.45}
+.vt--fn .fn-s0{animation:fnS0 var(--vt) infinite}.vt--fn .fn-s0 i{animation:fnI0 var(--vt) infinite}
+@keyframes fnS0{0%,0%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}0.5%,16%{border-color:#fb718580;background:#fb718512}16.5%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}
+@keyframes fnI0{0%,0%{background:#2a2f38;color:#c7d5e0}0.5%,100%{background:#fb7185;color:#06150b}}
+.vt--fn .fn-s1{animation:fnS1 var(--vt) infinite}.vt--fn .fn-s1 i{animation:fnI1 var(--vt) infinite}
+@keyframes fnS1{0%,16%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}16.5%,32%{border-color:#fb718580;background:#fb718512}32.5%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}
+@keyframes fnI1{0%,16%{background:#2a2f38;color:#c7d5e0}16.5%,100%{background:#fb7185;color:#06150b}}
+.vt--fn .fn-s2{animation:fnS2 var(--vt) infinite}.vt--fn .fn-s2 i{animation:fnI2 var(--vt) infinite}
+@keyframes fnS2{0%,32%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}32.5%,56%{border-color:#fb718580;background:#fb718512}56.5%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}
+@keyframes fnI2{0%,32%{background:#2a2f38;color:#c7d5e0}32.5%,100%{background:#fb7185;color:#06150b}}
+.vt--fn .fn-s3{animation:fnS3 var(--vt) infinite}.vt--fn .fn-s3 i{animation:fnI3 var(--vt) infinite}
+@keyframes fnS3{0%,56%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}56.5%,97%{border-color:#fb718580;background:#fb718512}97.5%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}
+@keyframes fnI3{0%,56%{background:#2a2f38;color:#c7d5e0}56.5%,100%{background:#fb7185;color:#06150b}}
+
+.vt--fn .fn-top span.on{color:#fff}
+.vt--fn .fn-t1{animation:fnT1 var(--vt) infinite}.vt--fn .fn-t2{animation:fnT2 var(--vt) infinite}.vt--fn .fn-t3{animation:fnT3 var(--vt) infinite}
+.vt--fn .fn-a{animation:fnA var(--vt) infinite}.vt--fn .fn-b{animation:fnB var(--vt) infinite}.vt--fn .fn-c{animation:fnC var(--vt) infinite}.vt--fn .fn-d{animation:fnD var(--vt) infinite}
+.vt--fn .fn-ok{color:#4ade80;font-size:9px;font-weight:800}.vt--fn .fn-pn{margin:3px 0 8px;color:#fff;font-size:12.5px;font-weight:900}
+.vt--fn .fn-in u{flex:0 0 38px;color:#8f98a0;font-size:8px;font-weight:700}
+.vt--fn .fn-a .fn-in{margin-top:5px}.vt--fn .fn-a .fn-in em{width:auto;color:#fff}
+.vt--fn .fn-r1{animation:fnR1 var(--vt) infinite}.vt--fn .fn-r2{animation:fnR2 var(--vt) infinite}
+.vt--fn .fn-go{margin-top:9px;background:#e11d48;animation:fnGoP var(--vt) infinite}
+.vt--fn .fn-toast{position:absolute;left:50%;top:5px;transform:translateX(-50%);padding:4px 10px;border-radius:999px;background:rgba(34,197,94,.18);border:1px solid #22c55e;color:#4ade80;font-size:9px;font-weight:800;white-space:nowrap;opacity:0;z-index:3}
+.vt--fn .fn-tc1{animation:fnTc1 var(--vt) infinite}.vt--fn .fn-tc2{animation:fnTc2 var(--vt) infinite}
+.vt--fn .fn-gate{text-align:center;padding-top:14px}
+.vt--fn .vt-win .fn-18{width:44px;height:44px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;background:#e11d48;color:#fff;font-size:14px;font-weight:900;box-shadow:0 0 18px #e11d4888;animation:fnPulse 2s ease-in-out infinite}
+@keyframes fnPulse{50%{transform:scale(1.07)}}
+.vt--fn .fn-gate>b{color:#fff;font-size:12px;font-weight:800}.vt--fn .fn-gate>small{margin-top:3px;color:#8f98a0;font-size:9px}
+.vt--fn .fn-gr{display:flex;gap:6px;margin-top:12px}.vt--fn .fn-gr .fn-bt{font-size:9px}.vt--fn .fn-no{flex:0 0 60px;background:#2a2f38}.vt--fn .fn-yes{flex:1;background:#e11d48;animation:fnYesP var(--vt) infinite}
+.vt--fn .fn-lbox{height:150px}
+.vt--fn .fn-wm{position:absolute;left:0;right:0;top:12px;text-align:center;font-size:19px;font-weight:900;background:linear-gradient(90deg,#fb7185,#e11d48);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.5px}
+.vt--fn .fn-i1,.vt--fn .fn-i2{position:absolute;left:12px;right:12px;margin:0}.vt--fn .fn-i1{top:48px}.vt--fn .fn-i2{top:78px}
+.vt--fn .fn-b1{position:absolute;left:12px;right:12px;top:112px;background:#e11d48;animation:fnB1 var(--vt) infinite}
+.vt--fn .fn-y1{animation:fnY1 var(--vt) infinite steps(15)}.vt--fn .fn-y2{animation:fnY2 var(--vt) infinite steps(10)}
+.vt--fn .fn-spin{position:absolute;left:50%;top:116px;width:16px;height:16px;margin-left:-8px;border-radius:50%;border:3px solid #2a2f38;border-top-color:#fb7185;opacity:0;animation:fnSpin .8s linear infinite,fnSpV var(--vt) infinite}
+@keyframes fnSpin{to{transform:rotate(360deg)}}
+.vt--fn .fn-sub{position:absolute;left:8px;right:8px;top:8px;height:46px;display:flex !important;align-items:center;gap:10px;padding:0 10px;border-radius:10px;background:linear-gradient(90deg,#4c0519,#1d2128);border:1px solid #9f1239}
+.vt--fn .fn-crown{flex:none;width:26px;height:20px;background:linear-gradient(180deg,#fcd34d,#f59e0b);clip-path:polygon(0 100%,0 25%,25% 55%,50% 0,75% 55%,100% 25%,100% 100%)}
+.vt--fn .fn-sub b{color:#fff;font-size:11.5px;font-weight:900}.vt--fn .fn-sub small{color:#fda4af;font-size:8.5px;margin-top:1px}
+.vt--fn .fn-on{white-space:nowrap;margin-left:auto;padding:3px 8px;border-radius:999px;background:#16a34a;color:#fff;font-size:8px;font-weight:900;opacity:0;animation:fnOn var(--vt) infinite}
+.vt--fn .fn-grid{position:absolute;left:8px;right:8px;top:62px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.vt--fn .fn-tl{position:relative;height:72px;border-radius:9px;overflow:hidden;background:#23262d;opacity:0;transform:translateY(8px)}
+.vt--fn .vt-win img.fn-art{position:absolute;left:0;top:0;width:100% !important;height:100% !important;max-width:none !important;margin:0 !important;border-radius:0 !important;object-fit:cover;object-position:center 12%;filter:blur(9px);transform:scale(1.15)}
+.vt--fn .fn-nm{position:absolute;left:0;right:0;bottom:0;padding:12px 6px 4px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;font-size:8px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0}
+.vt--fn .fn-lk{position:absolute;left:50%;top:50%;width:18px;height:14px;margin:-4px 0 0 -9px;border-radius:3px;background:#fff;box-shadow:0 -7px 0 -3px #fff}
+.vt--fn .fn-ul{position:absolute;right:5px;top:5px;padding:2px 6px;border-radius:999px;background:rgba(0,0,0,.6);color:#86efac;font-size:7.5px;font-weight:900;opacity:0}
+@keyframes fnT1{0%,15.4%{opacity:1}16%,100%{opacity:0}}@keyframes fnT2{0%,15.6%{opacity:0}16.2%,31.6%{opacity:1}32.2%,100%{opacity:0}}@keyframes fnT3{0%,31.8%{opacity:0}32.4%,100%{opacity:1}}
+@keyframes fnA{0%,15.4%{opacity:1}16.4%,100%{opacity:0}}@keyframes fnB{0%,15.8%{opacity:0}17.2%,31%{opacity:1}32.4%,100%{opacity:0}}@keyframes fnC{0%,31.8%{opacity:0}33.4%,54.4%{opacity:1}56%,100%{opacity:0}}@keyframes fnD{0%,55.4%{opacity:0}57%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes fnR1{0%,6.5%{background:#2a2f38}7%,9%{background:#7f1d1d}10%,100%{background:#2a2f38}}@keyframes fnR2{0%,10.5%{background:#2a2f38}11%,13%{background:#7f1d1d}13.8%,100%{background:#2a2f38}}
+@keyframes fnTc1{0%,7%{opacity:0}7.5%,9.8%{opacity:1}10.3%,100%{opacity:0}}
+@keyframes fnTc2{0%,11%{opacity:0}11.5%,13.4%{opacity:1}13.9%,100%{opacity:0}}
+@keyframes fnGoP{0%,14.2%{transform:none;filter:none}14.6%{transform:scale(.94);filter:brightness(.85)}15.5%,100%{transform:none;filter:none}}
+@keyframes fnYesP{0%,28.8%{transform:none;filter:none}29.2%{transform:scale(.94);filter:brightness(.85)}30.099999999999998%,100%{transform:none;filter:none}}
+@keyframes fnB1{0%,47.800000000000004%{transform:none;filter:none}48.2%{transform:scale(.94);filter:brightness(.85)}49.1%,100%{transform:none;filter:none}}
+@keyframes fnY1{0%,34.5%{width:0}40%,100%{width:15ch}}
+@keyframes fnY2{0%,41%{width:0}45%,100%{width:10ch}}
+@keyframes fnSpV{0%,49.4%{opacity:0}50%,54%{opacity:1}54.6%,100%{opacity:0}}
+@keyframes fnOn{0%,58%{opacity:0;transform:scale(.7)}59.4%,100%{opacity:1;transform:none}}
+.vt--fn .fn-tt0{animation:fnTt0 var(--vt) infinite}.vt--fn .fn-tt0 .fn-lk{animation:fnLk0 var(--vt) infinite}.vt--fn .fn-tt0 .fn-ul,.vt--fn .fn-tt0 .fn-nm{animation:fnUl0 var(--vt) infinite}.vt--fn .fn-tt0 .fn-art{animation:fnAr0 var(--vt) infinite}
+@keyframes fnTt0{0%,57.0%{opacity:0;transform:translateY(8px)}58.6%,97%{opacity:1;transform:none}98.6%,100%{opacity:0}}
+@keyframes fnLk0{0%,63.0%{opacity:1}64.0%,100%{opacity:0}}
+@keyframes fnUl0{0%,63.2%{opacity:0}64.4%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes fnAr0{0%,63.0%{filter:blur(9px);transform:scale(1.15)}64.6%,100%{filter:blur(0);transform:scale(1)}}
+.vt--fn .fn-tt1{animation:fnTt1 var(--vt) infinite}.vt--fn .fn-tt1 .fn-lk{animation:fnLk1 var(--vt) infinite}.vt--fn .fn-tt1 .fn-ul,.vt--fn .fn-tt1 .fn-nm{animation:fnUl1 var(--vt) infinite}.vt--fn .fn-tt1 .fn-art{animation:fnAr1 var(--vt) infinite}
+@keyframes fnTt1{0%,60.2%{opacity:0;transform:translateY(8px)}61.800000000000004%,97%{opacity:1;transform:none}98.6%,100%{opacity:0}}
+@keyframes fnLk1{0%,66.2%{opacity:1}67.2%,100%{opacity:0}}
+@keyframes fnUl1{0%,66.4%{opacity:0}67.60000000000001%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes fnAr1{0%,66.2%{filter:blur(9px);transform:scale(1.15)}67.8%,100%{filter:blur(0);transform:scale(1)}}
+.vt--fn .fn-tt2{animation:fnTt2 var(--vt) infinite}.vt--fn .fn-tt2 .fn-lk{animation:fnLk2 var(--vt) infinite}.vt--fn .fn-tt2 .fn-ul,.vt--fn .fn-tt2 .fn-nm{animation:fnUl2 var(--vt) infinite}.vt--fn .fn-tt2 .fn-art{animation:fnAr2 var(--vt) infinite}
+@keyframes fnTt2{0%,63.400000000000006%{opacity:0;transform:translateY(8px)}65.0%,97%{opacity:1;transform:none}98.6%,100%{opacity:0}}
+@keyframes fnLk2{0%,69.4%{opacity:1}70.4%,100%{opacity:0}}
+@keyframes fnUl2{0%,69.60000000000001%{opacity:0}70.80000000000001%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes fnAr2{0%,69.4%{filter:blur(9px);transform:scale(1.15)}71.0%,100%{filter:blur(0);transform:scale(1)}}
+.vt--fn .fn-tt3{animation:fnTt3 var(--vt) infinite}.vt--fn .fn-tt3 .fn-lk{animation:fnLk3 var(--vt) infinite}.vt--fn .fn-tt3 .fn-ul,.vt--fn .fn-tt3 .fn-nm{animation:fnUl3 var(--vt) infinite}.vt--fn .fn-tt3 .fn-art{animation:fnAr3 var(--vt) infinite}
+@keyframes fnTt3{0%,66.6%{opacity:0;transform:translateY(8px)}68.19999999999999%,97%{opacity:1;transform:none}98.6%,100%{opacity:0}}
+@keyframes fnLk3{0%,72.6%{opacity:1}73.6%,100%{opacity:0}}
+@keyframes fnUl3{0%,72.8%{opacity:0}74.0%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes fnAr3{0%,72.6%{filter:blur(9px);transform:scale(1.15)}74.19999999999999%,100%{filter:blur(0);transform:scale(1)}}
+.vt--fn .fn-tt4{animation:fnTt4 var(--vt) infinite}.vt--fn .fn-tt4 .fn-lk{animation:fnLk4 var(--vt) infinite}.vt--fn .fn-tt4 .fn-ul,.vt--fn .fn-tt4 .fn-nm{animation:fnUl4 var(--vt) infinite}.vt--fn .fn-tt4 .fn-art{animation:fnAr4 var(--vt) infinite}
+@keyframes fnTt4{0%,69.8%{opacity:0;transform:translateY(8px)}71.39999999999999%,97%{opacity:1;transform:none}98.6%,100%{opacity:0}}
+@keyframes fnLk4{0%,75.8%{opacity:1}76.8%,100%{opacity:0}}
+@keyframes fnUl4{0%,76.0%{opacity:0}77.2%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes fnAr4{0%,75.8%{filter:blur(9px);transform:scale(1.15)}77.39999999999999%,100%{filter:blur(0);transform:scale(1)}}
+.vt--fn .fn-tt5{animation:fnTt5 var(--vt) infinite}.vt--fn .fn-tt5 .fn-lk{animation:fnLk5 var(--vt) infinite}.vt--fn .fn-tt5 .fn-ul,.vt--fn .fn-tt5 .fn-nm{animation:fnUl5 var(--vt) infinite}.vt--fn .fn-tt5 .fn-art{animation:fnAr5 var(--vt) infinite}
+@keyframes fnTt5{0%,73.0%{opacity:0;transform:translateY(8px)}74.6%,97%{opacity:1;transform:none}98.6%,100%{opacity:0}}
+@keyframes fnLk5{0%,79.0%{opacity:1}80.0%,100%{opacity:0}}
+@keyframes fnUl5{0%,79.2%{opacity:0}80.4%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes fnAr5{0%,79.0%{filter:blur(9px);transform:scale(1.15)}80.6%,100%{filter:blur(0);transform:scale(1)}}
+@keyframes fnCur{0%{left:75%;top:90%}5.5%{left:calc(50% - 20px);top:104px}8%{left:calc(50% - 20px);top:104px}9.4%{left:calc(50% - 20px);top:132px}12%{left:calc(50% - 20px);top:132px}13.6%{left:calc(50% + 0px);top:172px}16%{left:calc(50% + 0px);top:172px}22%{left:calc(50% - 63px);top:178px}25%{left:calc(50% + 33px);top:178px}29%{left:calc(50% + 33px);top:178px}32%{left:calc(50% + 33px);top:178px}34%{left:calc(50% - 50px);top:107px}40.5%{left:calc(50% - 50px);top:107px}41.6%{left:calc(50% - 50px);top:137px}45.5%{left:calc(50% - 50px);top:137px}47.4%{left:calc(50% + 0px);top:169px}50.4%{left:calc(50% + 0px);top:169px}54%{left:calc(50% + 70px);top:210px}82%{left:calc(50% + 70px);top:210px}88%{left:calc(50% + 0px);top:165px}94%{left:calc(50% + 0px);top:165px}100%{left:75%;top:90%}}
+.vt--fn .fn-cur{position:absolute;z-index:9;width:18px;height:18px;margin:-2px 0 0 -3px;pointer-events:none;animation:fnCur var(--vt) infinite,fnCurV var(--vt) infinite}
+.vt--fn .fn-cur svg{display:block;width:18px !important;height:18px !important;max-width:none !important;fill:#fff;stroke:#111;stroke-width:1.4;stroke-linejoin:round;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));transform-origin:20% 15%;animation:fnPress var(--vt) infinite}
+.vt--fn .fn-cur::before{content:"";position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.55);opacity:0;transform:scale(.3);animation:fnClick var(--vt) infinite}
+@keyframes fnCurV{0%{opacity:0}0.00%{opacity:0}0.80%,16.40%{opacity:1}17.20%{opacity:0}20.49%{opacity:0}21.30%,32.00%{opacity:1}32.80%{opacity:0}33.49%{opacity:0}34.30%,50.50%{opacity:1}51.30%{opacity:0}85.99%{opacity:0}86.80%,95.00%{opacity:1}95.80%{opacity:0}100%{opacity:0}}
+@keyframes fnClick{0%{opacity:0;transform:scale(.3)}6.90%{opacity:0;transform:scale(.3)}7.00%{opacity:.8;transform:scale(.5)}8.10%{opacity:0;transform:scale(1.4)}10.90%{opacity:0;transform:scale(.3)}11.00%{opacity:.8;transform:scale(.5)}12.10%{opacity:0;transform:scale(1.4)}14.50%{opacity:0;transform:scale(.3)}14.60%{opacity:.8;transform:scale(.5)}15.70%{opacity:0;transform:scale(1.4)}29.10%{opacity:0;transform:scale(.3)}29.20%{opacity:.8;transform:scale(.5)}30.30%{opacity:0;transform:scale(1.4)}34.40%{opacity:0;transform:scale(.3)}34.50%{opacity:.8;transform:scale(.5)}35.60%{opacity:0;transform:scale(1.4)}41.90%{opacity:0;transform:scale(.3)}42.00%{opacity:.8;transform:scale(.5)}43.10%{opacity:0;transform:scale(1.4)}48.10%{opacity:0;transform:scale(.3)}48.20%{opacity:.8;transform:scale(.5)}49.30%{opacity:0;transform:scale(1.4)}90.90%{opacity:0;transform:scale(.3)}91.00%{opacity:.8;transform:scale(.5)}92.10%{opacity:0;transform:scale(1.4)}100%{opacity:0}}
+@keyframes fnPress{0%{transform:none}6.90%{transform:none}7.00%{transform:scale(.8)}7.70%{transform:none}10.90%{transform:none}11.00%{transform:scale(.8)}11.70%{transform:none}14.50%{transform:none}14.60%{transform:scale(.8)}15.30%{transform:none}29.10%{transform:none}29.20%{transform:scale(.8)}29.90%{transform:none}34.40%{transform:none}34.50%{transform:scale(.8)}35.20%{transform:none}41.90%{transform:none}42.00%{transform:scale(.8)}42.70%{transform:none}48.10%{transform:none}48.20%{transform:scale(.8)}48.90%{transform:none}90.90%{transform:none}91.00%{transform:scale(.8)}91.70%{transform:none}100%{transform:none}}
+.ic3{display:inline-block !important;width:1.15em !important;height:1.15em !important;max-width:none !important;margin:0 .12em !important;padding:0 !important;vertical-align:-.22em;border-radius:0 !important;object-fit:contain}.ic-s{display:inline-block !important;width:1em !important;height:1em !important;max-width:none !important;vertical-align:-.14em;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.ic-s.ic-f{fill:currentColor;stroke:none}
+</style>
+
+<div class="ed-alert"><strong>+18 · Conteúdo exclusivo para maiores de 18 anos.</strong> Ao comprar, você confirma que tem 18 anos ou mais.</div>
+
+<div class="ed-box"><p>Acesso a uma <strong>conta com assinatura Premium</strong> na <strong>Fatal Fans</strong>, com diversos conteúdos liberados para você.</p></div>
+
+<p>Na <strong>Rei dos Nitros</strong>, os dados chegam na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
+<figure class="ed-fig"><img class="ed-img" src="https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@3bf775830a432cfbd70bdcbd1acdff3ac9bd9d1d/banners/descricoes/fatal-fans-conta-nfa.jpg" alt="Fatal Fans · Conta Premium" loading="lazy"></figure>
+
+<h3 class="ed-h">Sobre a Fatal Fans</h3>
+<p>A <strong>Fatal Fans</strong> é uma plataforma <strong>brasileira</strong> de conteúdo adulto por assinatura: criadores publicam fotos e vídeos exclusivos e os assinantes têm acesso a esse material.</p>
+<p>Ela é operada pela <strong>Atlas Technologies</strong>, empresa de Pelotas (RS) que também mantém o site Fatal Model. A plataforma é <strong>legalizada no Brasil</strong> e é <strong>patrocinadora do Corinthians</strong>. A venda do acesso ao aplicativo também é legalizada, assim como a de outras plataformas de streaming.</p>
+<div class="ed-nums"><div><b>~25 mil</b><small>criadores</small></div><div><b>~300 mil</b><small>fãs</small></div></div>
+<p style="color:var(--ed-mut);font-size:12px;margin-top:-8px">Números informados pela própria plataforma.</p>
+
+<h3 class="ed-h">O que você recebe</h3>
+<div class="ed-spec">
+<div><small>Acesso</small><b>Conta com assinatura Premium ativa</b></div>
+<div><small>Conteúdo</small><b>Diversos conteúdos liberados</b></div>
+<div><small>Plataforma</small><b>Fatal Fans (Atlas Technologies)</b></div>
+<div><small>Entrega</small><b>Dados na página do pedido</b></div>
+<div class="ed-w"><small>Público</small><b>Exclusivo para maiores de 18 anos</b></div>
+</div>
+
+<div class="ed-card vt vt--fn" style="--vc:#fb7185"><span class="vt-k">Passo a passo</span><h2 class="vt-t">Como acessar a sua conta</h2><div class="vt-win" role="img" aria-label="Como acessar a conta premium da Fatal Fans"><div class="fn-top fn-t1"><b>Rei dos Nitros</b><span>Seu pedido</span></div><div class="fn-top fn-t2"><b>Fatal Fans</b><span>Acesso</span></div><div class="fn-top fn-t3"><b>Fatal Fans</b><span class="on">Início</span><span>Criadores</span><span>Minha conta</span></div><div class="fn-sc fn-a"><div class="fn-box"><small class="fn-ok"><svg class="ic-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Pagamento aprovado</small><b class="fn-pn">Fatal Fans · Conta NFA</b><span class="fn-in fn-r1"><u>E-mail</u><em>email_do_pedido</em></span><span class="fn-in fn-r2"><u>Senha</u><em>••••••••••</em></span><span class="fn-bt fn-go">Abrir a Fatal Fans</span></div><span class="fn-toast fn-tc1"><svg class="ic-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> E-mail copiado</span><span class="fn-toast fn-tc2"><svg class="ic-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Senha copiada</span></div><div class="fn-sc fn-b"><div class="fn-box fn-gate"><i class="fn-18">+18</i><b>Conteúdo para maiores de 18 anos</b><small>Confirme a sua idade para continuar.</small><div class="fn-gr"><span class="fn-bt fn-no">Sair</span><span class="fn-bt fn-yes">Tenho 18 anos ou mais</span></div></div></div><div class="fn-sc fn-c"><div class="fn-box fn-lbox"><b class="fn-wm">Fatal Fans</b><span class="fn-in fn-i1"><em class="fn-y1">email_do_pedido</em></span><span class="fn-in fn-i2"><em class="fn-y2">••••••••••</em></span><span class="fn-bt fn-b1">Entrar</span><i class="fn-spin"></i></div></div><div class="fn-sc fn-d"><div class="fn-sub"><i class="fn-crown"></i><div><b>Assinatura Premium</b><small>Conta NFA · acesso liberado</small></div><span class="fn-on"><svg class="ic-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> ATIVA</span></div><div class="fn-grid"><span class="fn-tl fn-tt0"><img class="fn-art" src="https://cdn.erbycloud.com/attachments/17944307198429905imagem.jpeg" alt="Mc Mirella" loading="lazy"><u class="fn-lk"></u><b class="fn-ul">Liberado</b><b class="fn-nm">Mc Mirella</b></span><span class="fn-tl fn-tt1"><img class="fn-art" src="https://cdn.erbycloud.com/attachments/17944307218999288imagem.jpeg" alt="Ester Muniz" loading="lazy"><u class="fn-lk"></u><b class="fn-ul">Liberado</b><b class="fn-nm">Ester Muniz</b></span><span class="fn-tl fn-tt2"><img class="fn-art" src="https://cdn.erbycloud.com/attachments/17944307235296518imagem.jpeg" alt="Bia Miranda" loading="lazy"><u class="fn-lk"></u><b class="fn-ul">Liberado</b><b class="fn-nm">Bia Miranda</b></span><span class="fn-tl fn-tt3"><img class="fn-art" src="https://cdn.erbycloud.com/attachments/17944307210587055imagem.jpeg" alt="Letycia Soares" loading="lazy"><u class="fn-lk"></u><b class="fn-ul">Liberado</b><b class="fn-nm">Letycia Soares</b></span><span class="fn-tl fn-tt4"><img class="fn-art" src="https://cdn.erbycloud.com/attachments/17944307268589385imagem.jpeg" alt="Camila Becker" loading="lazy"><u class="fn-lk"></u><b class="fn-ul">Liberado</b><b class="fn-nm">Camila Becker</b></span><span class="fn-tl fn-tt5"><img class="fn-art" src="https://cdn.erbycloud.com/attachments/1794431417157493imagem.jpeg" alt="Leticia Disher" loading="lazy"><u class="fn-lk"></u><b class="fn-ul">Liberado</b><b class="fn-nm">Leticia Disher</b></span></div></div><span class="fn-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span></div><div class="fn-steps"><div class="fn-st fn-s0"><i>1</i><div><b>Veja os dados no pedido</b><span>Na página do seu pedido aparecem o e-mail e a senha da conta.</span></div></div><div class="fn-st fn-s1"><i>2</i><div><b>Confirme que tem 18 anos</b><span>A plataforma pede a confirmação de maioridade antes de entrar.</span></div></div><div class="fn-st fn-s2"><i>3</i><div><b>Entre na conta</b><span>Faça o login no site ou no aplicativo da Fatal Fans com esses dados.</span></div></div><div class="fn-st fn-s3"><i>4</i><div><b>Use o acesso premium</b><span>A assinatura aparece como ativa, com os conteúdos liberados.</span></div></div></div></div>
+
+<div class="ed-alert"><strong>Informações importantes</strong><ol>
+<li>A equipe Rei dos Nitros não realiza o reembolso após a confirmação do pagamento.</li>
+<li>Após o encerramento da assinatura, o seu acesso é removido instantaneamente, sendo necessária uma renovação.</li>
+<li>Produto exclusivo para maiores de 18 anos.</li></ol></div>
+
+<!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, os dados aparecem na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Preciso ter 18 anos?</summary><p>Sim. O produto é <strong>exclusivo para maiores de 18 anos</strong>.</p></details><details><summary>E se a assinatura acabar?</summary><p>Quando a assinatura é encerrada, o acesso é removido na hora e é preciso <strong>renovar</strong>.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord.</p></details></div></div><!--/RN-CONV-->
+</div>

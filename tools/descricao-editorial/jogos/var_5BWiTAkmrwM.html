@@ -1,0 +1,196 @@
+<div class="ed">
+<style>
+.ed{--ed-ac:#107c10;--ed-tx:#c4c7cc;--ed-mut:#8b8f96;--ed-card:#131418;--ed-bd:#24262b;max-width:560px;margin:0 auto;color:var(--ed-tx);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.7}
+.ed *{box-sizing:border-box}
+.ed p{margin:0 0 14px !important;color:var(--ed-tx) !important;font-size:14px !important;line-height:1.7 !important}
+.ed strong{color:#fff;font-weight:700}
+.ed-box{margin:0 0 18px;padding:16px 18px;border-radius:14px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-box p{margin:0 !important}
+.ed-h{margin:26px 0 12px !important;padding:0 !important;border:0 !important;color:#fff !important;font-size:16px !important;font-weight:800 !important;line-height:1.3 !important}
+.ed-h::before{display:none !important}
+.ed-img{display:block;width:100%;height:auto;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd)}
+/* ilustração: aparelhos */
+.ed-dev{display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:26px 14px 18px;background:radial-gradient(100% 120% at 50% 100%,#0a2a0a,#0c0c0e 70%)}
+.ed-dev span{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-dev svg{fill:none;stroke:#e6e7e9;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ed-dev .ed-scr{fill:url(#edG)}
+/* ficha do plano */
+.ed-spec{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 18px}
+.ed-spec div{padding:11px 12px;border-radius:12px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-spec small{display:block;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-spec b{display:block;color:#fff;font-size:13.5px;font-weight:700;margin-top:2px}
+@media (min-width:520px){.ed-dev{gap:26px}}
+.ed-art{position:relative;overflow:hidden;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd)}
+.ed-fig{margin:4px 0 18px !important;padding:0 !important}
+.ed-fig .ed-img{margin:0 !important}
+.ed-fig figcaption{margin-top:6px;color:var(--ed-mut);font-size:11.5px;text-align:center}
+.ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-cfg-r span,.dz-cfg-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-ord>b{display:block !important}
+.ed-fig{margin:4px 0 18px !important;padding:0 !important}
+.ed-fig .ed-img{margin:0 !important}
+.ed-fig figcaption{margin-top:6px;color:var(--ed-mut);font-size:11.5px;text-align:center}
+.ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-spec .ed-w{grid-column:1 / -1}
+.ed-capas{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:4px 0 18px}
+.ed-capas img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;border:1px solid var(--ed-bd)}
+.vt,.vt *{box-sizing:border-box;line-height:normal}
+.vt{--vt:10s;margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card,#131418);border:1px solid var(--ed-bd,#24262b)}
+.vt-k{display:block;color:var(--vc);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.vt-t{margin:3px 0 12px !important;padding:0 !important;border:0 !important;color:#fff !important;font-size:18px !important;font-weight:800 !important;line-height:1.2 !important}
+.vt-t::before{display:none !important}
+.vt-win{position:relative;height:240px;border-radius:14px;overflow:hidden;background:#0c0d10;border:1px solid rgba(255,255,255,.08)}
+.vt-note{margin:8px 0 0 !important;color:#8b8f96 !important;font-size:11.5px !important;line-height:1.45 !important;text-align:center}
+.vt-steps{display:grid;gap:6px;margin-top:12px}
+.vt-st{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.vt-st i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--vc);color:#06110a;font-style:normal;font-size:11px;font-weight:900}
+.vt-st b{display:block;color:#fff;font-size:13.5px}
+.vt-st span{display:block;margin-top:1px;color:#9aa0a6;font-size:12px;line-height:1.45}
+.vt-conf{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.vt-conf i{position:absolute;top:-10px;width:6px;height:10px;border-radius:2px;opacity:0}
+@media (prefers-reduced-motion:reduce){.vt *{animation-duration:0s !important;animation-iteration-count:1 !important}}
+
+.vt--xg{--vt:26s}
+.vt--xg .vt-win{height:250px;background:#16191f}
+.vt--xg .vt-win *{box-sizing:border-box}
+.vt--xg .vt-win span,.vt--xg .vt-win small,.vt--xg .vt-win b,.vt--xg .vt-win em,.vt--xg .vt-win i,.vt--xg .vt-win u{display:block;font-style:normal;text-decoration:none}
+.vt--xg .xg-top{position:absolute;left:0;right:0;top:0;height:22px;display:flex;gap:12px;align-items:center;padding:0 10px;background:#0f1115;border-bottom:1px solid #23262d;z-index:4}
+.vt--xg .xg-top b,.vt--xg .xg-top span{color:#8f98a0;font-size:9px;font-weight:600}.vt--xg .xg-top b{color:#c7d5e0}
+.vt--xg .xg-sc{position:absolute;inset:22px 0 0;opacity:0}
+.vt--xg .xg-box{position:absolute;left:50%;top:22px;margin-left:-105px;width:210px;padding:10px 12px;border-radius:8px;background:#1d2128;border:1px solid #2a2f38}
+.vt--xg .xg-in{height:22px;margin-top:3px;padding:0 7px;border-radius:3px;background:#2a2f38;display:flex !important;align-items:center;overflow:hidden}
+.vt--xg .xg-in em{font-family:ui-monospace,Menlo,monospace;color:#e5e7eb;font-size:10px;white-space:nowrap;overflow:hidden;width:0;letter-spacing:.03em}
+.vt--xg .xg-bt{border-radius:4px;color:#fff;font-size:9.5px;font-weight:900;text-align:center;line-height:22px;height:22px}
+
+.vt--xg .xg-steps{display:grid;gap:6px;margin-top:12px}
+.vt--xg .xg-st{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.vt--xg .xg-st i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#2a2f38;color:#c7d5e0;font-style:normal;font-size:11px;font-weight:900}
+.vt--xg .xg-st b{display:block;color:#fff;font-size:13.5px}.vt--xg .xg-st span{display:block;margin-top:1px;color:#9aa0a6;font-size:12px;line-height:1.45}
+.vt--xg .xg-s0{animation:xgS0 var(--vt) infinite}.vt--xg .xg-s0 i{animation:xgI0 var(--vt) infinite}
+@keyframes xgS0{0%,0%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}0.5%,15%{border-color:#5dc21e80;background:#5dc21e12}15.5%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}
+@keyframes xgI0{0%,0%{background:#2a2f38;color:#c7d5e0}0.5%,100%{background:#5dc21e;color:#06150b}}
+.vt--xg .xg-s1{animation:xgS1 var(--vt) infinite}.vt--xg .xg-s1 i{animation:xgI1 var(--vt) infinite}
+@keyframes xgS1{0%,15%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}15.5%,40%{border-color:#5dc21e80;background:#5dc21e12}40.5%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}
+@keyframes xgI1{0%,15%{background:#2a2f38;color:#c7d5e0}15.5%,100%{background:#5dc21e;color:#06150b}}
+.vt--xg .xg-s2{animation:xgS2 var(--vt) infinite}.vt--xg .xg-s2 i{animation:xgI2 var(--vt) infinite}
+@keyframes xgS2{0%,40%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}40.5%,56%{border-color:#5dc21e80;background:#5dc21e12}56.5%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}
+@keyframes xgI2{0%,40%{background:#2a2f38;color:#c7d5e0}40.5%,100%{background:#5dc21e;color:#06150b}}
+.vt--xg .xg-s3{animation:xgS3 var(--vt) infinite}.vt--xg .xg-s3 i{animation:xgI3 var(--vt) infinite}
+@keyframes xgS3{0%,56%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}56.5%,84%{border-color:#5dc21e80;background:#5dc21e12}84.5%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}
+@keyframes xgI3{0%,56%{background:#2a2f38;color:#c7d5e0}56.5%,100%{background:#5dc21e;color:#06150b}}
+.vt--xg .xg-s4{animation:xgS4 var(--vt) infinite}.vt--xg .xg-s4 i{animation:xgI4 var(--vt) infinite}
+@keyframes xgS4{0%,84%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}84.5%,97%{border-color:#5dc21e80;background:#5dc21e12}97.5%,100%{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}
+@keyframes xgI4{0%,84%{background:#2a2f38;color:#c7d5e0}84.5%,100%{background:#5dc21e;color:#06150b}}
+
+.vt--xg .xg-top.on,.vt--xg .xg-top span.on{color:#fff}
+.vt--xg .xg-t1{animation:xgT1 var(--vt) infinite}.vt--xg .xg-t2{animation:xgT2 var(--vt) infinite}.vt--xg .xg-t3{animation:xgT3 var(--vt) infinite}
+.vt--xg .xg-ok{color:#4ade80;font-size:9px;font-weight:800}.vt--xg .xg-pn{margin:3px 0 8px;color:#fff;font-size:12.5px;font-weight:900}
+.vt--xg .xg-in u{flex:0 0 38px;color:#8f98a0;font-size:8px;font-weight:700}
+.vt--xg .xg-a .xg-in em{width:auto;font-size:10px;color:#fff}
+.vt--xg .xg-a .xg-in{margin-top:5px}
+.vt--xg .xg-r1{animation:xgR1 var(--vt) infinite}.vt--xg .xg-r2{animation:xgR2 var(--vt) infinite}
+.vt--xg .xg-go{margin-top:9px;background:#107c10;animation:xgGoP var(--vt) infinite}
+.vt--xg .xg-toast{position:absolute;left:50%;top:5px;transform:translateX(-50%);padding:4px 10px;border-radius:999px;background:rgba(34,197,94,.18);border:1px solid #22c55e;color:#4ade80;font-size:9px;font-weight:800;white-space:nowrap;opacity:0;z-index:3}
+.vt--xg .xg-tc1{animation:xgTc1 var(--vt) infinite}.vt--xg .xg-tc2{animation:xgTc2 var(--vt) infinite}.vt--xg .xg-tc3{top:auto;bottom:16px;animation:xgTc3 var(--vt) infinite}
+.vt--xg .xg-a{animation:xgA var(--vt) infinite}.vt--xg .xg-b{animation:xgB var(--vt) infinite}.vt--xg .xg-c{animation:xgC var(--vt) infinite}.vt--xg .xg-d{animation:xgD var(--vt) infinite}
+.vt--xg .xg-lbox{height:150px}
+.vt--xg .xg-logo{display:flex !important;align-items:center;gap:6px;margin-bottom:8px}
+.vt--xg .xg-logo i{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 50% 120%,#1d1d1d 0 5px,#5dc21e 5.5px);box-shadow:0 0 8px #5dc21e88}.vt--xg .xg-logo b{color:#fff;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.vt--xg .xg-lt{color:#fff;font-size:12.5px;font-weight:800;margin-bottom:6px;position:absolute;left:12px;top:36px}
+.vt--xg .xg-lt2{opacity:0;animation:xgLt2 var(--vt) infinite}.vt--xg .xg-lt1{animation:xgLt1 var(--vt) infinite}
+.vt--xg .xg-i1,.vt--xg .xg-i2{position:absolute;left:12px;right:12px;top:62px;margin:0}
+.vt--xg .xg-i2{opacity:0;animation:xgLt2 var(--vt) infinite}.vt--xg .xg-i1{animation:xgLt1 var(--vt) infinite}
+.vt--xg .xg-b1,.vt--xg .xg-b2{position:absolute;left:12px;right:12px;top:100px;background:#107c10}
+.vt--xg .xg-b2{opacity:0;animation:xgLt2 var(--vt) infinite}.vt--xg .xg-b1{animation:xgB1 var(--vt) infinite}
+.vt--xg .xg-spin{position:absolute;left:50%;top:104px;width:20px;height:20px;margin-left:-10px;border-radius:50%;border:3px solid #2a2f38;border-top-color:#5dc21e;opacity:0;animation:xgSpin var(--vt) infinite,xgSpV var(--vt) infinite}
+.vt--xg .xg-y1{animation:xgY1 var(--vt) infinite steps(15)}.vt--xg .xg-y2{animation:xgY2 var(--vt) infinite steps(10)}
+.vt--xg .xg-cbox .xg-in{margin-top:6px;position:relative}.vt--xg .xg-cbox .xg-lt{position:static;display:block;margin-bottom:8px}
+.vt--xg .xg-v1 em,.vt--xg .xg-v2 em{position:absolute;left:52px;width:auto;font-size:9.5px}
+.vt--xg .xg-w1b,.vt--xg .xg-w2b{color:#4ade80 !important;opacity:0}.vt--xg .xg-w1a,.vt--xg .xg-w2a{animation:xgWa var(--vt) infinite}.vt--xg .xg-w1b,.vt--xg .xg-w2b{animation:xgWb var(--vt) infinite}
+.vt--xg .xg-ed{position:relative;margin-top:10px;background:#107c10;animation:xgEdP var(--vt) infinite}
+.vt--xg .xg-ed b{position:absolute;inset:0}.vt--xg .xg-e2{opacity:0;animation:xgWb var(--vt) infinite}.vt--xg .xg-e1{animation:xgWa var(--vt) infinite}
+.vt--xg .xg-hero{position:absolute;left:10px;right:10px;top:6px;height:90px;border-radius:8px;background:#2a2f38 center/cover no-repeat;overflow:hidden}
+.vt--xg .xg-hero small{position:absolute;left:10px;top:12px;padding:2px 6px;border-radius:3px;background:#107c10;color:#fff;font-size:7.5px;font-weight:900;letter-spacing:.06em}
+.vt--xg .xg-hero b{position:absolute;left:10px;bottom:10px;color:#fff;font-size:17px;font-weight:900;text-shadow:0 2px 6px #000}
+.vt--xg .xg-actb{position:absolute;left:10px;right:10px;top:102px;height:24px}
+.vt--xg .xg-actb>*{position:absolute;left:0;top:0}.vt--xg .xg-actb .xg-bt{width:90px;background:#107c10}
+.vt--xg .xg-inst{animation:xgInst var(--vt) infinite}
+.vt--xg .xg-bar{left:0 !important;top:9px !important;width:90px;height:6px;border-radius:3px;background:#2a2f38;overflow:hidden;opacity:0;animation:xgBarW var(--vt) infinite}
+.vt--xg .xg-bar i{height:100%;width:0;background:#5dc21e;animation:xgBar var(--vt) infinite}
+.vt--xg .xg-dl{left:100px !important;top:6px !important;color:#8f98a0;font-size:8.5px;opacity:0;animation:xgBarW var(--vt) infinite}
+.vt--xg .xg-play{opacity:0;animation:xgPlay var(--vt) infinite}
+.vt--xg .xg-run{background:transparent !important;border:1.5px solid #5dc21e;color:#5dc21e;line-height:19px;opacity:0;animation:xgRun var(--vt) infinite}
+.vt--xg .xg-row{position:absolute;left:0;right:0;top:134px;height:84px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.vt--xg .xg-mq{display:flex;gap:8px;width:max-content;padding:0 10px;animation:xgMq 14s linear infinite}
+.vt--xg .xg-mq img{display:block;width:56px !important;height:84px !important;max-width:none !important;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,.12)}
+@keyframes xgMq{to{transform:translateX(-50%)}}
+@keyframes xgSpin{to{transform:rotate(360deg)}}
+@keyframes xgT1{0%,0%{opacity:0}0.4%,14.2%{opacity:1}14.6%,100%{opacity:0}}
+@keyframes xgT2{0%,14.5%{opacity:0}15%,55.5%{opacity:1}55.9%,100%{opacity:0}}@keyframes xgT3{0%,55.5%{opacity:0}56%,100%{opacity:1}}
+@keyframes xgA{0%,14.5%{opacity:1}15.5%,100%{opacity:0}}@keyframes xgB{0%,14.8%{opacity:0}16.5%,38.5%{opacity:1}40%,100%{opacity:0}}@keyframes xgC{0%,39.5%{opacity:0}41%,55%{opacity:1}56.5%,100%{opacity:0}}@keyframes xgD{0%,55.5%{opacity:0}57%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes xgR1{0%,6.5%{background:#2a2f38}7%,9%{background:#14532d}10%,100%{background:#2a2f38}}@keyframes xgR2{0%,9.5%{background:#2a2f38}10%,12%{background:#14532d}12.8%,100%{background:#2a2f38}}
+@keyframes xgTc1{0%,7%{opacity:0}7.5%,9.8%{opacity:1}10.3%,100%{opacity:0}}
+@keyframes xgTc2{0%,10%{opacity:0}10.5%,12.6%{opacity:1}13.1%,100%{opacity:0}}
+@keyframes xgGoP{0%,13.0%{transform:none;filter:none}13.4%{transform:scale(.94);filter:brightness(.85)}14.3%,100%{transform:none;filter:none}}
+@keyframes xgTc3{0%,47%{opacity:0}47.6%,54%{opacity:1}54.6%,100%{opacity:0}}
+@keyframes xgLt1{0%,25%{opacity:1}26%,100%{opacity:0}}@keyframes xgLt2{0%,25.4%{opacity:0}26.4%,39%{opacity:1}40%,100%{opacity:0}}
+@keyframes xgB1{0%,23.8%{transform:none;filter:none}24.2%{transform:scale(.94);filter:brightness(.85)}25.099999999999998%,100%{transform:none;filter:none}}
+@keyframes xgY1{0%,17.5%{width:0}22%,100%{width:15ch}}
+@keyframes xgY2{0%,27%{width:0}31%,100%{width:10ch}}
+@keyframes xgSpV{0%,36.6%{opacity:0}37%,39.4%{opacity:1}39.8%,100%{opacity:0}}
+@keyframes xgWa{0%,46.6%{opacity:1}47%,100%{opacity:0}}@keyframes xgWb{0%,46.6%{opacity:0}47%,100%{opacity:1}}
+@keyframes xgEdP{0%,45.2%{transform:none;filter:none}45.6%{transform:scale(.94);filter:brightness(.85)}46.5%,100%{transform:none;filter:none}}
+@keyframes xgInst{0%,61.6%{opacity:1;transform:none}62%{transform:scale(.94)}62.6%,100%{opacity:0}}@keyframes xgBarW{0%,62.2%{opacity:0}62.6%,78%{opacity:1}78.6%,100%{opacity:0}}@keyframes xgBar{0%,63%{width:0}78%,100%{width:100%}}
+@keyframes xgPlay{0%,78.2%{opacity:0}78.8%,85.4%{opacity:1;transform:none}85.8%{opacity:1;transform:scale(.94)}86.4%,100%{opacity:0}}
+@keyframes xgRun{0%,86%{opacity:0}86.6%,96%{opacity:1}98%,100%{opacity:0}}
+@keyframes xgCur{0%{left:75%;top:90%}5.5%{left:calc(50% - 20px);top:104px}8%{left:calc(50% - 20px);top:104px}9.2%{left:calc(50% - 20px);top:132px}12%{left:calc(50% - 20px);top:132px}13%{left:calc(50% + 0px);top:172px}15%{left:calc(50% + 0px);top:172px}17%{left:calc(50% - 50px);top:107px}22.5%{left:calc(50% - 50px);top:107px}23.4%{left:calc(50% + 0px);top:145px}25.5%{left:calc(50% + 0px);top:145px}26.5%{left:calc(50% - 50px);top:107px}31.5%{left:calc(50% - 50px);top:107px}34%{left:calc(50% + 0px);top:145px}37%{left:calc(50% + 0px);top:145px}39.5%{left:calc(50% + 70px);top:200px}43%{left:calc(50% + 0px);top:172px}47%{left:calc(50% + 0px);top:172px}52%{left:calc(50% + 70px);top:210px}58%{left:55px;top:158px}61.5%{left:55px;top:158px}68%{left:170px;top:210px}79%{left:170px;top:210px}84%{left:55px;top:158px}86%{left:55px;top:158px}92%{left:170px;top:215px}100%{left:75%;top:90%}}
+.vt--xg .xg-cur{position:absolute;z-index:9;width:18px;height:18px;margin:-2px 0 0 -3px;pointer-events:none;animation:xgCur var(--vt) infinite,xgCurV var(--vt) infinite}
+.vt--xg .xg-cur svg{display:block;width:18px !important;height:18px !important;max-width:none !important;fill:#fff;stroke:#111;stroke-width:1.4;stroke-linejoin:round;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));transform-origin:20% 15%;animation:xgPress var(--vt) infinite}
+.vt--xg .xg-cur::before{content:"";position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.55);opacity:0;transform:scale(.3);animation:xgClick var(--vt) infinite}
+@keyframes xgCurV{0%{opacity:0}0.00%{opacity:0}0.80%,15.50%{opacity:1}16.30%{opacity:0}16.39%{opacity:0}17.20%,37.50%{opacity:1}38.30%{opacity:0}41.99%{opacity:0}42.80%,49.00%{opacity:1}49.80%{opacity:0}56.99%{opacity:0}57.80%,63.50%{opacity:1}64.30%{opacity:0}82.99%{opacity:0}83.80%,87.00%{opacity:1}87.80%{opacity:0}100%{opacity:0}}
+@keyframes xgClick{0%{opacity:0;transform:scale(.3)}6.90%{opacity:0;transform:scale(.3)}7.00%{opacity:.8;transform:scale(.5)}8.10%{opacity:0;transform:scale(1.4)}9.90%{opacity:0;transform:scale(.3)}10.00%{opacity:.8;transform:scale(.5)}11.10%{opacity:0;transform:scale(1.4)}13.30%{opacity:0;transform:scale(.3)}13.40%{opacity:.8;transform:scale(.5)}14.50%{opacity:0;transform:scale(1.4)}17.50%{opacity:0;transform:scale(.3)}17.60%{opacity:.8;transform:scale(.5)}18.70%{opacity:0;transform:scale(1.4)}24.10%{opacity:0;transform:scale(.3)}24.20%{opacity:.8;transform:scale(.5)}25.30%{opacity:0;transform:scale(1.4)}26.90%{opacity:0;transform:scale(.3)}27.00%{opacity:.8;transform:scale(.5)}28.10%{opacity:0;transform:scale(1.4)}35.50%{opacity:0;transform:scale(.3)}35.60%{opacity:.8;transform:scale(.5)}36.70%{opacity:0;transform:scale(1.4)}45.50%{opacity:0;transform:scale(.3)}45.60%{opacity:.8;transform:scale(.5)}46.70%{opacity:0;transform:scale(1.4)}61.90%{opacity:0;transform:scale(.3)}62.00%{opacity:.8;transform:scale(.5)}63.10%{opacity:0;transform:scale(1.4)}85.70%{opacity:0;transform:scale(.3)}85.80%{opacity:.8;transform:scale(.5)}86.90%{opacity:0;transform:scale(1.4)}100%{opacity:0}}
+@keyframes xgPress{0%{transform:none}6.90%{transform:none}7.00%{transform:scale(.8)}7.70%{transform:none}9.90%{transform:none}10.00%{transform:scale(.8)}10.70%{transform:none}13.30%{transform:none}13.40%{transform:scale(.8)}14.10%{transform:none}17.50%{transform:none}17.60%{transform:scale(.8)}18.30%{transform:none}24.10%{transform:none}24.20%{transform:scale(.8)}24.90%{transform:none}26.90%{transform:none}27.00%{transform:scale(.8)}27.70%{transform:none}35.50%{transform:none}35.60%{transform:scale(.8)}36.30%{transform:none}45.50%{transform:none}45.60%{transform:scale(.8)}46.30%{transform:none}61.90%{transform:none}62.00%{transform:scale(.8)}62.70%{transform:none}85.70%{transform:none}85.80%{transform:scale(.8)}86.50%{transform:none}100%{transform:none}}
+.ic3{display:inline-block !important;width:1.15em !important;height:1.15em !important;max-width:none !important;margin:0 .12em !important;padding:0 !important;vertical-align:-.22em;border-radius:0 !important;object-fit:contain}.ic-s{display:inline-block !important;width:1em !important;height:1em !important;max-width:none !important;vertical-align:-.14em;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.ic-s.ic-f{fill:currentColor;stroke:none}
+</style>
+
+<div class="ed-box"><p>Tenha <strong>1 mês de Xbox Game Pass Ultimate</strong> e jogue uma enorme biblioteca de jogos, numa conta <strong>somente sua</strong>.</p></div>
+
+<p>Na <strong>Rei dos Nitros</strong>, os dados chegam na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
+<p>A conta é <strong>Full Acesso</strong>: depois de receber, você troca o e-mail e a senha e a assinatura fica com você.</p>
+<figure class="ed-fig"><img class="ed-img" src="https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@3bf775830a432cfbd70bdcbd1acdff3ac9bd9d1d/banners/descricoes/xbox-game-pass-ultimate.jpg" alt="Xbox Game Pass Ultimate" loading="lazy"></figure>
+
+<p><strong>Uma biblioteca para cada estilo.</strong> Explore jogos de corrida, FPS, RPG, sobrevivência, multiplayer e indies no catálogo do Game Pass Ultimate.</p>
+<div class="ed-capas"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/library_600x900.jpg" alt="Forza Horizon 5" loading="lazy"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1240440/library_600x900.jpg" alt="Halo Infinite" loading="lazy"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1716740/library_600x900.jpg" alt="Starfield" loading="lazy"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2677660/library_600x900.jpg" alt="Indiana Jones" loading="lazy"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/962130/library_600x900.jpg" alt="Grounded" loading="lazy"></div>
+
+<h3 class="ed-h">O que você recebe</h3>
+<div class="ed-spec">
+<div><small>Grandes franquias</small><b>Call of Duty, Forza, Minecraft, Halo e mais</b></div>
+<div><small>Biblioteca completa</small><b>Corrida, FPS, RPG, indies e mais</b></div>
+<div><small>Full Acesso</small><b>Troque e-mail e senha</b></div>
+<div><small>Duração</small><b>1 mês</b></div>
+</div>
+
+<div class="ed-card vt vt--xg" style="--vc:#5dc21e"><span class="vt-k">Passo a passo</span><h2 class="vt-t">Como começar a jogar</h2><div class="vt-win" role="img" aria-label="Como usar o Xbox Game Pass Ultimate"><div class="xg-top xg-t1"><b>Rei dos Nitros</b><span>Seu pedido</span></div><div class="xg-top xg-t2"><b>Xbox</b><span>Entrar</span></div><div class="xg-top xg-t3"><b>Xbox</b><span class="on">Início</span><span>Game Pass</span><span>Loja</span><span>Biblioteca</span></div><div class="xg-sc xg-a"><div class="xg-box"><small class="xg-ok"><svg class="ic-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Pagamento aprovado</small><b class="xg-pn">Xbox Game Pass Ultimate</b><span class="xg-in xg-r1"><u>E-mail</u><em>email_do_pedido</em></span><span class="xg-in xg-r2"><u>Senha</u><em>••••••••••</em></span><span class="xg-bt xg-go">Abrir o Xbox</span></div><span class="xg-toast xg-tc1"><svg class="ic-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> E-mail copiado</span><span class="xg-toast xg-tc2"><svg class="ic-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Senha copiada</span></div><div class="xg-sc xg-b"><div class="xg-box xg-lbox"><span class="xg-logo"><i></i><b>Xbox</b></span><b class="xg-lt xg-lt1">Entrar</b><b class="xg-lt xg-lt2">Digite a senha</b><span class="xg-in xg-i1"><em class="xg-y1">email_do_pedido</em></span><span class="xg-in xg-i2"><em class="xg-y2">••••••••••</em></span><span class="xg-bt xg-b1">Avançar</span><span class="xg-bt xg-b2">Entrar</span><i class="xg-spin"></i></div></div><div class="xg-sc xg-c"><div class="xg-box xg-cbox"><b class="xg-lt">Conta Microsoft</b><span class="xg-in xg-v1"><u>E-mail</u><em class="xg-w1a">og••••••@email.com</em><em class="xg-w1b">voce@seuemail.com</em></span><span class="xg-in xg-v2"><u>Senha</u><em class="xg-w2a">••••••••••</em><em class="xg-w2b">••••••••••••••</em></span><span class="xg-bt xg-ed"><b class="xg-e1">Editar dados</b><b class="xg-e2">Salvo <svg class="ic-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></b></span></div><span class="xg-toast xg-tc3"><svg class="ic-s" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> Dados trocados: a conta é sua</span></div><div class="xg-sc xg-d"><div class="xg-hero" style="background-image:linear-gradient(90deg,rgba(0,0,0,.8),rgba(0,0,0,.1) 70%),url(https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1240440/library_hero.jpg)"><small>GAME PASS ULTIMATE</small><b>Halo Infinite</b></div><div class="xg-actb"><span class="xg-bt xg-inst">INSTALAR</span><span class="xg-bar"><i></i></span><small class="xg-dl">Instalando...</small><span class="xg-bt xg-play">JOGAR</span><span class="xg-bt xg-run">EXECUTANDO</span></div><div class="xg-row"><div class="xg-mq"><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/library_600x900.jpg" alt=""><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1240440/library_600x900.jpg" alt=""><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1716740/library_600x900.jpg" alt=""><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2677660/library_600x900.jpg" alt=""><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/962130/library_600x900.jpg" alt=""><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/library_600x900.jpg" alt=""><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1240440/library_600x900.jpg" alt=""><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1716740/library_600x900.jpg" alt=""><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2677660/library_600x900.jpg" alt=""><img src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/962130/library_600x900.jpg" alt=""></div></div></div><span class="xg-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span></div><div class="xg-steps"><div class="xg-st xg-s0"><i>1</i><div><b>Veja os dados no pedido</b><span>Na página do seu pedido aparecem o e-mail e a senha da conta.</span></div></div><div class="xg-st xg-s1"><i>2</i><div><b>Entre na conta Microsoft</b><span>Abra o app do Xbox e entre com esses dados.</span></div></div><div class="xg-st xg-s2"><i>3</i><div><b>Troque e-mail e senha</b><span>Nas configurações da conta, coloque o seu e-mail e uma senha nova.</span></div></div><div class="xg-st xg-s3"><i>4</i><div><b>Instale o jogo</b><span>No catálogo do Game Pass, escolha um jogo e clique em Instalar.</span></div></div><div class="xg-st xg-s4"><i>5</i><div><b>Jogue</b><span>Clique em Jogar e aproveite.</span></div></div></div></div>
+
+<!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div></div><!--/RN-CONV-->
+</div>

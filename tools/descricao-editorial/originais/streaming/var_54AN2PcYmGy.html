@@ -1,0 +1,598 @@
+<div class="ds-wrapper">
+
+<style>
+.ds-wrapper{
+    --ds-accent:#3b82f6;
+    --ds-bg:#0b0d13;
+    --ds-card:#121622;
+    --ds-item:#181d2c;
+    --ds-border:rgba(255,255,255,.08);
+    --ds-text:#f5f5f6;
+    --ds-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--ds-text);
+}
+.ds-wrapper *{box-sizing:border-box}
+
+.ds-container{
+    background:var(--ds-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.ds-card{
+    background:var(--ds-card);
+    border:1px solid var(--ds-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.ds-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.ds-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--ds-accent);
+    flex-shrink:0;
+}
+
+.ds-quote{
+    border-left:3px solid var(--ds-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.ds-quote strong{color:#fff}
+
+.ds-text{
+    color:var(--ds-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.ds-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.ds-list{display:grid;gap:10px}
+.ds-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--ds-item);
+    border:1px solid var(--ds-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.ds-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(59,130,246,.10);
+    border:1px solid rgba(59,130,246,.38);
+}
+.ds-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#7db4ff;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.ds-item-label{
+    display:block;
+    color:var(--ds-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.ds-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.ds-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#0d1018;
+    border:1px solid var(--ds-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.ds-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--ds-border);
+}
+.ds-mock-bar span:first-child{color:#4f9dff;font-weight:900;letter-spacing:.5px}
+
+.ds-dialog,
+.ds-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.ds-dialog{animation:dsDialog 10s infinite}
+.ds-success{animation:dsSuccess 10s infinite;opacity:0;top:62px}
+
+.ds-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.ds-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.ds-field{
+    background:#151517;
+    border:1px solid rgba(59,130,246,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.ds-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--ds-accent);
+}
+.ds-type-1{animation:dsType1 10s steps(17,end) infinite}
+.ds-type-2{animation:dsType2 10s steps(10,end) infinite}
+
+.ds-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.ds-btn-cancel,
+.ds-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.ds-btn-cancel{background:#34363c;color:#d4d4d8}
+.ds-btn-go{
+    position:relative;
+    background:#0063e5;
+    color:#fff;
+    min-width:74px;
+    text-align:center;
+}
+.ds-btn-go span{display:block}
+.ds-btn-a{animation:dsBtnA 10s infinite}
+.ds-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:dsBtnB 10s infinite;
+}
+
+.ds-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.ds-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.ds-ok-name{font-size:11px;color:#7db4ff;font-weight:700;margin-bottom:3px}
+.ds-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes dsDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes dsSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes dsType1{
+    0%,6%{width:0}
+    24%,92%{width:17ch}
+    100%{width:0}
+}
+@keyframes dsType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes dsBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes dsBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.ds-steps{display:grid;gap:10px}
+.ds-step{
+    background:var(--ds-item);
+    border:1px solid var(--ds-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.ds-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--ds-muted);
+    margin-bottom:8px;
+}
+.ds-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--ds-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.ds-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--ds-text);
+    margin:0;
+}
+.ds-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.ds-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.ds-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.ds-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.ds-info:last-child{margin-bottom:0}
+.ds-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .ds-card{padding:18px 14px}
+    .ds-dialog,.ds-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .ds-dialog,.ds-success,.ds-type,.ds-btn-a,.ds-btn-b{animation:none}
+    .ds-dialog{opacity:1}
+    .ds-type-1{width:17ch}
+    .ds-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.ds-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.ds-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--ds-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.ds-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.ds-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ds-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.ds-hero-s strong{color:#fff}
+.ds-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--ds-border)}
+.ds-price-k{display:block;color:var(--ds-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.ds-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.ds-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.ds-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.ds-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.ds-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.ds-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ds-ben{background:var(--ds-item);border:1px solid var(--ds-border);border-radius:14px;padding:14px 12px}
+.ds-ben svg{width:26px;height:26px;fill:none;stroke:var(--ds-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.ds-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.ds-ben small{display:block;color:var(--ds-muted);font-size:12.5px;line-height:1.45}
+.ds-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.ds-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--ds-item);border:1px solid var(--ds-border);text-align:center}
+.ds-plan b{display:block;font-size:13px;color:var(--ds-muted);margin-bottom:6px}
+.ds-plan strong{display:block;font-size:22px;color:#fff}
+.ds-plan small{display:block;margin-top:4px;color:var(--ds-muted);font-size:12px}
+.ds-plan--on{border-color:var(--ds-accent);background:rgba(240,77,200,.10)}
+.ds-plan--on b{color:#ff7ad9}
+.ds-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--ds-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.ds-trust{display:grid;gap:10px}
+.ds-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.ds-trust strong{color:#fff}
+.ds-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.ds-info-title{display:flex;align-items:center;gap:8px}
+.ds-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.ds-grid,.ds-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ds-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.ds-prof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.ds-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.ds-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.ds-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.ds-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.ds-prof-body{padding:30px 12px 12px}
+.ds-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.ds-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.ds-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.ds-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.ds-prof-user b{color:#ff7ad9}
+.ds-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.ds-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.ds-mock:has(.ds-prof){height:auto !important;padding-bottom:16px}
+.ds-prof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.ds-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.ds-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.ds-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.ds-prof-name{white-space:nowrap}
+.ds-prof .ds-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.ds-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.ds-prof-av,.ds-prof-av span,.ds-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.ds-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.ds-rows{display:grid;gap:8px}
+.ds-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--ds-item);border:1px solid var(--ds-border);font-size:14px;color:#e4e4e7}
+.ds-row b{color:#fff;white-space:nowrap}
+.ds-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.ds-row--on{border-color:var(--ds-accent);background:rgba(240,77,200,.10)}
+.ds-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--ds-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.ds-mock:has(.ds-who){height:270px !important}
+.ds-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.ds-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+.ds-success.ds-who{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:16px 12px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important;text-align:center}
+.ds-who-t{display:block;margin-bottom:14px;font-size:16px;color:#fff}
+.ds-who-g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:300px;margin:0 auto}
+.ds-who-p{display:flex;flex-direction:column;align-items:center;gap:6px}
+.ds-who-p i{display:grid;place-items:center;width:100%;aspect-ratio:1;border-radius:10px;background:var(--c);opacity:.55}
+.ds-who-p small{font-size:11px !important;color:#9aa0a6}
+.ds-who-me i{opacity:1;box-shadow:0 0 0 2px #fff;animation:nzWho 2.6s ease-in-out infinite}
+.ds-who-me small{color:#fff;font-weight:800}
+.ds-who-me svg{width:45% !important;height:45% !important;max-width:none !important;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes nzWho{50%{transform:scale(1.08);box-shadow:0 0 0 2px #fff,0 0 16px var(--ds-accent)}}
+.ds-who-tag{display:inline-block;margin-top:14px;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px;font-weight:800}
+
+.ds-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+</style>
+
+
+<div class="ds-container">
+    <div class="ds-hero"><span class="ds-tag">PERFIL PRIVADO</span><h2 class="ds-hero-t">Disney+ Premium por <span>R$ 12,99</span></h2><p class="ds-hero-s">Um <strong>perfil só seu</strong> no Disney+, em uma conta compartilhada com poucos usuários. Receba o acesso no pedido e comece a assistir.</p><div class="ds-price ds-pulse"><div><span class="ds-price-k">No site oficial</span><span class="ds-price-old">R$ 69,90</span></div><div><span class="ds-price-k">Aqui</span><span class="ds-price-new">R$ 12,99</span></div><span class="ds-price-off">-81%</span><span class="ds-price-mes">Você economiza R$ 56,91.</span></div></div>
+    <div class="ds-card"><h2 class="ds-h2">Por que assinar aqui</h2><div class="ds-grid"><div class="ds-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><b>Perfil privado</b><small>Sua lista e seu histórico, separados dos outros.</small></div><div class="ds-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><b>Marvel, Star Wars e Pixar</b><small>Todo o catálogo Disney+ para a família.</small></div><div class="ds-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><b>Assista onde quiser</b><small>TV, computador, celular e tablet.</small></div><div class="ds-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b>Acesso rápido</b><small>Os dados de acesso chegam na página do pedido.</small></div></div></div>
+    <div class="ds-card"><h2 class="ds-h2">Compare os planos</h2><div class="ds-rows"><div class="ds-row ds-row--on"><span>Disney Plano Premium<span class="ds-row-tag">VOCÊ ESTÁ AQUI</span></span><b><s>R$ 69,90</s>R$ 12,99</b></div><div class="ds-row"><span>Disney Plano Padrão</span><b><s>R$ 49,90</s>R$ 7,99</b></div><div class="ds-row"><span>Disney Plano Padrão (COM ANÚNCIOS)</span><b><s>R$ 29,90</s>R$ 1,99</b></div></div><p class="ds-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="ds-card">
+
+        <h2 class="ds-h2">O que o plano oferece</h2>
+
+        <div class="ds-list">
+
+            <div class="ds-item">
+                <span class="ds-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg></span>
+                <div>
+                    <span class="ds-item-label">Esportes com a ESPN</span>
+                    <span class="ds-item-text">Todos os canais da ESPN, torneios e eventos esportivos exclusivos</span>
+                </div>
+            </div>
+
+            <div class="ds-item">
+                <span class="ds-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 7 5 3-5 3Z"></path><rect width="20" height="14" x="2" y="3" rx="2"></rect><path d="M12 17v4"></path><path d="M8 21h8"></path></svg></span>
+                <div>
+                    <span class="ds-item-label">Qualidade de áudio e vídeo</span>
+                    <span class="ds-item-text">Até 4K UHD, HDR e Dolby Atmos</span>
+                </div>
+            </div>
+
+            <div class="ds-item">
+                <span class="ds-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m4.9 4.9 14.2 14.2"></path></svg></span>
+                <div>
+                    <span class="ds-item-label">Plano sem anúncios</span>
+                    <span class="ds-item-text">Os melhores filmes e séries sem intervalos comerciais</span>
+                </div>
+            </div>
+
+            <div class="ds-item">
+                <span class="ds-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"></path><path d="M10 19v-3.96 3.15"></path><path d="M7 19h5"></path><rect width="6" height="10" x="16" y="12" rx="2"></rect></svg></span>
+                <div>
+                    <span class="ds-item-label">Vários dispositivos ao mesmo tempo</span>
+                    <span class="ds-item-text">Possibilidade de assistir em 4 dispositivos simultâneos</span>
+                </div>
+            </div>
+
+            <div class="ds-item">
+                <span class="ds-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg></span>
+                <div>
+                    <span class="ds-item-label">Downloads</span>
+                    <span class="ds-item-text">Liberados</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="ds-card">
+
+        <h2 class="ds-h2">Como utilizar</h2>
+
+        <div class="ds-mock">
+
+            <div class="ds-mock-bar">
+                <span>DISNEY+</span>
+                <span>Filmes</span>
+                <span>Séries</span>
+                <span>ESPN</span>
+            </div>
+
+            <div class="ds-dialog">
+                <div class="ds-dlg-title">Entrar</div>
+                <div class="ds-dlg-desc">Use o e-mail e a senha que chegaram no seu pedido.</div>
+
+                <div class="ds-field"><span class="ds-type ds-type-1">seuemail@gmail.com</span></div>
+                <div class="ds-field"><span class="ds-type ds-type-2">••••••••••</span></div>
+
+                <div class="ds-dlg-actions">
+                    <span class="ds-btn-cancel">Cancelar</span>
+                    <span class="ds-btn-go">
+                        <span class="ds-btn-a">Entrar</span>
+                        <span class="ds-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="ds-cur ds-cur2" aria-hidden="true" style="--x1:36.4%;--y1:141px;--x2:36.4%;--y2:178px;--x3:74.5%;--y3:216px;--x4:87.6%;--y4:137px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="ds-success ds-who">
+                <b class="ds-who-t">Quem está assistindo?</b>
+                <div class="ds-who-g">
+                    <span class="ds-who-p" style="--c:#3b82f6"><i></i><small>Perfil 1</small></span>
+                    <span class="ds-who-p" style="--c:#f59e0b"><i></i><small>Perfil 2</small></span>
+                    <span class="ds-who-p" style="--c:#10b981"><i></i><small>Perfil 3</small></span>
+                    <span class="ds-who-p ds-who-me" data-alvo style="--c:var(--ds-accent)"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></i><small>Você</small></span>
+                </div>
+                <span class="ds-who-tag">Perfil privado ativo</span>
+            </div>
+
+        </div>
+
+        <div class="ds-steps">
+
+            <div class="ds-step">
+                <div class="ds-step-label"><span class="ds-step-num">1</span> Passo 1</div>
+                <p class="ds-step-text">
+                    Escolha seu plano Disney e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="ds-step">
+                <div class="ds-step-label"><span class="ds-step-num">2</span> Passo 2</div>
+                <p class="ds-step-text">
+                    Receba os <strong>dados de acesso</strong> e entre na sua conta automaticamente.
+                </p>
+            </div>
+
+            <div class="ds-step">
+                <div class="ds-step-label"><span class="ds-step-num">3</span> Passo 3</div>
+                <p class="ds-step-text">
+                    Pronto! Escolha seu <strong>filme ou série favorita</strong> e aproveite o Disney+.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="ds-card"><h2 class="ds-h2">Compre com tranquilidade</h2><div class="ds-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Entrega dos dados</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte por 7 dias</strong> depois do resgate, se precisar de reenvio.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+<!-- TERMOS E GARANTIA -->
+    <div class="ds-card">
+
+        <h2 class="ds-h2">Termos e garantia</h2>
+
+        <div class="ds-info-box">
+
+            <h3 class="ds-info-title">LEIA ANTES DE COMPRAR</h3>
+
+            <p class="ds-info">
+                <span class="ds-highlight">1. Tentativas de fraude:</span><br>
+                Qualquer abuso ou tentativa de burlar o sistema resultará
+                na perda do item e bloqueio do suporte.
+            </p>
+
+            <p class="ds-info">
+                <span class="ds-highlight">2. Prazo para resgate:</span><br>
+                Após o primeiro resgate do produto, você terá até 7 dias
+                para solicitar o envio ou garantia de suporte.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Outras pessoas vão ver o que eu assisto?</summary><p>Não. Você recebe um <strong>perfil só seu</strong>, com a sua lista e o seu histórico separados.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="ds-hero rn-cta2"><span class="ds-tag">PRONTO PARA GARANTIR?</span><h2 class="ds-hero-t">Disney Plano Premium</h2><div class="ds-price ds-pulse"><div><span class="ds-price-k">No site oficial</span><span class="ds-price-old">R$ 69,90</span></div><div><span class="ds-price-k">Aqui</span><span class="ds-price-new">R$ 12,99</span></div><span class="ds-price-off">-81%</span><span class="ds-price-mes">Você economiza R$ 56,91.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

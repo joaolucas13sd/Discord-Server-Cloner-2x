@@ -1,0 +1,603 @@
+<div class="ib-wrapper">
+
+<style>
+.ib-wrapper{
+    --ib-accent:#e879f9;
+    --ib-bg:#100a12;
+    --ib-card:#18101c;
+    --ib-item:#211628;
+    --ib-border:rgba(255,255,255,.08);
+    --ib-text:#f5f5f6;
+    --ib-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--ib-text);
+}
+.ib-wrapper *{box-sizing:border-box}
+
+.ib-container{
+    background:var(--ib-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.ib-card{
+    background:var(--ib-card);
+    border:1px solid var(--ib-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.ib-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.ib-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--ib-accent);
+    flex-shrink:0;
+}
+
+.ib-quote{
+    border-left:3px solid var(--ib-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.ib-quote strong{color:#fff}
+
+.ib-text{
+    color:var(--ib-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.ib-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.ib-list{display:grid;gap:10px}
+.ib-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--ib-item);
+    border:1px solid var(--ib-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.ib-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(232,121,249,.10);
+    border:1px solid rgba(232,121,249,.38);
+}
+.ib-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#f0abfc;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.ib-item-label{
+    display:block;
+    color:var(--ib-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.ib-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.ib-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#110b14;
+    border:1px solid var(--ib-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.ib-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--ib-border);
+}
+.ib-mock-bar span:first-child{color:#f0abfc;font-weight:900;letter-spacing:.5px}
+
+.ib-dialog,
+.ib-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.ib-dialog{animation:ibDialog 10s infinite}
+.ib-success{animation:ibSuccess 10s infinite;opacity:0;top:62px}
+
+.ib-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.ib-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.ib-field{
+    background:#151517;
+    border:1px solid rgba(232,121,249,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.ib-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--ib-accent);
+}
+.ib-type-1{animation:ibType1 10s steps(18,end) infinite}
+.ib-type-2{animation:ibType2 10s steps(10,end) infinite}
+
+.ib-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.ib-btn-cancel,
+.ib-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.ib-btn-cancel{background:#34363c;color:#d4d4d8}
+.ib-btn-go{
+    position:relative;
+    background:#b83acb;
+    color:#fff;
+    min-width:74px;
+    text-align:center;
+}
+.ib-btn-go span{display:block}
+.ib-btn-a{animation:ibBtnA 10s infinite}
+.ib-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:ibBtnB 10s infinite;
+}
+
+.ib-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.ib-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.ib-ok-name{font-size:11px;color:#f0abfc;font-weight:700;margin-bottom:3px}
+.ib-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes ibDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes ibSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes ibType1{
+    0%,6%{width:0}
+    24%,92%{width:18ch}
+    100%{width:0}
+}
+@keyframes ibType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes ibBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes ibBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.ib-steps{display:grid;gap:10px}
+.ib-step{
+    background:var(--ib-item);
+    border:1px solid var(--ib-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.ib-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--ib-muted);
+    margin-bottom:8px;
+}
+.ib-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--ib-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.ib-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--ib-text);
+    margin:0;
+}
+.ib-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.ib-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.ib-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.ib-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.ib-info:last-child{margin-bottom:0}
+.ib-highlight{color:#ef6b6b;font-weight:800}
+
+/* CHIPS */
+.ib-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:16px;
+}
+.ib-chips span{
+    background:var(--ib-item);
+    border:1px solid rgba(232,121,249,.35);
+    color:#f0abfc;
+    font-size:12px;
+    font-weight:800;
+    padding:7px 12px;
+    border-radius:999px;
+}
+
+@media(max-width:380px){
+    .ib-card{padding:18px 14px}
+    .ib-dialog,.ib-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .ib-dialog,.ib-success,.ib-type,.ib-btn-a,.ib-btn-b{animation:none}
+    .ib-dialog{opacity:1}
+    .ib-type-1{width:18ch}
+    .ib-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.ib-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.ib-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--ib-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.ib-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.ib-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ib-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.ib-hero-s strong{color:#fff}
+.ib-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--ib-border)}
+.ib-price-k{display:block;color:var(--ib-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.ib-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.ib-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.ib-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.ib-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.ib-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.ib-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ib-ben{background:var(--ib-item);border:1px solid var(--ib-border);border-radius:14px;padding:14px 12px}
+.ib-ben svg{width:26px;height:26px;fill:none;stroke:#ff7ad9;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.ib-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.ib-ben small{display:block;color:var(--ib-muted);font-size:12.5px;line-height:1.45}
+.ib-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.ib-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--ib-item);border:1px solid var(--ib-border);text-align:center}
+.ib-plan b{display:block;font-size:13px;color:var(--ib-muted);margin-bottom:6px}
+.ib-plan strong{display:block;font-size:22px;color:#fff}
+.ib-plan small{display:block;margin-top:4px;color:var(--ib-muted);font-size:12px}
+.ib-plan--on{border-color:var(--ib-accent);background:rgba(240,77,200,.10)}
+.ib-plan--on b{color:#ff7ad9}
+.ib-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--ib-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.ib-trust{display:grid;gap:10px}
+.ib-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.ib-trust strong{color:#fff}
+.ib-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.ib-info-title{display:flex;align-items:center;gap:8px}
+.ib-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.ib-grid,.ib-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ib-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.ib-prof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.ib-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.ib-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.ib-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.ib-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.ib-prof-body{padding:30px 12px 12px}
+.ib-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.ib-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.ib-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.ib-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.ib-prof-user b{color:#ff7ad9}
+.ib-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.ib-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.ib-mock:has(.ib-prof){height:auto !important;padding-bottom:16px}
+.ib-prof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.ib-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.ib-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.ib-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.ib-prof-name{white-space:nowrap}
+.ib-prof .ib-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.ib-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.ib-prof-av,.ib-prof-av span,.ib-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.ib-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.ib-rows{display:grid;gap:8px}
+.ib-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--ib-item);border:1px solid var(--ib-border);font-size:14px;color:#e4e4e7}
+.ib-row b{color:#fff;white-space:nowrap}
+.ib-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.ib-row--on{border-color:var(--ib-accent);background:rgba(240,77,200,.10)}
+.ib-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--ib-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+/* ===== Impulsos: barra de níveis subindo (Como utilizar) ===== */
+.ib-mock:has(.ib-lv){height:auto !important;padding-bottom:14px}
+.ib-lv{padding:14px 14px 0}
+.ib-lv-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:12px}
+.ib-lv-top b{font-size:14px;color:#fff}
+.ib-lv-cnt{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:999px;background:rgba(232,121,249,.14);color:var(--ib-accent);font-size:11.5px;font-weight:800}
+.ib-lv-cnt svg{width:12px;height:12px;fill:currentColor}
+.ib-lv-n::after{content:"0";animation:ibCnt 9s steps(1,end) infinite}
+@keyframes ibCnt{0%{content:"0"}10%{content:"2"}20%{content:"4"}35%{content:"7"}45%{content:"10"}55%{content:"14"}95%{content:"14"}}
+.ib-lv-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ib-lv-col{position:relative;padding:10px 8px 26px;border-radius:10px;background:#1b1420;border:1px solid var(--ib-border);transition:none}
+.ib-lv-col b{display:block;margin:8px 0 4px;font-size:12.5px;color:#9aa0a6}
+.ib-lv-col small{display:block;font-size:10.5px;line-height:1.35;color:#7d7e84}
+.ib-lv-bar{height:5px;border-radius:5px;background:#2e2836;overflow:hidden}
+.ib-lv-bar i{display:block;height:100%;width:0;border-radius:5px;background:linear-gradient(90deg,#f04dc8,var(--ib-accent));box-shadow:0 0 8px var(--ib-accent)}
+.ib-lv-ok{position:absolute;left:8px;bottom:7px;font-size:9.5px;font-weight:900;letter-spacing:.3px;color:#22c55e;opacity:0}
+.ib-lv-c1 .ib-lv-bar i{animation:ibF1 9s ease-in-out infinite}
+.ib-lv-c2 .ib-lv-bar i{animation:ibF2 9s ease-in-out infinite}
+.ib-lv-c3 .ib-lv-bar i{animation:ibF3 9s ease-in-out infinite}
+@keyframes ibF1{0%,4%{width:0}22%,94%{width:100%}100%{width:0}}
+@keyframes ibF2{0%,26%{width:0}44%,94%{width:100%}100%{width:0}}
+@keyframes ibF3{0%,48%{width:0}66%,94%{width:100%}100%{width:0}}
+.ib-lv-c1{animation:ibOn1 9s infinite}.ib-lv-c2{animation:ibOn2 9s infinite}.ib-lv-c3{animation:ibOn3 9s infinite}
+.ib-lv-c1 b{animation:ibTx1 9s infinite}.ib-lv-c2 b{animation:ibTx2 9s infinite}.ib-lv-c3 b{animation:ibTx3 9s infinite}
+.ib-lv-c1 .ib-lv-ok{animation:ibOk1 9s infinite}.ib-lv-c2 .ib-lv-ok{animation:ibOk2 9s infinite}.ib-lv-c3 .ib-lv-ok{animation:ibOk3 9s infinite}
+@keyframes ibOk1{0%,21%{opacity:0}23%,94%{opacity:1}100%{opacity:0}}
+@keyframes ibOk2{0%,43%{opacity:0}45%,94%{opacity:1}100%{opacity:0}}
+@keyframes ibOk3{0%,65%{opacity:0}67%,94%{opacity:1}100%{opacity:0}}
+@keyframes ibOn1{0%,21%{border-color:var(--ib-border);box-shadow:none}23%,94%{border-color:var(--ib-accent);box-shadow:0 0 14px rgba(232,121,249,.25)}}
+@keyframes ibOn2{0%,43%{border-color:var(--ib-border);box-shadow:none}45%,94%{border-color:var(--ib-accent);box-shadow:0 0 14px rgba(232,121,249,.25)}}
+@keyframes ibOn3{0%,65%{border-color:var(--ib-border);box-shadow:none}67%,94%{border-color:var(--ib-accent);box-shadow:0 0 18px rgba(232,121,249,.4);transform:scale(1.03)}}
+@keyframes ibTx1{0%,21%{color:#9aa0a6}23%,94%{color:#fff}}
+@keyframes ibTx2{0%,43%{color:#9aa0a6}45%,94%{color:#fff}}
+@keyframes ibTx3{0%,65%{color:#9aa0a6}67%,94%{color:#fff}}
+@media(prefers-reduced-motion:reduce){.ib-lv-bar i{animation:none;width:100%}.ib-lv-ok{opacity:1}}
+
+/* versão em lista (cabe bem no celular) */
+.ib-lv{padding:14px 12px 0}
+.ib-lv-top{flex-wrap:wrap}
+.ib-lv-top b{font-size:15px !important;line-height:1.25}
+.ib-lv-cnt{font-size:12px !important;white-space:nowrap}
+.ib-lv-cnt svg{width:13px !important;height:13px !important;max-width:none !important;flex:none}
+.ib-lv-cols{grid-template-columns:1fr !important;gap:8px}
+.ib-lv-col{padding:11px 12px !important}
+.ib-lv-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+.ib-lv-col b{margin:0 !important;font-size:14px !important}
+.ib-lv-col small{margin-top:7px;font-size:12px !important;line-height:1.4 !important}
+.ib-lv-ok{position:static !important;padding:2px 8px;border-radius:999px;background:rgba(34,197,94,.14);font-size:10.5px !important;white-space:nowrap}
+.ib-lv-bar{height:6px}
+@keyframes ibOn3{0%,65%{border-color:var(--ib-border);box-shadow:none}67%,94%{border-color:var(--ib-accent);box-shadow:0 0 18px rgba(232,121,249,.4)}}
+</style>
+
+
+<div class="ib-container">
+    <div class="ib-hero">
+        <span class="ib-tag">NÍVEL 3 DO SERVIDOR</span>
+        <h2 class="ib-hero-t">14 impulsos por <span>R$ 25,99</span></h2>
+        <p class="ib-hero-s">Leve o seu servidor ao <strong>nível máximo</strong> por 1 mês: áudio melhor, banner animado, link personalizado e mais status para atrair membros.</p>
+        <div class="ib-price ib-pulse"><div><span class="ib-price-k">Preço normal</span><span class="ib-price-old">R$ 50,99</span></div><div><span class="ib-price-k">Aqui</span><span class="ib-price-new">R$ 25,99</span></div><span class="ib-price-off">-49%</span><span class="ib-price-mes">Você economiza R$ 25,00.</span></div>
+    </div>
+    <div class="ib-card">
+        <h2 class="ib-h2">O que o nível 3 libera</h2>
+        <div class="ib-grid"><div class="ib-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg><b>Nível 3 liberado</b><small>Os 14 impulsos levam o servidor ao nível máximo.</small></div><div class="ib-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg><b>Áudio de 384 kbps</b><small>Canais de voz com som cristalino.</small></div><div class="ib-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg><b>Banner animado</b><small>Servidor com cara profissional e única.</small></div><div class="ib-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><b>Link personalizado</b><small>Convite exclusivo, como discord.gg/suamarca.</small></div><div class="ib-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><b>Mais status</b><small>Uma comunidade de elite atrai novos membros.</small></div><div class="ib-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V6l8-3 8 3z"/><path d="m9 12 2 2 4-4"/></svg><b>Garantia de 7 dias</b><small>Se os impulsos saírem, a gente repõe.</small></div></div>
+    </div>
+    <div class="ib-card">
+        <h2 class="ib-h2">Compare os pacotes</h2>
+        <div class="ib-rows"><div class="ib-row"><span>14x Impulsos Trimensais</span><b><s>R$ 100,99</s>R$ 45,99</b></div><div class="ib-row ib-row--on"><span>14x Impulsos Mensais<span class="ib-row-tag">VOCÊ ESTÁ AQUI</span></span><b><s>R$ 50,99</s>R$ 25,99</b></div></div>
+        <p class="ib-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p>
+    </div>
+    <!-- COMO UTILIZAR -->
+    <div class="ib-card">
+
+        <h2 class="ib-h2">Como utilizar</h2>
+
+        <div class="ib-mock">
+
+            <div class="ib-mock-bar">
+                <span>DISCORD</span>
+                <span>Início</span>
+                <span>Servidor</span>
+                <span>Impulsos</span>
+            </div>
+
+            <div class="ib-lv">
+                <div class="ib-lv-top"><b>Desbloqueie o seu servidor</b><span class="ib-lv-cnt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><i class="ib-lv-n"></i> impulsos</span></div>
+                <div class="ib-lv-cols">
+                    <div class="ib-lv-col ib-lv-c1"><div class="ib-lv-hd"><b>Nível 1</b><span class="ib-lv-ok">Desbloqueado</span></div><div class="ib-lv-bar"><i></i></div><small>Mais emojis · Ícone animado</small></div>
+                    <div class="ib-lv-col ib-lv-c2"><div class="ib-lv-hd"><b>Nível 2</b><span class="ib-lv-ok">Desbloqueado</span></div><div class="ib-lv-bar"><i></i></div><small>Live em 1080p · Banner do servidor</small></div>
+                    <div class="ib-lv-col ib-lv-c3"><div class="ib-lv-hd"><b>Nível 3</b><span class="ib-lv-ok">Desbloqueado</span></div><div class="ib-lv-bar"><i></i></div><small>Áudio 384 kbps · Link personalizado</small></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="ib-steps">
+
+            <div class="ib-step">
+                <div class="ib-step-label"><span class="ib-step-num">1</span> Passo 1</div>
+                <p class="ib-step-text">
+                    Escolha o pacote de impulsos e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="ib-step">
+                <div class="ib-step-label"><span class="ib-step-num">2</span> Passo 2</div>
+                <p class="ib-step-text">
+                    Informe o <strong>link do seu servidor</strong> para a entrega.
+                </p>
+            </div>
+
+            <div class="ib-step">
+                <div class="ib-step-label"><span class="ib-step-num">3</span> Passo 3</div>
+                <p class="ib-step-text">
+                    Pronto! Seu servidor recebe os <strong>impulsos</strong> e sobe de nível.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="ib-card">
+        <h2 class="ib-h2">Compre com tranquilidade</h2>
+        <div class="ib-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Entrega pelo link</strong> do seu servidor, sem precisar da sua senha.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Reposição em até 7 dias</strong> se os impulsos saírem do servidor.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div>
+    </div>
+<!-- TERMOS E GARANTIA -->
+    <div class="ib-card">
+
+        <h2 class="ib-h2">Protocolo de garantia e riscos</h2>
+
+        <p class="ib-text" style="margin-bottom:14px">
+            Este é um produto de alta performance com regras específicas.
+            Leia com <strong style="color:#fff">MÁXIMA ATENÇÃO</strong>.
+        </p>
+
+        <div class="ib-info-box">
+
+            <h3 class="ib-info-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>POLÍTICA DE GARANTIA - LEIA ANTES DE COMPRAR</h3>
+
+            <p class="ib-info">
+                <span class="ib-highlight">1. GARANTIA DE 7 DIAS:</span><br>
+                Se os impulsos saírem do servidor por qualquer motivo,
+                oferecemos uma garantia de reposição total por até 7 DIAS
+                após a compra.
+            </p>
+
+            <p class="ib-info">
+                <span class="ib-highlight">2. SEM GARANTIA PARA TOKENS:</span><br>
+                NÃO HÁ GARANTIA OU REEMBOLSO caso os tokens utilizados para os
+                impulsos sejam desabilitados ou flagados pelo Discord. Este é
+                um risco inerente ao produto que você assume ao comprar.
+            </p>
+
+            <p class="ib-info">
+                <span class="ib-highlight">Compre ciente de que, após os 7 dias de garantia inicial,
+                você assume total responsabilidade sobre a permanência dos impulsos.</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="ib-hero rn-cta2"><span class="ib-tag">PRONTO PARA GARANTIR?</span><h2 class="ib-hero-t">14x Impulsos Mensais</h2><div class="ib-price ib-pulse"><div><span class="ib-price-k">Preço normal</span><span class="ib-price-old">R$ 50,99</span></div><div><span class="ib-price-k">Aqui</span><span class="ib-price-new">R$ 25,99</span></div><span class="ib-price-off">-49%</span><span class="ib-price-mes">Você economiza R$ 25,00.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

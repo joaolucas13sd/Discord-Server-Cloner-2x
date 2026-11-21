@@ -1,0 +1,555 @@
+<div class="pm-wrapper">
+
+<style>
+.pm-wrapper{
+    --pm-accent:#1ecb7a;
+    --pm-bg:#08100c;
+    --pm-card:#0f1a14;
+    --pm-item:#16241c;
+    --pm-border:rgba(255,255,255,.08);
+    --pm-text:#f5f5f6;
+    --pm-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--pm-text);
+}
+.pm-wrapper *{box-sizing:border-box}
+
+.pm-container{
+    background:var(--pm-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.pm-card{
+    background:var(--pm-card);
+    border:1px solid var(--pm-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.pm-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.pm-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--pm-accent);
+    flex-shrink:0;
+}
+
+.pm-quote{
+    border-left:3px solid var(--pm-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.pm-quote strong{color:#fff}
+
+.pm-text{
+    color:var(--pm-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.pm-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.pm-list{display:grid;gap:10px}
+.pm-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--pm-item);
+    border:1px solid var(--pm-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.pm-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(30,203,122,.10);
+    border:1px solid rgba(30,203,122,.38);
+}
+.pm-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#9af0c6;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.pm-item-label{
+    display:block;
+    color:var(--pm-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.pm-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.pm-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#08100c;
+    border:1px solid var(--pm-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.pm-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--pm-border);
+}
+.pm-mock-bar span:first-child{color:#9af0c6;font-weight:900;letter-spacing:.5px}
+
+.pm-dialog,
+.pm-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.pm-dialog{animation:pmDialog 10s infinite}
+.pm-success{animation:pmSuccess 10s infinite;opacity:0;top:62px}
+
+.pm-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.pm-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.pm-field{
+    background:#151517;
+    border:1px solid rgba(30,203,122,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.pm-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--pm-accent);
+}
+.pm-type-1{animation:pmType1 10s steps(18,end) infinite}
+.pm-type-2{animation:pmType2 10s steps(10,end) infinite}
+
+.pm-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.pm-btn-cancel,
+.pm-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.pm-btn-cancel{background:#34363c;color:#d4d4d8}
+.pm-btn-go{
+    position:relative;
+    background:#15a862;
+    color:#1a1205;
+    min-width:74px;
+    text-align:center;
+}
+.pm-btn-go span{display:block}
+.pm-btn-a{animation:pmBtnA 10s infinite}
+.pm-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:pmBtnB 10s infinite;
+}
+
+.pm-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.pm-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.pm-ok-name{font-size:11px;color:#9af0c6;font-weight:700;margin-bottom:3px}
+.pm-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes pmDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes pmSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes pmType1{
+    0%,6%{width:0}
+    24%,92%{width:18ch}
+    100%{width:0}
+}
+@keyframes pmType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes pmBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes pmBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.pm-steps{display:grid;gap:10px}
+.pm-step{
+    background:var(--pm-item);
+    border:1px solid var(--pm-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.pm-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--pm-muted);
+    margin-bottom:8px;
+}
+.pm-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--pm-accent);
+    color:#1a1205;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.pm-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--pm-text);
+    margin:0;
+}
+.pm-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.pm-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.pm-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.pm-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.pm-info:last-child{margin-bottom:0}
+.pm-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .pm-card{padding:18px 14px}
+    .pm-dialog,.pm-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .pm-dialog,.pm-success,.pm-type,.pm-btn-a,.pm-btn-b{animation:none}
+    .pm-dialog{opacity:1}
+    .pm-type-1{width:18ch}
+    .pm-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.pm-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.pm-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--pm-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.pm-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.pm-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pm-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.pm-hero-s strong{color:#fff}
+.pm-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--pm-border)}
+.pm-price-k{display:block;color:var(--pm-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.pm-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.pm-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.pm-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.pm-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.pm-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.pm-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pm-ben{background:var(--pm-item);border:1px solid var(--pm-border);border-radius:14px;padding:14px 12px}
+.pm-ben svg{width:26px;height:26px;fill:none;stroke:var(--pm-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.pm-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.pm-ben small{display:block;color:var(--pm-muted);font-size:12.5px;line-height:1.45}
+.pm-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.pm-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--pm-item);border:1px solid var(--pm-border);text-align:center}
+.pm-plan b{display:block;font-size:13px;color:var(--pm-muted);margin-bottom:6px}
+.pm-plan strong{display:block;font-size:22px;color:#fff}
+.pm-plan small{display:block;margin-top:4px;color:var(--pm-muted);font-size:12px}
+.pm-plan--on{border-color:var(--pm-accent);background:rgba(240,77,200,.10)}
+.pm-plan--on b{color:#ff7ad9}
+.pm-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--pm-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.pm-trust{display:grid;gap:10px}
+.pm-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.pm-trust strong{color:#fff}
+.pm-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.pm-info-title{display:flex;align-items:center;gap:8px}
+.pm-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.pm-grid,.pm-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.pm-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.pm-prof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.pm-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.pm-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.pm-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.pm-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.pm-prof-body{padding:30px 12px 12px}
+.pm-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.pm-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.pm-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.pm-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.pm-prof-user b{color:#ff7ad9}
+.pm-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.pm-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.pm-mock:has(.pm-prof){height:auto !important;padding-bottom:16px}
+.pm-prof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.pm-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.pm-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.pm-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.pm-prof-name{white-space:nowrap}
+.pm-prof .pm-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.pm-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.pm-prof-av,.pm-prof-av span,.pm-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.pm-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.pm-rows{display:grid;gap:8px}
+.pm-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--pm-item);border:1px solid var(--pm-border);font-size:14px;color:#e4e4e7}
+.pm-row b{color:#fff;white-space:nowrap}
+.pm-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.pm-row--on{border-color:var(--pm-accent);background:rgba(240,77,200,.10)}
+.pm-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--pm-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.pm-mock:has(.pm-who){height:270px !important}
+.pm-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.pm-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+.pm-success.pm-who{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:16px 12px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important;text-align:center}
+.pm-who-t{display:block;margin-bottom:14px;font-size:16px;color:#fff}
+.pm-who-g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:300px;margin:0 auto}
+.pm-who-p{display:flex;flex-direction:column;align-items:center;gap:6px}
+.pm-who-p i{display:grid;place-items:center;width:100%;aspect-ratio:1;border-radius:10px;background:var(--c);opacity:.55}
+.pm-who-p small{font-size:11px !important;color:#9aa0a6}
+.pm-who-me i{opacity:1;box-shadow:0 0 0 2px #fff;animation:nzWho 2.6s ease-in-out infinite}
+.pm-who-me small{color:#fff;font-weight:800}
+.pm-who-me svg{width:45% !important;height:45% !important;max-width:none !important;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes nzWho{50%{transform:scale(1.08);box-shadow:0 0 0 2px #fff,0 0 16px var(--pm-accent)}}
+.pm-who-tag{display:inline-block;margin-top:14px;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px;font-weight:800}
+
+.pm-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+</style>
+
+
+<div class="pm-container">
+    <div class="pm-hero"><span class="pm-tag">FUTEBOL AO VIVO</span><h2 class="pm-hero-t">Premiere por <span>R$ 6,99</span></h2><p class="pm-hero-s">Receba uma <strong>conta com Premiere</strong> ativo e acompanhe os jogos e os conteúdos esportivos do plano.</p><div class="pm-price pm-pulse"><div><span class="pm-price-k">No Premiere</span><span class="pm-price-old">R$ 59,90</span></div><div><span class="pm-price-k">Aqui</span><span class="pm-price-new">R$ 6,99</span></div><span class="pm-price-off">-88%</span><span class="pm-price-mes">Você economiza R$ 52,91.</span></div></div>
+    <div class="pm-card"><h2 class="pm-h2">Por que assinar aqui</h2><div class="pm-grid"><div class="pm-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><b>Jogos ao vivo</b><small>Acompanhe as partidas do plano em tempo real.</small></div><div class="pm-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><b>Conteúdo esportivo</b><small>Programas e conteúdos do Premiere.</small></div><div class="pm-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><b>Conta pronta</b><small>Receba os dados e faça o login.</small></div><div class="pm-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b>Acesso rápido</b><small>Os dados chegam na página do pedido.</small></div></div></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="pm-card">
+
+        <h2 class="pm-h2">O que você recebe</h2>
+
+        <div class="pm-list">
+
+            <div class="pm-item">
+                <span class="pm-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg></span>
+                <div>
+                    <span class="pm-item-label">Premiere Premium</span>
+                    <span class="pm-item-text">Conta com o plano Premiere Premium ativo.</span>
+                </div>
+            </div>
+
+            <div class="pm-item">
+                <span class="pm-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="15" x="2" y="7" rx="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg></span>
+                <div>
+                    <span class="pm-item-label">Esporte ao vivo</span>
+                    <span class="pm-item-text">Acompanhe os jogos e os conteúdos esportivos disponíveis no plano.</span>
+                </div>
+            </div>
+
+            <div class="pm-item">
+                <span class="pm-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 11 2 2 4-4"></path><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></span>
+                <div>
+                    <span class="pm-item-label">Conta pronta para uso</span>
+                    <span class="pm-item-text">Receba os dados e faça o login para assistir.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="pm-card">
+
+        <h2 class="pm-h2">Como utilizar</h2>
+
+        <div class="pm-mock">
+
+            <div class="pm-mock-bar">
+                <span>PREMIERE</span>
+                <span>Ao vivo</span>
+                <span>Jogos</span>
+                <span>Perfil</span>
+            </div>
+
+            <div class="pm-dialog">
+                <div class="pm-dlg-title">Entrar</div>
+                <div class="pm-dlg-desc">Use o e-mail e a senha que chegaram no seu pedido.</div>
+
+                <div class="pm-field"><span class="pm-type pm-type-1">seuemail@gmail.com</span></div>
+                <div class="pm-field"><span class="pm-type pm-type-2">••••••••••</span></div>
+
+                <div class="pm-dlg-actions">
+                    <span class="pm-btn-cancel">Cancelar</span>
+                    <span class="pm-btn-go">
+                        <span class="pm-btn-a">Entrar</span>
+                        <span class="pm-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="pm-cur pm-cur2" aria-hidden="true" style="--x1:36.4%;--y1:141px;--x2:36.4%;--y2:178px;--x3:74.5%;--y3:216px;--x4:87.6%;--y4:137px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="pm-success pm-who">
+                <b class="pm-who-t">Quem está assistindo?</b>
+                <div class="pm-who-g">
+                    <span class="pm-who-p" style="--c:#3b82f6"><i></i><small>Perfil 1</small></span>
+                    <span class="pm-who-p" style="--c:#f59e0b"><i></i><small>Perfil 2</small></span>
+                    <span class="pm-who-p" style="--c:#10b981"><i></i><small>Perfil 3</small></span>
+                    <span class="pm-who-p pm-who-me" data-alvo style="--c:var(--pm-accent)"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></i><small>Você</small></span>
+                </div>
+                <span class="pm-who-tag">Perfil privado ativo</span>
+            </div>
+
+        </div>
+
+        <div class="pm-steps">
+
+            <div class="pm-step">
+                <div class="pm-step-label"><span class="pm-step-num">1</span> Passo 1</div>
+                <p class="pm-step-text">
+                    Escolha sua conta Premiere Premium e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="pm-step">
+                <div class="pm-step-label"><span class="pm-step-num">2</span> Passo 2</div>
+                <p class="pm-step-text">
+                    Receba os <strong>dados da conta</strong> e faça o login.
+                </p>
+            </div>
+
+            <div class="pm-step">
+                <div class="pm-step-label"><span class="pm-step-num">3</span> Passo 3</div>
+                <p class="pm-step-text">
+                    Pronto! Entre no <strong>Premiere</strong> com a conta e aproveite os jogos.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="pm-card"><h2 class="pm-h2">Compre com tranquilidade</h2><div class="pm-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Entrega dos dados</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte por 7 dias</strong> depois do resgate, se precisar de reenvio.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Outras pessoas vão ver o que eu assisto?</summary><p>Não. Você recebe um <strong>perfil só seu</strong>, com a sua lista e o seu histórico separados.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="pm-hero rn-cta2"><span class="pm-tag">PRONTO PARA GARANTIR?</span><h2 class="pm-hero-t">Premiere</h2><div class="pm-price pm-pulse"><div><span class="pm-price-k">No Premiere</span><span class="pm-price-old">R$ 59,90</span></div><div><span class="pm-price-k">Aqui</span><span class="pm-price-new">R$ 6,99</span></div><span class="pm-price-off">-88%</span><span class="pm-price-mes">Você economiza R$ 52,91.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

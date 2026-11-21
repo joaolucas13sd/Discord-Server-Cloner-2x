@@ -1,0 +1,603 @@
+<div class="cv-wrapper">
+
+<style>
+.cv-wrapper{
+    --cv-accent:#8b5cf6;
+    --cv-bg:#0c0a14;
+    --cv-card:#14111f;
+    --cv-item:#1c1830;
+    --cv-border:rgba(255,255,255,.08);
+    --cv-text:#f5f5f6;
+    --cv-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--cv-text);
+}
+.cv-wrapper *{box-sizing:border-box}
+
+.cv-container{
+    background:var(--cv-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.cv-card{
+    background:var(--cv-card);
+    border:1px solid var(--cv-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.cv-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.cv-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--cv-accent);
+    flex-shrink:0;
+}
+
+.cv-quote{
+    border-left:3px solid var(--cv-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.cv-quote strong{color:#fff}
+
+.cv-text{
+    color:var(--cv-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.cv-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.cv-list{display:grid;gap:10px}
+.cv-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--cv-item);
+    border:1px solid var(--cv-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.cv-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(139,92,246,.10);
+    border:1px solid rgba(139,92,246,.38);
+}
+.cv-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#c4b0ff;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.cv-item-label{
+    display:block;
+    color:var(--cv-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.cv-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.cv-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#0c0a14;
+    border:1px solid var(--cv-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.cv-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--cv-border);
+}
+.cv-mock-bar span:first-child{color:#c4b0ff;font-weight:900;letter-spacing:.5px}
+
+.cv-dialog,
+.cv-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.cv-dialog{animation:cvDialog 10s infinite}
+.cv-success{animation:cvSuccess 10s infinite;opacity:0;top:62px}
+
+.cv-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.cv-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.cv-field{
+    background:#151517;
+    border:1px solid rgba(139,92,246,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.cv-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--cv-accent);
+}
+.cv-type-1{animation:cvType1 10s steps(18,end) infinite}
+.cv-type-2{animation:cvType2 10s steps(10,end) infinite}
+
+.cv-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.cv-btn-cancel,
+.cv-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.cv-btn-cancel{background:#34363c;color:#d4d4d8}
+.cv-btn-go{
+    position:relative;
+    background:#6d4ad8;
+    color:#ffffff;
+    min-width:100px;
+    text-align:center;
+}
+.cv-btn-go span{display:block}
+.cv-btn-a{animation:cvBtnA 10s infinite}
+.cv-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:cvBtnB 10s infinite;
+}
+
+.cv-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.cv-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.cv-ok-name{font-size:11px;color:#c4b0ff;font-weight:700;margin-bottom:3px}
+.cv-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes cvDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes cvSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes cvType1{
+    0%,6%{width:0}
+    24%,92%{width:18ch}
+    100%{width:0}
+}
+@keyframes cvType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes cvBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes cvBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.cv-steps{display:grid;gap:10px}
+.cv-step{
+    background:var(--cv-item);
+    border:1px solid var(--cv-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.cv-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--cv-muted);
+    margin-bottom:8px;
+}
+.cv-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--cv-accent);
+    color:#ffffff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.cv-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--cv-text);
+    margin:0;
+}
+.cv-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.cv-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.cv-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.cv-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.cv-info:last-child{margin-bottom:0}
+.cv-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .cv-card{padding:18px 14px}
+    .cv-dialog,.cv-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .cv-dialog,.cv-success,.cv-type,.cv-btn-a,.cv-btn-b{animation:none}
+    .cv-dialog{opacity:1}
+    .cv-type-1{width:18ch}
+    .cv-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.cv-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.cv-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--cv-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.cv-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.cv-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cv-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.cv-hero-s strong{color:#fff}
+.cv-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--cv-border)}
+.cv-price-k{display:block;color:var(--cv-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.cv-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.cv-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.cv-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.cv-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.cv-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.cv-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cv-ben{background:var(--cv-item);border:1px solid var(--cv-border);border-radius:14px;padding:14px 12px}
+.cv-ben svg{width:26px;height:26px;fill:none;stroke:var(--cv-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.cv-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.cv-ben small{display:block;color:var(--cv-muted);font-size:12.5px;line-height:1.45}
+.cv-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.cv-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--cv-item);border:1px solid var(--cv-border);text-align:center}
+.cv-plan b{display:block;font-size:13px;color:var(--cv-muted);margin-bottom:6px}
+.cv-plan strong{display:block;font-size:22px;color:#fff}
+.cv-plan small{display:block;margin-top:4px;color:var(--cv-muted);font-size:12px}
+.cv-plan--on{border-color:var(--cv-accent);background:rgba(240,77,200,.10)}
+.cv-plan--on b{color:#ff7ad9}
+.cv-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--cv-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.cv-trust{display:grid;gap:10px}
+.cv-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.cv-trust strong{color:#fff}
+.cv-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.cv-info-title{display:flex;align-items:center;gap:8px}
+.cv-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.cv-grid,.cv-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.cv-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.cv-prof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.cv-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.cv-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.cv-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.cv-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.cv-prof-body{padding:30px 12px 12px}
+.cv-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.cv-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.cv-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.cv-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.cv-prof-user b{color:#ff7ad9}
+.cv-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.cv-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.cv-mock:has(.cv-prof){height:auto !important;padding-bottom:16px}
+.cv-prof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.cv-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.cv-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.cv-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.cv-prof-name{white-space:nowrap}
+.cv-prof .cv-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.cv-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.cv-prof-av,.cv-prof-av span,.cv-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.cv-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.cv-rows{display:grid;gap:8px}
+.cv-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--cv-item);border:1px solid var(--cv-border);font-size:14px;color:#e4e4e7}
+.cv-row b{color:#fff;white-space:nowrap}
+.cv-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.cv-row--on{border-color:var(--cv-accent);background:rgba(240,77,200,.10)}
+.cv-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--cv-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.cv-inv{display:flex;align-items:center;gap:10px;margin:4px 0 12px;padding:10px;border-radius:8px;background:#151517;border:1px solid rgba(255,255,255,.08)}
+.cv-inv-av{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:var(--cv-accent)}
+.cv-inv-av svg{width:17px !important;height:17px !important;max-width:none !important;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.cv-inv b{display:block;font-size:12.5px;color:#fff}
+.cv-inv small{display:block;margin-top:2px;font-size:11px;color:#a1a1aa}
+.cv-cur.cv-cur3{animation-name:nzCur3 !important}
+.cv-cur.cv-cur3 svg{animation-name:nzClk3 !important}
+@keyframes nzCur3{0%{left:60%;top:250px;opacity:0}5%{opacity:1}12%,30%{left:var(--x1);top:var(--y1);opacity:1}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+@keyframes nzClk3{0%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}44.5%,79.5%{transform:scale(.8)}}
+
+.cv-cb-g{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 8px}
+.cv-cb-s{display:flex;flex-direction:column;align-items:center;gap:5px;width:62px}
+.cv-cb-s i{display:grid;place-items:center;width:46px;height:46px;border-radius:9px;background:var(--c);color:#fff;font-style:normal;font-weight:900;font-size:13px !important;line-height:1;letter-spacing:-.3px;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:none}
+.cv-cb-s small{font-size:10px !important;color:#d4d4d8;white-space:nowrap}
+.cv-cb-on i{animation:nzCbOn 10s infinite}
+@keyframes nzCbOn{0%,79%{box-shadow:0 4px 12px rgba(0,0,0,.4);transform:none}81%,96%{box-shadow:0 0 0 3px #fff;transform:scale(1.08)}}
+.cv-cb-tag{display:table !important;margin:12px auto 0 !important;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px !important;font-weight:800}
+
+.cv-yt-v{position:relative;height:118px;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#1e293b,#7f1d1d 60%,#dc2626)}
+.cv-yt-play{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:44px;height:32px;margin:-16px 0 0 -22px;border-radius:9px;background:#ff0033}
+.cv-yt-play svg{width:16px !important;height:16px !important;max-width:none !important;fill:#fff}
+.cv-yt-tag{position:absolute;left:8px;top:8px;padding:3px 7px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9.5px;font-weight:900;letter-spacing:.4px}
+.cv-yt-bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.25)}
+.cv-yt-bar i{display:block;height:100%;width:0;background:#ff0033;animation:nzMusBar 10s linear infinite}
+.cv-yt-t{display:block;margin:9px 2px 8px;font-size:13px;color:#fff}
+.cv-yt-acts{display:flex;gap:6px}
+.cv-yt-b{display:inline-flex;align-items:center;gap:5px;padding:7px 11px;border-radius:999px;background:#2e3035;color:#e4e4e7;font-size:11.5px;font-weight:700}
+.cv-yt-b svg{width:13px !important;height:13px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.cv-yt-b em{font-style:normal}
+.cv-yt-dl{position:relative}
+.cv-yt-ok{display:none}
+.cv-yt-dl{animation:nzYtDl 10s infinite}
+@keyframes nzYtDl{0%,80%{background:#2e3035;color:#e4e4e7}83%,96%{background:#22c55e;color:#04140a}}
+.cv-yt-a{animation:nzYtA 10s steps(1,end) infinite}
+@keyframes nzYtA{0%,81%{font-size:11.5px}82%,97%{font-size:0}}
+.cv-yt-dl::after{content:"Baixado";font-size:0;animation:nzYtOk 10s steps(1,end) infinite}
+@keyframes nzYtOk{0%,81%{font-size:0}82%,97%{font-size:11.5px}}
+
+.cv-mock:has(.cv-scr){height:270px !important}
+.cv-mock:has(.cv-cv-art){height:300px !important}
+.cv-success.cv-scr{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:12px 14px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important}
+.cv-scr-t{display:block;margin-bottom:10px;font-size:14px;color:#fff}
+.cv-mus-r{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;margin-bottom:4px}
+.cv-mus-on{background:rgba(255,255,255,.07)}
+.cv-mus-cap{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:6px;background:var(--c)}
+.cv-mus-cap svg{width:16px !important;height:16px !important;max-width:none !important;fill:#000}
+.cv-mus-r span{flex:1;min-width:0;display:flex;flex-direction:column}
+.cv-mus-r b{font-size:12.5px;color:#fff}.cv-mus-on b{color:var(--cv-accent)}
+.cv-mus-r small{font-size:10.5px;color:#9aa0a6}
+.cv-mus-r .cv-eq{flex:none;flex-direction:row;align-items:flex-end;gap:2px;height:14px}
+.cv-eq i{width:3px;height:100%;border-radius:2px;background:var(--cv-accent);transform-origin:bottom;animation:nzEq .9s ease-in-out infinite}
+.cv-eq i:nth-child(2){animation-delay:.2s}.cv-eq i:nth-child(3){animation-delay:.4s}.cv-eq i:nth-child(4){animation-delay:.1s}
+@keyframes nzEq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.cv-mus-bar{height:4px;margin:10px 8px 0;border-radius:4px;background:#2e3035;overflow:hidden}
+.cv-mus-bar i{display:block;height:100%;width:0;background:var(--cv-accent);animation:nzMusBar 10s linear infinite}
+@keyframes nzMusBar{0%,72%{width:0}96%,100%{width:70%}}
+.cv-cv-tools{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.cv-cv-btn,.cv-cv-btn2{display:inline-flex;align-items:center;gap:4px;padding:6px 9px;border-radius:7px;font-size:11px;font-weight:700}
+.cv-cv-btn{background:var(--cv-accent);color:#fff}.cv-cv-btn2{background:#2e3035;color:#d4d4d8}
+.cv-cv-btn svg{width:12px !important;height:12px !important;max-width:none !important;fill:#fff}
+.cv-cv-art{position:relative;height:150px;border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#3a3b42 0 25%,#2a2b31 0 50%) 0 0/16px 16px}
+.cv-cv-bg{position:absolute;inset:0;background:linear-gradient(160deg,#38bdf8,#22c55e 55%,#f59e0b);animation:nzCvBg 10s infinite}
+@keyframes nzCvBg{0%,80%{opacity:1}85%,100%{opacity:0}}
+.cv-cv-head{position:absolute;left:50%;top:26px;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:#f5d0b5}
+.cv-cv-body{position:absolute;left:50%;top:68px;width:84px;height:90px;margin-left:-42px;border-radius:42px 42px 0 0;background:#7c3aed}
+.cv-cv-ok{position:absolute;right:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:#22c55e;color:#04140a;font-size:10px;font-weight:900;opacity:0;animation:nzCvOk 10s infinite}
+@keyframes nzCvOk{0%,84%{opacity:0}87%,96%{opacity:1}100%{opacity:0}}
+
+.cv-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+
+.cv-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.cv-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+</style>
+
+
+<div class="cv-container">
+    <div class="cv-hero"><span class="cv-tag">CONVITE NA SUA CONTA</span><h2 class="cv-hero-t">Canva Pro por <span>R$ 3,99</span></h2><p class="cv-hero-s">Receba um convite para o <strong>Canva Pro</strong> na sua própria conta Canva e crie designs profissionais com os recursos premium.</p><div class="cv-price cv-pulse"><div><span class="cv-price-k">No Canva</span><span class="cv-price-old">R$ 35,00</span></div><div><span class="cv-price-k">Aqui</span><span class="cv-price-new">R$ 3,99</span></div><span class="cv-price-off">-89%</span><span class="cv-price-mes">Você economiza R$ 31,01.</span></div></div>
+    <div class="cv-card"><h2 class="cv-h2">O que o Pro libera</h2><div class="cv-grid"><div class="cv-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><b>Conteúdo premium</b><small>Modelos, fontes e elementos gráficos Pro.</small></div><div class="cv-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/></svg><b>Remover fundo</b><small>Tire o fundo de qualquer imagem em 1 clique.</small></div><div class="cv-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></svg><b>Kit de Marca</b><small>Suas cores, fontes e logos sempre à mão.</small></div><div class="cv-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b>Ferramentas de IA</b><small>Redimensionar, agendar posts e criar com IA.</small></div></div></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="cv-card">
+
+        <h2 class="cv-h2">O que você recebe</h2>
+
+        <div class="cv-list">
+
+            <div class="cv-item">
+                <span class="cv-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg></span>
+                <div>
+                    <span class="cv-item-label">Convite Canva Pro</span>
+                    <span class="cv-item-text">Receba o convite para usar o Canva Pro com a sua conta Canva.</span>
+                </div>
+            </div>
+
+            <div class="cv-item">
+                <span class="cv-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519l-2.834 10.246a1 1 0 0 1-.956.734H5.81a1 1 0 0 1-.957-.734L2.02 6.02a.5.5 0 0 1 .798-.519l4.276 3.664a1 1 0 0 0 1.516-.294z"></path><path d="M5 21h14"></path></svg></span>
+                <div>
+                    <span class="cv-item-label">Conteúdo premium</span>
+                    <span class="cv-item-text">Acesso aos modelos, fontes e elementos gráficos premium.</span>
+                </div>
+            </div>
+
+            <div class="cv-item">
+                <span class="cv-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.64 3.64-1.28-1.28a1.21 1.21 0 0 0-1.72 0L2.36 18.64a1.21 1.21 0 0 0 0 1.72l1.28 1.28a1.2 1.2 0 0 0 1.72 0L21.64 5.36a1.2 1.2 0 0 0 0-1.72"></path><path d="m14 7 3 3"></path><path d="M5 6v4"></path><path d="M19 14v4"></path><path d="M10 2v2"></path><path d="M7 8H3"></path><path d="M21 16h-4"></path><path d="M11 3H9"></path></svg></span>
+                <div>
+                    <span class="cv-item-label">Ferramentas Pro</span>
+                    <span class="cv-item-text">Remover Fundo, Redimensionar, Kit de Marca, agendamento de publicações e ferramentas de IA.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="cv-card">
+
+        <h2 class="cv-h2">Como utilizar</h2>
+
+        <div class="cv-mock">
+
+            <div class="cv-mock-bar">
+                <span>Canva</span>
+                <span>Início</span>
+                <span>Projetos</span>
+                <span>Modelos</span>
+            </div>
+
+            <div class="cv-dialog">
+                <div class="cv-dlg-title">Convite recebido</div>
+                <div class="cv-dlg-desc">Você recebeu um convite para o Canva Pro.</div>
+
+                <div class="cv-inv"><i class="cv-inv-av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l9 6 9-6M4 6h16v12H4z"/></svg></i><span><b>Você foi convidado!</b><small>Canva Pro · Convite</small></span></div>
+
+                <div class="cv-dlg-actions">
+                    <span class="cv-btn-cancel">Cancelar</span>
+                    <span class="cv-btn-go">
+                        <span class="cv-btn-a">Aceitar convite</span>
+                        <span class="cv-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="cv-cur cv-cur2 cv-cur3" aria-hidden="true" style="--x1:77.2%;--y1:154px;--x2:77.2%;--y2:154px;--x3:71.0%;--y3:207px;--x4:26.9%;--y4:70px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="cv-success cv-scr">
+                <div class="cv-cv-tools"><span class="cv-cv-btn" data-alvo><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/></svg>Remover fundo</span><span class="cv-cv-btn2">Redimensionar</span><span class="cv-cv-btn2">Kit de Marca</span></div>
+                <div class="cv-cv-art"><i class="cv-cv-bg"></i><i class="cv-cv-head"></i><i class="cv-cv-body"></i><span class="cv-cv-ok">Fundo removido</span></div>
+            </div>
+        </div>
+
+        <div class="cv-steps">
+
+            <div class="cv-step">
+                <div class="cv-step-label"><span class="cv-step-num">1</span> Passo 1</div>
+                <p class="cv-step-text">
+                    Finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="cv-step">
+                <div class="cv-step-label"><span class="cv-step-num">2</span> Passo 2</div>
+                <p class="cv-step-text">
+                    Informe o <strong>e-mail da sua conta Canva</strong> pelo pedido.
+                </p>
+            </div>
+
+            <div class="cv-step">
+                <div class="cv-step-label"><span class="cv-step-num">3</span> Passo 3</div>
+                <p class="cv-step-text">
+                    Pronto! Aceite o <strong>convite</strong> recebido e aproveite o Canva Pro.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="cv-card"><h2 class="cv-h2">Compre com tranquilidade</h2><div class="cv-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Convite na sua conta:</strong> seus projetos continuam com você.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte por 7 dias</strong> depois do resgate, se precisar de reenvio.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Vou perder os meus projetos?</summary><p>Não. O convite é na <strong>sua própria conta Canva</strong>, então os seus projetos continuam com você.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="cv-hero rn-cta2"><span class="cv-tag">PRONTO PARA GARANTIR?</span><h2 class="cv-hero-t">Canva Pro</h2><div class="cv-price cv-pulse"><div><span class="cv-price-k">No Canva</span><span class="cv-price-old">R$ 35,00</span></div><div><span class="cv-price-k">Aqui</span><span class="cv-price-new">R$ 3,99</span></div><span class="cv-price-off">-89%</span><span class="cv-price-mes">Você economiza R$ 31,01.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

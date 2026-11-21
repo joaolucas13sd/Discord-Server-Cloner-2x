@@ -1,0 +1,212 @@
+{% comment %}
+  Rei dos Nitros: página "Presentear" (endereço /presente, definido em routes/routes.json).
+  /presente?v=ID_DA_VARIACAO  -> monta o cartão-presente, compra e, depois de pago, libera o link
+  /presente?g=...&s=...       -> o amigo abre o cartão-presente (o link é conferido no servidor)
+
+  O link do presente só é liberado depois do pagamento: o servidor do presente (Cloudflare Worker,
+  código em presente-worker/worker.js) consulta o pedido na Ereemby e devolve o link assinado.
+  Endereço do servidor: coloque abaixo em rn_presente_api (ex.: https://presente.SEU-USUARIO.workers.dev).
+  Enquanto estiver vazio, a liberação mostra o atendimento pelo Discord.
+{% endcomment %}
+{% assign rn_presente_api = 'https://presente-rei-dos-nitros.juanlauncherpikadasgalaxias.workers.dev' %}
+<div class="rn-terms rn-gf">
+  <nav class="rn-terms__crumb"><a href="/">Início</a><span aria-hidden="true">›</span><span>Presentear</span></nav>
+  <div id="rn-gf-app"><p class="rn-fr__load">Carregando…</p></div>
+</div>
+<script>
+  (function () {
+    var app = document.getElementById('rn-gf-app');
+    if (!app) return;
+    var API = '{{ rn_presente_api }}'.replace(/\/+$/, '');
+    var DISCORD = 'https://discord.gg/dFr88Y8rJb';
+    var I = {
+      gift: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>',
+      ok: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>',
+      cart: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"/></svg>',
+      lock: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>',
+      copy: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+      zap: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11.8 11.8 0 0 0 2.2 17.7L1 23l5.4-1.4A11.8 11.8 0 0 0 20.5 3.5Zm-8.6 18.2c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.2.8.9-3.1-.2-.4a9.8 9.8 0 1 1 7.9 4.3Zm5.4-7.3c-.3-.1-1.8-.9-2-1s-.5-.1-.7.1-.8 1-1 1.2-.4.2-.7.1a8 8 0 0 1-4-3.5c-.3-.5.3-.5.9-1.6.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6a1.1 1.1 0 0 0-.8.4 3.4 3.4 0 0 0-1.1 2.5 5.9 5.9 0 0 0 1.2 3.1 13.4 13.4 0 0 0 5.2 4.6c1.9.8 2.7.9 3.6.7.6-.1 1.8-.7 2-1.4s.3-1.3.2-1.4-.3-.2-.6-.4Z"/></svg>',
+      dc: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.3 4.4A19.8 19.8 0 0 0 15.4 3l-.6 1.3a18.4 18.4 0 0 0-5.6 0L8.6 3a19.7 19.7 0 0 0-4.9 1.5A20.3 20.3 0 0 0 .1 18.1 19.9 19.9 0 0 0 6.1 21l1.3-2.1a12.9 12.9 0 0 1-2-1l.5-.4a14.2 14.2 0 0 0 12.2 0l.5.4c-.6.4-1.3.7-2 1l1.3 2.1a19.8 19.8 0 0 0 6-3 20.2 20.2 0 0 0-3.6-13.6ZM8 15.4c-1.2 0-2.2-1.1-2.2-2.4S6.8 10.6 8 10.6s2.2 1.1 2.2 2.4S9.2 15.4 8 15.4Zm8 0c-1.2 0-2.2-1.1-2.2-2.4s1-2.4 2.2-2.4 2.2 1.1 2.2 2.4-1 2.4-2.2 2.4Z"/></svg>',
+      bow: '<svg width="64" height="40" viewBox="0 0 64 40" aria-hidden="true"><path d="M32 20C24 6 6 2 6 12s14 12 26 8Z" fill="#22f26a"/><path d="M32 20C40 6 58 2 58 12S44 24 32 20Z" fill="#22f26a"/><path d="M32 20 22 38l7-2 3 4 3-4 7 2Z" fill="#13a347"/><circle cx="32" cy="20" r="6" fill="#0d0e11" stroke="#22f26a" stroke-width="3"/></svg>'
+    };
+    function pronto(cb) { if (window.rnJogos && window.rnEsc) cb(); else setTimeout(function () { pronto(cb); }, 60); }
+    function todasVars() {
+      var ps = window.CATALOG_PRODUCTS || [], cat = {}, out = [];
+      (window.CATALOG_VARIANTS || []).forEach(function (v) { if (v) cat[String(v.id)] = v; });
+      ps.forEach(function (p) { (Array.isArray(p.variants) ? p.variants : []).forEach(function (v) { if (v) out.push({ p: p, v: cat[String(v.id)] || v }); }); });
+      return out;
+    }
+    // banner principal do produto; nos Jogos Steam (banner igual para todos) usa a capa do jogo escolhido
+    function capa(x) {
+      if (!x) return '';
+      var doProduto = x.p && x.p.images && x.p.images[0], daOpcao = x.v && ((x.v.images && x.v.images[0]) || x.v.icon);
+      var jogos = x.p && String(x.p.name || '').trim().toLowerCase() === 'jogos steam';
+      return (jogos ? (daOpcao || doProduto) : (doProduto || daOpcao)) || '';
+    }
+    function api(rota, corpo) {
+      return fetch(API + rota, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) })
+        .then(function (r) { return r.json(); });
+    }
+    function cartao(o, img, aberto) {
+      var esc = window.rnEsc;
+      return '<div class="rn-gf__card' + (aberto ? ' rn-gf__card--open' : '') + '">' +
+        '<span class="rn-gf__bow">' + I.bow + '</span>' +
+        '<div class="rn-gf__top"><span class="rn-gf__tag">' + I.gift + ' PRESENTE</span><span class="rn-gf__loja">Rei dos Nitros</span></div>' +
+        // a imagem aparece inteira (sem cortar), com o fundo desfocado dela mesma
+        (img ? '<div class="rn-gf__img" style="--rn-gf-bg:url(\'' + esc(img) + '\')"><img src="' + esc(img) + '" alt=""></div>' : '<div class="rn-gf__img rn-gf__img--vazio">' + I.gift.replace(/16/g, '48') + '</div>') +
+        '<div class="rn-gf__body"><div class="rn-gf__para">Para <b>' + esc(o.para || 'seu amigo') + '</b></div>' +
+        '<div class="rn-gf__jogo">' + esc(o.n || 'Escolha o presente') + '</div>' +
+        (o.m ? '<p class="rn-gf__msg">“' + esc(o.m) + '”</p>' : '') +
+        '<div class="rn-gf__de">De <b>' + esc(o.de || 'você') + '</b></div></div></div>';
+    }
+    pronto(function () {
+      window.rnJogos(function () {
+        var esc = window.rnEsc, brl = window.rnBrl;
+        var qs = new URLSearchParams(location.search);
+
+        // ══════ o amigo abrindo o presente ══════
+        if (qs.get('g')) {
+          document.title = 'Você ganhou um presente!';
+          var falhou = function (txt) {
+            app.innerHTML = '<div class="rn-gf__abrir"><span class="rn-gf__aviso-ico">' + I.lock.replace(/18/g, '34') + '</span><h1 class="rn-gf__h">Presente não encontrado</h1><p class="rn-gf__p">' + txt + '</p>' +
+              '<div class="rn-gf__btns rn-gf__btns--c"><a class="rn-gf__btn" href="' + DISCORD + '" target="_blank" rel="noopener">' + I.dc + 'Falar com a gente no Discord</a></div></div>';
+          };
+          if (!API) { falhou('A liberação de presentes está sendo configurada. Fale com a gente no Discord.'); return; }
+          app.innerHTML = '<p class="rn-fr__load">Conferindo o seu presente…</p>';
+          api('/verificar', { g: qs.get('g'), s: qs.get('s') || '' }).then(function (r) {
+            if (!r || !r.ok || !r.dados) { falhou('Esse link de presente não é válido. Peça para quem te enviou gerar o link de novo.'); return; }
+            var g = r.dados;
+            var x = todasVars().filter(function (y) { return String(y.v.id) === String(g.v) || String(y.p.id) === String(g.v); })[0];
+            var img = capa(x);
+            app.innerHTML = '<div class="rn-gf__abrir"><h1 class="rn-gf__h">' + esc(g.de || 'Alguém') + ' te mandou um presente!</h1>' +
+              '<button type="button" class="rn-gf__caixa" id="rn-gf-caixa" aria-label="Abrir presente"><span class="rn-gf__caixa-tampa"></span><span class="rn-gf__caixa-corpo"></span><span class="rn-gf__caixa-txt">Toque para abrir</span></button></div>';
+            document.getElementById('rn-gf-caixa').addEventListener('click', function () {
+              app.innerHTML = cartao(g, img, true) +
+                '<div class="rn-gf__como"><h2>Como receber</h2><ol class="rn-gf__passos">' +
+                '<li><span>1</span><div><b>' + esc(g.de || 'Quem te presenteou') + '</b> já pagou e recebe o acesso do presente.</div></li>' +
+                '<li><span>2</span><div>O acesso é repassado para você' + (g.para ? ', ' + esc(g.para) : '') + '.</div></li>' +
+                '<li><span>3</span><div>Ficou alguma dúvida? Abra um ticket no nosso Discord que a gente ajuda.</div></li></ol>' +
+                '<div class="rn-gf__btns"><a class="rn-gf__btn" href="' + DISCORD + '" target="_blank" rel="noopener">' + I.dc + 'Abrir o Discord</a>' +
+                (x ? '<a class="rn-gf__btn rn-gf__btn--2" href="/product/' + esc(x.p.id) + '/' + esc(x.v.id) + '">Ver na loja</a>' : '') + '</div></div>';
+              if (window.rnBurst) try { window.rnBurst(app.querySelector('.rn-gf__card'), true); } catch (e) { }
+            });
+          }).catch(function () { falhou('Não conseguimos conferir o presente agora. Tente de novo em alguns minutos.'); });
+          return;
+        }
+
+        // ══════ quem compra montando o presente ══════
+        document.title = 'Presentear um amigo';
+        var lista = todasVars();
+        var escolhido = lista.filter(function (y) { return String(y.v.id) === String(qs.get('v')); })[0] || null;
+        var st = { de: '', para: '', m: '', pedido: '', email: '' }, link = null, liberando = false, erro = '';
+        app.innerHTML =
+          '<div class="rn-fr__hero"><div class="rn-fr__badge">PRESENTEAR</div><h1 class="rn-fr__title">Mande um <span>presente</span></h1>' +
+          '<p class="rn-fr__lead">Escolha o produto, monte o cartão e compre. Assim que o pagamento for confirmado, você libera o link para mandar ao seu amigo.</p>' +
+          '<ol class="rn-gf__etapas" id="rn-gf-etapas"></ol></div>' +
+          '<div class="rn-gf__grid"><form class="rn-gf__form" id="rn-gf-form" autocomplete="off" onsubmit="return false">' +
+            '<label class="rn-gf__l">O presente<div class="rn-gf__sel" id="rn-gf-sel"></div>' +
+            '<input type="search" id="rn-gf-busca" class="rn-gf__in" placeholder="Buscar um produto ou jogo…"><div class="rn-gf__res" id="rn-gf-res" hidden></div></label>' +
+            '<label class="rn-gf__l">Seu nome<input class="rn-gf__in" id="rn-gf-de" maxlength="30" placeholder="Ex.: João"></label>' +
+            '<label class="rn-gf__l">Nome do amigo<input class="rn-gf__in" id="rn-gf-para" maxlength="30" placeholder="Ex.: Pedro"></label>' +
+            '<label class="rn-gf__l">Mensagem (opcional)<textarea class="rn-gf__in rn-gf__ta" id="rn-gf-m" maxlength="140" rows="3" placeholder="Feliz aniversário!"></textarea></label>' +
+          '</form><div class="rn-gf__prev"><div id="rn-gf-card"></div><div class="rn-gf__acoes" id="rn-gf-acoes"></div></div></div>';
+        var sel = document.getElementById('rn-gf-sel'), busca = document.getElementById('rn-gf-busca'), res = document.getElementById('rn-gf-res');
+        function etapa() {
+          if (link) return 4;
+          if (escolhido && window.rnNoCarrinho(escolhido.p, escolhido.v)) return 3;
+          if (escolhido && st.de && st.para) return 3;
+          if (escolhido) return 2;
+          return 1;
+        }
+        function pintarCartao() {
+          document.getElementById('rn-gf-card').innerHTML = cartao({ n: escolhido && escolhido.v.name, de: st.de, para: st.para, m: st.m }, escolhido ? capa(escolhido) : '', false);
+        }
+        function pintar() {
+          var e = etapa();
+          document.getElementById('rn-gf-etapas').innerHTML = ['Escolha', 'Personalize', 'Compre', 'Envie o link'].map(function (t, i) {
+            return '<li class="' + (i + 1 < e ? 'feito' : i + 1 === e ? 'agora' : '') + '"><span>' + (i + 1 < e ? I.ok.replace(/18/g, '14') : i + 1) + '</span>' + t + '</li>';
+          }).join('');
+          sel.innerHTML = escolhido ? '<div class="rn-gf__esc"><span class="rn-gf__esc-img"><img src="' + esc(capa(escolhido)) + '" alt=""></span><span><b>' + esc(escolhido.v.name) + '</b><small>' + esc(escolhido.p.name) + ' · ' + brl(escolhido.v.price) + '</small></span></div>' : '<div class="rn-gf__esc rn-gf__esc--vazio">' + I.gift + ' Busque o presente abaixo</div>';
+          pintarCartao();
+          var acoes = document.getElementById('rn-gf-acoes');
+          if (!escolhido) { acoes.innerHTML = ''; return; }
+          var nomes = st.de && st.para, noCar = window.rnNoCarrinho(escolhido.p, escolhido.v), temEst = window.rnTemEstoque(escolhido.v);
+          var h = '<button type="button" class="rn-gf__btn" id="rn-gf-buy"' + (temEst || noCar ? '' : ' disabled') + '>' +
+            (noCar ? I.ok + 'No carrinho · ver carrinho' : temEst ? I.cart + 'Comprar o presente · ' + brl(escolhido.v.price) : 'Esgotado') + '</button>';
+          // liberação do link (depois do pagamento)
+          h += '<div class="rn-gf__lib' + (link ? ' rn-gf__lib--ok' : '') + '"><div class="rn-gf__lib-t">' + (link ? I.ok + ' Pagamento confirmado' : I.lock + ' Link liberado após o pagamento') + '</div>';
+          if (link) {
+            h += '<p class="rn-gf__lib-s">Pronto! Mande a mensagem com o link para ' + esc(st.para) + '.</p>' +
+              '<div class="rn-gf__share"><button type="button" class="rn-gf__btn" id="rn-gf-copy">' + I.copy + 'Copiar mensagem com o link</button>' +
+              '<a class="rn-gf__btn rn-gf__btn--zap" id="rn-gf-zap" href="https://wa.me/?text=' + encodeURIComponent(msg()) + '" target="_blank" rel="noopener">' + I.zap + 'Enviar no WhatsApp</a></div>';
+          } else if (!API) {
+            h += '<p class="rn-gf__lib-s">Depois de pagar, fale com a gente no Discord para receber o link do presente.</p>' +
+              '<a class="rn-gf__btn rn-gf__btn--2" href="' + DISCORD + '" target="_blank" rel="noopener">' + I.dc + 'Pedir o link no Discord</a>';
+          } else {
+            h += '<p class="rn-gf__lib-s">Já pagou? Digite o número do pedido (começa com <b>ord_</b>, está no e-mail da compra e em Minhas compras) e o e-mail usado na compra.</p>' +
+              '<input class="rn-gf__in" id="rn-gf-pedido" placeholder="Número do pedido (ord_…)" value="' + esc(st.pedido) + '" autocomplete="off">' +
+              '<input class="rn-gf__in" id="rn-gf-email" type="email" placeholder="E-mail da compra" value="' + esc(st.email) + '" autocomplete="email">' +
+              (erro ? '<p class="rn-gf__erro">' + esc(erro) + '</p>' : '') +
+              '<button type="button" class="rn-gf__btn rn-gf__btn--2" id="rn-gf-liberar"' + (liberando || !nomes ? ' disabled' : '') + '>' + (liberando ? 'Conferindo o pagamento…' : nomes ? 'Liberar link do presente' : 'Preencha os nomes primeiro') + '</button>';
+          }
+          h += '</div>';
+          acoes.innerHTML = h;
+        }
+        function msg() { return st.para + ', você ganhou ' + escolhido.v.name + ' de presente de ' + st.de + '! Abra aqui: ' + link; }
+        function buscar() {
+          var sem = function (t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); };
+          var q = sem(busca.value).trim();
+          if (!q) { res.hidden = true; return; }
+          var achados = lista.filter(function (y) { return sem(y.v.name).indexOf(q) !== -1 || sem(y.p.name).indexOf(q) !== -1; }).slice(0, 10);
+          res.hidden = false;
+          res.innerHTML = achados.length ? achados.map(function (y) {
+            return '<button type="button" class="rn-gf__op" data-v="' + esc(y.v.id) + '"><span class="rn-gf__op-img"><img src="' + esc(capa(y)) + '" alt="" loading="lazy"></span><span>' + esc(y.v.name) + '<small>' + esc(y.p.name) + ' · ' + brl(y.v.price) + '</small></span></button>';
+          }).join('') : '<p class="rn-gf__nada">Nada encontrado.</p>';
+        }
+        busca.addEventListener('input', buscar);
+        res.addEventListener('click', function (e) {
+          var b = e.target.closest('.rn-gf__op'); if (!b) return;
+          escolhido = lista.filter(function (y) { return String(y.v.id) === b.getAttribute('data-v'); })[0] || null;
+          busca.value = ''; res.hidden = true; link = null; erro = ''; pintar();
+        });
+        ['de', 'para', 'm'].forEach(function (k) {
+          document.getElementById('rn-gf-' + k).addEventListener('input', function (e) {
+            st[k] = e.target.value.trim(); link = null; // mudou o cartão: precisa liberar o link de novo
+            pintar();
+          });
+        });
+        app.addEventListener('input', function (e) {
+          if (e.target.id === 'rn-gf-pedido') st.pedido = e.target.value.trim();
+          if (e.target.id === 'rn-gf-email') st.email = e.target.value.trim();
+        });
+        app.addEventListener('click', function (e) {
+          if (e.target.closest('#rn-gf-buy') && escolhido) {
+            if (!window.rnNoCarrinho(escolhido.p, escolhido.v)) window.rnAddCarrinho(escolhido.p, escolhido.v);
+            window.rnAbrirCarrinho(e); pintar(); return;
+          }
+          if (e.target.closest('#rn-gf-liberar') && escolhido && !liberando) {
+            if (!/^#?ord_[A-Za-z0-9]{6,40}$/.test(st.pedido)) { erro = 'Confira o número do pedido: ele começa com "ord_".'; pintar(); return; }
+            if (!/@/.test(st.email)) { erro = 'Digite o e-mail usado na compra.'; pintar(); return; }
+            liberando = true; erro = ''; pintar();
+            api('/gerar', { pedido: st.pedido, email: st.email, item: escolhido.v.id, produto: escolhido.p.id, de: st.de, para: st.para, m: st.m }).then(function (r) {
+              liberando = false;
+              if (r && r.ok) { link = location.origin + '/presente?g=' + r.g + '&s=' + r.s; if (window.rnBurst) setTimeout(function () { var b = document.getElementById('rn-gf-copy'); if (b) try { window.rnBurst(b, true); } catch (x) { } }, 60); }
+              else erro = (r && r.erro) || 'Não foi possível liberar agora.';
+              pintar();
+            }).catch(function () { liberando = false; erro = 'Não conseguimos falar com o servidor do presente. Tente de novo.'; pintar(); });
+            return;
+          }
+          var c = e.target.closest('#rn-gf-copy');
+          if (c && link) {
+            var txt = msg();
+            var fim = function () { c.innerHTML = I.ok + 'Copiado! Agora é só colar para ' + esc(st.para); c.classList.add('rn-copied'); if (window.rnBurst) try { window.rnBurst(c); } catch (e2) { } setTimeout(pintar, 2600); };
+            if (navigator.clipboard) navigator.clipboard.writeText(txt).then(fim, function () { prompt('Copie a mensagem:', txt); });
+            else prompt('Copie a mensagem:', txt);
+          }
+        });
+        window.addEventListener('cart-sync', pintar);
+        pintar();
+      });
+    });
+  })();
+</script>

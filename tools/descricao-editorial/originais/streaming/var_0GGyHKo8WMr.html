@@ -1,0 +1,582 @@
+<div class="hb-wrapper">
+
+<style>
+.hb-wrapper{
+    --hb-accent:#a855f7;
+    --hb-bg:#0e0b14;
+    --hb-card:#161222;
+    --hb-item:#1d1830;
+    --hb-border:rgba(255,255,255,.08);
+    --hb-text:#f5f5f6;
+    --hb-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--hb-text);
+}
+.hb-wrapper *{box-sizing:border-box}
+
+.hb-container{
+    background:var(--hb-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.hb-card{
+    background:var(--hb-card);
+    border:1px solid var(--hb-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.hb-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.hb-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--hb-accent);
+    flex-shrink:0;
+}
+
+.hb-quote{
+    border-left:3px solid var(--hb-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.hb-quote strong{color:#fff}
+
+.hb-text{
+    color:var(--hb-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.hb-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.hb-list{display:grid;gap:10px}
+.hb-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--hb-item);
+    border:1px solid var(--hb-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.hb-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(168,85,247,.10);
+    border:1px solid rgba(168,85,247,.38);
+}
+.hb-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#c4a1ff;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.hb-item-label{
+    display:block;
+    color:var(--hb-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.hb-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.hb-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#0f0c16;
+    border:1px solid var(--hb-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.hb-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--hb-border);
+}
+.hb-mock-bar span:first-child{color:#b983ff;font-weight:900;letter-spacing:.5px}
+
+.hb-dialog,
+.hb-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.hb-dialog{animation:hbDialog 10s infinite}
+.hb-success{animation:hbSuccess 10s infinite;opacity:0;top:62px}
+
+.hb-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.hb-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.hb-field{
+    background:#151517;
+    border:1px solid rgba(168,85,247,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.hb-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--hb-accent);
+}
+.hb-type-1{animation:hbType1 10s steps(17,end) infinite}
+.hb-type-2{animation:hbType2 10s steps(10,end) infinite}
+
+.hb-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.hb-btn-cancel,
+.hb-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.hb-btn-cancel{background:#34363c;color:#d4d4d8}
+.hb-btn-go{
+    position:relative;
+    background:#6d28d9;
+    color:#fff;
+    min-width:74px;
+    text-align:center;
+}
+.hb-btn-go span{display:block}
+.hb-btn-a{animation:hbBtnA 10s infinite}
+.hb-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:hbBtnB 10s infinite;
+}
+
+.hb-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.hb-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.hb-ok-name{font-size:11px;color:#c4a1ff;font-weight:700;margin-bottom:3px}
+.hb-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes hbDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes hbSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes hbType1{
+    0%,6%{width:0}
+    24%,92%{width:17ch}
+    100%{width:0}
+}
+@keyframes hbType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes hbBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes hbBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.hb-steps{display:grid;gap:10px}
+.hb-step{
+    background:var(--hb-item);
+    border:1px solid var(--hb-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.hb-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--hb-muted);
+    margin-bottom:8px;
+}
+.hb-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--hb-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.hb-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--hb-text);
+    margin:0;
+}
+.hb-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.hb-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.hb-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.hb-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.hb-info:last-child{margin-bottom:0}
+.hb-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .hb-card{padding:18px 14px}
+    .hb-dialog,.hb-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .hb-dialog,.hb-success,.hb-type,.hb-btn-a,.hb-btn-b{animation:none}
+    .hb-dialog{opacity:1}
+    .hb-type-1{width:17ch}
+    .hb-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.hb-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.hb-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--hb-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.hb-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.hb-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hb-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.hb-hero-s strong{color:#fff}
+.hb-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--hb-border)}
+.hb-price-k{display:block;color:var(--hb-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.hb-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.hb-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.hb-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.hb-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.hb-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.hb-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hb-ben{background:var(--hb-item);border:1px solid var(--hb-border);border-radius:14px;padding:14px 12px}
+.hb-ben svg{width:26px;height:26px;fill:none;stroke:var(--hb-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.hb-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.hb-ben small{display:block;color:var(--hb-muted);font-size:12.5px;line-height:1.45}
+.hb-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.hb-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--hb-item);border:1px solid var(--hb-border);text-align:center}
+.hb-plan b{display:block;font-size:13px;color:var(--hb-muted);margin-bottom:6px}
+.hb-plan strong{display:block;font-size:22px;color:#fff}
+.hb-plan small{display:block;margin-top:4px;color:var(--hb-muted);font-size:12px}
+.hb-plan--on{border-color:var(--hb-accent);background:rgba(240,77,200,.10)}
+.hb-plan--on b{color:#ff7ad9}
+.hb-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--hb-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.hb-trust{display:grid;gap:10px}
+.hb-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.hb-trust strong{color:#fff}
+.hb-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.hb-info-title{display:flex;align-items:center;gap:8px}
+.hb-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.hb-grid,.hb-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.hb-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.hb-prof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.hb-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.hb-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.hb-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.hb-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.hb-prof-body{padding:30px 12px 12px}
+.hb-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.hb-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.hb-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.hb-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.hb-prof-user b{color:#ff7ad9}
+.hb-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.hb-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.hb-mock:has(.hb-prof){height:auto !important;padding-bottom:16px}
+.hb-prof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.hb-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.hb-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.hb-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.hb-prof-name{white-space:nowrap}
+.hb-prof .hb-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.hb-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.hb-prof-av,.hb-prof-av span,.hb-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.hb-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.hb-rows{display:grid;gap:8px}
+.hb-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--hb-item);border:1px solid var(--hb-border);font-size:14px;color:#e4e4e7}
+.hb-row b{color:#fff;white-space:nowrap}
+.hb-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.hb-row--on{border-color:var(--hb-accent);background:rgba(240,77,200,.10)}
+.hb-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--hb-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.hb-mock:has(.hb-who){height:270px !important}
+.hb-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.hb-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+.hb-success.hb-who{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:16px 12px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important;text-align:center}
+.hb-who-t{display:block;margin-bottom:14px;font-size:16px;color:#fff}
+.hb-who-g{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:300px;margin:0 auto}
+.hb-who-p{display:flex;flex-direction:column;align-items:center;gap:6px}
+.hb-who-p i{display:grid;place-items:center;width:100%;aspect-ratio:1;border-radius:10px;background:var(--c);opacity:.55}
+.hb-who-p small{font-size:11px !important;color:#9aa0a6}
+.hb-who-me i{opacity:1;box-shadow:0 0 0 2px #fff;animation:nzWho 2.6s ease-in-out infinite}
+.hb-who-me small{color:#fff;font-weight:800}
+.hb-who-me svg{width:45% !important;height:45% !important;max-width:none !important;fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@keyframes nzWho{50%{transform:scale(1.08);box-shadow:0 0 0 2px #fff,0 0 16px var(--hb-accent)}}
+.hb-who-tag{display:inline-block;margin-top:14px;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px;font-weight:800}
+
+.hb-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+</style>
+
+
+<div class="hb-container">
+    <div class="hb-hero"><span class="hb-tag">PERFIL PRIVADO</span><h2 class="hb-hero-t">HBO Max Básico com anúncios por <span>R$ 1,99</span></h2><p class="hb-hero-s">Um <strong>perfil só seu</strong> na HBO Max, em uma conta compartilhada com poucos usuários. Receba o acesso no pedido e comece a assistir.</p><div class="hb-price hb-pulse"><div><span class="hb-price-k">No site oficial</span><span class="hb-price-old">R$ 29,90</span></div><div><span class="hb-price-k">Aqui</span><span class="hb-price-new">R$ 1,99</span></div><span class="hb-price-off">-93%</span><span class="hb-price-mes">Você economiza R$ 27,91.</span></div></div>
+    <div class="hb-card"><h2 class="hb-h2">Por que assinar aqui</h2><div class="hb-grid"><div class="hb-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><b>Perfil privado</b><small>Sua lista e seu histórico, separados dos outros.</small></div><div class="hb-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><b>Séries da HBO, DC e Harry Potter</b><small>Produções premiadas e grandes franquias.</small></div><div class="hb-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><b>Assista onde quiser</b><small>TV, computador, celular e tablet.</small></div><div class="hb-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b>Acesso rápido</b><small>Os dados de acesso chegam na página do pedido.</small></div></div></div>
+    <div class="hb-card"><h2 class="hb-h2">Compare os planos</h2><div class="hb-rows"><div class="hb-row hb-row--on"><span>Hbo Max Plano Basico (COM ANÚNCIOS)<span class="hb-row-tag">VOCÊ ESTÁ AQUI</span></span><b><s>R$ 29,90</s>R$ 1,99</b></div><div class="hb-row"><span>Hbo Max Plano Platinum</span><b><s>R$ 55,90</s>R$ 10,99</b></div><div class="hb-row"><span>Hbo Max Plano Stardard</span><b><s>R$ 44,90</s>R$ 8,99</b></div></div><p class="hb-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="hb-card">
+
+        <h2 class="hb-h2">O que o plano oferece</h2>
+
+        <div class="hb-list">
+
+            <div class="hb-item">
+                <span class="hb-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h8"></path><path d="M10 19v-3.96 3.15"></path><path d="M7 19h5"></path><rect width="6" height="10" x="16" y="12" rx="2"></rect></svg></span>
+                <div>
+                    <span class="hb-item-label">Dispositivos simultâneos</span>
+                    <span class="hb-item-text">2 dispositivos ao mesmo tempo</span>
+                </div>
+            </div>
+
+            <div class="hb-item">
+                <span class="hb-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 7 5 3-5 3Z"></path><rect width="20" height="14" x="2" y="3" rx="2"></rect><path d="M12 17v4"></path><path d="M8 21h8"></path></svg></span>
+                <div>
+                    <span class="hb-item-label">Resolução de vídeo</span>
+                    <span class="hb-item-text">Full HD</span>
+                </div>
+            </div>
+
+            <div class="hb-item">
+                <span class="hb-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"></path><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"></path></svg></span>
+                <div>
+                    <span class="hb-item-label">Anúncios</span>
+                    <span class="hb-item-text">Menos do que você imagina</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="hb-card">
+
+        <h2 class="hb-h2">Como utilizar</h2>
+
+        <div class="hb-mock">
+
+            <div class="hb-mock-bar">
+                <span>HBO MAX</span>
+                <span>Séries</span>
+                <span>Filmes</span>
+                <span>DC</span>
+            </div>
+
+            <div class="hb-dialog">
+                <div class="hb-dlg-title">Entrar</div>
+                <div class="hb-dlg-desc">Use o e-mail e a senha que chegaram no seu pedido.</div>
+
+                <div class="hb-field"><span class="hb-type hb-type-1">seuemail@gmail.com</span></div>
+                <div class="hb-field"><span class="hb-type hb-type-2">••••••••••</span></div>
+
+                <div class="hb-dlg-actions">
+                    <span class="hb-btn-cancel">Cancelar</span>
+                    <span class="hb-btn-go">
+                        <span class="hb-btn-a">Entrar</span>
+                        <span class="hb-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="hb-cur hb-cur2" aria-hidden="true" style="--x1:36.4%;--y1:141px;--x2:36.4%;--y2:178px;--x3:74.5%;--y3:216px;--x4:87.6%;--y4:137px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="hb-success hb-who">
+                <b class="hb-who-t">Quem está assistindo?</b>
+                <div class="hb-who-g">
+                    <span class="hb-who-p" style="--c:#3b82f6"><i></i><small>Perfil 1</small></span>
+                    <span class="hb-who-p" style="--c:#f59e0b"><i></i><small>Perfil 2</small></span>
+                    <span class="hb-who-p" style="--c:#10b981"><i></i><small>Perfil 3</small></span>
+                    <span class="hb-who-p hb-who-me" data-alvo style="--c:var(--hb-accent)"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></i><small>Você</small></span>
+                </div>
+                <span class="hb-who-tag">Perfil privado ativo</span>
+            </div>
+
+        </div>
+
+        <div class="hb-steps">
+
+            <div class="hb-step">
+                <div class="hb-step-label"><span class="hb-step-num">1</span> Passo 1</div>
+                <p class="hb-step-text">
+                    Escolha seu plano HBO Max e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="hb-step">
+                <div class="hb-step-label"><span class="hb-step-num">2</span> Passo 2</div>
+                <p class="hb-step-text">
+                    Receba os <strong>dados de acesso</strong> e entre na sua conta automaticamente.
+                </p>
+            </div>
+
+            <div class="hb-step">
+                <div class="hb-step-label"><span class="hb-step-num">3</span> Passo 3</div>
+                <p class="hb-step-text">
+                    Pronto! Escolha seu <strong>filme ou série favorita</strong> e aproveite o HBO Max.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="hb-card"><h2 class="hb-h2">Compre com tranquilidade</h2><div class="hb-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Entrega dos dados</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte por 7 dias</strong> depois do resgate, se precisar de reenvio.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+<!-- TERMOS E GARANTIA -->
+    <div class="hb-card">
+
+        <h2 class="hb-h2">Termos e garantia</h2>
+
+        <div class="hb-info-box">
+
+            <h3 class="hb-info-title">LEIA ANTES DE COMPRAR</h3>
+
+            <p class="hb-info">
+                <span class="hb-highlight">1. Tentativas de fraude:</span><br>
+                Qualquer abuso ou tentativa de burlar o sistema resultará
+                na perda do item e bloqueio do suporte.
+            </p>
+
+            <p class="hb-info">
+                <span class="hb-highlight">2. Prazo para resgate:</span><br>
+                Após o primeiro resgate do produto, você terá até 7 dias
+                para solicitar o envio ou garantia de suporte.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Outras pessoas vão ver o que eu assisto?</summary><p>Não. Você recebe um <strong>perfil só seu</strong>, com a sua lista e o seu histórico separados.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="hb-hero rn-cta2"><span class="hb-tag">PRONTO PARA GARANTIR?</span><h2 class="hb-hero-t">Hbo Max Plano Basico (COM ANÚNCIOS)</h2><div class="hb-price hb-pulse"><div><span class="hb-price-k">No site oficial</span><span class="hb-price-old">R$ 29,90</span></div><div><span class="hb-price-k">Aqui</span><span class="hb-price-new">R$ 1,99</span></div><span class="hb-price-off">-93%</span><span class="hb-price-mes">Você economiza R$ 27,91.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

@@ -1,0 +1,6 @@
+# Configuração do Worker de pedidos (usada pelo "wrangler deploy" ou pelo build do Cloudflare
+# com "Root directory" = tools/worker-pedidos). A webhook NÃO vai aqui: é o segredo DISCORD_WEBHOOK.
+name = "discord-server-cloner-2x"
+main = "worker.js"
+compatibility_date = "2025-06-01"
+workers_dev = true

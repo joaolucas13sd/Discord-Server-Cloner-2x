@@ -1,0 +1,550 @@
+<div class="nx-wrapper">
+
+<style>
+.nx-wrapper{
+    --nx-accent:#f04dc8;
+    --nx-bg:#100a0f;
+    --nx-card:#181018;
+    --nx-item:#211621;
+    --nx-border:rgba(255,255,255,.08);
+    --nx-text:#f5f5f6;
+    --nx-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--nx-text);
+}
+.nx-wrapper *{box-sizing:border-box}
+
+.nx-container{
+    background:var(--nx-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.nx-card{
+    background:var(--nx-card);
+    border:1px solid var(--nx-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.nx-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.nx-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--nx-accent);
+    flex-shrink:0;
+}
+
+.nx-quote{
+    border-left:3px solid var(--nx-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.nx-quote strong{color:#fff}
+
+.nx-text{
+    color:var(--nx-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.nx-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.nx-list{display:grid;gap:10px}
+.nx-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--nx-item);
+    border:1px solid var(--nx-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.nx-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(240,77,200,.10);
+    border:1px solid rgba(240,77,200,.38);
+}
+.nx-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#ff7ad9;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.nx-item-label{
+    display:block;
+    color:var(--nx-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.nx-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.nx-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#110b10;
+    border:1px solid var(--nx-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.nx-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--nx-border);
+}
+.nx-mock-bar span:first-child{color:#ff7ad9;font-weight:900;letter-spacing:.5px}
+
+.nx-dialog,
+.nx-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.nx-dialog{animation:nxDialog 10s infinite}
+.nx-success{animation:nxSuccess 10s infinite;opacity:0;top:62px}
+
+.nx-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.nx-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.nx-field{
+    background:#151517;
+    border:1px solid rgba(240,77,200,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.nx-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--nx-accent);
+}
+.nx-type-1{animation:nxType1 10s steps(18,end) infinite}
+.nx-type-2{animation:nxType2 10s steps(10,end) infinite}
+
+.nx-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.nx-btn-cancel,
+.nx-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.nx-btn-cancel{background:#34363c;color:#d4d4d8}
+.nx-btn-go{
+    position:relative;
+    background:#c8309f;
+    color:#fff;
+    min-width:74px;
+    text-align:center;
+}
+.nx-btn-go span{display:block}
+.nx-btn-a{animation:nxBtnA 10s infinite}
+.nx-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:nxBtnB 10s infinite;
+}
+
+.nx-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.nx-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.nx-ok-name{font-size:11px;color:#ff7ad9;font-weight:700;margin-bottom:3px}
+.nx-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes nxDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes nxSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes nxType1{
+    0%,6%{width:0}
+    24%,92%{width:18ch}
+    100%{width:0}
+}
+@keyframes nxType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes nxBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes nxBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.nx-steps{display:grid;gap:10px}
+.nx-step{
+    background:var(--nx-item);
+    border:1px solid var(--nx-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.nx-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--nx-muted);
+    margin-bottom:8px;
+}
+.nx-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--nx-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.nx-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--nx-text);
+    margin:0;
+}
+.nx-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.nx-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.nx-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.nx-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.nx-info:last-child{margin-bottom:0}
+.nx-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .nx-card{padding:18px 14px}
+    .nx-dialog,.nx-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .nx-dialog,.nx-success,.nx-type,.nx-btn-a,.nx-btn-b{animation:none}
+    .nx-dialog{opacity:1}
+    .nx-type-1{width:18ch}
+    .nx-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.nx-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.nx-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--nx-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.nx-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.nx-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.nx-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.nx-hero-s strong{color:#fff}
+.nx-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--nx-border)}
+.nx-price-k{display:block;color:var(--nx-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.nx-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.nx-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.nx-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.nx-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.nx-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.nx-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nx-ben{background:var(--nx-item);border:1px solid var(--nx-border);border-radius:14px;padding:14px 12px}
+.nx-ben svg{width:26px;height:26px;fill:none;stroke:#ff7ad9;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.nx-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.nx-ben small{display:block;color:var(--nx-muted);font-size:12.5px;line-height:1.45}
+.nx-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.nx-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--nx-item);border:1px solid var(--nx-border);text-align:center}
+.nx-plan b{display:block;font-size:13px;color:var(--nx-muted);margin-bottom:6px}
+.nx-plan strong{display:block;font-size:22px;color:#fff}
+.nx-plan small{display:block;margin-top:4px;color:var(--nx-muted);font-size:12px}
+.nx-plan--on{border-color:var(--nx-accent);background:rgba(240,77,200,.10)}
+.nx-plan--on b{color:#ff7ad9}
+.nx-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--nx-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.nx-trust{display:grid;gap:10px}
+.nx-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.nx-trust strong{color:#fff}
+.nx-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.nx-info-title{display:flex;align-items:center;gap:8px}
+.nx-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.nx-grid,.nx-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.nx-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.nx-prof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.nx-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.nx-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.nx-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.nx-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.nx-prof-body{padding:30px 12px 12px}
+.nx-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.nx-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.nx-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.nx-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.nx-prof-user b{color:#ff7ad9}
+.nx-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.nx-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.nx-mock:has(.nx-prof){height:auto !important;padding-bottom:16px}
+.nx-prof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.nx-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.nx-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.nx-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.nx-prof-name{white-space:nowrap}
+.nx-prof .nx-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.nx-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.nx-prof-av,.nx-prof-av span,.nx-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.nx-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.nx-rows{display:grid;gap:8px}
+.nx-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--nx-item);border:1px solid var(--nx-border);font-size:14px;color:#e4e4e7}
+.nx-row b{color:#fff;white-space:nowrap}
+.nx-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.nx-row--on{border-color:var(--nx-accent);background:rgba(240,77,200,.10)}
+.nx-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--nx-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+/* perfil do Discord (popout) */
+.nx-mock:has(.nx-pp){height:auto !important;padding-bottom:18px}
+.nx-pp{position:relative;width:min(88%,300px);margin:16px auto 0;border-radius:16px;overflow:hidden;background:#111214;border:1px solid rgba(255,255,255,.09);box-shadow:0 16px 40px rgba(0,0,0,.55);text-align:left;color:#f2f3f5;animation:nxPpIn .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes nxPpIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.nx-pp-ban{height:92px;background:linear-gradient(120deg,#f04dc8,#8f5bff 45%,#5865f2 70%,#f04dc8);background-size:200% 100%;animation:nxPpBan 6s ease-in-out infinite alternate}
+@keyframes nxPpBan{from{background-position:0 0}to{background-position:100% 0}}
+.nx-pp-av{position:absolute;left:14px;top:50px;width:84px;height:84px}
+.nx-pp-img{position:absolute;inset:0;border-radius:50%;border:6px solid #111214;background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2;box-shadow:0 0 0 3px #ff7ad9,0 0 18px rgba(240,77,200,.55)}
+.nx-pp-dec{position:absolute;inset:-9%;background:center/contain no-repeat;pointer-events:none}
+.nx-pp-st{position:absolute;right:1px;bottom:1px;width:22px;height:22px;border-radius:50%;background:#23a55a;border:5px solid #111214;box-sizing:border-box}
+.nx-pp-body{padding:48px 12px 12px}
+.nx-pp-nb{position:relative;padding:8px 10px;margin:0 -2px;border-radius:10px;overflow:hidden}
+.nx-pp-nb--np{background:linear-gradient(100deg,rgba(255,122,217,.22),rgba(143,91,255,.18) 55%,rgba(88,101,242,.06))}
+.nx-pp-name{display:flex;align-items:center;gap:6px;font-size:19px;font-weight:800;line-height:1.2;color:#f2f3f5;white-space:nowrap}
+.nx-pp-user{display:flex;align-items:center;gap:6px;margin-top:3px;font-size:13px;color:#b5bac1}
+.nx-pp-bdg{display:inline-flex;align-items:center;gap:3px;padding:2px;border-radius:6px;background:rgba(255,255,255,.07)}
+.nx-pp-bdg img,.nx-pp-bdg svg{display:block;width:16px !important;height:16px !important;max-width:none !important;margin:0 !important}
+.nx-pp-bdg b{display:grid;place-items:center;width:16px;height:16px;font-size:10px;color:#dbdee1}
+.nx-pp-pn{margin-top:10px;padding:10px 11px;border-radius:10px;background:#1e1f22}
+.nx-pp-pn h4{margin:0 0 4px !important;padding:0 !important;font-size:11.5px !important;font-weight:800;letter-spacing:.2px;color:#dbdee1 !important;border:0 !important}
+.nx-pp-pn p{margin:0 !important;font-size:13px !important;line-height:1.45 !important;color:#dbdee1 !important}
+.nx-pp-dt{display:flex;align-items:center;gap:7px;font-size:13px;color:#dbdee1}
+.nx-pp-logo{display:block;width:17px !important;height:13px !important;max-width:none !important;color:#b5bac1;flex:none}
+.nx-pp-dt img{display:block;width:16px !important;height:16px !important;max-width:none !important;margin:0 !important}
+.nx-pp-tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.nx-pp-tags span{padding:3px 8px;border-radius:999px;background:#2b2d31;color:#dbdee1;font-size:11px;font-weight:700}
+.nx-pp-msg{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:9px 11px;border-radius:8px;background:#1e1f22;border:1px solid rgba(255,255,255,.05);color:#6d6f78;font-size:13px}
+.nx-pp-msg i{font-style:normal;color:#b5bac1}
+@media(prefers-reduced-motion:reduce){.nx-pp,.nx-pp-ban{animation:none}}
+</style>
+
+
+<div class="nx-container">
+    <div class="nx-hero">
+        <span class="nx-tag">PRONTA PARA USAR</span>
+        <h2 class="nx-hero-t">Conta com Nitro ativado por <span>R$ 13,99</span></h2>
+        <p class="nx-hero-s">Receba uma conta <strong>Full Access</strong> com 3 meses de Nitro já ativado: é só entrar, trocar e-mail e senha e aproveitar.</p>
+        <div class="nx-price nx-pulse"><div><span class="nx-price-k">Nitro no Discord</span><span class="nx-price-old">R$ 74,97</span></div><div><span class="nx-price-k">Aqui</span><span class="nx-price-new">R$ 13,99</span></div><span class="nx-price-off">-81%</span><span class="nx-price-mes">Equivale a R$ 4,66 por mês. Você economiza R$ 60,98.</span></div>
+    </div>
+    <div class="nx-card">
+        <h2 class="nx-h2">O que você recebe</h2>
+        <div class="nx-grid"><div class="nx-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.3-9.3M17 6l3 3M14 9l2 2"/></svg><b>Full Access</b><small>Você troca o e-mail e a senha: a conta fica 100% sua.</small></div><div class="nx-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><b>3 meses de Nitro</b><small>Nitro já ativado, sem precisar de cartão.</small></div><div class="nx-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b>2 impulsos inclusos</b><small>Impulsione o servidor que você quiser.</small></div><div class="nx-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5h.01M15 9.5h.01"/></svg><b>Emojis ilimitados</b><small>Emojis e figurinhas personalizados em qualquer servidor.</small></div><div class="nx-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><b>Perfil personalizável</b><small>Avatar e banner animados.</small></div><div class="nx-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg><b>Streaming em HD</b><small>Transmita com qualidade alta para os amigos.</small></div></div>
+    </div>
+    <div class="nx-card">
+        <h2 class="nx-h2">Compare os planos</h2>
+        <div class="nx-rows"><div class="nx-row nx-row--on"><span>Conta Nitrada 3 Meses<span class="nx-row-tag">VOCÊ ESTÁ AQUI</span></span><b><s>R$ 74,97</s>R$ 13,99</b></div><div class="nx-row"><span>Conta Nitrada 1 Mês</span><b><s>R$ 24,99</s>R$ 7,99</b></div></div>
+        <p class="nx-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p>
+    </div>
+    <!-- COMO UTILIZAR -->
+    <div class="nx-card">
+
+        <h2 class="nx-h2">Como utilizar</h2>
+
+        <div class="nx-mock">
+
+            <div class="nx-mock-bar">
+                <span>DISCORD</span>
+                <span>Início</span>
+                <span>Nitro</span>
+                <span>Loja</span>
+            </div>
+
+            <div class="nx-pp" role="img" aria-label="Seu perfil com Nitro"><div class="nx-pp-ban"></div><div class="nx-pp-av"><span class="nx-pp-img"></span><i class="nx-pp-st"></i></div><div class="nx-pp-body"><div class="nx-pp-nb nx-pp-nb--np"><div class="nx-pp-name">Seu perfil com Nitro</div><div class="nx-pp-user">voce <span class="nx-pp-bdg"><img src="https://cdn.erbycloud.com/attachments/17577399496517578imagem.png" alt="Nitro"><b>✦</b></span></div></div><div class="nx-pp-pn"><h4>Sobre mim</h4><p>Nitro ativo ✦ aproveitando tudo</p><div class="nx-pp-tags"><span>Avatar animado</span><span>Banner</span><span>Emojis</span></div></div><div class="nx-pp-pn"><h4>Assinante Nitro desde</h4><div class="nx-pp-dt"><img src="https://cdn.erbycloud.com/attachments/17577399496517578imagem.png" alt="">Hoje</div></div><div class="nx-pp-msg">Mensagem @voce<i>☺</i></div></div></div>
+        </div>
+
+        <div class="nx-steps">
+
+            <div class="nx-step">
+                <div class="nx-step-label"><span class="nx-step-num">1</span> Passo 1</div>
+                <p class="nx-step-text">
+                    Escolha sua conta com Nitro e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="nx-step">
+                <div class="nx-step-label"><span class="nx-step-num">2</span> Passo 2</div>
+                <p class="nx-step-text">
+                    Receba os <strong>dados da conta</strong> e entre no Discord.
+                </p>
+            </div>
+
+            <div class="nx-step">
+                <div class="nx-step-label"><span class="nx-step-num">3</span> Passo 3</div>
+                <p class="nx-step-text">
+                    Pronto! Altere o <strong>e-mail e a senha</strong> para ter o controle da conta.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="nx-card">
+        <h2 class="nx-h2">Compre com tranquilidade</h2>
+        <div class="nx-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Entrega dos dados</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Conta funcional</strong> garantida no momento da entrega.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div>
+    </div>
+<!-- TERMOS E GARANTIA -->
+    <div class="nx-card">
+
+        <h2 class="nx-h2">Protocolo de segurança e riscos</h2>
+
+        <p class="nx-text" style="margin-bottom:14px">
+            Siga as instruções para garantir o melhor uso da sua conta.
+            É fundamental estar ciente dos termos.
+        </p>
+
+        <div class="nx-info-box">
+
+            <h3 class="nx-info-title"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>AVISO IMPORTANTE SOBRE A GARANTIA</h3>
+
+            <p class="nx-info">
+                Este produto funciona perfeitamente, mas por se tratar de um
+                item digital sensível às políticas do Discord,
+                <span class="nx-highlight">NÃO HÁ REEMBOLSO</span> caso o
+                Discord revogue os Nitros ou desabilite a conta futuramente.
+            </p>
+
+            <p class="nx-info">
+                <span class="nx-highlight">Compre ciente de que você assume este risco.</span>
+                Nós garantimos a entrega da conta funcional no momento da compra.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="nx-hero rn-cta2"><span class="nx-tag">PRONTO PARA GARANTIR?</span><h2 class="nx-hero-t">Conta Nitrada 3 Meses</h2><div class="nx-price nx-pulse"><div><span class="nx-price-k">Nitro no Discord</span><span class="nx-price-old">R$ 74,97</span></div><div><span class="nx-price-k">Aqui</span><span class="nx-price-new">R$ 13,99</span></div><span class="nx-price-off">-81%</span><span class="nx-price-mes">Equivale a R$ 4,66 por mês. Você economiza R$ 60,98.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

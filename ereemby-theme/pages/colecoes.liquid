@@ -1,0 +1,112 @@
+{% comment %}
+  Rei dos Nitros: página "Coleções" (endereço /colecoes, definido em routes/routes.json).
+  /colecoes          -> todas as coleções por tema
+  /colecoes?c=slug   -> os jogos da coleção (mais jogados primeiro), com o botão "Levar todos"
+  As coleções e suas regras ficam em assets/rn-mais.js (RN_COLECOES).
+{% endcomment %}
+<div class="rn-terms rn-fr">
+  <nav class="rn-terms__crumb"><a href="/">Início</a><span aria-hidden="true">›</span><a href="/colecoes">Coleções</a><span aria-hidden="true" id="rn-co-sep" hidden>›</span><span id="rn-co-crumb" hidden></span></nav>
+  <div id="rn-co-app"><p class="rn-fr__load">Carregando coleções…</p></div>
+</div>
+<script>
+  (function () {
+    var app = document.getElementById('rn-co-app');
+    if (!app) return;
+    function pronto(cb) { if (window.rnJogos && window.RN_COLECOES) cb(); else setTimeout(function () { pronto(cb); }, 60); }
+    pronto(function () {
+      window.rnJogos(function () {
+        var esc = window.rnEsc, brl = window.rnBrl;
+        var p = window.rnProdJogos(), FR = window.RN_COLECOES || [];
+        var slug = new URLSearchParams(location.search).get('c');
+        function vars(fr) { return window.rnColecao(fr); }
+        function capa(v) { return (v && ((v.images && v.images[0]) || v.icon)) || ''; }
+        if (!p) { app.innerHTML = '<p class="rn-fr__load">Os jogos não estão disponíveis agora.</p>'; return; }
+
+        var fr = slug && FR.filter(function (f) { return f.s === slug; })[0];
+        if (!fr) {
+          // índice: todas as franquias
+          document.title = 'Coleções de jogos';
+          app.innerHTML =
+            '<div class="rn-fr__hero"><div class="rn-fr__badge">COLEÇÕES</div><h1 class="rn-fr__title">Jogos para cada <span>momento</span></h1>' +
+            '<p class="rn-fr__lead">Seleções por tema, montadas com a nota, o ano e os requisitos de cada jogo na Steam. A cada 2 jogos, você ganha 1 grátis.</p></div>' +
+            '<div class="rn-fr__grid">' + FR.map(function (f) {
+              var vs = vars(f); if (vs.length < 2) return '';
+              var total = vs.reduce(function (s, v) { return s + Number(v.price || 0); }, 0);
+              var imgs = vs.slice(0, 3).map(function (v) { return '<img src="' + esc(capa(v)) + '" alt="" loading="lazy">'; }).join('');
+              return '<a class="rn-fr__card" href="/colecoes?c=' + esc(f.s) + '"><span class="rn-fr__imgs rn-fr__imgs--' + Math.min(3, vs.length) + '">' + imgs + '</span>' +
+                '<span class="rn-fr__cb"><b>' + esc(f.n) + '</b><small>' + esc(f.d) + '</small><small>' + vs.length + ' jogos</small></span><span class="rn-fr__go" aria-hidden="true">→</span></a>';
+            }).join('') + '</div>';
+          return;
+        }
+
+        // uma coleção
+        var vs = vars(fr);
+        document.title = fr.n + ' - coleção';
+        var cr = document.getElementById('rn-co-crumb'), sep = document.getElementById('rn-co-sep');
+        if (cr) { cr.textContent = fr.n; cr.hidden = false; sep.hidden = false; }
+        function render() {
+          // a fileira de brindes mantém a posição e a busca ao redesenhar
+          var fv = document.getElementById('rn-co-fil'), fx = 0, fq = '';
+          if (fv) { var tv = fv.querySelector('.rnb-fil__track'), iv = fv.querySelector('input'); fx = tv ? tv.scrollLeft : 0; fq = iv ? iv.value : ''; }
+          var disp = vs.filter(window.rnTemEstoque);
+          var falta = disp.filter(function (v) { return !window.rnNoCarrinho(p, v); });
+          var total = falta.reduce(function (s, v) { return s + Number(v.price || 0); }, 0);
+          app.innerHTML =
+            '<div class="rn-fr__hero rn-fr__hero--um" style="--rn-bg:url(\'' + esc(capa(vs[0])) + '\')"><div class="rn-fr__badge">FRANQUIA</div><h1 class="rn-fr__title">' + esc(fr.n) + '</h1>' +
+            '<p class="rn-fr__lead">' + vs.length + ' jogos na loja, em ordem de lançamento.</p></div>' +
+            '<ol class="rn-fr__list">' + vs.map(function (v, i) {
+              var j = window.rnJogo(v.name) || {}, ok = window.rnTemEstoque(v), dentro = window.rnNoCarrinho(p, v);
+              var off = Number(v.comparison) > Number(v.price) ? Math.round((1 - v.price / v.comparison) * 100) : 0;
+              return '<li class="rn-fr__it">' +
+                '<span class="rn-fr__n">' + (i + 1) + '</span>' +
+                '<a class="rn-fr__img" href="' + esc(window.rnLinkVar(v)) + '"><img src="' + esc(capa(v)) + '" alt="" loading="lazy"></a>' +
+                '<div class="rn-fr__info"><a class="rn-fr__nome" href="' + esc(window.rnLinkVar(v)) + '">' + esc(v.name) + '</a>' +
+                  '<div class="rn-fr__meta">' + (j.y ? '<span>' + j.y + '</span>' : '') + (j.gb != null ? '<span>' + j.gb + ' GB</span>' : '') + (j.r ? window.rnNota(j) : '') + '</div>' +
+                  '<div class="rn-fr__preco"><b>' + brl(v.price) + '</b>' + (off > 0 ? ' <s>' + brl(v.comparison) + '</s> <span class="rn-fr__off">-' + off + '%</span>' : '') + '</div></div>' +
+                '<button type="button" class="rn-fr__add' + (dentro ? ' rn-fr__add--on' : '') + '" data-v="' + esc(v.id) + '"' + (!ok && !dentro ? ' disabled' : '') + '>' +
+                  (dentro ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>No carrinho' : ok ? '+ Carrinho' : 'Esgotado') + '</button>' +
+                '</li>';
+            }).join('') + '</ol>' +
+            '<div class="rn-fr__bar">' +
+              (falta.length
+                ? '<div class="rn-fr__bt"><small>' + (falta.length === vs.length ? 'A coleção inteira' : 'Os ' + falta.length + ' que faltam') + '</small><b>' + brl(total) + '</b></div>' +
+                  '<button type="button" class="rn-fr__all" id="rn-co-all">Levar todos (' + falta.length + ')</button>'
+                : '<div class="rn-fr__bt"><small>Tudo certo</small><b>Todos já estão no carrinho</b></div><button type="button" class="rn-fr__all" id="rn-co-cart">Ver carrinho</button>') +
+            '</div>' +
+            (window.rnBrindeHtml ? window.rnBrindeHtml() : '') +
+            '<div class="rnb-fil" id="rn-co-fil"' + (filAberta ? '' : ' hidden') + '></div>';
+          var fil = document.getElementById('rn-co-fil');
+          if (filAberta && fil && window.RNB) {
+            window.RNB.fileira(fil);
+            var i2 = fil.querySelector('input'); if (fq && i2) { i2.value = fq; i2.dispatchEvent(new Event('input')); }
+            var t2 = fil.querySelector('.rnb-fil__track'); if (t2) t2.scrollLeft = fx;
+          }
+        }
+        var filAberta = false;
+        render();
+        app.addEventListener('click', function (e) {
+          if (e.target.closest('#rn-brd-abrir')) {
+            filAberta = !filAberta;
+            if (window.RNB && window.RNB.livres() < 1) window.RNB.trocar();
+            render();
+            var fl = document.getElementById('rn-co-fil'); if (filAberta && fl) setTimeout(function () { fl.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 60);
+            return;
+          }
+          var b = e.target.closest('.rn-fr__add');
+          if (b && !b.disabled) {
+            var v = vs.filter(function (x) { return String(x.id) === b.getAttribute('data-v'); })[0];
+            if (window.rnNoCarrinho(p, v)) window.rnTirarCarrinho(v); else window.rnAddCarrinho(p, v);
+            render(); return;
+          }
+          if (e.target.closest('#rn-co-all')) {
+            vs.forEach(function (v) { window.rnAddCarrinho(p, v); });
+            render(); window.rnAbrirCarrinho(e); return;
+          }
+          if (e.target.closest('#rn-co-cart')) window.rnAbrirCarrinho(e);
+        });
+        window.addEventListener('cart-sync', function () { if (!document.activeElement || !document.activeElement.closest || !document.activeElement.closest('#rn-co-fil')) render(); });
+        window.addEventListener('storage', function (e) { if (!e.key || e.key === 'cart' || e.key.indexOf('rn_free') === 0) render(); });
+      });
+    });
+  })();
+</script>

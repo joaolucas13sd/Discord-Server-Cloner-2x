@@ -1,0 +1,666 @@
+<div class="tv-wrapper">
+
+<style>
+.tv-wrapper{
+    --tv-accent:#fe2c55;
+    --tv-bg:#0a0a0c;
+    --tv-card:#131316;
+    --tv-item:#1c1c21;
+    --tv-border:rgba(255,255,255,.08);
+    --tv-text:#f5f5f6;
+    --tv-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--tv-text);
+}
+.tv-wrapper *{box-sizing:border-box}
+
+.tv-container{
+    background:var(--tv-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.tv-card{
+    background:var(--tv-card);
+    border:1px solid var(--tv-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.tv-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.tv-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--tv-accent);
+    flex-shrink:0;
+}
+
+.tv-quote{
+    border-left:3px solid var(--tv-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.tv-quote strong{color:#fff}
+
+.tv-text{
+    color:var(--tv-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.tv-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.tv-list{display:grid;gap:10px}
+.tv-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--tv-item);
+    border:1px solid var(--tv-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.tv-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(254,44,85,.10);
+    border:1px solid rgba(254,44,85,.38);
+}
+.tv-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#ff8fa6;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.tv-item-label{
+    display:block;
+    color:var(--tv-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.tv-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP VIDEO TIKTOK (VISUALIZAÇÕES) */
+.tv-mock{
+    position:relative;
+    height:300px;
+    border-radius:12px;
+    background:linear-gradient(170deg,#1b1030 0%,#0d1a2b 50%,#2b1020 100%);
+    border:1px solid var(--tv-border);
+    overflow:hidden;
+    margin-bottom:18px;
+}
+.tv-tabs{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    padding:10px 0;
+    font-size:12px;
+    font-weight:700;
+    color:rgba(255,255,255,.55);
+}
+.tv-tabs span:nth-child(2){color:#fff;border-bottom:2px solid #fff;padding-bottom:2px}
+.tv-play{
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:54px;
+    height:54px;
+    margin:-34px 0 0 -27px;
+    border-radius:50%;
+    background:rgba(255,255,255,.14);
+    border:1px solid rgba(255,255,255,.3);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    animation:tvPlay 8s infinite;
+}
+.tv-play svg{width:22px;height:22px;fill:#fff;margin-left:3px}
+@keyframes tvPlay{
+    0%,6%{opacity:1;transform:scale(1)}
+    10%,100%{opacity:0;transform:scale(1.25)}
+}
+.tv-progress{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:3px;
+    background:rgba(255,255,255,.18);
+}
+.tv-progress i{
+    display:block;
+    height:100%;
+    width:100%;
+    background:#fff;
+    transform-origin:0 50%;
+    animation:tvProg 8s linear infinite;
+}
+@keyframes tvProg{
+    0%,10%{transform:scaleX(0)}
+    90%,100%{transform:scaleX(1)}
+}
+.tv-note{
+    position:absolute;
+    left:36px;
+    top:120px;
+    font-size:46px;
+    opacity:.16;
+}
+.tv-rail{
+    position:absolute;
+    right:12px;
+    bottom:58px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:14px;
+}
+.tv-rail-avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:2px solid #fff;
+    background:#2a2a33;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+    overflow:hidden;
+}
+.tv-rail-avatar svg{width:80%;height:80%;fill:#6b6b78}
+.tv-act{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:2px;
+    font-size:11px;
+    font-weight:700;
+}
+.tv-heart{
+    position:relative;
+    width:32px;
+    height:32px;
+}
+.tv-heart svg{
+    position:absolute;
+    inset:0;
+    width:32px;
+    height:32px;
+    fill:#fff;
+}
+.tv-act svg.tv-ic{
+    width:30px;
+    height:30px;
+    fill:#fff;
+}
+.tv-views{
+    position:absolute;
+    left:12px;
+    bottom:62px;
+    display:flex;
+    align-items:center;
+    gap:7px;
+    padding:6px 11px 6px 9px;
+    border-radius:999px;
+    background:rgba(0,0,0,.55);
+    border:1px solid rgba(255,255,255,.14);
+    font-size:11.5px;
+    font-weight:700;
+}
+.tv-views svg.tv-eye{
+    width:16px;
+    height:16px;
+    fill:none;
+    stroke:#25f4ee;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.tv-count-win{
+    height:16px;
+    overflow:hidden;
+}
+.tv-count-col{
+    display:block;
+    animation:tvCount 8s steps(1,end) infinite;
+}
+.tv-count-col b{
+    display:block;
+    height:16px;
+    line-height:16px;
+    font-size:11.5px;
+    font-variant-numeric:tabular-nums;
+    text-align:right;
+}
+.tv-count-col b:last-child{color:#25f4ee}
+@keyframes tvCount{
+    0%,10%{transform:translateY(0)}
+    22%{transform:translateY(-16px)}
+    34%{transform:translateY(-32px)}
+    46%{transform:translateY(-48px)}
+    58%{transform:translateY(-64px)}
+    70%,100%{transform:translateY(-80px)}
+}
+.tv-caption{
+    position:absolute;
+    left:12px;
+    right:70px;
+    bottom:12px;
+    text-align:left;
+}
+.tv-caption b{display:block;font-size:12.5px;margin-bottom:3px}
+.tv-caption span{font-size:11.5px;color:rgba(255,255,255,.8)}
+
+/* OLHINHOS SUBINDO A PARTIR DO CONTADOR */
+.tv-fly{
+    position:absolute;
+    left:16px;
+    bottom:92px;
+    width:18px;
+    height:18px;
+    fill:none;
+    stroke:#25f4ee;
+    stroke-width:2;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    opacity:0;
+    animation:tvFly 2.4s ease-out infinite;
+    z-index:2;
+}
+.tv-fly:nth-of-type(1){animation-delay:0s;margin-left:0}
+.tv-fly:nth-of-type(2){animation-delay:.6s;margin-left:30px}
+.tv-fly:nth-of-type(3){animation-delay:1.2s;margin-left:60px}
+.tv-fly:nth-of-type(4){animation-delay:1.8s;margin-left:90px}
+@keyframes tvFly{
+    0%{opacity:0;transform:translateY(8px) scale(.7)}
+    20%{opacity:1}
+    100%{opacity:0;transform:translateY(-110px) scale(1.15)}
+}
+
+.tv-gain{
+    position:absolute;
+    left:12px;
+    top:44px;
+    padding:5px 10px;
+    border-radius:999px;
+    background:#22c55e;
+    color:#06210f;
+    font-size:12px;
+    font-weight:900;
+    opacity:0;
+    animation:tvGain 8s infinite;
+}
+@keyframes tvGain{
+    0%,66%{opacity:0;transform:translateY(8px) scale(.8)}
+    74%,94%{opacity:1;transform:translateY(0) scale(1)}
+    98%,100%{opacity:0;transform:translateY(-4px) scale(1)}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .tv-count-col,.tv-gain,.tv-play,.tv-progress i,.tv-fly{animation:none}
+    .tv-count-col{transform:translateY(-80px)}
+    .tv-gain{opacity:1}
+    .tv-play{opacity:0}
+    .tv-fly{display:none}
+}
+
+.tv-disclaimer{
+    margin:14px 0 0;
+    text-align:center;
+    font-size:11.5px;
+    line-height:1.5;
+    color:#8b8d93;
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.tv-steps{display:grid;gap:10px}
+.tv-step{
+    background:var(--tv-item);
+    border:1px solid var(--tv-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.tv-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--tv-muted);
+    margin-bottom:8px;
+}
+.tv-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--tv-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.tv-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--tv-text);
+    margin:0;
+}
+.tv-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.tv-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.tv-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.tv-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.tv-info:last-child{margin-bottom:0}
+.tv-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .tv-card{padding:18px 14px}
+}
+
+/* ===== DESTAQUE ===== */
+.tv-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.tv-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--tv-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.tv-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.tv-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tv-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.tv-hero-s strong{color:#fff}
+.tv-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--tv-border)}
+.tv-price-k{display:block;color:var(--tv-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.tv-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.tv-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.tv-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.tv-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.tv-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.tv-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tv-ben{background:var(--tv-item);border:1px solid var(--tv-border);border-radius:14px;padding:14px 12px}
+.tv-ben svg{width:26px;height:26px;fill:none;stroke:var(--tv-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.tv-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.tv-ben small{display:block;color:var(--tv-muted);font-size:12.5px;line-height:1.45}
+.tv-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.tv-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--tv-item);border:1px solid var(--tv-border);text-align:center}
+.tv-plan b{display:block;font-size:13px;color:var(--tv-muted);margin-bottom:6px}
+.tv-plan strong{display:block;font-size:22px;color:#fff}
+.tv-plan small{display:block;margin-top:4px;color:var(--tv-muted);font-size:12px}
+.tv-plan--on{border-color:var(--tv-accent);background:rgba(240,77,200,.10)}
+.tv-plan--on b{color:#ff7ad9}
+.tv-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--tv-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.tv-trust{display:grid;gap:10px}
+.tv-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.tv-trust strong{color:#fff}
+.tv-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.tv-info-title{display:flex;align-items:center;gap:8px}
+.tv-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.tv-nzgrid,.tv-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.tv-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.tv-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.tv-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.tv-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.tv-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.tv-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.tv-prof-body{padding:30px 12px 12px}
+.tv-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.tv-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.tv-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.tv-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.tv-prof-user b{color:#ff7ad9}
+.tv-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.tv-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.tv-mock:has(.tv-nzprof){height:auto !important;padding-bottom:16px}
+.tv-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.tv-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.tv-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.tv-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.tv-prof-name{white-space:nowrap}
+.tv-nzprof .tv-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.tv-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.tv-prof-av,.tv-prof-av span,.tv-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.tv-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.tv-rows{display:grid;gap:8px}
+.tv-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--tv-item);border:1px solid var(--tv-border);font-size:14px;color:#e4e4e7}
+.tv-row b{color:#fff;white-space:nowrap}
+.tv-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.tv-row--on{border-color:var(--tv-accent);background:rgba(240,77,200,.10)}
+.tv-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--tv-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.tv-en{height:300px !important;padding:0 !important;background:#0b0b0f !important;overflow:hidden}
+.tv-en *{box-sizing:border-box}
+.tv-en svg{max-width:none !important}
+.tv-enbar{display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-bottom:1px solid rgba(255,255,255,.07)}
+.tv-enbar b{font-size:12.5px !important;color:#fff}
+.tv-enbar span{font-size:10.5px !important;font-weight:800;background:linear-gradient(90deg,#f58529,#dd2a7b,#8134af);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tv-en-tt .tv-enbar span{background:none;color:#25f4ee}
+.tv-enprof{display:flex;align-items:center;gap:12px;padding:12px 12px 6px}
+.tv-enav{display:grid;place-items:center;flex:0 0 auto;width:58px;height:58px;border-radius:50%;background:#26282e}
+.tv-enav svg{width:28px !important;height:28px !important;fill:none;stroke:#a1a1aa;stroke-width:2}
+.tv-enav-ig{box-shadow:0 0 0 2px #0b0b0f,0 0 0 4px #dd2a7b}
+.tv-enav-tt{box-shadow:0 0 0 2px #25f4ee}
+.tv-enst{flex:1;display:flex;justify-content:space-around;text-align:center}
+.tv-enst b{display:block;font-size:14px !important;line-height:18px !important;color:#fff}
+.tv-enst small{display:block;font-size:9.5px !important;color:#a1a1aa}
+.tv-hot b{color:#fff}
+.tv-hot small{color:#f472b6 !important;font-weight:700}
+.tv-en-tt .tv-hot small{color:#25f4ee !important}
+.tv-cnt{display:inline-block;height:18px;overflow:hidden;vertical-align:bottom}
+.tv-col{display:block;animation:nzEnCol 10s infinite}
+.tv-col b{display:block;height:18px;line-height:18px !important}
+.tv-likes .tv-col b,.tv-ttviews .tv-col b{text-align:right}
+.tv-likes .tv-cnt{margin-right:3px}
+@keyframes nzEnCol{0%,12%{transform:translateY(0)}20%,24%{transform:translateY(-18px)}32%,36%{transform:translateY(-36px)}44%,48%{transform:translateY(-54px)}56%,60%{transform:translateY(-72px)}68%,95%{transform:translateY(-90px)}100%{transform:translateY(0)}}
+.tv-hot b,.tv-likes .tv-cnt b{animation:nzEnHot 10s infinite}
+@keyframes nzEnHot{0%,12%{color:#fff}20%,95%{color:#22c55e}100%{color:#fff}}
+.tv-enname{display:block;padding:0 12px;font-size:12px !important;color:#fff}
+.tv-enbtn{display:block;margin:8px 12px;padding:6px;border-radius:7px;background:#26282e;text-align:center;font-size:11px !important;font-weight:700;color:#e4e4e7}
+.tv-engrid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;padding:0 0 0}
+.tv-engrid i{display:block;height:58px;background:linear-gradient(135deg,#3b0764,#9d174d)}
+.tv-engrid i:nth-child(2){background:linear-gradient(135deg,#1e3a8a,#0e7490)}.tv-engrid i:nth-child(3){background:linear-gradient(135deg,#7c2d12,#ca8a04)}.tv-engrid i:nth-child(4){background:linear-gradient(135deg,#14532d,#0d9488)}.tv-engrid i:nth-child(5){background:linear-gradient(135deg,#831843,#f59e0b)}.tv-engrid i:nth-child(6){background:linear-gradient(135deg,#312e81,#7c3aed)}
+.tv-ttprof{display:flex;flex-direction:column;align-items:center;padding:10px 12px 0}
+.tv-ttprof .tv-enav{width:50px;height:50px}
+.tv-ttprof .tv-enname{margin-top:5px}
+.tv-ttst{width:100%;margin-top:6px}
+.tv-ttbtn{align-self:stretch;margin:7px 30px}
+.tv-ttgrid i{height:44px}
+.tv-post{position:relative;height:150px;background:linear-gradient(135deg,#f58529 0%,#dd2a7b 50%,#515bd4 100%)}
+.tv-bigh{position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;opacity:0;animation:nzEnBig 10s infinite}
+.tv-bigh svg{width:64px !important;height:64px !important;fill:#fff;filter:drop-shadow(0 4px 10px rgba(0,0,0,.4))}
+@keyframes nzEnBig{0%,10%{opacity:0;transform:scale(.3)}13%{opacity:1;transform:scale(1.15)}16%{transform:scale(1)}22%,100%{opacity:0;transform:scale(1)}}
+.tv-acts{display:flex;gap:14px;padding:9px 12px 4px}
+.tv-acts i svg{width:21px !important;height:21px !important;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.tv-h1 svg{animation:nzEnH1 10s infinite}
+@keyframes nzEnH1{0%,11%{fill:none;stroke:#fff;transform:scale(1)}13%{fill:#ff3040;stroke:#ff3040;transform:scale(1.3)}16%,95%{fill:#ff3040;stroke:#ff3040;transform:scale(1)}100%{fill:none;stroke:#fff}}
+.tv-likes{display:block;padding:0 12px;font-size:12.5px !important;line-height:18px !important;color:#fff}
+.tv-ttvid{position:relative;height:100%;background:linear-gradient(180deg,#1f1144,#3b0764 40%,#0f172a)}
+.tv-tttabs{position:absolute;left:0;right:0;top:9px;display:flex;justify-content:center;gap:14px}
+.tv-tttabs small{font-size:11.5px !important;color:#a1a1aa}
+.tv-tttabs b{font-size:11.5px !important;color:#fff;border-bottom:2px solid #fff}
+.tv-ttside{position:absolute;right:9px;bottom:52px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.tv-ttside .tv-enav{width:36px;height:36px}
+.tv-ttside .tv-enav svg{width:18px !important;height:18px !important}
+.tv-ttic{display:flex;flex-direction:column;align-items:center;gap:2px}
+.tv-ttic svg{width:24px !important;height:24px !important;fill:#fff;stroke:none}
+.tv-ttic small{font-size:10px !important;line-height:18px !important;font-weight:700;color:#fff}
+.tv-ttic.tv-h1 svg{stroke:#fff;stroke-width:2}
+.tv-ttinfo{position:absolute;left:12px;bottom:22px;max-width:70%}
+.tv-ttinfo b{display:block;font-size:12px !important;color:#fff}
+.tv-ttinfo small{display:block;font-size:10.5px !important;color:#d4d4d8}
+.tv-ttviews{display:inline-flex;align-items:center;gap:5px;margin-top:6px;padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.5);font-size:11px !important;line-height:18px !important;font-weight:800;color:#fff}
+.tv-ttviews svg{width:14px !important;height:14px !important;fill:none;stroke:#25f4ee;stroke-width:2.2}
+.tv-ttplay{position:absolute;left:50%;top:42%;width:44px;height:44px;margin:-22px 0 0 -22px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.15)}
+.tv-ttplay svg{width:20px !important;height:20px !important;fill:#fff}
+.tv-ttprog{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(255,255,255,.2)}
+.tv-ttprog i{display:block;height:100%;width:0;background:#fff;animation:nzEnMusBar 10s linear infinite}
+.tv-tsts{position:absolute;left:12px;right:12px;top:44px;height:0}
+.tv-tst{position:absolute;left:0;top:calc(var(--d) * 34px);display:inline-flex;align-items:center;gap:6px;padding:5px 10px 5px 5px;border-radius:999px;background:rgba(24,24,27,.92);border:1px solid rgba(255,255,255,.1);font-size:10.5px !important;font-weight:700;color:#fff;opacity:0;animation:nzEnTst 10s infinite;animation-delay:calc(var(--d) * 1.3s + 1.6s)}
+.tv-tst i{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#dd2a7b}
+.tv-en-tt .tv-tst i{background:#fe2c55}
+.tv-tst svg{width:11px !important;height:11px !important;fill:#fff;stroke:#fff;stroke-width:1}
+@keyframes nzEnTst{0%{opacity:0;transform:translateX(-12px)}4%,16%{opacity:1;transform:none}21%,100%{opacity:0;transform:translateX(-6px)}}
+.tv-enok{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);padding:6px 13px;border-radius:999px;background:#22c55e;color:#04140a;font-size:12px !important;font-weight:900;white-space:nowrap;box-shadow:0 6px 18px rgba(34,197,94,.35);opacity:0;animation:nzEnEnOk 10s infinite}
+@keyframes nzEnEnOk{0%,68%{opacity:0;transform:translate(-50%,10px)}72%,94%{opacity:1;transform:translate(-50%,0)}98%,100%{opacity:0}}
+.tv-en-prof .tv-tsts{top:182px}
+.tv-en-vid .tv-enok{bottom:auto;top:40px}
+@keyframes nzEnMusBar{0%{width:0}100%{width:100%}}
+</style>
+
+
+<div class="tv-container">
+    <div class="tv-hero"><span class="tv-tag">ENGAJAMENTO · TIKTOK</span><h2 class="tv-hero-t">1.000 visualizações no TikTok por <span>R$ 5,99</span></h2><p class="tv-hero-s">Receba <strong>1.000 visualizações</strong> no seu vídeo do TikTok e dê mais força ao seu conteúdo.</p><div class="tv-price tv-pulse"><div><span class="tv-price-k">Preço</span><span class="tv-price-new">R$ 5,99</span></div></div></div>
+    <div class="tv-card"><h2 class="tv-h2">Compare os pacotes</h2><div class="tv-rows"><div class="tv-row tv-row--on"><span>TIKTOK / 1K DE VISUALIZACOES<span class="tv-row-tag">VOCÊ ESTÁ AQUI</span></span><b>R$ 5,99</b></div><div class="tv-row"><span>TIKTOK / 1K DE CURTIDAS</span><b>R$ 10,99</b></div><div class="tv-row"><span>TIKTOK / 1K DE SEGUIDORES</span><b>R$ 45,99</b></div><div class="tv-row"><span>INSTAGRAM / 1K DE CURTIDAS 100% BR</span><b>R$ 15,99</b></div><div class="tv-row"><span>INSTAGRAM / 1K DE SEGUIDORES 50% BR</span><b>R$ 25,99</b></div></div><p class="tv-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p></div>
+    <!-- O QUE VOCÊ RECEBE -->
+    <div class="tv-card">
+
+        <h2 class="tv-h2">O que você recebe</h2>
+
+        <div class="tv-list">
+
+            <div class="tv-item">
+                <span class="tv-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg></span>
+                <div>
+                    <span class="tv-item-label">1.000 visualizações</span>
+                    <span class="tv-item-text">1.000 visualizações no seu vídeo do TikTok.</span>
+                </div>
+            </div>
+
+            <div class="tv-item">
+                <span class="tv-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="6 3 20 12 6 21 6 3"></polygon></svg></span>
+                <div>
+                    <span class="tv-item-label">Para o seu vídeo</span>
+                    <span class="tv-item-text">Aplicado no vídeo TikTok que você escolher.</span>
+                </div>
+            </div>
+
+            <div class="tv-item">
+                <span class="tv-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="18" x2="18" y1="20" y2="10"></line><line x1="12" x2="12" y1="20" y2="4"></line><line x1="6" x2="6" y1="20" y2="14"></line></svg></span>
+                <div>
+                    <span class="tv-item-label">Mais movimento</span>
+                    <span class="tv-item-text">Dê mais movimento ao seu conteúdo.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="tv-card">
+
+        <h2 class="tv-h2">Como utilizar</h2>
+
+        <div class="tv-mock tv-en tv-en-tt tv-en-vid"><div class="tv-ttvid"><span class="tv-tttabs"><small>Seguindo</small><b>Para você</b></span><div class="tv-ttside"><i class="tv-enav tv-enav-tt"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></i><span class="tv-ttic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 4.5 6.8 4.5c2.1 0 3.6 1.1 5.2 3 1.6-1.9 3.1-3 5.2-3 3.8 0 5.9 3.9 4.4 7.3C19.5 16.4 12 21 12 21z"/></svg><small>2.418</small></span><span class="tv-ttic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><small>96</small></span><span class="tv-ttic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4l7 7-7 7v-4c-5 0-8 1.5-10 5 .5-5.5 3.5-10 10-11z"/></svg><small>41</small></span></div><div class="tv-ttinfo"><b>@seu.perfil</b><small>Meu novo vídeo #fyp</small><span class="tv-ttviews"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="tv-cnt"><span class="tv-col"><b>120</b><b>320</b><b>520</b><b>720</b><b>920</b><b>1.120</b></span></span> visualizações</span></div><i class="tv-ttplay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></i><div class="tv-ttprog"><i></i></div></div><div class="tv-tsts"><span class="tv-tst" style="--d:0"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></i>Nova visualização</span><span class="tv-tst" style="--d:1"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></i>Nova visualização</span><span class="tv-tst" style="--d:2"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></i>Nova visualização</span></div><span class="tv-enok">+1.000 visualizações</span></div>
+
+
+        <div class="tv-steps">
+
+            <div class="tv-step">
+                <div class="tv-step-label"><span class="tv-step-num">1</span> Passo 1</div>
+                <p class="tv-step-text">
+                    Finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="tv-step">
+                <div class="tv-step-label"><span class="tv-step-num">2</span> Passo 2</div>
+                <p class="tv-step-text">
+                    Informe o <strong>link do seu vídeo</strong> pelo pedido.
+                </p>
+            </div>
+
+            <div class="tv-step">
+                <div class="tv-step-label"><span class="tv-step-num">3</span> Passo 3</div>
+                <p class="tv-step-text">
+                    Acompanhe as <strong>visualizações</strong> chegando ao seu vídeo.
+                </p>
+            </div>
+
+        </div>
+
+        <p class="tv-disclaimer">
+            Animação ilustrativa.
+        </p>
+
+    </div>
+
+    <div class="tv-card"><h2 class="tv-h2">Compre com tranquilidade</h2><div class="tv-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Acompanhe o pedido</strong> pela página da compra.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="tv-hero rn-cta2"><span class="tv-tag">PRONTO PARA GARANTIR?</span><h2 class="tv-hero-t">TIKTOK / 1K DE VISUALIZACOES</h2><div class="tv-price tv-pulse"><div><span class="tv-price-k">Preço</span><span class="tv-price-new">R$ 5,99</span></div></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

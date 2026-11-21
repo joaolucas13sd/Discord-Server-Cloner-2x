@@ -1,0 +1,97 @@
+{% comment %}
+  Rei dos Nitros: barra de compra fixa na página de produto (celular), acima da barra de navegação.
+  Aparece quando o botão "Comprar agora" principal sai da tela. O botão daqui aciona o principal.
+{% endcomment %}
+<div class="rn-buybar" id="rn-buybar" aria-hidden="true">
+  <div class="rn-buybar__price">
+    <span class="rn-buybar__k">À vista no Pix</span>
+    <span class="rn-buybar__v" id="rn-buybar-v"></span>
+  </div>
+  <button type="button" class="rn-buybar__btn" id="rn-buybar-btn" tabindex="-1">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 11-1 9M19 11l-4-7M2 11h20M3.5 11l1.6 7.4a2 2 0 0 0 2 1.6h9.8a2 2 0 0 0 2-1.6l1.7-7.4M4.5 15.5h15M5 11l4-7M9 11l1 9"/></svg>
+    <span id="rn-buybar-label">Comprar agora</span>
+  </button>
+</div>
+<script>
+  (function () {
+    var bar = document.getElementById('rn-buybar');
+    var btn = document.getElementById('rn-buybar-btn');
+    if (!bar || !btn) return;
+    function principal() { return document.getElementById('btn-buy-now'); }
+
+    // modo carrinho: na página de Jogos Steam, com jogos no carrinho, a barra mostra o total e abre o carrinho
+    var CART_ICO = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"/></svg>';
+    var BUY_ICO = btn.querySelector('svg').outerHTML;
+    var modoCarrinho = false, modoVazio = false;
+    function brl(v) { return Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+    function infoCarrinho() {
+      var cart = []; try { cart = (window.EreembyCart && EreembyCart.getCart()) || JSON.parse(localStorage.getItem('cart') || '[]'); } catch (e) {}
+      var n = 0, total = 0, free = 0, fv = null, cup = 'LEVE3';
+      try { fv = localStorage.getItem('rn_free_vid'); } catch (e) {}
+      cart.forEach(function (i) { n += i.amount || 1; total += (i.value || 0) * (i.amount || 1); if (fv && String(i.variant) === String(fv)) free = i.value || 0; });
+      // desconto e cupom certos (vários brindes, jogos do Relâmpago): assets/rn-brindes.js
+      var ci = window.RNB && RNB.cupomInfo ? RNB.cupomInfo() : null;
+      if (ci) { free = ci.n ? ci.off : 0; cup = ci.code; }
+      return { n: n, total: total, free: free, cup: cup };
+    }
+    // copia preço e estado (esgotado) do bloco principal, inclusive quando a variação muda
+    function sync() {
+      var v = document.getElementById('rn-buybar-v'), k = bar.querySelector('.rn-buybar__k'), lab = document.getElementById('rn-buybar-label');
+      var naPromo = !!document.getElementById('rn-free');
+      var c = naPromo ? infoCarrinho() : { n: 0 };
+      var ativo = naPromo;
+      if (ativo) {
+        var txtK = c.n === 0 ? 'Nenhum jogo no carrinho' : c.free > 0 ? 'Total com ' + c.cup + ' (' + c.n + ' jogos)' : 'Total no carrinho (' + c.n + (c.n === 1 ? ' item)' : ' itens)');
+        var txtV = brl(Math.max(0, c.total - c.free));
+        if (k.textContent !== txtK) k.textContent = txtK;
+        if (v.textContent !== txtV) { v.textContent = txtV; v.classList.remove('rn-buybar__v--pop'); void v.offsetWidth; v.classList.add('rn-buybar__v--pop'); }
+        if (!modoCarrinho) { btn.querySelector('svg').outerHTML = CART_ICO; }
+        btn.disabled = false; btn.classList.remove('rn-buybar__btn--off');
+        var txtB = c.n === 0 ? 'Escolher jogos' : 'Ver carrinho';
+        if (lab.textContent !== txtB) lab.textContent = txtB;
+        modoVazio = c.n === 0;
+        modoCarrinho = true;
+        return;
+      }
+      if (modoCarrinho) { btn.querySelector('svg').outerHTML = BUY_ICO; k.textContent = 'À vista no Pix'; modoCarrinho = false; }
+      var p = document.querySelector('[data-liquid="price"]');
+      if (p && v.textContent !== p.textContent.trim()) v.textContent = p.textContent.trim();
+      var b = principal();
+      var off = !b || b.disabled;
+      btn.disabled = off;
+      btn.classList.toggle('rn-buybar__btn--off', off);
+      lab.textContent = off ? 'Esgotado' : 'Comprar agora';
+    }
+    window.addEventListener('cart-sync', sync);
+    setInterval(sync, 400); sync();
+
+    // mostra a barra só quando o "Comprar agora" principal não está visível
+    var visivel = false;
+    function mostrar(s) {
+      if (s === visivel) return;
+      visivel = s;
+      bar.classList.toggle('rn-buybar--on', s);
+      bar.setAttribute('aria-hidden', s ? 'false' : 'true');
+      btn.tabIndex = s ? 0 : -1;
+      document.documentElement.classList.toggle('rn-has-buybar', s);
+    }
+    function checar() {
+      var b = principal();
+      if (!b) return mostrar(false);
+      var r = b.getBoundingClientRect();
+      var fora = r.bottom < 70 || r.top > window.innerHeight - 150;
+      mostrar(fora);
+    }
+    window.addEventListener('scroll', checar, { passive: true });
+    document.addEventListener('scroll', checar, { passive: true, capture: true });
+    window.addEventListener('resize', checar);
+    setInterval(checar, 600); checar();
+
+    btn.addEventListener('click', function (e) {
+      if (modoCarrinho && modoVazio) { var g = document.getElementById('rn-vg-busca') || document.getElementById('variants-list'); if (g) window.scrollTo({ top: g.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' }); return; }
+      if (modoCarrinho && window.EreembyCart) { e.stopPropagation(); EreembyCart.openDropdown(); return; }
+      var b = principal();
+      if (b && !b.disabled) b.click();
+    });
+  })();
+</script>

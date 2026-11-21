@@ -1,0 +1,494 @@
+<div class="rk-wrapper">
+
+<style>
+.rk-wrapper{
+--rk-accent:#2ee86b;
+--rk-bg:#0b0f0c;
+--rk-card:#121814;
+--rk-item:#18211b;
+--rk-border:rgba(255,255,255,.08);
+--rk-text:#f5f5f6;
+--rk-muted:#b4b8bf;
+width:100%;
+max-width:500px;
+margin:0 auto;
+font-family:'Inter',system-ui,-apple-system,sans-serif;
+color:var(--rk-text);
+}
+.rk-wrapper *{box-sizing:border-box}
+.rk-container{
+background:var(--rk-bg);
+padding:14px 12px 10px;
+border-radius:16px;
+}
+.rk-card{
+background:var(--rk-card);
+border:1px solid var(--rk-border);
+border-radius:18px;
+padding:22px 18px;
+margin-bottom:14px;
+}
+.rk-h2{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:19px;
+font-weight:800;
+line-height:1.3;
+margin:0 0 16px;
+}
+.rk-h2::before{
+content:"";
+width:4px;
+height:22px;
+border-radius:3px;
+background:var(--rk-accent);
+flex-shrink:0;
+}
+.rk-text{
+color:var(--rk-muted);
+font-size:13.5px;
+line-height:1.7;
+margin:0;
+}
+.rk-list{display:grid;gap:10px}
+.rk-item{
+display:flex;
+align-items:center;
+gap:14px;
+background:var(--rk-item);
+border:1px solid var(--rk-border);
+border-radius:12px;
+padding:13px 15px;
+}
+.rk-item-icon{
+width:50px;
+height:50px;
+flex-shrink:0;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:14px;
+background:rgba(46,232,107,.10);
+border:1px solid rgba(46,232,107,.38);
+}
+.rk-item-icon svg{
+width:26px;
+height:26px;
+fill:none;
+stroke:#7ef0a6;
+stroke-width:1.8;
+stroke-linecap:round;
+stroke-linejoin:round;
+}
+.rk-item-label{
+display:block;
+color:var(--rk-accent);
+font-size:12px;
+font-weight:800;
+margin-bottom:3px;
+}
+.rk-item-text{
+color:#e4e4e7;
+font-size:14px;
+line-height:1.45;
+}
+.rk-mock{
+position:relative;
+height:230px;
+border-radius:12px;
+background:#0c120e;
+border:1px solid var(--rk-border);
+overflow:hidden;
+margin-bottom:16px;
+}
+.rk-mock-bar{
+display:flex;
+gap:16px;
+padding:11px 16px;
+font-size:11px;
+color:#9aa0a6;
+border-bottom:1px solid var(--rk-border);
+}
+.rk-mock-bar span:first-child{color:#7ef0a6;font-weight:900;letter-spacing:.5px}
+.rk-dialog,
+.rk-success{
+position:absolute;
+left:50%;
+top:52px;
+transform:translateX(-50%);
+width:78%;
+border-radius:10px;
+padding:14px;
+background:#25272b;
+border:1px solid rgba(255,255,255,.10);
+box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.rk-dialog{animation:rkDialog 10s infinite}
+.rk-success{animation:rkSuccess 10s infinite;opacity:0;top:62px}
+.rk-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.rk-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+.rk-field{
+background:#151517;
+border:1px solid rgba(46,232,107,.55);
+border-radius:6px;
+padding:7px 9px;
+margin-bottom:7px;
+font-family:ui-monospace,Menlo,Consolas,monospace;
+font-size:11px;
+color:#fff;
+height:30px;
+display:flex;
+align-items:center;
+}
+.rk-type{
+display:inline-block;
+overflow:hidden;
+white-space:nowrap;
+width:0;
+border-right:1px solid var(--rk-accent);
+}
+.rk-type-1{animation:rkType1 10s steps(18,end) infinite}
+.rk-type-2{animation:rkType2 10s steps(10,end) infinite}
+.rk-dlg-actions{
+display:flex;
+justify-content:flex-end;
+gap:8px;
+margin-top:10px;
+}
+.rk-btn-cancel,
+.rk-btn-go{
+font-size:10.5px;
+font-weight:700;
+padding:6px 12px;
+border-radius:6px;
+}
+.rk-btn-cancel{background:#34363c;color:#d4d4d8}
+.rk-btn-go{
+position:relative;
+background:#16a34a;
+color:#fff;
+min-width:74px;
+text-align:center;
+}
+.rk-btn-go span{display:block}
+.rk-btn-a{animation:rkBtnA 10s infinite}
+.rk-btn-b{
+position:absolute;
+inset:6px 0 0 0;
+opacity:0;
+animation:rkBtnB 10s infinite;
+}
+@keyframes rkDialog{
+0%,66%{opacity:1}
+70%,96%{opacity:0}
+100%{opacity:1}
+}
+@keyframes rkSuccess{
+0%,66%{opacity:0}
+71%,94%{opacity:1}
+98%,100%{opacity:0}
+}
+@keyframes rkType1{
+0%,6%{width:0}
+24%,92%{width:18ch}
+100%{width:0}
+}
+@keyframes rkType2{
+0%,26%{width:0}
+38%,92%{width:10ch}
+100%{width:0}
+}
+@keyframes rkBtnA{
+0%,42%{opacity:1}
+44%,96%{opacity:0}
+100%{opacity:1}
+}
+@keyframes rkBtnB{
+0%,42%{opacity:0}
+44%,66%{opacity:1}
+68%,100%{opacity:0}
+}
+.rk-steps{display:grid;gap:10px}
+.rk-step{
+background:var(--rk-item);
+border:1px solid var(--rk-border);
+border-radius:14px;
+padding:14px 16px;
+}
+.rk-step-label{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:11.5px;
+font-weight:800;
+letter-spacing:.8px;
+text-transform:uppercase;
+color:var(--rk-muted);
+margin-bottom:8px;
+}
+.rk-step-num{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:21px;
+height:21px;
+border-radius:50%;
+background:var(--rk-accent);
+color:#fff;
+font-size:11px;
+font-weight:900;
+letter-spacing:0;
+}
+.rk-step-text{
+font-size:14px;
+line-height:1.6;
+color:var(--rk-text);
+margin:0;
+}
+.rk-step-text strong{color:#fff;font-weight:800}
+.rk-info-box{
+background:rgba(115,45,50,.28);
+border:1px solid rgba(239,68,68,.38);
+border-radius:12px;
+padding:16px;
+}
+.rk-info-title{
+color:#ef6b6b;
+font-size:13px;
+font-weight:800;
+margin:0 0 12px;
+}
+.rk-info{
+color:#c9c3c3;
+font-size:13px;
+line-height:1.65;
+margin:0 0 12px;
+}
+.rk-info:last-child{margin-bottom:0}
+.rk-highlight{color:#ef6b6b;font-weight:800}
+@media(max-width:380px){
+.rk-card{padding:18px 14px}
+.rk-dialog,.rk-success{width:88%}
+}
+@media(prefers-reduced-motion:reduce){
+.rk-dialog,.rk-success,.rk-type,.rk-btn-a,.rk-btn-b{animation:none}
+.rk-dialog{opacity:1}
+.rk-type-1{width:18ch}
+.rk-type-2{width:10ch}
+}
+.rk-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(46,232,107,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(22,163,74,.30),transparent 60%),#0b160f;border:1px solid rgba(46,232,107,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.rk-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--rk-accent);color:#04140a;font-size:11px;font-weight:900;letter-spacing:.8px}
+.rk-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.rk-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#7ef0a6,#2ee86b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rk-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.rk-hero-s strong{color:#fff}
+.rk-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--rk-border)}
+.rk-price-k{display:block;color:var(--rk-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.rk-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.rk-price-mes{flex-basis:100%;color:#7ef0a6;font-size:13px;font-weight:800}
+.rk-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(46,232,107,.18)}}
+.rk-trust{display:grid;gap:10px}
+.rk-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.rk-trust strong{color:#fff}
+.rk-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.rk-info-title{display:flex;align-items:center;gap:8px}
+.rk-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(prefers-reduced-motion:reduce){.rk-pulse{animation:none}}
+.rk-mock:has(.rk-scr){height:270px !important}
+.rk-success.rk-scr{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:12px 14px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important}
+.rk-scr-t{display:block;margin-bottom:10px;font-size:14px;color:#fff}
+.rk-rk-ban{position:relative;height:122px;border-radius:10px;overflow:hidden;padding:12px;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.75)),linear-gradient(135deg,#1d4ed8 0%,#6d28d9 45%,#9333ea 75%,#0ea5e9 100%)}
+.rk-rk-tag{display:inline-block;padding:3px 7px;border-radius:5px;background:rgba(0,0,0,.45);color:#fff;font-size:9px !important;font-weight:900;letter-spacing:.4px}
+.rk-rk-t{position:absolute;left:12px;bottom:12px;max-width:55%;font-size:15px !important;line-height:1.15;color:#fff}
+.rk-rk-play{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:7px;background:#2ee86b;color:#111;font-size:12px !important;font-weight:800;animation:nzRkP 10s infinite}
+.rk-rk-play svg{width:12px !important;height:12px !important;max-width:none !important;fill:currentColor}
+.rk-rk-play em{font-style:normal}
+.rk-rk-b{display:none}
+.rk-rk-a{animation:nzRkA 10s steps(1,end) infinite}
+.rk-rk-play::after{content:"Abrindo...";font-size:0;animation:nzRkB 10s steps(1,end) infinite}
+@keyframes nzRkP{0%,80%{background:#2ee86b;color:#111}83%,96%{background:#22c55e;color:#04140a}}
+@keyframes nzRkA{0%,81%{font-size:12px}82%,97%{font-size:0}}
+@keyframes nzRkB{0%,81%{font-size:0}82%,97%{font-size:12px}}
+.rk-rk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.rk-rk-chips span{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11px !important;font-weight:800}
+.rk-rk-chips svg{width:12px !important;height:12px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.rk-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+.rk-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.rk-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+</style>
+
+
+<div class="rk-container">
+    <div class="rk-hero"><span class="rk-tag">FORTNITE · FULL ACESSO</span><h2 class="rk-hero-t">Conta Fortnite com 90 skins por <span>R$ 119,90</span></h2><p class="rk-hero-s">Conta <strong>full acesso</strong> com <strong>Renegade Raider</strong>, <strong>Peter Griffin</strong> e mais 88 skins, pronta para jogar.</p><div class="rk-price rk-pulse"><div><span class="rk-price-k">Preço</span><span class="rk-price-new">R$ 119,90</span></div><span class="rk-price-mes">À vista no Pix · entrega automática</span></div></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="rk-card">
+
+        <h2 class="rk-h2">O que você recebe</h2>
+
+        <div class="rk-list">
+
+            <div class="rk-item">
+                <span class="rk-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" x2="10" y1="12" y2="12"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="15" x2="15.01" y1="13" y2="13"></line><line x1="18" x2="18.01" y1="11" y2="11"></line><rect width="20" height="12" x="2" y="6" rx="2"></rect></svg></span>
+                <div>
+                    <span class="rk-item-label">Skins</span>
+                    <span class="rk-item-text">90 skins, incluindo a rara Renegade Raider e o Peter Griffin.</span>
+                </div>
+            </div>
+
+            <div class="rk-item">
+                <span class="rk-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <div>
+                    <span class="rk-item-label">Itens da conta</span>
+                    <span class="rk-item-text">135 picaretas, 81 emotes e 250 V-Bucks.</span>
+                </div>
+            </div>
+
+            <div class="rk-item">
+                <span class="rk-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <div>
+                    <span class="rk-item-label">Full acesso</span>
+                    <span class="rk-item-text">Você recebe e-mail e senha da conta e pode alterar os dados disponíveis, assumindo o controle após a entrega.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap');
+.rv-k{display:block;color:var(--rk-accent);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.rv-h{margin:4px 0 14px;color:#fff;font-size:22px;font-weight:900;line-height:1.15}
+.rv-grid{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -18px 14px 0;padding:0 18px 4px 0;scrollbar-width:none}
+.rv-grid::-webkit-scrollbar{display:none}
+.rv-t{position:relative;flex:0 0 42%;max-width:170px;aspect-ratio:4/5.3;padding:0;border:0;border-radius:12px;overflow:hidden;cursor:pointer;scroll-snap-align:start;
+background:radial-gradient(120% 90% at 50% 25%,var(--c1),var(--c2));box-shadow:inset 0 -4px 0 var(--c2),inset 0 0 0 1px rgba(255,255,255,.10)}
+.rv-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.rv-t::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.78))}
+.rv-t b{position:absolute;z-index:1;left:6px;right:6px;bottom:10px;color:#fff;font-family:Oswald,'Arial Narrow',sans-serif;font-size:17px;line-height:1.05;font-weight:700;text-transform:uppercase;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.rv-st{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
+.rv-st span{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 8px;border-radius:12px;background:var(--rk-item);border:1px solid var(--rk-border);color:var(--rk-muted);font-size:14px}
+.rv-st svg{width:19px;height:19px;flex:0 0 auto;fill:none;stroke:var(--rk-accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rv-st b{color:#fff;font-weight:800}
+.rv-open{display:none}
+.rv[data-rv-tipo=steam] .rv-t{flex-basis:38%;aspect-ratio:2/3;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.rv[data-rv-tipo=steam] .rv-t::after,.rv[data-rv-tipo=steam] .rv-t b{display:none}
+</style><style>.rc0{--c1:#2cc1ff;--c2:#143977}.rc1{--c1:#ea8d23;--c2:#78371d}.rc2{--c1:#d8edff;--c2:#86ddff}.rc3{--c1:#bacaf2;--c2:#3f386d}.rc4{--c1:#c359ff;--c2:#4b2483}.rc5{--c1:#5cf2f3;--c2:#000f2b}.rc6{--c1:#ed1c24;--c2:#280102}.rc7{--c1:#8078ff;--c2:#0d0027}.rc8{--c1:#face36;--c2:#3f0043}.rc9{--c1:#69bb1e;--c2:#175117}</style>
+    <!-- VESTIÁRIO -->
+    <div class="rk-card rv" data-rv data-rv-tipo="fortnite">
+        <span class="rv-k">Inventário real desta conta</span>
+        <h2 class="rv-h">Vestiário da conta</h2>
+        <div class="rv-grid" data-rv-grid><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Saqueadora Renegada" data-d="Traje Raro Saqueadora Renegada." data-s="Explorador da Tempestade" data-i="Capítulo 1, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_028_athena_commando_f/smallicon.png" alt=""><b>Saqueadora Renegada</b></button><button type="button" class="rv-t rc1" data-r="legendary" data-rt="Lendário" data-n="Peter Griffin" data-d="Que belezinha!" data-s="Family Guy" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_zebrascramble_bacon/smallicon.png" alt=""><b>Peter Griffin</b></button><button type="button" class="rv-t rc1" data-r="legendary" data-rt="Lendário" data-n="Valéria" data-d="Brinque com o fogo." data-s="Chama e Fortuna" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_madamemoth_posh/smallicon.png" alt=""><b>Valéria</b></button><button type="button" class="rv-t rc1" data-r="legendary" data-rt="Lendário" data-n="O Fundação" data-d="Líder dos Sete. Sua missão é Tudo. " data-s="Os Sete" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_286_athena_commando_m_turtleneck/smallicon.png" alt=""><b>O Fundação</b></button><button type="button" class="rv-t rc2" data-r="frozen" data-rt="Série Congelados" data-n="Guarda do Amor Congelado" data-d="Mire naqueles de coração gelado." data-s="Lendas Congeladas" data-i="Capítulo 1, Temporada 7"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_295_athena_commando_m_cupidwinter/smallicon.png" alt=""><b>Guarda do Amor Congelado</b></button><button type="button" class="rv-t rc1" data-r="legendary" data-rt="Lendário" data-n="Ronin" data-d="Um viajante cujo caminho o levará à glória." data-s="Ordem da Lua Crescente" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_287_athena_commando_m_lonewolf/smallicon.png" alt=""><b>Ronin</b></button><button type="button" class="rv-t rc1" data-r="legendary" data-rt="Lendário" data-n="O Origem" data-d="A realidade dele continua viva. Um dos Sete." data-s="Os Sete" data-i="Capítulo 3, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_373_athena_commando_m_originprisoner/smallicon.png" alt=""><b>O Origem</b></button><button type="button" class="rv-t rc1" data-r="legendary" data-rt="Lendário" data-n="Imaginária" data-d="O passado dela é a chave para o nosso futuro. Faz parte dos Sete." data-s="Os Sete" data-i="Capítulo 3, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_374_athena_commando_f_binary/smallicon.png" alt=""><b>Imaginária</b></button><button type="button" class="rv-t rc2" data-r="frozen" data-rt="Série Congelados" data-n="Corvo Congelado" data-d="Mestre taciturno das penas congeladas." data-s="Lendas Congeladas" data-i="Capítulo 1, Temporada 7"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_293_athena_commando_m_ravenwinter/smallicon.png" alt=""><b>Corvo Congelado</b></button><button type="button" class="rv-t rc2" data-r="frozen" data-rt="Série Congelados" data-n="Cavaleira Rubra Congelada" data-d="Ameaça congelada das selvas geladas." data-s="Lendas Congeladas" data-i="Capítulo 1, Temporada 7"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_294_athena_commando_f_redknightwinter/smallicon.png" alt=""><b>Cavaleira Rubra Congelada</b></button><button type="button" class="rv-t rc3" data-r="epic" data-rt="Série do Clube" data-n="Sayara" data-d="Não há lugar seguro para seus alvos." data-s="Esquecidos da Escuridão" data-i="Capítulo 3, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_378_athena_commando_f_bacteria_8jygu/smallicon.png" alt=""><b>Sayara</b></button><button type="button" class="rv-t rc3" data-r="epic" data-rt="Série do Clube" data-n="Haruka Mascarada" data-d="Nunca revele sua verdadeira face." data-s="Sombra Mascarada" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_anodizedmetal/smallicon.png" alt=""><b>Haruka Mascarada</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Comandante Caveira" data-d="Sinta em seus ossos." data-s="Esquadrão Caveira" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_ethicalnoggin/smallicon.png" alt=""><b>Comandante Caveira</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Rosa da Noite" data-d="Uma guerreira demoníaca presa a uma maldição antiga." data-s="Rosa da Noite" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_rosedepth_seed/smallicon.png" alt=""><b>Rosa da Noite</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Protetora" data-d="Criada pela Ilha. Nascida para defendê-la." data-s="Espírito Animal" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_291_athena_commando_f_islandnomad/smallicon.png" alt=""><b>Protetora</b></button><button type="button" class="rv-t rc5" data-r="icon" data-rt="Série Ícones" data-n="Hatsune Miku Neko" data-d="O primeiro som do futuro." data-s="Hatsune Miku" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_jadetowelhope/smallicon.png" alt=""><b>Hatsune Miku Neko</b></button><button type="button" class="rv-t rc5" data-r="icon" data-rt="Série Ícones" data-n="Combatente Weeknd" data-d="Prepare-se feito um gladiador." data-s="The Weeknd" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_speeddialbattle/smallicon.png" alt=""><b>Combatente Weeknd</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Diretora do Caos" data-d="O caos reina." data-s="Caos e Desolação" data-i="Capítulo 2, Temporada Remix"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_missusmind_suit/smallicon.png" alt=""><b>Diretora do Caos</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Vindicta" data-d="Você pode moldar sua realidade." data-s="Vingança Futurística" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_290_athena_commando_f_motorcyclist/smallicon.png" alt=""><b>Vindicta</b></button><button type="button" class="rv-t rc6" data-r="marvel" data-rt="SÉRIE MARVEL" data-n="Homem-Aranha" data-d="Seu amigão da vizinhança." data-s="Homem-Aranha" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_293_athena_commando_m_parallelcomic/smallicon.png" alt=""><b>Homem-Aranha</b></button><button type="button" class="rv-t rc2" data-r="frozen" data-rt="Série Congelados" data-n="Embananado — Congelado" data-d="Quem o colocou no congelador?!" data-s="Festival Invernal 2021" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_323_athena_commando_m_bananawinter/smallicon.png" alt=""><b>Embananado — Congelado</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Syd da Equipe Corvo" data-d="Assombrosamente alegre." data-s="Acorvorante" data-i="Capítulo 5, Temporada 4"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_fuzzyclaw/smallicon.png" alt=""><b>Syd da Equipe Corvo</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Armando Metralha" data-d="Algoz condecorado e respeitado da Ordem Imaginária." data-s="Inquérito da O.I." data-i="Capítulo 3, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_370_athena_commando_m_orderguard/smallicon.png" alt=""><b>Armando Metralha</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Miaudas" data-d="Ele é um gato dourado." data-s="Miouro" data-i="Capítulo 2, Temporada Remix"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_goldcat_claw/smallicon.png" alt=""><b>Miaudas</b></button><button type="button" class="rv-t rc6" data-r="marvel" data-rt="SÉRIE MARVEL" data-n="Corvopool" data-d="Escuridão máxima." data-s="Deadpool" data-i="Capítulo 2, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_745_athena_commando_m_ravenquill/smallicon.png" alt=""><b>Corvopool</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Bola Amarela" data-d="Acerte todas as caçapas." data-s="Tacada de Mestre" data-i="Capítulo 2, Temporada Remix"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_stagecue_chalk/smallicon.png" alt=""><b>Bola Amarela</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Manchado" data-d="É a gota d&#x27;água... ou de tinta. Reativo: uma nova alma é adicionada ao Traje a cada eliminação." data-s="Marcados" data-i="Capítulo 2, Temporada 6"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_069_athena_commando_m_accumulate/smallicon.png" alt=""><b>Manchado</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Oscar" data-d="O instinto caçador dele nunca muda." data-s="Felino Lutador" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_bengalbasher_suit/smallicon.png" alt=""><b>Oscar</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Porco, o Açougueiro" data-d="É dele que vem a carne." data-s="Maestro da Carne" data-i="Capítulo 6, Temporada 5"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_snoutslice/smallicon.png" alt=""><b>Porco, o Açougueiro</b></button><button type="button" class="rv-t rc3" data-r="epic" data-rt="Série do Clube" data-n="O Devastação" data-d="Repete a batida!" data-s="Caveiroso Luminoso" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_327_athena_commando_m_skullpunk_9qtqi/smallicon.png" alt=""><b>O Devastação</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Bombardeiro de Assalto Aéreo" data-d="Proteja os céus." data-s="Voo de Volta" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_stormaviator/smallicon.png" alt=""><b>Bombardeiro de Assalto Aéreo</b></button><button type="button" class="rv-t rc5" data-r="icon" data-rt="Série Ícones" data-n="Snoop LBC &#x27;93" data-d="Direto do Ônibus de Batalha de LBC 2. " data-s="Snoop Dogg" data-i="Capítulo 2, Temporada Remix"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_lemoncartcleaner/smallicon.png" alt=""><b>Snoop LBC &#x27;93</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Tsuki — 2.0" data-d="Arma Caratecnológica mais recente enviada para caçar um protótipo quebrado." data-s="Caratecnológico" data-i="Capítulo 3, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_369_athena_commando_f_cyberarmor/smallicon.png" alt=""><b>Tsuki — 2.0</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Tenente Lauro Lhama" data-d="Nunca mande uma alpaca fazer o trabalho de uma lhama." data-s="Lhama Bélhica" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_288_athena_commando_m_buffllama/smallicon.png" alt=""><b>Tenente Lauro Lhama</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Auu Gusto" data-d="As melhores travessuras acontecem durante a lua cheia." data-s="Licantropia Lúdica" data-i="Capítulo 5, Temporada 4"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_kobolobo/smallicon.png" alt=""><b>Auu Gusto</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Gomes Demascar" data-d="Sabores artificiais, atitude autêntica." data-s="Duro de Mascar" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_289_athena_commando_m_gumball/smallicon.png" alt=""><b>Gomes Demascar</b></button><button type="button" class="rv-t rc3" data-r="epic" data-rt="Série do Clube" data-n="Li-Anna" data-d="A mente por trás da Armautomática da Ilha." data-s="Origens da Lhana" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_rainbowstraps/smallicon.png" alt=""><b>Li-Anna</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Shanta" data-d="Viaje através do plano ancestral." data-s="Caminho da Lótus" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_292_athena_commando_f_exosuit/smallicon.png" alt=""><b>Shanta</b></button><button type="button" class="rv-t rc5" data-r="icon" data-rt="Série Ícones" data-n="Papai Snoop" data-d="Ele distribui rimas, não presentes." data-s="Snoop Natalino" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_almondsplash/smallicon.png" alt=""><b>Papai Snoop</b></button><button type="button" class="rv-t rc3" data-r="epic" data-rt="Série do Clube" data-n="Tracy Trapalhada" data-d="Você está na mira dela." data-s="Princesa de Ninguém" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_357_athena_commando_f_valentinefashion_b3s3r/smallicon.png" alt=""><b>Tracy Trapalhada</b></button><button type="button" class="rv-t rc3" data-r="epic" data-rt="Série do Clube" data-n="Silas Sibilo" data-d="Herdeiro sangue frio de uma dinastia venenosa." data-s="Príncipe da Peçonha" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_serpentcoil/smallicon.png" alt=""><b>Silas Sibilo</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Valentia Lâmina das Sombras" data-d="Veja através das sombras." data-s="Nas Sombras" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_ironlilac_sly/smallicon.png" alt=""><b>Valentia Lâmina das Sombras</b></button><button type="button" class="rv-t rc3" data-r="epic" data-rt="Série do Clube" data-n="Dama das Garças" data-d="Mil anos de sorte." data-s="Asas da Graça" data-i="Capítulo 2, Temporada Remix"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_cranelaugh/smallicon.png" alt=""><b>Dama das Garças</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="TNTina (Dínamo)" data-d="Pegue um fósforo e acenda o pavio." data-s="CABUM!" data-i="Capítulo 2, Temporada Remix"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_boomshot_blam/smallicon.png" alt=""><b>TNTina (Dínamo)</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Doguíneo Trevoso" data-d="Todo bom garoto tem um lado sombrio." data-s="Não Tão Bom Garoto" data-i="Capítulo 2, Temporada Remix"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_hazardedge/smallicon.png" alt=""><b>Doguíneo Trevoso</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Nora Nocaute" data-d="Líder querida do esquadrão Tango." data-s="K.O. Capitão" data-i="Capítulo 3, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_371_athena_commando_f_cadet/smallicon.png" alt=""><b>Nora Nocaute</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Felínia" data-d="Robô assassina criada em um laboratório Re-Lince secreto Caratecnológico." data-s="Felina Fatal" data-i="Capítulo 5, Temporada 4"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_rankedscythe/smallicon.png" alt=""><b>Felínia</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Tozzi" data-d="Coração de diamante, nervos de aço." data-s="Impecável" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_diamondheart_chic/smallicon.png" alt=""><b>Tozzi</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Disfarçada" data-d="Espiã mais foffa que existe." data-s="Aventura e Foffura" data-i="Capítulo 2, Temporada Remix"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_denimequip_stock/smallicon.png" alt=""><b>Disfarçada</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Eloá Exploradora" data-d="Veja o que quiser." data-s="Exploração Real" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_vitalinventorblock/smallicon.png" alt=""><b>Eloá Exploradora</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Daigo" data-d="O homem das mil faces. " data-s="Mil Faces" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_mistmylar_claw/smallicon.png" alt=""><b>Daigo</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Nyanja" data-d="Vigarista de duas caudas." data-s="Gatuno Nekomata" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_slicevine_loopplum/smallicon.png" alt=""><b>Nyanja</b></button><button type="button" class="rv-t rc6" data-r="marvel" data-rt="SÉRIE MARVEL" data-n="Gatuno" data-d="Criminoso global com aprimoramentos tecnológicos e ladrão mais perigoso dos Estados Unidos." data-s="Gatuno" data-i="Capítulo 3, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_368_athena_commando_m_sienna/smallicon.png" alt=""><b>Gatuno</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Hope" data-d="Arrume encrenca e mude o mundo." data-s="O Submundo" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_voidredemption_rebel/smallicon.png" alt=""><b>Hope</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Kendo" data-d="Um ronin errante com um espírito indomável." data-s="Espada Errante" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_cubicvice_dual/smallicon.png" alt=""><b>Kendo</b></button><button type="button" class="rv-t rc3" data-r="epic" data-rt="Série do Clube" data-n="San-Burguer" data-d="Se você não aguenta o calor, fica longe do wasabi." data-s="Omakase Durrr" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_dashsurge/smallicon.png" alt=""><b>San-Burguer</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Alexandra Sharpe" data-d="Ela dá conta." data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_spyhandler/smallicon.png" alt=""><b>Alexandra Sharpe</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Dragão de Fumaça" data-d="Camuflado nas sombras." data-s="Ancestrais Renascidos" data-i="Capítulo 2, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_682_athena_commando_m_virtualshadow/smallicon.png" alt=""><b>Dragão de Fumaça</b></button><button type="button" class="rv-t rc3" data-r="epic" data-rt="Série do Clube" data-n="Boxeadora" data-d="No fundo, todo mundo gosta de um azarão." data-s="Superação" data-i="Capítulo 3, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_393_athena_commando_f_forsake/smallicon.png" alt=""><b>Boxeadora</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Nisha" data-d="Duelista honrada numa Sociedade sem honra." data-s="En Garde" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_ceremonialguard_fencer/smallicon.png" alt=""><b>Nisha</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Jones Vingativo" data-d="Um ícone renegado em uma missão de retaliação." data-s="A Vingança de Jones" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_undergroundrebel_fashion/smallicon.png" alt=""><b>Jones Vingativo</b></button><button type="button" class="rv-t rc5" data-r="icon" data-rt="Série Ícones" data-n="Marshmello" data-d="A festa é sua.
+Reativo: Brilha ao usar gestos musicais." data-s="Marshmello" data-i="Capítulo 1, Temporada 7"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_333_athena_commando_m_squishy/smallicon.png" alt=""><b>Marshmello</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Diva Estrelada" data-d="Brilhe com estilo." data-s="Estrela Reluzente" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_sparklechop/smallicon.png" alt=""><b>Diva Estrelada</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Rebelde Renegada" data-d="Sempre clássica." data-s="O Retorno da Renegada" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_rushrustle/smallicon.png" alt=""><b>Rebelde Renegada</b></button><button type="button" class="rv-t rc5" data-r="icon" data-rt="Série Ícones" data-n="Juice WRLD Slayer" data-d="O céu é o limite." data-s="Juice WRLD" data-i="Capítulo 2, Temporada Remix"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_kelplinenmagnesium/smallicon.png" alt=""><b>Juice WRLD Slayer</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Godzilla Evoluído" data-d="O rei dos monstros." data-s="Titãs da Monarca" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_blondejaw/smallicon.png" alt=""><b>Godzilla Evoluído</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Jade" data-d="Descubra os mitos da Ilha." data-s="Guardiã Amaldiçoada" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_polishedjade_mind/smallicon.png" alt=""><b>Jade</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Bugada" data-d="Você não é o que você programa." data-s="Inteligência Artificial" data-i="Capítulo 3, Temporada 4"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_defectglitch/smallicon.png" alt=""><b>Bugada</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Noele" data-d="Fria e destemida." data-s="Equipe Festiva" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_blowwire/smallicon.png" alt=""><b>Noele</b></button><button type="button" class="rv-t rc4" data-r="epic" data-rt="Épico" data-n="Baymax Herói" data-d="Pronto para salvar o dia." data-s="Operação Big Hero" data-i="Capítulo 6, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_oysterknock/smallicon.png" alt=""><b>Baymax Herói</b></button><button type="button" class="rv-t rc7" data-r="gaminglegends" data-rt="Série Lendas dos Jogos" data-n="Solid Snake" data-d="Mestre da camuflagem, incomparável em missões furtivas." data-s="EQUIPE SORRATEIRA" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_abstractmirror_rogue/smallicon.png" alt=""><b>Solid Snake</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Foffo Noel" data-d="O Noel não tá pra brincadeira." data-s="Festival Invernal 2022" data-i="Capítulo 4, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_cometwinter/smallicon.png" alt=""><b>Foffo Noel</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Bombardeira Estelar" data-d="O futuro parece brilhante..." data-s="Luz do Sol e Arco-íris" data-i="Capítulo 1, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_044_athena_commando_f_scipop/smallicon.png" alt=""><b>Bombardeira Estelar</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Guarda da Moita do Festival Invernal" data-d="Ele é uma arvorezinha bem natalina!" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_weepingwoodsfestive/smallicon.png" alt=""><b>Guarda da Moita do Festival Invernal</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Encaixotada Natalina" data-d="Sempre presente." data-s="Entrega Especial" data-i="Capítulo 5, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_cardboardcrew_holiday/smallicon.png" alt=""><b>Encaixotada Natalina</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Dentada Dócil" data-d="Aproveite a vida a cada mordida." data-s="Frenesi Faminto" data-i="Capítulo 2, Temporada 3"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_803_athena_commando_f_sharksuit/smallicon.png" alt=""><b>Dentada Dócil</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Rudolfoffo" data-d="A previsão do tempo é de Foffo." data-s="Festival Invernal 2022" data-i="Capítulo 4, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_cometdeer/smallicon.png" alt=""><b>Rudolfoffo</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Barão Bengala" data-d="O empresário mais doce do Polo Norte." data-s="Bengala Bigoduda" data-i="Capítulo 2, Temporada 5"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_978_athena_commando_m_fancycandy/smallicon.png" alt=""><b>Barão Bengala</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Quebra-mar" data-d="Reme contra a maré." data-s="Mar Aberto" data-i="Capítulo 2, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_575_athena_commando_f_bulletblue/smallicon.png" alt=""><b>Quebra-mar</b></button><button type="button" class="rv-t rc8" data-r="lava" data-rt="Série Lava" data-n="Komplexa — Tectônica" data-d="O mundo está esperando. É a sua vez." data-s="Assassina Vulcânica" data-i="Capítulo 3, Temporada 2"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_420_athena_commando_f_neongraffitilava/smallicon.png" alt=""><b>Komplexa — Tectônica</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Adeline Ártica" data-d="O estilo do momento." data-s="Festival Invernal 2022" data-i="Capítulo 4, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/character_sportsfashion_winter/smallicon.png" alt=""><b>Adeline Ártica</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Isabelle — Inverno" data-d="Eleita Rainha Adolescente do Festival Invernal por um júri de bruxas." data-s="Academia Oakwitch" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_311_athena_commando_f_scholarfestivewinter/smallicon.png" alt=""><b>Isabelle — Inverno</b></button><button type="button" class="rv-t rc0" data-r="rare" data-rt="Raro" data-n="Isabelle — Festiva" data-d="Eleita &quot;Bruxa Mais Animada&quot; todo ano, e ela está empolgada para vencer de novo!" data-s="Academia Oakwitch" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_310_athena_commando_f_scholarfestive/smallicon.png" alt=""><b>Isabelle — Festiva</b></button><button type="button" class="rv-t rc9" data-r="uncommon" data-rt="Incomum" data-n="Reservado" data-d="Se quiser ter o estilo dele, vai ter que entrar na fila." data-s="Nova Moda" data-i="Capítulo 3, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_a_326_athena_commando_m_sharpdresserblack/smallicon.png" alt=""><b>Reservado</b></button><button type="button" class="rv-t rc9" data-r="uncommon" data-rt="Incomum" data-n="Caçadora do Frio" data-d="Lute com o poder do vento. " data-s="Permafrost" data-i="Capítulo 2, Temporada 1"><img loading="lazy" src="https://fortnite-api.com/images/cosmetics/br/cid_673_athena_commando_f_arcticcamo_slate/smallicon.png" alt=""><b>Caçadora do Frio</b></button></div>
+        <div class="rv-st"><span data-aba="trajes"><svg viewBox="0 0 24 24"><path d="M8 3 3 6l2 5 2-1v11h10V10l2 1 2-5-5-3a4 4 0 0 1-8 0z"/></svg><b>90</b> Trajes</span><span data-aba="picaretas"><svg viewBox="0 0 24 24"><path d="M14 4c3 0 5.5 1 7 3-2-.6-4.3-.6-6.5.3M10 4C7 4 4.5 5 3 7c2-.6 4.3-.6 6.5.3M12 6l-1.5 1.5M10.5 7.5 3 15l2 2 7.5-7.5"/><path d="M12 6l6 6"/></svg><b>135</b> Picaretas</span><span data-aba="gestos"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><b>81</b> Gestos</span><span data-aba="asas-delta"><svg viewBox="0 0 24 24"><path d="M2 12a10 10 0 0 1 20 0z"/><path d="M12 12v8a2 2 0 0 0 4 0"/></svg><b>96</b> Asas-delta</span></div>
+        <button type="button" class="rv-open" data-rv-open>Abrir vestiário</button>
+    </div>
+
+    <!-- COMO UTILIZAR -->
+    <div class="rk-card">
+
+        <h2 class="rk-h2">Como utilizar</h2>
+
+        <div class="rk-mock">
+
+            <div class="rk-mock-bar">
+                <span>EPIC GAMES</span>
+                <span>Início</span>
+                <span>Jogos</span>
+                <span>Suporte</span>
+            </div>
+
+            <div class="rk-dialog">
+                <div class="rk-dlg-title">Entrar</div>
+                <div class="rk-dlg-desc">Use o e-mail e a senha que chegaram no seu pedido.</div>
+
+                <div class="rk-field"><span class="rk-type rk-type-1">seuemail@gmail.com</span></div>
+                <div class="rk-field"><span class="rk-type rk-type-2">••••••••••</span></div>
+
+                <div class="rk-dlg-actions">
+                    <span class="rk-btn-cancel">Cancelar</span>
+                    <span class="rk-btn-go">
+                        <span class="rk-btn-a">Entrar</span>
+                        <span class="rk-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="rk-cur rk-cur2" aria-hidden="true" style="--x1:36.4%;--y1:141px;--x2:36.4%;--y2:178px;--x3:74.5%;--y3:216px;--x4:80.9%;--y4:180px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="rk-success rk-scr">
+                <b class="rk-scr-t">Início</b>
+                <div class="rk-rk-ban"><span class="rk-rk-tag">NA SUA BIBLIOTECA</span><b class="rk-rk-t">Fortnite</b><span class="rk-rk-play" data-alvo><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><em class="rk-rk-a">Jogar</em><em class="rk-rk-b">Abrindo...</em></span></div>
+                <div class="rk-rk-chips"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>90 skins</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Full acesso</span></div>
+            </div>
+        </div>
+
+        <div class="rk-steps">
+
+            <div class="rk-step">
+                <div class="rk-step-label"><span class="rk-step-num">1</span> Passo 1</div>
+                <p class="rk-step-text">
+                    Escolha sua conta Fortnite e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="rk-step">
+                <div class="rk-step-label"><span class="rk-step-num">2</span> Passo 2</div>
+                <p class="rk-step-text">
+                    Receba os <strong>dados da conta Epic Games</strong> e faça o login.
+                </p>
+            </div>
+
+            <div class="rk-step">
+                <div class="rk-step-label"><span class="rk-step-num">3</span> Passo 3</div>
+                <p class="rk-step-text">
+                    Pronto! Abra o <strong>Fortnite</strong> e jogue com todas as suas skins.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="rk-card"><h2 class="rk-h2">Compre com tranquilidade</h2><div class="rk-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Dados da conta</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+<!-- TERMOS E GARANTIA -->
+    <div class="rk-card">
+
+        <h2 class="rk-h2">Informações importantes</h2>
+
+        <p class="rk-text" style="margin-bottom:14px">Antes de comprar, confira as informações sobre a conta e o acesso fornecido.</p>
+
+        <div class="rk-info-box">
+
+            <h3 class="rk-info-title">ATENÇÃO — LEIA ANTES DE COMPRAR</h3>
+
+            <p class="rk-info">
+                <span class="rk-highlight">Conta Epic Games:</span><br>
+                A conta é entregue com os itens informados no anúncio (skins, picaretas, emotes e V-Bucks) no momento da compra.
+            </p>
+
+            <p class="rk-info">
+                <span class="rk-highlight">Full acesso:</span><br>
+                Depois de receber, troque o e-mail e a senha para deixar a conta só com você.
+            </p>
+
+            <p class="rk-info">
+                <span class="rk-highlight">Suporte:</span><br>
+                Qualquer dúvida ou problema no login, basta abrir um ticket e consultar a staff.
+            </p>
+
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>A conta fica só comigo?</summary><p>Sim. A conta é <strong>full acesso</strong>: depois de receber, você pode assumir o controle dela.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="rk-hero rn-cta2"><span class="rk-tag">PRONTO PARA GARANTIR?</span><h2 class="rk-hero-t">Conta Fortnite com 90 skins</h2><div class="rk-price rk-pulse"><div><span class="rk-price-k">Preço</span><span class="rk-price-new">R$ 119,90</span></div><span class="rk-price-mes">À vista no Pix · entrega automática</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

@@ -1,0 +1,175 @@
+{% comment %} Rei dos Nitros: fonte Baloo 2 + estilos próprios {% endcomment %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&display=swap">
+{% include 'rn-styles' %}
+{% include 'rn-styles4' %}
+{% include 'rn-styles5' %}
+
+<style>
+  .reset-content-css {
+    font-family: inherit;
+    font-size: 16px;
+    line-height: 1.6;
+    word-break: normal;
+    overflow-wrap: break-word;
+    color: #ffffff
+  }
+
+  .reset-content-css * {
+    box-sizing: border-box;
+    font-family: inherit;
+    line-height: inherit;
+  }
+
+  /* Textos */
+  .reset-content-css p {
+    margin: 0 0 1rem;
+  }
+
+  /* Títulos */
+  .reset-content-css h1,
+  .reset-content-css h2,
+  .reset-content-css h3,
+  .reset-content-css h4,
+  .reset-content-css h5,
+  .reset-content-css h6 {
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 1.5rem 0 0.75rem;
+  }
+
+  .reset-content-css h1 {
+    font-size: 2rem;
+  }
+
+  .reset-content-css h2 {
+    font-size: 1.6rem;
+  }
+
+  .reset-content-css h3 {
+    font-size: 1.35rem;
+  }
+
+  .reset-content-css h4 {
+    font-size: 1.15rem;
+  }
+
+  .reset-content-css h5 {
+    font-size: 1rem;
+  }
+
+  .reset-content-css h6 {
+    font-size: 0.9rem;
+  }
+
+  /* Links */
+  .reset-content-css a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* Listas */
+  .reset-content-css ul,
+  .reset-content-css ol {
+    margin: 0 0 1rem 1.5rem;
+    padding: 0;
+  }
+
+  .reset-content-css ul {
+    list-style: disc;
+  }
+
+  .reset-content-css ol {
+    list-style: decimal;
+  }
+
+  .reset-content-css li {
+    margin: 0.35rem 0;
+  }
+
+  /* Mídias */
+  .reset-content-css img,
+  .reset-content-css video,
+  .reset-content-css iframe,
+  .reset-content-css canvas,
+  .reset-content-css svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Tabelas */
+  .reset-content-css table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+  }
+
+  .reset-content-css th,
+  .reset-content-css td {
+    padding: 0.75rem;
+    text-align: left;
+  }
+
+  /* Código */
+  .reset-content-css code,
+  .reset-content-css pre {
+    font-family: monospace;
+  }
+
+  .reset-content-css code {
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+  }
+
+  .reset-content-css pre {
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1rem 0;
+  }
+
+  .reset-content-css pre code {
+    padding: 0;
+  }
+
+  /* Blockquote */
+  .reset-content-css blockquote {
+    margin: 1rem 0;
+    padding-left: 1rem;
+  }
+
+  /* Linha horizontal */
+  .reset-content-css hr {
+    margin: 1.5rem 0;
+  }
+
+  /* Formulários */
+  .reset-content-css input,
+  .reset-content-css textarea,
+  .reset-content-css select,
+  .reset-content-css button {
+    font: inherit;
+  }
+
+  /* Espaçamento padrão */
+  .reset-content-css > *:first-child {
+    margin-top: 0;
+  }
+
+  .reset-content-css > *:last-child {
+    margin-bottom: 0;
+  }
+
+  {% comment %}
+    responsivo de #__ecommerce para garantir que o
+    layout ocupe toda a altura da tela, mesmo em
+    páginas com pouco conteúdo.
+  {% endcomment %}
+
+  #__ecommerce {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+</style>

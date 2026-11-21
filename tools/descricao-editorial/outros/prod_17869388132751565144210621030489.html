@@ -1,0 +1,114 @@
+<div class="ed">
+<style>
+.ed{--ed-ac:#22c55e;--ed-tx:#c4c7cc;--ed-mut:#8b8f96;--ed-card:#131418;--ed-bd:#24262b;max-width:560px;margin:0 auto;color:var(--ed-tx);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.7}
+.ed *{box-sizing:border-box}
+.ed p{margin:0 0 14px !important;color:var(--ed-tx) !important;font-size:14px !important;line-height:1.7 !important}
+.ed strong{color:#fff;font-weight:700}
+.ed-box{margin:0 0 18px;padding:16px 18px;border-radius:14px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-box p{margin:0 !important}
+.ed-h{margin:26px 0 12px !important;padding:0 !important;border:0 !important;color:#fff !important;font-size:16px !important;font-weight:800 !important;line-height:1.3 !important}
+.ed-h::before{display:none !important}
+.ed-img{display:block;width:100%;height:auto;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd)}
+/* ilustração: aparelhos */
+.ed-dev{display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:26px 14px 18px;background:radial-gradient(100% 120% at 50% 100%,#1e0b3a,#0c0c0e 70%)}
+.ed-dev span{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-dev svg{fill:none;stroke:#e6e7e9;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ed-dev .ed-scr{fill:url(#edG)}
+/* ficha do plano */
+.ed-spec{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 18px}
+.ed-spec div{padding:11px 12px;border-radius:12px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-spec small{display:block;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-spec b{display:block;color:#fff;font-size:13.5px;font-weight:700;margin-top:2px}
+@media (min-width:520px){.ed-dev{gap:26px}}
+.ed-art{position:relative;overflow:hidden;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd)}
+.ed-fig{margin:4px 0 18px !important;padding:0 !important}
+.ed-fig .ed-img{margin:0 !important}
+.ed-fig figcaption{margin-top:6px;color:var(--ed-mut);font-size:11.5px;text-align:center}
+.ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-cfg-r span,.dz-cfg-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-ord>b{display:block !important}
+.ed-fig{margin:4px 0 18px !important;padding:0 !important}
+.ed-fig .ed-img{margin:0 !important}
+.ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-spec .ed-w{grid-column:1 / -1}
+.ed-alert{margin:0 0 18px;padding:12px 14px;border-radius:12px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.45);color:#fde68a;font-size:13px;line-height:1.55}
+.ed-alert strong{color:#fff}
+.vt,.vt *{box-sizing:border-box;line-height:normal}
+.vt{--vt:10s;margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card,#131418);border:1px solid var(--ed-bd,#24262b)}
+.vt-k{display:block;color:var(--vc);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.vt-t{margin:3px 0 12px !important;padding:0 !important;border:0 !important;color:#fff !important;font-size:18px !important;font-weight:800 !important;line-height:1.2 !important}
+.vt-t::before{display:none !important}
+.vt-win{position:relative;height:240px;border-radius:14px;overflow:hidden;background:#0c0d10;border:1px solid rgba(255,255,255,.08)}
+.vt-note{margin:8px 0 0 !important;color:#8b8f96 !important;font-size:11.5px !important;line-height:1.45 !important;text-align:center}
+.vt-steps{display:grid;gap:6px;margin-top:12px}
+.vt-st{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.vt-st i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--vc);color:#06110a;font-style:normal;font-size:11px;font-weight:900}
+.vt-st b{display:block;color:#fff;font-size:13.5px}
+.vt-st span{display:block;margin-top:1px;color:#9aa0a6;font-size:12px;line-height:1.45}
+.vt-conf{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.vt-conf i{position:absolute;top:-10px;width:6px;height:10px;border-radius:2px;opacity:0}
+@media (prefers-reduced-motion:reduce){.vt *{animation-duration:0s !important;animation-iteration-count:1 !important}}
+@keyframes vtCf50{0%,50%{opacity:0;transform:translateY(0) rotate(0)}51%{opacity:1}80%{opacity:1}100%{opacity:0;transform:translateY(280px) rotate(620deg)}}
+.vt--rp .rp-bg{position:absolute;inset:0;background:radial-gradient(70% 80% at 50% 30%,#3b1d6e,#0d0a1a 75%)}
+.vt--rp .rp-card{position:absolute;left:50%;top:50%;width:82%;max-width:300px;height:150px;transform:translate(-50%,-50%);border-radius:16px;overflow:hidden;
+  background:radial-gradient(90% 90% at 50% 40%,#0f3d24,#06140c);border:2px solid #22c55e;box-shadow:0 0 0 4px rgba(34,197,94,.12),0 16px 40px rgba(0,0,0,.5)}
+.vt--rp .rp-prize{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;animation:rpPulse var(--vt) infinite}
+.vt--rp .rp-prize small{color:#86efac;font-size:9px;font-weight:900;letter-spacing:.12em}
+.vt--rp .rp-prize b{color:#fff;font-size:32px;font-weight:900;text-shadow:0 0 18px rgba(34,197,94,.8)}
+.vt--rp .rp-prize span{color:#d1fae5;font-size:11px}
+@keyframes rpPulse{0%,48%{transform:scale(1)}53%{transform:scale(1.12)}58%,92%{transform:scale(1)}}
+.vt--rp .rp-foil{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  background:repeating-linear-gradient(135deg,#d4d7dd 0 8px,#b9bdc5 8px 16px);animation:rpFoil var(--vt) infinite}
+.vt--rp .rp-foil b{color:#3f3f46;font-size:18px;font-weight:900;letter-spacing:.1em}
+.vt--rp .rp-foil span{color:#52525b;font-size:10px;font-weight:700}
+@keyframes rpFoil{0%,8%{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+  16%{clip-path:polygon(22% 0,100% 0,100% 100%,0 100%,0 40%)}24%{clip-path:polygon(45% 0,100% 0,100% 100%,0 100%,0 100%)}
+  32%{clip-path:polygon(68% 0,100% 0,100% 100%,30% 100%,30% 100%)}40%{clip-path:polygon(90% 0,100% 0,100% 100%,62% 100%,62% 100%)}
+  46%,93%{clip-path:polygon(100% 0,100% 0,100% 100%,100% 100%,100% 100%)}100%{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}}
+.vt--rp .rp-coin{position:absolute;width:38px !important;height:38px !important;max-width:none !important;margin:0 !important;filter:drop-shadow(0 4px 6px rgba(0,0,0,.5));animation:rpCoin var(--vt) infinite}
+@keyframes rpCoin{0%,4%{left:78%;top:78%;opacity:0}8%{left:12%;top:28%;opacity:1}16%{left:30%;top:68%}24%{left:44%;top:26%}32%{left:60%;top:70%}40%{left:76%;top:28%}46%{left:86%;top:62%;opacity:1}52%,100%{left:92%;top:88%;opacity:0}}
+.vt--rp .rp-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(34,197,94,.35),transparent 60%);opacity:0;animation:rpGlow var(--vt) infinite}
+@keyframes rpGlow{0%,47%{opacity:0}52%{opacity:1}75%,100%{opacity:0}}
+</style>
+
+<div class="ed-box"><p>Raspe e receba <strong>de R$ 0,20 até R$ 1.000,00 em saldo</strong> para usar na loja. Todo participante recebe saldo.</p></div>
+<div class="ed-alert"><strong>Resultado aleatório:</strong> todo participante recebe de R$ 0,20 a R$ 1.000,00 em saldo, mas o valor pode ser menor do que o que você pagou.</div>
+
+<p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
+<p>A raspadinha revela o seu resultado na hora. O saldo é resgatado falando com o suporte, em até 5 dias, para usar na loja.</p>
+<figure class="ed-fig"><img class="ed-img" src="https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@3bf775830a432cfbd70bdcbd1acdff3ac9bd9d1d/banners/descricoes/raspadinha-pix.jpg" alt="Teste da Sorte" loading="lazy"></figure>
+
+<p><strong>Todo participante recebe saldo</strong>, o que muda é o valor. Ele é aleatório e pode ser menor do que o que você pagou.</p>
+
+<h3 class="ed-h">Como a raspadinha funciona</h3>
+<div class="ed-spec">
+<div><small>Prêmios</small><b>De R$ 0,20 até R$ 1.000,00</b></div>
+<div><small>Forma</small><b>Saldo para usar na loja</b></div>
+<div><small>Ganho</small><b>Todo participante recebe saldo</b></div>
+<div><small>Resgate</small><b>Em até 5 dias, com o suporte</b></div>
+</div>
+
+<div class="ed-card vt vt--rp" style="--vc:#22c55e"><span class="vt-k">Veja como funciona</span><h2 class="vt-t">Raspe e descubra o seu saldo</h2><div class="vt-win" role="img" aria-label="Raspe e descubra o seu saldo"><div class="rp-bg"></div><div class="rp-card"><div class="rp-prize"><small>EXEMPLO · PRÊMIO MÁXIMO</small><b>R$ 1.000,00</b><span>de saldo na loja</span></div><div class="rp-foil"><b>RASPE AQUI</b><span>e descubra o seu saldo</span></div></div><img class="rp-coin" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Coin/3D/coin_3d.png" alt=""><div class="vt-conf"><i style="left:0%;background:#22c55e;animation:vtCf50 var(--vt) infinite;animation-delay:0.00s"></i><i style="left:53%;background:#facc15;animation:vtCf50 var(--vt) infinite;animation-delay:0.06s"></i><i style="left:6%;background:#f472b6;animation:vtCf50 var(--vt) infinite;animation-delay:0.12s"></i><i style="left:59%;background:#60a5fa;animation:vtCf50 var(--vt) infinite;animation-delay:0.18s"></i><i style="left:12%;background:#a78bfa;animation:vtCf50 var(--vt) infinite;animation-delay:0.24s"></i><i style="left:65%;background:#fb923c;animation:vtCf50 var(--vt) infinite;animation-delay:0.30s"></i><i style="left:18%;background:#22c55e;animation:vtCf50 var(--vt) infinite;animation-delay:0.00s"></i><i style="left:71%;background:#facc15;animation:vtCf50 var(--vt) infinite;animation-delay:0.06s"></i><i style="left:24%;background:#f472b6;animation:vtCf50 var(--vt) infinite;animation-delay:0.12s"></i><i style="left:77%;background:#60a5fa;animation:vtCf50 var(--vt) infinite;animation-delay:0.18s"></i><i style="left:30%;background:#a78bfa;animation:vtCf50 var(--vt) infinite;animation-delay:0.24s"></i><i style="left:83%;background:#fb923c;animation:vtCf50 var(--vt) infinite;animation-delay:0.30s"></i><i style="left:36%;background:#22c55e;animation:vtCf50 var(--vt) infinite;animation-delay:0.00s"></i><i style="left:89%;background:#facc15;animation:vtCf50 var(--vt) infinite;animation-delay:0.06s"></i><i style="left:42%;background:#f472b6;animation:vtCf50 var(--vt) infinite;animation-delay:0.12s"></i><i style="left:95%;background:#60a5fa;animation:vtCf50 var(--vt) infinite;animation-delay:0.18s"></i><i style="left:48%;background:#a78bfa;animation:vtCf50 var(--vt) infinite;animation-delay:0.24s"></i><i style="left:1%;background:#fb923c;animation:vtCf50 var(--vt) infinite;animation-delay:0.30s"></i></div><div class="rp-glow"></div></div><p class="vt-note">Exemplo ilustrativo com o prêmio máximo. O valor mostrado não é o seu resultado: todo participante recebe de R$ 0,20 a R$ 1.000,00.</p><div class="vt-steps"><div class="vt-st"><i>1</i><div><b>Compre pelo Pix</b><span>Aprovação na hora, a qualquer hora do dia.</span></div></div><div class="vt-st"><i>2</i><div><b>Raspe a sua cartela</b><span>O resultado aparece na hora.</span></div></div><div class="vt-st"><i>3</i><div><b>Resgate com o suporte</b><span>Fale com a gente em até 5 dias para receber.</span></div></div></div></div>
+
+<!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Como eu resgato o prêmio?</summary><p>Depois do resultado, fale com o suporte em até <strong>5 dias</strong> para solicitar o resgate.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div></div><!--/RN-CONV-->
+</div>

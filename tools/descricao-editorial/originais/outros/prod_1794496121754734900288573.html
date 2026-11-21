@@ -1,0 +1,651 @@
+<div class="ot-wrapper">
+
+<style>
+.ot-wrapper{
+    --ot-accent:#ff7a1a;
+    --ot-bg:#0e0a08;
+    --ot-card:#17110e;
+    --ot-item:#1f1612;
+    --ot-border:rgba(255,255,255,.08);
+    --ot-text:#f5f5f6;
+    --ot-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--ot-text);
+}
+.ot-wrapper *{box-sizing:border-box}
+
+.ot-container{
+    background:var(--ot-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.ot-card{
+    background:var(--ot-card);
+    border:1px solid var(--ot-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.ot-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.ot-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--ot-accent);
+    flex-shrink:0;
+}
+
+.ot-quote{
+    border-left:3px solid var(--ot-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.ot-quote strong{color:#fff}
+
+.ot-text{
+    color:var(--ot-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.ot-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.ot-list{display:grid;gap:10px}
+.ot-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--ot-item);
+    border:1px solid var(--ot-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.ot-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(255,122,26,.10);
+    border:1px solid rgba(255,122,26,.38);
+}
+.ot-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#ffb27a;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.ot-item-label{
+    display:block;
+    color:var(--ot-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.ot-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP FOGUETE */
+.ot-mock{
+    position:relative;
+    height:270px;
+    border-radius:12px;
+    background:linear-gradient(180deg,#0a0f1f 0%,#1a1030 55%,#2b1410 100%);
+    border:1px solid var(--ot-border);
+    overflow:hidden;
+    margin-bottom:18px;
+}
+.ot-stars{
+    position:absolute;
+    inset:-270px 0 0 0;
+    height:540px;
+    background-image:
+        radial-gradient(1.5px 1.5px at 12% 20px,#fff,transparent),
+        radial-gradient(1px 1px at 30% 60px,#fff,transparent),
+        radial-gradient(1.5px 1.5px at 55% 40px,#fff,transparent),
+        radial-gradient(1px 1px at 78% 90px,#fff,transparent),
+        radial-gradient(1.5px 1.5px at 90% 30px,#fff,transparent),
+        radial-gradient(1px 1px at 20% 130px,#fff,transparent),
+        radial-gradient(1.5px 1.5px at 65% 150px,#fff,transparent),
+        radial-gradient(1px 1px at 88% 170px,#fff,transparent);
+    background-size:100% 180px;
+    opacity:.8;
+    animation:otStars 8s linear infinite;
+}
+@keyframes otStars{
+    from{transform:translateY(0)}
+    to{transform:translateY(270px)}
+}
+.ot-ground{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:26px;
+    background:linear-gradient(180deg,#2a1a14,#120b08);
+    border-top:1px solid rgba(255,122,26,.25);
+    animation:otGround 8s infinite;
+}
+@keyframes otGround{
+    0%,10%{transform:translateY(0);opacity:1}
+    24%,100%{transform:translateY(40px);opacity:0}
+}
+
+/* FOGUETE + FPS (sobem juntos) */
+.ot-lift{
+    position:absolute;
+    left:50%;
+    bottom:20px;
+    width:200px;
+    margin-left:-100px;
+    height:150px;
+    animation:otLift 8s cubic-bezier(.45,.05,.55,.95) infinite;
+}
+@keyframes otLift{
+    0%,10%{transform:translateY(0);opacity:1}
+    78%,92%{transform:translateY(-100px);opacity:1}
+    97%{transform:translateY(-100px);opacity:0}
+    99%,100%{transform:translateY(0);opacity:0}
+}
+.ot-rocket{
+    position:absolute;
+    left:20px;
+    bottom:0;
+    width:46px;
+    height:104px;
+    animation:otShake .12s linear infinite;
+}
+@keyframes otShake{
+    0%,100%{transform:translateX(0)}
+    50%{transform:translateX(1px)}
+}
+.ot-rocket svg{width:100%;height:100%;display:block;overflow:visible}
+.ot-flame{
+    transform-origin:50% 0;
+    animation:otFlame .18s ease-in-out infinite alternate;
+}
+@keyframes otFlame{
+    from{transform:scaleY(.7)}
+    to{transform:scaleY(1.25)}
+}
+
+.ot-fps{
+    position:absolute;
+    left:84px;
+    top:24px;
+    display:flex;
+    align-items:center;
+    gap:6px;
+    padding:8px 12px;
+    border-radius:12px;
+    background:rgba(10,10,14,.82);
+    border:1px solid #ef4444;
+    box-shadow:0 0 18px rgba(239,68,68,.35);
+    animation:otFpsBox 8s infinite;
+}
+@keyframes otFpsBox{
+    0%,10%{border-color:#ef4444;box-shadow:0 0 18px rgba(239,68,68,.35)}
+    45%{border-color:#facc15;box-shadow:0 0 18px rgba(250,204,21,.35)}
+    78%,100%{border-color:#22c55e;box-shadow:0 0 22px rgba(34,197,94,.55)}
+}
+.ot-fps-win{
+    height:30px;
+    overflow:hidden;
+}
+.ot-fps-col{
+    display:block;
+    animation:otCount 8s steps(1,end) infinite;
+}
+.ot-fps-col b{
+    display:block;
+    height:30px;
+    line-height:30px;
+    min-width:44px;
+    text-align:right;
+    font-size:24px;
+    font-weight:900;
+    font-variant-numeric:tabular-nums;
+}
+.ot-fps-col b:nth-child(1){color:#ef4444}
+.ot-fps-col b:nth-child(2){color:#f97316}
+.ot-fps-col b:nth-child(3){color:#f59e0b}
+.ot-fps-col b:nth-child(4){color:#facc15}
+.ot-fps-col b:nth-child(5){color:#a3e635}
+.ot-fps-col b:nth-child(6){color:#4ade80}
+.ot-fps-col b:nth-child(7){color:#22c55e}
+@keyframes otCount{
+    0%,10%{transform:translateY(0)}
+    22%{transform:translateY(-30px)}
+    34%{transform:translateY(-60px)}
+    46%{transform:translateY(-90px)}
+    58%{transform:translateY(-120px)}
+    68%{transform:translateY(-150px)}
+    78%,100%{transform:translateY(-180px)}
+}
+.ot-fps-label{
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1px;
+    color:#d4d4d8;
+}
+.ot-fps-up{
+    font-size:16px;
+    font-weight:900;
+    color:#22c55e;
+    opacity:0;
+    animation:otUp 8s infinite;
+}
+@keyframes otUp{
+    0%,30%{opacity:0}
+    40%,92%{opacity:1}
+    97%,100%{opacity:0}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .ot-stars,.ot-ground,.ot-lift,.ot-rocket,.ot-flame,.ot-fps,.ot-fps-col,.ot-fps-up{animation:none}
+    .ot-lift{transform:translateY(-100px)}
+    .ot-fps-col{transform:translateY(-180px)}
+    .ot-fps{border-color:#22c55e}
+    .ot-fps-up{opacity:1}
+}
+
+.ot-disclaimer{
+    margin:14px 0 0;
+    text-align:center;
+    font-size:11.5px;
+    line-height:1.5;
+    color:#8b8d93;
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.ot-steps{display:grid;gap:10px}
+.ot-step{
+    background:var(--ot-item);
+    border:1px solid var(--ot-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.ot-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--ot-muted);
+    margin-bottom:8px;
+}
+.ot-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--ot-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.ot-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--ot-text);
+    margin:0;
+}
+.ot-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.ot-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.ot-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.ot-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.ot-info:last-child{margin-bottom:0}
+.ot-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .ot-card{padding:18px 14px}
+}
+
+/* ===== DESTAQUE ===== */
+.ot-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.ot-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--ot-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.ot-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.ot-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ot-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.ot-hero-s strong{color:#fff}
+.ot-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--ot-border)}
+.ot-price-k{display:block;color:var(--ot-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.ot-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.ot-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.ot-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.ot-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.ot-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.ot-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ot-ben{background:var(--ot-item);border:1px solid var(--ot-border);border-radius:14px;padding:14px 12px}
+.ot-ben svg{width:26px;height:26px;fill:none;stroke:var(--ot-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.ot-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.ot-ben small{display:block;color:var(--ot-muted);font-size:12.5px;line-height:1.45}
+.ot-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.ot-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--ot-item);border:1px solid var(--ot-border);text-align:center}
+.ot-plan b{display:block;font-size:13px;color:var(--ot-muted);margin-bottom:6px}
+.ot-plan strong{display:block;font-size:22px;color:#fff}
+.ot-plan small{display:block;margin-top:4px;color:var(--ot-muted);font-size:12px}
+.ot-plan--on{border-color:var(--ot-accent);background:rgba(240,77,200,.10)}
+.ot-plan--on b{color:#ff7ad9}
+.ot-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--ot-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.ot-trust{display:grid;gap:10px}
+.ot-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.ot-trust strong{color:#fff}
+.ot-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.ot-info-title{display:flex;align-items:center;gap:8px}
+.ot-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.ot-nzgrid,.ot-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ot-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.ot-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.ot-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.ot-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.ot-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.ot-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.ot-prof-body{padding:30px 12px 12px}
+.ot-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.ot-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.ot-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.ot-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.ot-prof-user b{color:#ff7ad9}
+.ot-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.ot-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.ot-mock:has(.ot-nzprof){height:auto !important;padding-bottom:16px}
+.ot-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.ot-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.ot-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.ot-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.ot-prof-name{white-space:nowrap}
+.ot-nzprof .ot-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.ot-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.ot-prof-av,.ot-prof-av span,.ot-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.ot-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.ot-rows{display:grid;gap:8px}
+.ot-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--ot-item);border:1px solid var(--ot-border);font-size:14px;color:#e4e4e7}
+.ot-row b{color:#fff;white-space:nowrap}
+.ot-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.ot-row--on{border-color:var(--ot-accent);background:rgba(240,77,200,.10)}
+.ot-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--ot-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.ot-inv{display:flex;align-items:center;gap:10px;margin:4px 0 12px;padding:10px;border-radius:8px;background:#151517;border:1px solid rgba(255,255,255,.08)}
+.ot-inv-av{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:var(--ot-accent)}
+.ot-inv-av svg{width:17px !important;height:17px !important;max-width:none !important;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.ot-inv b{display:block;font-size:12.5px;color:#fff}
+.ot-inv small{display:block;margin-top:2px;font-size:11px;color:#a1a1aa}
+.ot-cur.ot-cur3{animation-name:nzCur3 !important}
+.ot-cur.ot-cur3 svg{animation-name:nzClk3 !important}
+@keyframes nzCur3{0%{left:60%;top:250px;opacity:0}5%{opacity:1}12%,30%{left:var(--x1);top:var(--y1);opacity:1}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+@keyframes nzClk3{0%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}44.5%,79.5%{transform:scale(.8)}}
+
+.ot-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+
+.ot-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.ot-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+
+.ot-om{height:280px !important;background:radial-gradient(circle at 80% 0%,rgba(255,122,26,.18),transparent 55%),linear-gradient(180deg,#0b0d14,#120d0a) !important}
+.ot-om>*:not(.ot-cur){display:block}
+.ot-om .ot-stars,.ot-om .ot-ground{display:none}
+.ot-owin{position:absolute;left:50%;top:14px;transform:translateX(-50%);width:88%;padding:0 12px 12px;border-radius:10px;background:#1c1d22;border:1px solid rgba(255,255,255,.1);box-shadow:0 12px 30px rgba(0,0,0,.55);animation:nzOWin 10s infinite}
+.ot-otop{display:flex;align-items:center;gap:5px;margin:0 -12px 10px;padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.07);border-radius:10px 10px 0 0;background:#25262c}
+.ot-otop i{width:8px;height:8px;border-radius:50%;background:#ef4444}.ot-otop i:nth-child(2){background:#f59e0b}.ot-otop i:nth-child(3){background:#22c55e}
+.ot-otop span{margin-left:6px;font-size:10.5px !important;font-weight:800;color:#d4d4d8}
+.ot-om .ot-inv{margin:0 0 8px;padding:8px}
+.ot-om .ot-inv-av{flex-basis:30px;width:30px;height:30px;border-radius:8px;background:#ff7a1a}
+.ot-om .ot-inv b{font-size:11.5px !important;font-family:ui-monospace,Menlo,Consolas,monospace}
+.ot-om .ot-inv small{font-size:10px !important}
+.ot-olist{display:grid;gap:4px}
+.ot-oi{display:flex;align-items:center;gap:6px;font-size:10.5px !important;color:#71717a;animation:nzOi 10s infinite;animation-delay:calc(var(--d) * .5s)}
+.ot-oi svg{flex:0 0 13px;width:13px !important;height:13px !important;max-width:none !important;padding:2px;border-radius:50%;background:#2e3035;fill:none;stroke:transparent;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;animation:nzOiC 10s infinite;animation-delay:calc(var(--d) * .5s)}
+.ot-obar{height:5px;margin:9px 0;border-radius:3px;background:#2e3035;overflow:hidden}
+.ot-obar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#ff7a1a,#facc15);animation:nzObar 10s infinite}
+.ot-oact{display:flex;justify-content:flex-end}
+.ot-om .ot-btn-go{position:relative;padding:6px 14px;border-radius:6px;background:#ff7a1a;color:#fff;font-size:11px !important;font-weight:800;min-width:0}
+.ot-oa{font-style:normal;animation:nzRkA2 10s steps(1,end) infinite}
+.ot-om .ot-btn-go::after{content:"Otimizando...";font-size:0;animation:nzRkB2 10s steps(1,end) infinite}
+.ot-ores{position:absolute;left:12px;right:12px;top:14px;opacity:0;animation:nzORes 10s infinite}
+.ot-ores-t{display:flex;align-items:center;gap:7px;font-size:14px !important;color:#fff}
+.ot-ores-t i{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#22c55e}
+.ot-ores-t svg{width:13px !important;height:13px !important;max-width:none !important;fill:none;stroke:#04140a;stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round}
+.ot-ocmp{display:grid;gap:8px;margin:12px 0 10px}
+.ot-ocmp>div{display:grid;grid-template-columns:44px 1fr 62px;align-items:center;gap:8px}
+.ot-ocmp small{font-size:10.5px !important;color:#a1a1aa}
+.ot-ocmp b{font-size:12px !important;color:#e4e4e7;text-align:right}
+.ot-ocmp b.ot-ogood{color:#22c55e}
+.ot-ob{height:10px;border-radius:5px;background:#26282e;overflow:hidden}
+.ot-ob i{display:block;height:100%;border-radius:5px}
+.ot-ob1{width:38%;background:#71717a}
+.ot-ob2{width:0;background:linear-gradient(90deg,#ff7a1a,#22c55e);animation:nzOb2 10s infinite}
+.ot-ochips{display:flex;flex-wrap:wrap;gap:6px}
+.ot-ochips span{padding:4px 9px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:10.5px !important;font-weight:800}
+.ot-oplay{display:table;margin:12px auto 0;padding:7px 16px;border-radius:7px;background:#ff7a1a;color:#fff;font-size:11.5px !important;font-weight:800;animation:nzOPlay 10s infinite}
+.ot-oplay svg{display:inline-block;vertical-align:-2px;margin-right:5px;width:12px !important;height:12px !important;max-width:none !important;fill:currentColor}
+@keyframes nzOWin{0%,68%{opacity:1}70%,97%{opacity:0}100%{opacity:1}}
+@keyframes nzORes{0%,69%{opacity:0;transform:translateY(8px)}72%,94%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes nzObar{0%,45%{width:0}66%,100%{width:100%}}
+@keyframes nzOi{0%,47%{color:#71717a}49%,100%{color:#e4e4e7}}
+@keyframes nzOiC{0%,47%{background:#2e3035;stroke:transparent}49%,100%{background:#22c55e;stroke:#04140a}}
+@keyframes nzOb2{0%,72%{width:0}80%,100%{width:92%}}
+@keyframes nzOPlay{0%,79%{background:#ff7a1a}81%,96%{background:#22c55e}}
+@keyframes nzRkA2{0%,44%{font-size:11px}45%,69%{font-size:0}70%,100%{font-size:11px}}
+@keyframes nzRkB2{0%,44%{font-size:0}45%,69%{font-size:11px}70%,100%{font-size:0}}
+</style>
+
+
+<div class="ot-container">
+    <div class="ot-hero"><span class="ot-tag">PC · VERSÃO V11 2026</span><h2 class="ot-hero-t">Otimização completa por <span>R$ 25,99</span></h2><p class="ot-hero-s">Menos travadas e <strong>mais FPS</strong>: receba o arquivo, execute os comandos e deixe o seu PC no máximo.</p><div class="ot-price ot-pulse"><div><span class="ot-price-k">Com um técnico</span><span class="ot-price-old">R$ 329,00</span></div><div><span class="ot-price-k">Aqui</span><span class="ot-price-new">R$ 25,99</span></div><span class="ot-price-off">-92%</span><span class="ot-price-mes">Você economiza R$ 303,01.</span></div></div>
+    <!-- O QUE VOCÊ RECEBE -->
+    <div class="ot-card">
+
+        <h2 class="ot-h2">O que você recebe</h2>
+
+        <div class="ot-list">
+
+            <div class="ot-item ot-item-hl">
+                <span class="ot-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"></path><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"></path><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"></path><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"></path></svg></span>
+                <div>
+                    <span class="ot-item-label">Mais desempenho</span>
+                    <span class="ot-item-text">Ajustes feitos para tirar o máximo do seu PC nos jogos e no dia a dia.</span>
+                </div>
+            </div>
+
+            <div class="ot-item">
+                <span class="ot-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><path d="m10 13-2 2 2 2"></path><path d="m14 17 2-2-2-2"></path></svg></span>
+                <div>
+                    <span class="ot-item-label">Arquivo pronto</span>
+                    <span class="ot-item-text">Você recebe o arquivo com os comandos e só precisa executar.</span>
+                </div>
+            </div>
+
+            <div class="ot-item">
+                <span class="ot-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg></span>
+                <div>
+                    <span class="ot-item-label">Mais fluidez</span>
+                    <span class="ot-item-text">Menos travadas e um sistema mais leve e responsivo.</span>
+                </div>
+            </div>
+
+            <div class="ot-item">
+                <span class="ot-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="14" x="2" y="3" rx="2"></rect><line x1="8" x2="16" y1="21" y2="21"></line><line x1="12" x2="12" y1="17" y2="21"></line></svg></span>
+                <div>
+                    <span class="ot-item-label">Versão V11 • 2026</span>
+                    <span class="ot-item-text">A versão mais atual da otimização completa para PC.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="ot-card">
+
+        <h2 class="ot-h2">Como utilizar</h2>
+
+        <div class="ot-mock ot-om">
+            <div class="ot-dialog ot-owin">
+                <div class="ot-otop"><i></i><i></i><i></i><span>Otimizador V11</span></div>
+                <div class="ot-inv"><i class="ot-inv-av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6v18h12V7zM14 3v4h4M9 13l-2 2 2 2M15 13l2 2-2 2"/></svg></i><span><b>otimizacao-v11.bat</b><small>Pronto para executar</small></span></div>
+                <div class="ot-olist">
+                    <span class="ot-oi" style="--d:0"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Limpando arquivos temporários</span>
+                    <span class="ot-oi" style="--d:1"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Energia no modo desempenho</span>
+                    <span class="ot-oi" style="--d:2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Processos em segundo plano</span>
+                    <span class="ot-oi" style="--d:3"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ajustes de rede e latência</span>
+                </div>
+                <div class="ot-obar"><i></i></div>
+                <div class="ot-oact"><span class="ot-btn-go"><em class="ot-oa">Executar</em></span></div>
+            </div>
+            <span class="ot-cur ot-cur2 ot-cur3" aria-hidden="true" style="--x1:81.7%;--y1:78px;--x2:81.7%;--y2:78px;--x3:79.8%;--y3:210px;--x4:53.7%;--y4:152px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="ot-success ot-ores">
+                <b class="ot-ores-t"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></i>PC otimizado</b>
+                <div class="ot-ocmp">
+                    <div><small>Antes</small><span class="ot-ob"><i class="ot-ob1"></i></span><b>60 FPS</b></div>
+                    <div><small>Depois</small><span class="ot-ob"><i class="ot-ob2"></i></span><b class="ot-ogood">144 FPS</b></div>
+                </div>
+                <div class="ot-ochips"><span>Menos travadas</span><span>Sistema mais leve</span></div>
+                <span class="ot-oplay" data-alvo><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>Jogar agora</span>
+            </div>
+        </div>
+
+
+        <div class="ot-steps">
+
+            <div class="ot-step">
+                <div class="ot-step-label"><span class="ot-step-num">1</span> Passo 1</div>
+                <p class="ot-step-text">
+                    Finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="ot-step">
+                <div class="ot-step-label"><span class="ot-step-num">2</span> Passo 2</div>
+                <p class="ot-step-text">
+                    Receba o <strong>arquivo da otimização</strong> na página do seu pedido.
+                </p>
+            </div>
+
+            <div class="ot-step">
+                <div class="ot-step-label"><span class="ot-step-num">3</span> Passo 3</div>
+                <p class="ot-step-text">
+                    Execute os <strong>comandos</strong> do arquivo, reinicie o PC e sinta a diferença.
+                </p>
+            </div>
+
+        </div>
+
+        <p class="ot-disclaimer">
+            Animação ilustrativa. O ganho de FPS varia conforme o hardware e os jogos do seu PC.
+        </p>
+
+    </div>
+
+
+        <div class="ot-card"><h2 class="ot-h2">Compre com tranquilidade</h2><div class="ot-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Arquivo e instruções</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+<!-- AVISOS -->
+    <div class="ot-card">
+
+        <h2 class="ot-h2">Informações importantes</h2>
+
+        <div class="ot-info-box">
+
+            <h3 class="ot-info-title">LEIA ANTES DE COMPRAR</h3>
+
+            <p class="ot-info">
+                <span class="ot-highlight">Resultados:</span><br>
+                O desempenho final depende das configurações e do hardware de cada PC.
+            </p>
+
+            <p class="ot-info">
+                <span class="ot-highlight">Antes de executar:</span><br>
+                Recomendamos criar um ponto de restauração do Windows e fechar os programas abertos.
+            </p>
+
+            <p class="ot-info">
+                <span class="ot-highlight">Uso:</span><br>
+                Siga as instruções do arquivo com atenção e reinicie o PC ao final.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="ot-hero rn-cta2"><span class="ot-tag">PRONTO PARA GARANTIR?</span><h2 class="ot-hero-t">Otimização Avançada</h2><div class="ot-price ot-pulse"><div><span class="ot-price-k">Com um técnico</span><span class="ot-price-old">R$ 329,00</span></div><div><span class="ot-price-k">Aqui</span><span class="ot-price-new">R$ 25,99</span></div><span class="ot-price-off">-92%</span><span class="ot-price-mes">Você economiza R$ 303,01.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

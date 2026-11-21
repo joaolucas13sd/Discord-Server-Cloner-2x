@@ -1,0 +1,69 @@
+{% comment %}
+  Rei dos Nitros: chamada da Black Friday no topo da Home.
+  Aparece até 30/11 (some sozinha a partir de 01/12 00:00, horário de Brasília).
+{% endcomment %}
+{% assign rn_bf_agora = 'now' | date: '%s' | plus: 0 %}
+{% if rn_bf_agora < 1796094000 %}
+<section class="rn-bfh rn-bfh--v2" id="rn-bfh">
+  <div class="rn-bfh__top">
+    <div class="rn-bfh__pill"><span class="rn-bfh__dot"></span>BLACK FRIDAY · 25 A 30/11</div>
+  </div>
+  <h2 class="rn-bfh__title"><span class="rn-bfh__l1">BLACK</span><span class="rn-bfh__l2">FRIDAY</span></h2>
+  <p class="rn-bfh__txt">Um <b>cupom secreto novo por dia</b>, revelado à meia-noite. Na sexta tem o <b>cupom dourado</b>, o maior da Black.</p>
+  <div class="rn-bfh__painel">
+  <div class="rn-bfh__dias" aria-label="Dias da Black Friday">
+    <div class="rn-bfh__dia" data-t="1795575600"><small>QUA</small><b>25</b><i>Cupom</i></div>
+    <div class="rn-bfh__dia" data-t="1795662000"><small>QUI</small><b>26</b><i>Cupom</i></div>
+    <div class="rn-bfh__dia rn-bfh__dia--ouro" data-t="1795748400"><small>SEX</small><b>27</b><i>Dourado</i></div>
+    <div class="rn-bfh__dia" data-t="1795834800"><small>SÁB</small><b>28</b><i>Cupom</i></div>
+    <div class="rn-bfh__dia" data-t="1795921200"><small>DOM</small><b>29</b><i>Cupom</i></div>
+    <div class="rn-bfh__dia" data-t="1796007600"><small>SEG</small><b>30</b><i>Último</i></div>
+  </div>
+  <div class="rn-bfh__k" id="rn-bfh-k">A BLACK COMEÇA EM</div>
+  <div class="rn-bfh__clock">
+    <div class="rn-bfh__u rn-bfh__u--on"><b id="rn-bfh-d">00</b><span>DIAS</span></div>
+    <div class="rn-bfh__u"><b id="rn-bfh-h">00</b><span>HORAS</span></div>
+    <div class="rn-bfh__u"><b id="rn-bfh-m">00</b><span>MIN</span></div>
+    <div class="rn-bfh__u"><b id="rn-bfh-s">00</b><span>SEG</span></div>
+  </div>
+  </div>
+  <div class="rn-bfh__btns">
+    <a class="rn-bfh__btn" href="/black-friday">Ver a página da Black <span aria-hidden="true">→</span></a>
+    <a class="rn-bfh__cal" id="rn-bfh-cal" target="_blank" rel="noopener" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=Black%20Friday%20Rei%20dos%20Nitros&amp;dates=20261125T030000Z/20261201T030000Z&amp;details=Cupom%20secreto%20novo%20todo%20dia%20%C3%A0%20meia-noite.%20Sexta%20(27%2F11)%20tem%20o%20cupom%20dourado.&amp;location=https%3A%2F%2Fblast.erbystores.com%2Fblack-friday"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M12 14v4M10 16h4"/></svg>Lembrar na agenda</a>
+  </div>
+  <a class="rn-bfh__rl" href="/black-friday#rn-bf-rl" id="rn-bfh-rl"><span class="rn-bfh__rli"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.2 2.2 4.6 13a.8.8 0 0 0 .6 1.3h5.4l-1.4 7.1c-.1.8.9 1.2 1.4.6L19.4 11a.8.8 0 0 0-.6-1.3h-5.4l1.4-6.9c.1-.8-.9-1.2-1.6-.6Z"/></svg></span><span><b>Enquanto isso:</b> Relâmpago com 3 jogos por <b>R$ 10</b>, valendo agora</span><span aria-hidden="true" class="rn-bfh__rlg">→</span></a>
+</section>
+<script>
+  (function () {
+    var INICIO = 1795575600, FIM = 1796094000, DIA = 86400;
+    var cupons = [1795575600, 1795662000, 1795748400, 1795834800, 1795921200, 1796007600];
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    function tick() {
+      var agora = Date.now() / 1000, sec = document.getElementById('rn-bfh');
+      if (!sec) return;
+      if (agora >= FIM) { sec.remove(); return; }
+      var alvo = INICIO;
+      if (agora >= INICIO) {
+        alvo = cupons.filter(function (t) { return t > agora; })[0] || FIM;
+        document.getElementById('rn-bfh-k').textContent = alvo === FIM ? 'ÚLTIMO DIA: A BLACK ACABA EM' : 'A BLACK ESTÁ ROLANDO · PRÓXIMO CUPOM EM';
+      }
+      var r = Math.max(0, Math.floor(alvo - agora));
+      document.getElementById('rn-bfh-d').textContent = pad(Math.floor(r / DIA));
+      document.getElementById('rn-bfh-h').textContent = pad(Math.floor(r % DIA / 3600));
+      document.getElementById('rn-bfh-m').textContent = pad(Math.floor(r % 3600 / 60));
+      document.getElementById('rn-bfh-s').textContent = pad(r % 60);
+    }
+    function dias() {
+      var agora = Date.now() / 1000;
+      [].forEach.call(document.querySelectorAll('#rn-bfh .rn-bfh__dia'), function (d) {
+        var t = +d.getAttribute('data-t');
+        d.classList.toggle('rn-bfh__dia--hoje', agora >= t && agora < t + DIA);
+        d.classList.toggle('rn-bfh__dia--foi', agora >= t + DIA);
+      });
+    }
+    var rl = document.getElementById('rn-bfh-rl');
+    if (rl) rl.addEventListener('click', function () { try { sessionStorage.setItem('rn_ir_relampago', '1'); } catch (e) {} });
+    tick(); dias(); setInterval(function () { tick(); dias(); }, 1000);
+  })();
+</script>
+{% endif %}
