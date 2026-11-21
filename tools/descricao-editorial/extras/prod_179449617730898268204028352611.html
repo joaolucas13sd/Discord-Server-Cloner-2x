@@ -164,9 +164,9 @@
 .sv-cur::before{content:"";position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.55);opacity:0;transform:scale(.3);animation:svClick var(--sv-t) infinite}
 @keyframes svCur{
   0%,3%{left:calc(50% + 120px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  8%{left:calc(50% + 46px);top:101px}10%{left:calc(50% + 46px);top:101px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  12.5%{left:calc(50% + 46px);top:133px}14%{left:calc(50% + 46px);top:133px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  16.5%{left:calc(50% + 46px);top:165px}23%{left:calc(50% + 46px);top:165px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  8%{left:calc(50% + 46px);top:116px}10%{left:calc(50% + 46px);top:116px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  12.5%{left:calc(50% + 46px);top:148px}14%{left:calc(50% + 46px);top:148px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  16.5%{left:calc(50% + 46px);top:180px}23%{left:calc(50% + 46px);top:180px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   27.5%{left:calc(50% - 40px);top:100px}36%{left:calc(50% - 40px);top:100px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   37%{left:calc(50% - 40px);top:130px}42.5%{left:calc(50% - 40px);top:130px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   44.5%{left:calc(50% + 4px);top:161px}49%{left:calc(50% + 4px);top:161px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
@@ -223,7 +223,55 @@
 .sv-card .sv-brand .sv-word{font-size:12px;animation:none !important;opacity:1 !important;transform:none !important}
 .sv-card .sv-brand{margin-bottom:2px}
 
-.sv-inv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:22px;text-align:center}
+/* ---- movimento ---- */
+@keyframes svA{0%{opacity:0;transform:scale(.97)}2%,23%{opacity:1;transform:none}25.5%,98%{opacity:0;transform:translateX(-14%)}100%{opacity:0}}
+@keyframes svB{0%,24%{opacity:0;transform:translateX(14%)}26%,49%{opacity:1;transform:none}51%,100%{opacity:0;transform:scale(1.04)}}
+@keyframes svC{0%,49.5%{opacity:0;transform:scale(.94)}51.5%,68%{opacity:1;transform:none}70.5%,100%{opacity:0;transform:translateY(-10%)}}
+@keyframes svD{0%,69%{opacity:0;transform:translateY(12%)}71.5%,97%{opacity:1;transform:none}99.5%,100%{opacity:0}}
+.sv-toast{position:absolute;left:50%;top:8px;z-index:2;display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:999px;background:#16351f;border:1px solid rgba(34,197,94,.5);color:#86efac;font-size:9.5px;font-weight:700;white-space:nowrap;transform:translate(-50%,-150%);animation:svToast var(--sv-t) infinite}
+@keyframes svToast{0%,1%{transform:translate(-50%,-150%)}3.5%,15%{transform:translate(-50%,0)}18%,100%{transform:translate(-50%,-150%)}}
+.sv-sc1{padding-top:32px}
+.sv-ord{animation:svOrd var(--sv-t) infinite}
+@keyframes svOrd{0%,2%{transform:translateY(10px);opacity:0}5%,100%{transform:none;opacity:1}}
+.sv-ty{animation-name:svTy1,svCaret !important;animation-duration:var(--sv-t),.9s !important;animation-iteration-count:infinite,infinite !important}
+.sv-ty2{animation-name:svTy2,svCaret !important}
+@keyframes svCaret{50%{border-right-color:transparent}}
+.sv-log{animation:svLog var(--sv-t) infinite}
+@keyframes svLog{0%,25.5%{transform:translate(-50%,-44%);opacity:0}28%,100%{transform:translate(-50%,-50%);opacity:1}}
+.sv-btn{transition:none}
+@keyframes svBtn{0%,43%{filter:none;transform:none;box-shadow:none}44%{filter:brightness(1.12);box-shadow:0 0 0 3px rgba(255,255,255,.18)}45%,46.5%{filter:brightness(1.25);transform:scale(.96)}47.5%,100%{filter:none;transform:none;box-shadow:none}}
+.sv-load{position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;animation:svLoad var(--sv-t) infinite}
+.sv-load i{width:26px;height:26px;border-radius:50%;border:3px solid rgba(255,255,255,.25);border-top-color:var(--sv);animation:svSpin .8s linear infinite}
+@keyframes svLoad{0%,46.8%{opacity:0}47.6%,50%{opacity:1}51%,100%{opacity:0}}
+@keyframes svSpin{to{transform:rotate(360deg)}}
+.sv-pf{animation:svPfIn var(--sv-t) infinite}
+.sv-pf:nth-child(2){animation-delay:.12s}.sv-pf:nth-child(3){animation-delay:.24s}.sv-pf:nth-child(4){animation-delay:.36s}
+@keyframes svGer{0%,57%{opacity:1}58.5%,100%{opacity:0}}
+@keyframes svPfIn{0%,50%{opacity:0;transform:translateY(8px)}53%,100%{opacity:1;transform:none}}
+.sv-ger{animation:svGer var(--sv-t) infinite;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);padding:4px 10px;border:1px solid #808080;color:#a3a3a3;font-size:8.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.sv-hero--img{animation:svKen var(--sv-t) infinite}
+@keyframes svKen{0%,70%{background-position:50% 35%}97%,100%{background-position:50% 65%}}
+.sv-thumbs i,.sv-tiles i{animation:svTh var(--sv-t) infinite}
+.sv-thumbs i:nth-child(2),.sv-tiles i:nth-child(2){animation-delay:.1s}.sv-thumbs i:nth-child(3),.sv-tiles i:nth-child(3){animation-delay:.2s}.sv-thumbs i:nth-child(4),.sv-tiles i:nth-child(4){animation-delay:.3s}.sv-thumbs i:nth-child(5),.sv-tiles i:nth-child(5){animation-delay:.4s}
+@keyframes svTh{0%,71%{opacity:0;transform:translateX(16px)}74%,100%{opacity:1;transform:none}}
+/* ---- fidelidade: menu do app e player ---- */
+.sv-nav{display:flex;align-items:center;gap:9px;height:24px;padding:0 10px;margin-bottom:-2px}
+.sv-nlogo{display:flex;align-items:center;margin-right:4px;color:#fff;font-weight:800;font-size:10px}
+.sv-nlogo .sv-word{font-size:11px !important;animation:none !important;opacity:1 !important;transform:none !important}
+.sv-nav em{font-style:normal;color:#b3b3b3;font-size:8.5px;font-weight:600;white-space:nowrap}
+.sv-nav em.on{color:#fff;font-weight:800}
+.sv-nav-av{margin-left:auto;width:14px;height:14px;border-radius:4px;background:#30a46c}
+.sv-nav~.sv-hero{margin-top:4px;height:112px}
+.sv-pctl{position:absolute;left:10px;right:10px;top:8px;display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:9px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.7);opacity:0;animation:svPctl var(--sv-t) infinite}
+@keyframes svPctl{0%,87%{opacity:0}89%,100%{opacity:1}}
+.sv-pi{display:flex;gap:7px}
+.sv-pi i{width:9px;height:9px;border:2px solid #fff;border-radius:2px}
+.sv-pi .sv-i-pause{border-width:0 3px;height:9px;width:8px;border-radius:0}
+.sv-pi .sv-i-10{border-radius:50%;border-right-color:transparent}
+.sv-pi .sv-i-vol{border-radius:2px 50% 50% 2px}
+@media (prefers-reduced-motion:reduce){.sv-card *{animation-duration:0s !important;animation-iteration-count:1 !important}}
+
+.sv-inv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:12px;text-align:center}
 .sv-inv-ic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);margin-bottom:4px}
 .sv-inv-ic svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linejoin:round}
 .sv-inv b{color:#fff;font-size:12px}
@@ -271,6 +319,8 @@
 .sv--canva .sv-pbtn{animation:svCvOk var(--sv-t) infinite}
 @keyframes svCvOk{0%,86%{opacity:0}88%,100%{opacity:1}}
 .sv--canva .sv-hb em:not(.sv-as){display:none}
+
+.sv--canva .sv-pctl{display:none}
 </style>
 
 <div class="ed-box"><p>Receba um convite para o <strong>Canva Pro</strong> na <strong>sua própria conta Canva</strong> e crie designs profissionais com os <strong>recursos premium</strong>.</p></div>
@@ -295,16 +345,16 @@
       <div class="sv-win" role="img" aria-label="Animação: ver os dados no pedido, entrar no streaming, escolher o perfil e dar o play">
         <div class="sv-bar"><i></i><i></i><i></i><span class="sv-url"><b class="sv-u1">Seu pedido · Rei dos Nitros</b><b class="sv-u2">canva.com · Entrar</b><b class="sv-u3">canva.com · Convite</b><b class="sv-u4">canva.com · Editor</b></span></div>
         <div class="sv-scr">
-          <div class="sv-sc sv-sc1"><div class="sv-ord"><span class="sv-ok"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pagamento aprovado</span><b>Canva Pro</b>
+          <div class="sv-sc sv-sc1"><div class="sv-toast"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pix aprovado · pedido entregue</div><div class="sv-ord"><span class="sv-ok"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pagamento aprovado</span><b>Canva Pro</b>
             <div class="sv-row sv-r1"><span>Sua conta</span><code>seuemail@gmail.com</code></div><div class="sv-row sv-r2"><span>Plano</span><code>Canva Pro</code></div><div class="sv-row sv-r3"><span>Status</span><code>Convite enviado</code></div></div></div>
           <div class="sv-sc sv-sc2"><div class="sv-wall"></div><div class="sv-log"><span class="sv-brand"><span class="sv-word">Canva</span></span><b>Entrar ou criar conta</b>
             <div class="sv-in"><span class="sv-ty sv-ty1">seuemail@gmail.com</span></div>
             <div class="sv-in"><span class="sv-ty sv-ty2">••••••••••</span></div>
-            <div class="sv-btn"><span class="sv-b1">Continuar</span><span class="sv-b2">Entrando...</span></div></div><div class="sv-splash"><span class="sv-word">Canva</span></div></div>
+            <div class="sv-btn"><span class="sv-b1">Continuar</span><span class="sv-b2">Entrando...</span></div></div><div class="sv-load"><i></i></div><div class="sv-splash"><span class="sv-word">Canva</span></div></div>
           <div class="sv-sc sv-sc3"><div class="sv-inv"><span class="sv-inv-ic"><svg viewBox="0 0 24 24"><path d="M3 8l9 6 9-6M4 6h16v12H4z"/></svg></span><b>Você foi convidado!</b><small>Canva Pro · Convite</small><span class="sv-inv-btn"><em class="sv-ib1">Aceitar convite</em><em class="sv-ib2">Convite aceito</em></span><span class="sv-inv-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Premium ativo na sua conta</span></div></div>
           <div class="sv-sc sv-sc4"><div class="sv-hero"><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht"><span class="sv-badge">Pro</span><b>Seu design</b><small>Post para Instagram</small><span class="sv-hb"><em class="sv-as"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>Remover fundo</em><em>+ Minha lista</em></span></div></div>
             <div class="sv-tiles"><i>Remover fundo</i><i>Redimensionar</i><i>Kit de Marca</i><i>Modelos Pro</i><i>IA</i></div>
-            <div class="sv-play"><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-prog"><i></i></div></div></div>
+            <div class="sv-play"><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-pctl"><span class="sv-pt">‹ Seu design</span><span class="sv-pi"><i class="sv-i-pause"></i><i class="sv-i-10"></i><i class="sv-i-vol"></i></span></div><div class="sv-prog"><i></i></div></div></div>
           <span class="sv-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>
         </div>
       </div>

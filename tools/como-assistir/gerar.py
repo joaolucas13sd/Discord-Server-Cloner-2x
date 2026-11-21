@@ -13,7 +13,8 @@ def esc(t):
 
 def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6', TEMA='', WORD='', HERO='', THUMBS=(), TITULO='Filme em destaque', SUB='Aventura · Ficção', BADGE='', AS='Assistir', TILES=(),
           ROWS=None, LOGIN_T='Entrar', BTN='Entrar', BTN2='Entrando...', TY1='email_do_pedido', PAG=('Entrar', 'Perfis', 'Início'),
-          WHO='Quem está assistindo?', PFS=None, PIN=True, SC3=None, STEPS=None, WARN=None, TITULO_CARD='Como começar a assistir'):
+          WHO='Quem está assistindo?', PFS=None, PIN=True, SC3=None, STEPS=None, WARN=None, TITULO_CARD='Como começar a assistir',
+          NAV=None, GERENCIAR=None, TOAST='Pix aprovado · pedido entregue'):
   # TEMA: netflix | hbo | disney | prime | crunchy (visual da abertura, do login, dos perfis e do início de cada serviço)
   BRAND = f'<span class="sv-word">{WORD}</span>' if WORD else '<svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>' + esc(MARCA)
   SPLASH = f'<div class="sv-splash"><span class="sv-word">{WORD}</span></div>' if WORD else ''
@@ -42,22 +43,27 @@ def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6', TEMA=
   SC3_H = SC3 or f'<b class="sv-who">{esc(WHO)}</b><div class="sv-pfs">{PFS_H}</div>\n            {PIN_H}'
   ROWS_H = ''.join(f'<div class="sv-row sv-r{i + 1}"><span>{esc(a)}</span><code>{esc(b)}</code></div>' for i, (a, b) in enumerate(ROWS))
   STEPS_H = ''.join(f'<div class="sv-st sv-st{i + 1}"><span class="sv-n">{i + 1}</span><div><b>{esc(t)}</b><p>{esc(d)}</p></div></div>' for i, (t, d) in enumerate(STEPS))
+  NAV = NAVS.get(TEMA, ('Início', 'Séries', 'Filmes')) if NAV is None else NAV
+  NAV_H = ('<div class="sv-nav"><span class="sv-nlogo">' + (f'<span class="sv-word">{WORD}</span>' if WORD else esc(MARCA)) + '</span>'
+           + ''.join(f'<em{" class=\"on\"" if i == 0 else ""}>{esc(n)}</em>' for i, n in enumerate(NAV)) + '<i class="sv-nav-av"></i></div>') if NAV else ''
+  GER = (GERENCIAR if GERENCIAR is not None else (not SC3))
+  GER_H = '<span class="sv-ger">Gerenciar perfis</span>' if GER else ''
   CARD = f'''<!-- COMO UTILIZAR -->
     <div class="{P}-card sv-card{" sv--" + TEMA if TEMA else ""}" style="--sv:{COR};--sv2:{COR2}">
       <div class="sv-head"><span class="sv-hico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></span><div><span class="sv-k">PASSO A PASSO</span><h2 class="sv-t">{esc(TITULO_CARD)}</h2></div></div>
       <div class="sv-win" role="img" aria-label="Animação: ver os dados no pedido, entrar no streaming, escolher o perfil e dar o play">
         <div class="sv-bar"><i></i><i></i><i></i><span class="sv-url"><b class="sv-u1">Seu pedido · {LOJA}</b><b class="sv-u2">{esc(SITE)} · {esc(PAG[0])}</b><b class="sv-u3">{esc(SITE)} · {esc(PAG[1])}</b><b class="sv-u4">{esc(SITE)} · {esc(PAG[2])}</b></span></div>
         <div class="sv-scr">
-          <div class="sv-sc sv-sc1"><div class="sv-ord"><span class="sv-ok"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pagamento aprovado</span><b>{esc(PEDIDO)}</b>
+          <div class="sv-sc sv-sc1"><div class="sv-toast"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>{esc(TOAST)}</div><div class="sv-ord"><span class="sv-ok"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pagamento aprovado</span><b>{esc(PEDIDO)}</b>
             {ROWS_H}</div></div>
           <div class="sv-sc sv-sc2"><div class="sv-wall"></div><div class="sv-log"><span class="sv-brand">{BRAND}</span><b>{esc(LOGIN_T)}</b>
             <div class="sv-in"><span class="sv-ty sv-ty1">{esc(TY1)}</span></div>
             <div class="sv-in"><span class="sv-ty sv-ty2">••••••••••</span></div>
-            <div class="sv-btn"><span class="sv-b1">{esc(BTN)}</span><span class="sv-b2">{esc(BTN2)}</span></div></div>{SPLASH}</div>
-          <div class="sv-sc sv-sc3">{SC3_H}</div>
-          <div class="sv-sc sv-sc4"><div class="sv-hero{" sv-hero--img" if HERO else ""}"{HSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht">{BADGE_H}<b>{esc(TITULO)}</b><small>{esc(SUB)}</small><span class="sv-hb"><em class="sv-as"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>{esc(AS)}</em><em>+ Minha lista</em></span></div></div>
+            <div class="sv-btn"><span class="sv-b1">{esc(BTN)}</span><span class="sv-b2">{esc(BTN2)}</span></div></div><div class="sv-load"><i></i></div>{SPLASH}</div>
+          <div class="sv-sc sv-sc3">{SC3_H}{GER_H}</div>
+          <div class="sv-sc sv-sc4">{NAV_H}<div class="sv-hero{" sv-hero--img" if HERO else ""}"{HSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht">{BADGE_H}<b>{esc(TITULO)}</b><small>{esc(SUB)}</small><span class="sv-hb"><em class="sv-as"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>{esc(AS)}</em><em>+ Minha lista</em></span></div></div>
             {ROW}
-            <div class="sv-play{" sv-play--img" if HERO else ""}"{PSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-prog"><i></i></div></div></div>
+            <div class="sv-play{" sv-play--img" if HERO else ""}"{PSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-pctl"><span class="sv-pt">‹ {esc(TITULO)}</span><span class="sv-pi"><i class="sv-i-pause"></i><i class="sv-i-10"></i><i class="sv-i-vol"></i></span></div><div class="sv-prog"><i></i></div></div></div>
           <span class="sv-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>
         </div>
       </div>
@@ -69,7 +75,7 @@ def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6', TEMA=
 
 '''
 
-  return CARD, CSS + TEMA_BASE + (INV_CSS if 'sv-inv' in SC3_H else '') + TEMAS.get(TEMA, '')
+  return CARD, CSS + TEMA_BASE + MOVE + (INV_CSS if 'sv-inv' in SC3_H else '') + TEMAS.get(TEMA, '') + TEMAS2.get(TEMA, '')
 
 CSS = '''
 /* ===== Passo a passo animado "Como começar a assistir" (20s em loop) ===== */
@@ -182,9 +188,9 @@ CSS = '''
 .sv-cur::before{content:"";position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.55);opacity:0;transform:scale(.3);animation:svClick var(--sv-t) infinite}
 @keyframes svCur{
   0%,3%{left:calc(50% + 120px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  8%{left:calc(50% + 46px);top:101px}10%{left:calc(50% + 46px);top:101px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  12.5%{left:calc(50% + 46px);top:133px}14%{left:calc(50% + 46px);top:133px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  16.5%{left:calc(50% + 46px);top:165px}23%{left:calc(50% + 46px);top:165px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  8%{left:calc(50% + 46px);top:116px}10%{left:calc(50% + 46px);top:116px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  12.5%{left:calc(50% + 46px);top:148px}14%{left:calc(50% + 46px);top:148px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  16.5%{left:calc(50% + 46px);top:180px}23%{left:calc(50% + 46px);top:180px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   27.5%{left:calc(50% - 40px);top:100px}36%{left:calc(50% - 40px);top:100px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   37%{left:calc(50% - 40px);top:130px}42.5%{left:calc(50% - 40px);top:130px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   44.5%{left:calc(50% + 4px);top:161px}49%{left:calc(50% + 4px);top:161px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
@@ -239,6 +245,68 @@ if __name__ == '__main__':
   print(dst, tam, 'bytes')
 
 # ---------- temas por serviço ----------
+NAVS = {
+  'netflix': ('Início', 'Séries', 'Filmes', 'Bombando'),
+  'hbo': ('Início', 'Séries', 'Filmes', 'HBO'),
+  'disney': ('Início', 'Busca', 'Filmes', 'Séries'),
+  'prime': ('Início', 'Filmes', 'Séries', 'Ao vivo'),
+  'crunchy': ('Novidades', 'Populares', 'Simulcasts'),
+  'spotify': ('Início', 'Buscar', 'Biblioteca'),
+  'youtube': ('Tudo', 'Músicas', 'Ao vivo', 'Games'),
+  'premiere': ('Ao vivo', 'Jogos', 'Times'),
+  'canva': (),
+}
+
+MOVE = """
+/* ---- movimento ---- */
+@keyframes svA{0%{opacity:0;transform:scale(.97)}2%,23%{opacity:1;transform:none}25.5%,98%{opacity:0;transform:translateX(-14%)}100%{opacity:0}}
+@keyframes svB{0%,24%{opacity:0;transform:translateX(14%)}26%,49%{opacity:1;transform:none}51%,100%{opacity:0;transform:scale(1.04)}}
+@keyframes svC{0%,49.5%{opacity:0;transform:scale(.94)}51.5%,68%{opacity:1;transform:none}70.5%,100%{opacity:0;transform:translateY(-10%)}}
+@keyframes svD{0%,69%{opacity:0;transform:translateY(12%)}71.5%,97%{opacity:1;transform:none}99.5%,100%{opacity:0}}
+.sv-toast{position:absolute;left:50%;top:8px;z-index:2;display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:999px;background:#16351f;border:1px solid rgba(34,197,94,.5);color:#86efac;font-size:9.5px;font-weight:700;white-space:nowrap;transform:translate(-50%,-150%);animation:svToast var(--sv-t) infinite}
+@keyframes svToast{0%,1%{transform:translate(-50%,-150%)}3.5%,15%{transform:translate(-50%,0)}18%,100%{transform:translate(-50%,-150%)}}
+.sv-sc1{padding-top:32px}
+.sv-ord{animation:svOrd var(--sv-t) infinite}
+@keyframes svOrd{0%,2%{transform:translateY(10px);opacity:0}5%,100%{transform:none;opacity:1}}
+.sv-ty{animation-name:svTy1,svCaret !important;animation-duration:var(--sv-t),.9s !important;animation-iteration-count:infinite,infinite !important}
+.sv-ty2{animation-name:svTy2,svCaret !important}
+@keyframes svCaret{50%{border-right-color:transparent}}
+.sv-log{animation:svLog var(--sv-t) infinite}
+@keyframes svLog{0%,25.5%{transform:translate(-50%,-44%);opacity:0}28%,100%{transform:translate(-50%,-50%);opacity:1}}
+.sv-btn{transition:none}
+@keyframes svBtn{0%,43%{filter:none;transform:none;box-shadow:none}44%{filter:brightness(1.12);box-shadow:0 0 0 3px rgba(255,255,255,.18)}45%,46.5%{filter:brightness(1.25);transform:scale(.96)}47.5%,100%{filter:none;transform:none;box-shadow:none}}
+.sv-load{position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;animation:svLoad var(--sv-t) infinite}
+.sv-load i{width:26px;height:26px;border-radius:50%;border:3px solid rgba(255,255,255,.25);border-top-color:var(--sv);animation:svSpin .8s linear infinite}
+@keyframes svLoad{0%,46.8%{opacity:0}47.6%,50%{opacity:1}51%,100%{opacity:0}}
+@keyframes svSpin{to{transform:rotate(360deg)}}
+.sv-pf{animation:svPfIn var(--sv-t) infinite}
+.sv-pf:nth-child(2){animation-delay:.12s}.sv-pf:nth-child(3){animation-delay:.24s}.sv-pf:nth-child(4){animation-delay:.36s}
+@keyframes svGer{0%,57%{opacity:1}58.5%,100%{opacity:0}}
+@keyframes svPfIn{0%,50%{opacity:0;transform:translateY(8px)}53%,100%{opacity:1;transform:none}}
+.sv-ger{animation:svGer var(--sv-t) infinite;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);padding:4px 10px;border:1px solid #808080;color:#a3a3a3;font-size:8.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.sv-hero--img{animation:svKen var(--sv-t) infinite}
+@keyframes svKen{0%,70%{background-position:50% 35%}97%,100%{background-position:50% 65%}}
+.sv-thumbs i,.sv-tiles i{animation:svTh var(--sv-t) infinite}
+.sv-thumbs i:nth-child(2),.sv-tiles i:nth-child(2){animation-delay:.1s}.sv-thumbs i:nth-child(3),.sv-tiles i:nth-child(3){animation-delay:.2s}.sv-thumbs i:nth-child(4),.sv-tiles i:nth-child(4){animation-delay:.3s}.sv-thumbs i:nth-child(5),.sv-tiles i:nth-child(5){animation-delay:.4s}
+@keyframes svTh{0%,71%{opacity:0;transform:translateX(16px)}74%,100%{opacity:1;transform:none}}
+/* ---- fidelidade: menu do app e player ---- */
+.sv-nav{display:flex;align-items:center;gap:9px;height:24px;padding:0 10px;margin-bottom:-2px}
+.sv-nlogo{display:flex;align-items:center;margin-right:4px;color:#fff;font-weight:800;font-size:10px}
+.sv-nlogo .sv-word{font-size:11px !important;animation:none !important;opacity:1 !important;transform:none !important}
+.sv-nav em{font-style:normal;color:#b3b3b3;font-size:8.5px;font-weight:600;white-space:nowrap}
+.sv-nav em.on{color:#fff;font-weight:800}
+.sv-nav-av{margin-left:auto;width:14px;height:14px;border-radius:4px;background:#30a46c}
+.sv-nav~.sv-hero{margin-top:4px;height:112px}
+.sv-pctl{position:absolute;left:10px;right:10px;top:8px;display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:9px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.7);opacity:0;animation:svPctl var(--sv-t) infinite}
+@keyframes svPctl{0%,87%{opacity:0}89%,100%{opacity:1}}
+.sv-pi{display:flex;gap:7px}
+.sv-pi i{width:9px;height:9px;border:2px solid #fff;border-radius:2px}
+.sv-pi .sv-i-pause{border-width:0 3px;height:9px;width:8px;border-radius:0}
+.sv-pi .sv-i-10{border-radius:50%;border-right-color:transparent}
+.sv-pi .sv-i-vol{border-radius:2px 50% 50% 2px}
+@media (prefers-reduced-motion:reduce){.sv-card *{animation-duration:0s !important;animation-iteration-count:1 !important}}
+"""
+
 TEMA_BASE = """
 .sv-splash{position:absolute;inset:0;z-index:6;display:grid;place-items:center;background:var(--sp,#000);opacity:0;pointer-events:none;animation:svSplash var(--sv-t) infinite}
 .sv-card:has(.sv-splash) .sv-cur{animation:svCur var(--sv-t) infinite,svCurHide var(--sv-t) infinite}
@@ -337,7 +405,7 @@ def convite(plano, nota='Você foi convidado!'):
             '<span class="sv-inv-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Premium ativo na sua conta</span></div>')
 
 INV_CSS = """
-.sv-inv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:22px;text-align:center}
+.sv-inv{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:12px;text-align:center}
 .sv-inv-ic{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.08);margin-bottom:4px}
 .sv-inv-ic svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linejoin:round}
 .sv-inv b{color:#fff;font-size:12px}
@@ -459,3 +527,56 @@ TEMAS['canva'] = """
 .sv--canva .sv-hb em:not(.sv-as){display:none}
 """
 WORDS['canva'] = 'Canva'
+
+
+# ---- fidelidade extra por app (menu, perfis, player) ----
+TEMAS2 = {
+'netflix': """
+.sv--netflix .sv-sc4{background:#141414}
+.sv--netflix .sv-nav-av{background:#e5484d}
+.sv--netflix .sv-ger{border-color:#808080}
+.sv--netflix .sv-pf i{border-radius:5px}
+""",
+'hbo': """
+.sv--hbo .sv-nav{background:linear-gradient(180deg,rgba(0,0,0,.5),transparent)}
+.sv--hbo .sv-nav em.on{border-bottom:2px solid #fff}
+.sv--hbo .sv-ger{border-radius:999px;border-color:#6b6f9e;color:#c7c9e8}
+.sv--hbo .sv-nav-av{border-radius:50%;background:#3d5afe}
+""",
+'disney': """
+.sv--disney .sv-nav em{text-transform:uppercase;letter-spacing:.08em;font-size:7.5px}
+.sv--disney .sv-ger{border:0;color:#cacaca;text-transform:none;letter-spacing:0;font-size:9px}
+.sv--disney .sv-nav-av{border-radius:50%;background:#0063e5}
+""",
+'prime': """
+.sv--prime .sv-nav{background:#0f171e}
+.sv--prime .sv-nav em.on{color:#fff;border-bottom:2px solid #fff}
+.sv--prime .sv-ger{border-radius:6px;border-color:#425265;color:#aab7c4;text-transform:none;letter-spacing:0}
+.sv--prime .sv-nav-av{border-radius:50%;background:#1a98ff}
+""",
+'crunchy': """
+.sv--crunchy .sv-nav{background:#23252b}
+.sv--crunchy .sv-nav em.on{color:#f47521}
+.sv--crunchy .sv-ger{border-color:#f47521;color:#f47521;text-transform:uppercase}
+.sv--crunchy .sv-nav-av{border-radius:50%;background:#f47521}
+""",
+'spotify': """
+.sv--spotify .sv-nav em{padding:2px 7px;border-radius:999px;background:#2a2a2a;color:#fff}
+.sv--spotify .sv-nav em.on{background:#1ed760;color:#000}
+.sv--spotify .sv-nav-av{border-radius:50%;background:#ff6437}
+.sv--spotify .sv-nlogo{display:none}
+""",
+'youtube': """
+.sv--youtube .sv-nav em{padding:2px 7px;border-radius:6px;background:#272727;color:#f1f1f1}
+.sv--youtube .sv-nav em.on{background:#f1f1f1;color:#0f0f0f}
+.sv--youtube .sv-nav-av{border-radius:50%;background:#7c4dff}
+""",
+'premiere': """
+.sv--premiere .sv-nav{background:#05090a}
+.sv--premiere .sv-nav em.on{color:#18c964}
+.sv--premiere .sv-nav-av{border-radius:50%;background:#18c964}
+""",
+'canva': """
+.sv--canva .sv-pctl{display:none}
+""",
+}

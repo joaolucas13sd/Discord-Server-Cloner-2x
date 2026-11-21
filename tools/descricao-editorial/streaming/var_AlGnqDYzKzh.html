@@ -141,9 +141,9 @@
 .sv-cur::before{content:"";position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.55);opacity:0;transform:scale(.3);animation:svClick var(--sv-t) infinite}
 @keyframes svCur{
   0%,3%{left:calc(50% + 120px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  8%{left:calc(50% + 46px);top:101px}10%{left:calc(50% + 46px);top:101px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  12.5%{left:calc(50% + 46px);top:133px}14%{left:calc(50% + 46px);top:133px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  16.5%{left:calc(50% + 46px);top:165px}23%{left:calc(50% + 46px);top:165px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  8%{left:calc(50% + 46px);top:116px}10%{left:calc(50% + 46px);top:116px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  12.5%{left:calc(50% + 46px);top:148px}14%{left:calc(50% + 46px);top:148px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  16.5%{left:calc(50% + 46px);top:180px}23%{left:calc(50% + 46px);top:180px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   27.5%{left:calc(50% - 40px);top:100px}36%{left:calc(50% - 40px);top:100px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   37%{left:calc(50% - 40px);top:130px}42.5%{left:calc(50% - 40px);top:130px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   44.5%{left:calc(50% + 4px);top:161px}49%{left:calc(50% + 4px);top:161px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
@@ -200,6 +200,54 @@
 .sv-card .sv-brand .sv-word{font-size:12px;animation:none !important;opacity:1 !important;transform:none !important}
 .sv-card .sv-brand{margin-bottom:2px}
 
+/* ---- movimento ---- */
+@keyframes svA{0%{opacity:0;transform:scale(.97)}2%,23%{opacity:1;transform:none}25.5%,98%{opacity:0;transform:translateX(-14%)}100%{opacity:0}}
+@keyframes svB{0%,24%{opacity:0;transform:translateX(14%)}26%,49%{opacity:1;transform:none}51%,100%{opacity:0;transform:scale(1.04)}}
+@keyframes svC{0%,49.5%{opacity:0;transform:scale(.94)}51.5%,68%{opacity:1;transform:none}70.5%,100%{opacity:0;transform:translateY(-10%)}}
+@keyframes svD{0%,69%{opacity:0;transform:translateY(12%)}71.5%,97%{opacity:1;transform:none}99.5%,100%{opacity:0}}
+.sv-toast{position:absolute;left:50%;top:8px;z-index:2;display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:999px;background:#16351f;border:1px solid rgba(34,197,94,.5);color:#86efac;font-size:9.5px;font-weight:700;white-space:nowrap;transform:translate(-50%,-150%);animation:svToast var(--sv-t) infinite}
+@keyframes svToast{0%,1%{transform:translate(-50%,-150%)}3.5%,15%{transform:translate(-50%,0)}18%,100%{transform:translate(-50%,-150%)}}
+.sv-sc1{padding-top:32px}
+.sv-ord{animation:svOrd var(--sv-t) infinite}
+@keyframes svOrd{0%,2%{transform:translateY(10px);opacity:0}5%,100%{transform:none;opacity:1}}
+.sv-ty{animation-name:svTy1,svCaret !important;animation-duration:var(--sv-t),.9s !important;animation-iteration-count:infinite,infinite !important}
+.sv-ty2{animation-name:svTy2,svCaret !important}
+@keyframes svCaret{50%{border-right-color:transparent}}
+.sv-log{animation:svLog var(--sv-t) infinite}
+@keyframes svLog{0%,25.5%{transform:translate(-50%,-44%);opacity:0}28%,100%{transform:translate(-50%,-50%);opacity:1}}
+.sv-btn{transition:none}
+@keyframes svBtn{0%,43%{filter:none;transform:none;box-shadow:none}44%{filter:brightness(1.12);box-shadow:0 0 0 3px rgba(255,255,255,.18)}45%,46.5%{filter:brightness(1.25);transform:scale(.96)}47.5%,100%{filter:none;transform:none;box-shadow:none}}
+.sv-load{position:absolute;inset:0;z-index:5;display:grid;place-items:center;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;animation:svLoad var(--sv-t) infinite}
+.sv-load i{width:26px;height:26px;border-radius:50%;border:3px solid rgba(255,255,255,.25);border-top-color:var(--sv);animation:svSpin .8s linear infinite}
+@keyframes svLoad{0%,46.8%{opacity:0}47.6%,50%{opacity:1}51%,100%{opacity:0}}
+@keyframes svSpin{to{transform:rotate(360deg)}}
+.sv-pf{animation:svPfIn var(--sv-t) infinite}
+.sv-pf:nth-child(2){animation-delay:.12s}.sv-pf:nth-child(3){animation-delay:.24s}.sv-pf:nth-child(4){animation-delay:.36s}
+@keyframes svGer{0%,57%{opacity:1}58.5%,100%{opacity:0}}
+@keyframes svPfIn{0%,50%{opacity:0;transform:translateY(8px)}53%,100%{opacity:1;transform:none}}
+.sv-ger{animation:svGer var(--sv-t) infinite;position:absolute;bottom:12px;left:50%;transform:translateX(-50%);padding:4px 10px;border:1px solid #808080;color:#a3a3a3;font-size:8.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.sv-hero--img{animation:svKen var(--sv-t) infinite}
+@keyframes svKen{0%,70%{background-position:50% 35%}97%,100%{background-position:50% 65%}}
+.sv-thumbs i,.sv-tiles i{animation:svTh var(--sv-t) infinite}
+.sv-thumbs i:nth-child(2),.sv-tiles i:nth-child(2){animation-delay:.1s}.sv-thumbs i:nth-child(3),.sv-tiles i:nth-child(3){animation-delay:.2s}.sv-thumbs i:nth-child(4),.sv-tiles i:nth-child(4){animation-delay:.3s}.sv-thumbs i:nth-child(5),.sv-tiles i:nth-child(5){animation-delay:.4s}
+@keyframes svTh{0%,71%{opacity:0;transform:translateX(16px)}74%,100%{opacity:1;transform:none}}
+/* ---- fidelidade: menu do app e player ---- */
+.sv-nav{display:flex;align-items:center;gap:9px;height:24px;padding:0 10px;margin-bottom:-2px}
+.sv-nlogo{display:flex;align-items:center;margin-right:4px;color:#fff;font-weight:800;font-size:10px}
+.sv-nlogo .sv-word{font-size:11px !important;animation:none !important;opacity:1 !important;transform:none !important}
+.sv-nav em{font-style:normal;color:#b3b3b3;font-size:8.5px;font-weight:600;white-space:nowrap}
+.sv-nav em.on{color:#fff;font-weight:800}
+.sv-nav-av{margin-left:auto;width:14px;height:14px;border-radius:4px;background:#30a46c}
+.sv-nav~.sv-hero{margin-top:4px;height:112px}
+.sv-pctl{position:absolute;left:10px;right:10px;top:8px;display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:9px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.7);opacity:0;animation:svPctl var(--sv-t) infinite}
+@keyframes svPctl{0%,87%{opacity:0}89%,100%{opacity:1}}
+.sv-pi{display:flex;gap:7px}
+.sv-pi i{width:9px;height:9px;border:2px solid #fff;border-radius:2px}
+.sv-pi .sv-i-pause{border-width:0 3px;height:9px;width:8px;border-radius:0}
+.sv-pi .sv-i-10{border-radius:50%;border-right-color:transparent}
+.sv-pi .sv-i-vol{border-radius:2px 50% 50% 2px}
+@media (prefers-reduced-motion:reduce){.sv-card *{animation-duration:0s !important;animation-iteration-count:1 !important}}
+
 .sv--crunchy{--sp:#f47521}
 .sv--crunchy .sv-word{color:#f47521;font-weight:900;letter-spacing:-.03em;text-transform:lowercase}
 .sv--crunchy .sv-splash .sv-word{color:#fff}
@@ -213,6 +261,11 @@
 @keyframes svPfCr{0%,56.5%{border-color:transparent;transform:none}57.5%,100%{border-color:#f47521;transform:scale(1.1);box-shadow:0 0 14px rgba(244,117,33,.5)}}
 .sv--crunchy .sv-hb .sv-as{background:#f47521;color:#000}
 .sv--crunchy .sv-badge{color:#f47521}
+
+.sv--crunchy .sv-nav{background:#23252b}
+.sv--crunchy .sv-nav em.on{color:#f47521}
+.sv--crunchy .sv-ger{border-color:#f47521;color:#f47521;text-transform:uppercase}
+.sv--crunchy .sv-nav-av{border-radius:50%;background:#f47521}
 </style>
 
 <div class="ed-box"><p>Tenha a <strong>Crunchyroll Mega Fan (semanal)</strong> com um <strong>perfil só seu</strong> e assista por <strong>7 dias</strong>, <strong>sem anúncios</strong> e com episódios novos logo após o Japão.</p></div>
@@ -243,28 +296,22 @@
       <div class="sv-win" role="img" aria-label="Animação: ver os dados no pedido, entrar no streaming, escolher o perfil e dar o play">
         <div class="sv-bar"><i></i><i></i><i></i><span class="sv-url"><b class="sv-u1">Seu pedido · Rei dos Nitros</b><b class="sv-u2">crunchyroll.com · Entrar</b><b class="sv-u3">crunchyroll.com · Perfis</b><b class="sv-u4">crunchyroll.com · Início</b></span></div>
         <div class="sv-scr">
-          <div class="sv-sc sv-sc1"><div class="sv-ord"><span class="sv-ok"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pagamento aprovado</span><b>Crunchyroll Mega Fan (semanal)</b>
-            <div class="sv-row sv-r1"><span>E-mail</span><code>email_do_pedido</code></div>
-            <div class="sv-row sv-r2"><span>Senha</span><code>••••••••••</code></div>
-            <div class="sv-row sv-r3"><span>Perfil</span><code>Perfil 3</code></div></div></div>
+          <div class="sv-sc sv-sc1"><div class="sv-toast"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pix aprovado · pedido entregue</div><div class="sv-ord"><span class="sv-ok"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pagamento aprovado</span><b>Crunchyroll Mega Fan (semanal)</b>
+            <div class="sv-row sv-r1"><span>E-mail</span><code>email_do_pedido</code></div><div class="sv-row sv-r2"><span>Senha</span><code>••••••••••</code></div><div class="sv-row sv-r3"><span>Perfil</span><code>Perfil 3</code></div></div></div>
           <div class="sv-sc sv-sc2"><div class="sv-wall"></div><div class="sv-log"><span class="sv-brand"><span class="sv-word">crunchyroll</span></span><b>Entrar</b>
             <div class="sv-in"><span class="sv-ty sv-ty1">email_do_pedido</span></div>
             <div class="sv-in"><span class="sv-ty sv-ty2">••••••••••</span></div>
-            <div class="sv-btn"><span class="sv-b1">Entrar</span><span class="sv-b2">Entrando...</span></div></div><div class="sv-splash"><span class="sv-word">crunchyroll</span></div></div>
-          <div class="sv-sc sv-sc3"><b class="sv-who">Quem está assistindo?</b><div class="sv-pfs">
-            <span class="sv-pf" style="--c:#e5484d"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Grinning%20face%20with%20big%20eyes/3D/grinning_face_with_big_eyes_3d.png" alt=""></i>Perfil 1</span><span class="sv-pf" style="--c:#3e63dd"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Star-struck/3D/star-struck_3d.png" alt=""></i>Perfil 2</span><span class="sv-pf sv-pf3" style="--c:#30a46c"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Smiling%20face%20with%20sunglasses/3D/smiling_face_with_sunglasses_3d.png" alt=""></i>Perfil 3</span><span class="sv-pf" style="--c:#f5a524"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Partying%20face/3D/partying_face_3d.png" alt=""></i>Perfil 4</span></div>
-            <div class="sv-pin"><small>PIN do perfil</small><span><i class="sv-d1"></i><i class="sv-d2"></i><i class="sv-d3"></i><i class="sv-d4"></i></span></div></div>
-          <div class="sv-sc sv-sc4"><div class="sv-hero sv-hero--img" style="background-image:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.15) 70%),url(https://image.tmdb.org/t/p/w1280/xMNH87maNLt9n2bMDYeI6db5VFm.jpg)"><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht"><span class="sv-badge">Anime</span><b>Solo Leveling</b><small>Ação · Anime</small><span class="sv-hb"><em class="sv-as"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>Assistir T1 E1</em><em>+ Minha lista</em></span></div></div>
+            <div class="sv-btn"><span class="sv-b1">Entrar</span><span class="sv-b2">Entrando...</span></div></div><div class="sv-load"><i></i></div><div class="sv-splash"><span class="sv-word">crunchyroll</span></div></div>
+          <div class="sv-sc sv-sc3"><b class="sv-who">Quem está assistindo?</b><div class="sv-pfs"><span class="sv-pf" style="--c:#e5484d"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Grinning%20face%20with%20big%20eyes/3D/grinning_face_with_big_eyes_3d.png" alt=""></i>Perfil 1</span><span class="sv-pf" style="--c:#3e63dd"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Star-struck/3D/star-struck_3d.png" alt=""></i>Perfil 2</span><span class="sv-pf sv-pf3" style="--c:#30a46c"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Smiling%20face%20with%20sunglasses/3D/smiling_face_with_sunglasses_3d.png" alt=""></i>Perfil 3</span><span class="sv-pf" style="--c:#f5a524"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Partying%20face/3D/partying_face_3d.png" alt=""></i>Perfil 4</span></div>
+            <div class="sv-pin"><small>PIN do perfil</small><span><i class="sv-d1"></i><i class="sv-d2"></i><i class="sv-d3"></i><i class="sv-d4"></i></span></div><span class="sv-ger">Gerenciar perfis</span></div>
+          <div class="sv-sc sv-sc4"><div class="sv-nav"><span class="sv-nlogo"><span class="sv-word">crunchyroll</span></span><em class="on">Novidades</em><em>Populares</em><em>Simulcasts</em><i class="sv-nav-av"></i></div><div class="sv-hero sv-hero--img" style="background-image:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.15) 70%),url(https://image.tmdb.org/t/p/w1280/xMNH87maNLt9n2bMDYeI6db5VFm.jpg)"><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht"><span class="sv-badge">Anime</span><b>Solo Leveling</b><small>Ação · Anime</small><span class="sv-hb"><em class="sv-as"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>Assistir T1 E1</em><em>+ Minha lista</em></span></div></div>
             <div class="sv-thumbs sv-thumbs--img"><i style="background-image:url(https://image.tmdb.org/t/p/w300/nTvM4mhqNlHIvUkI1gVnW6XP7GG.jpg)"></i><i style="background-image:url(https://image.tmdb.org/t/p/w300/rBOnrVlck7BIlGeWVlzYiZeg4l2.jpg)"></i><i style="background-image:url(https://image.tmdb.org/t/p/w300/flgn0jXbg8GIe2qaWfd70A0uzfp.jpg)"></i><i style="background-image:url(https://image.tmdb.org/t/p/w300/xMNH87maNLt9n2bMDYeI6db5VFm.jpg)"></i><i style="background-image:url(https://image.tmdb.org/t/p/w300/nTvM4mhqNlHIvUkI1gVnW6XP7GG.jpg)"></i></div>
-            <div class="sv-play sv-play--img" style="background-image:url(https://image.tmdb.org/t/p/w1280/xMNH87maNLt9n2bMDYeI6db5VFm.jpg)"><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-prog"><i></i></div></div></div>
+            <div class="sv-play sv-play--img" style="background-image:url(https://image.tmdb.org/t/p/w1280/xMNH87maNLt9n2bMDYeI6db5VFm.jpg)"><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-pctl"><span class="sv-pt">‹ Solo Leveling</span><span class="sv-pi"><i class="sv-i-pause"></i><i class="sv-i-10"></i><i class="sv-i-vol"></i></span></div><div class="sv-prog"><i></i></div></div></div>
           <span class="sv-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>
         </div>
       </div>
       <div class="sv-steps">
-        <div class="sv-st sv-st1"><span class="sv-n">1</span><div><b>Veja os dados no pedido</b><p>Na página do seu pedido aparecem o e-mail, a senha e o perfil da conta.</p></div></div>
-        <div class="sv-st sv-st2"><span class="sv-n">2</span><div><b>Entre no streaming</b><p>Abra o site ou o app do streaming e entre com esse e-mail e essa senha.</p></div></div>
-        <div class="sv-st sv-st3"><span class="sv-n">3</span><div><b>Escolha o perfil</b><p>Entre no perfil indicado no pedido e digite o PIN, se tiver.</p></div></div>
-        <div class="sv-st sv-st4"><span class="sv-n">4</span><div><b>Dê o play</b><p>Escolha um filme, uma série ou um anime e aproveite.</p></div></div>
+        <div class="sv-st sv-st1"><span class="sv-n">1</span><div><b>Veja os dados no pedido</b><p>Na página do seu pedido aparecem o e-mail, a senha e o perfil da conta.</p></div></div><div class="sv-st sv-st2"><span class="sv-n">2</span><div><b>Entre no streaming</b><p>Abra o site ou o app do streaming e entre com esse e-mail e essa senha.</p></div></div><div class="sv-st sv-st3"><span class="sv-n">3</span><div><b>Escolha o perfil</b><p>Entre no perfil indicado no pedido e digite o PIN, se tiver.</p></div></div><div class="sv-st sv-st4"><span class="sv-n">4</span><div><b>Dê o play</b><p>Escolha um filme, uma série ou um anime e aproveite.</p></div></div>
       </div>
       <div class="sv-warn"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M12 8v5M12 16h.01"/></svg><p>Não altere o e-mail, a senha, os perfis nem o PIN da conta: isso pode fazer você perder o acesso. As instruções completas vêm no seu pedido.</p></div>
     </div>
