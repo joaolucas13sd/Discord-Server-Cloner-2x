@@ -376,3 +376,228 @@ def sensi(plat, passos):
 """
     return card('s2', '#f59e0b', 'Veja a diferença na mira', 'Antes errando, depois só capa', jan, css,
                 'Animação ilustrativa. O resultado depende da sua prática e do seu aparelho.', passos)
+
+
+# ---------------------------------------------------------------- Sensi v3: partida de Free Fire em 3ª pessoa
+# Desenhos próprios (sem arte do jogo). A mira fica fixa no centro e o "mundo" se move, como no jogo.
+FF_INIMIGO = ('<svg class="ff-sv" viewBox="0 0 26 58" aria-hidden="true">'
+              '<circle cx="13" cy="6" r="5" fill="#f1c27d"/><path d="M8 5c0-4 3-5 5-5s6 1 5 6l-1-3c-2 1-6 1-9 2z" fill="#1f2937"/>'
+              '<path d="M6 13c2-2 4-2 7-2s5 0 7 2l2 15h-4l-1 3H9l-1-3H4z" fill="var(--ec,#dc2626)"/>'
+              '<path d="M9 31h8l1 25h-4l-1-18-1 18H8z" fill="#1e293b"/><path d="M14 18h11v3H14z" fill="#111827"/>'
+              '<path d="M4 16l-2 12h3l2-10z" fill="#f1c27d"/></svg>')
+FF_EU = ('<svg class="ff-me" viewBox="0 0 80 110" aria-hidden="true">'
+         '<path d="M40 8c8 0 13 5 13 13 0 7-5 12-13 12s-13-5-13-12c0-8 5-13 13-13z" fill="#2b1d14"/>'
+         '<path d="M14 52c2-12 12-18 26-18s24 6 26 18l3 58H11z" fill="#16a34a"/>'
+         '<rect x="25" y="44" width="30" height="40" rx="7" fill="#7c4a1e"/><rect x="29" y="50" width="22" height="9" rx="3" fill="#5b3714"/>'
+         '<path d="M60 50l14-22 5 3-12 24z" fill="#16a34a"/><path d="M62 30l16-26 4 2-15 27z" fill="#27272a"/><path d="M69 14l4 2-3 6-4-2z" fill="#3f3f46"/></svg>')
+
+def _pisca(nome, tempos, dur=1.2, extra=''):
+    """Keyframes de opacidade que acendem em cada tempo (em % do ciclo)."""
+    fr = ['0%{opacity:0}']
+    for t in tempos:
+        fr += [f'{t - .01:.2f}%{{opacity:0}}', f'{t:.2f}%{{opacity:1}}', f'{t + dur:.2f}%{{opacity:0}}']
+    fr.append('100%{opacity:0}')
+    return f'@keyframes {nome}{{{"".join(fr)}{extra}}}'
+
+def sensi(plat, passos):
+    # inimigos no mundo: (dx, dy) da cabeça em relação à mira, cor da roupa
+    inimigos = [(40, 10, '#dc2626'), (-80, 4, '#7c3aed'), (110, -8, '#0891b2')]
+    en = ''.join(f'<div class="ff-en ff-e{k}" style="left:calc(50% + {dx - 13}px);top:calc(45% + {dy - 6}px);--ec:{c}">{FF_INIMIGO}</div>'
+                 f'<span class="ff-loot ff-l{k}" style="left:calc(50% + {dx - 9}px);top:calc(45% + {dy + 40}px)"></span>'
+                 for k, (dx, dy, c) in enumerate(inimigos))
+    sl = ''.join(f'<div class="ff-r"><span>{n}</span><i><b style="--v:{v}%"></b></i><em><u>{a}</u><u>{v}</u></em></div>'
+                 for n, a, v in [('Geral', 42, 100), ('Ponto vermelho', 38, 95), ('Mira 2x', 35, 90), ('Mira 4x', 30, 88), ('Olhadinha', 50, 75)])
+    feed = ''.join(f'<span class="ff-k ff-k{k}"><b>Você</b> <i></i> Inimigo_{n} · M1887 · <em>CAPA</em></span>' for k, n in enumerate([27, 81, 46]))
+    dmg = ''.join(f'<span class="ff-dmg ff-d{k}"><i></i>{d}</span>' for k, d in enumerate([187, 203, 196]))
+    fraco = ''.join(f'<span class="ff-wd ff-w{k}">{d}</span>' for k, d in enumerate([12, 9, 0, 0]))
+    abates = ''.join(f'<b class="ff-a{k}">{k}</b>' for k in range(4))
+    jan = (
+        '<div class="ff-sky"></div>'
+        '<div class="ff-world">'
+        '<div class="ff-hill"></div><div class="ff-ground"></div><div class="ff-road"></div>'
+        '<div class="ff-house" style="left:calc(50% - 175px);top:calc(45% - 22px)"><i></i></div>'
+        '<div class="ff-house ff-h2" style="left:calc(50% + 150px);top:calc(45% - 16px)"><i></i></div>'
+        '<span class="ff-tree" style="left:calc(50% - 30px);top:calc(45% - 30px)"></span>'
+        '<span class="ff-tree" style="left:calc(50% + 70px);top:calc(45% - 40px)"></span>'
+        '<span class="ff-tree" style="left:calc(50% - 250px);top:calc(45% - 36px)"></span>'
+        '<span class="ff-rock" style="left:calc(50% + 95px);top:calc(45% + 26px)"></span>'
+        f'{en}'
+        '<div class="ff-gloo" style="left:calc(50% + 14px);top:calc(45% + 16px)"></div>'
+        '</div>'
+        f'<div class="ff-player">{FF_EU}<span class="ff-flash"></span></div>'
+        '<div class="ff-cross"><i></i></div>'
+        f'{fraco}<span class="ff-miss">ERROU</span>{dmg}'
+        '<span class="ff-hit"></span>'
+        # HUD fixo
+        '<div class="ff-hud">'
+        '<span class="ff-map"><i class="ff-zone"></i><i class="ff-me-dot"></i><i class="ff-red"></i></span>'
+        f'<span class="ff-cnt"><em>VIVOS</em> 42 <em>ABATES</em> <span class="ff-ab">{abates}</span></span>'
+        '<span class="ff-hp"><small>Você</small><i><b></b></i><span class="ff-arm"><u>3</u><u>3</u></span></span>'
+        '<span class="ff-gun ff-g1"><b>M1887</b>2/2</span><span class="ff-gun ff-g2"><b>MP40</b>20/60</span>'
+        '<span class="ff-joy"><i></i></span><span class="ff-fl"></span>'
+        '<span class="ff-fire"><i></i></span><span class="ff-btn ff-scope"><i></i></span><span class="ff-btn ff-jump">▲</span>'
+        '<span class="ff-btn ff-gel">GEL</span>'
+        '</div>'
+        f'<div class="ff-feed">{feed}</div>'
+        '<span class="ff-pop ff-p0">CAPA!</span><span class="ff-pop ff-p1">CAPA! ×2</span><span class="ff-pop ff-p2">CAPA! ×3</span>'
+        '<span class="ff-finger"></span>'
+        # configurações
+        '<div class="ff-cfg"><div class="ff-tabs"><u>Básico</u><u class="on">Sensibilidade</u><u>Controles</u></div>'
+        f'{sl}<span class="ff-save">Salvar</span><span class="ff-ok">✓ Sensi Premium aplicada</span></div>'
+        f'<div class="ff-end"><b>3 ABATES</b><span>3 capas seguidas · M1887</span><small>Sensi Premium · {esc(plat)}</small></div>'
+        f'<span class="ff-tag ff-t1">Sem Sensi</span><span class="ff-tag ff-t2">Com Sensi Premium · {esc(plat)}</span>')
+
+    # mundo: posição que leva o ponto desejado até a mira
+    mundo = [(0, (-60, 20)), (4, (-60, 20)), (8, (-95, -12)), (10, (-15, -46)), (12, (-58, -42)), (14, (-22, -54)), (16, (-52, -48)),
+             (18, (-28, -52)), (20, (-48, -44)), (22, (-36, -50)), (26, (-42, -46)), (30, (-38, -48)), (34, (-40, -48)), (49, (-40, -48)),
+             (51, (10, 0)), (53.5, (-40, -30)), (55, (-40, -30)), (56.6, (-40, -10)), (61, (-40, -10)),
+             (63.5, (80, -24)), (65, (80, -24)), (66.6, (80, -4)), (71, (80, -4)),
+             (73.5, (-110, -12)), (75, (-110, -12)), (76.6, (-110, 8)), (81, (-110, 8)), (84, (-30, 0)), (96, (-30, 0)), (100, (-60, 20))]
+    kf_mundo = '@keyframes ffWorld{' + ''.join(f'{p}%{{transform:translate({x}px,{y}px)}}' for p, (x, y) in mundo) + '}'
+    tiros1 = [11, 13, 15, 17, 19, 24, 26]
+    tiros3 = [58, 68, 78]
+    tiros = tiros1 + tiros3
+    kf_fire = '@keyframes ffFire{' + ''.join(f'{t - .01:.2f}%{{transform:scale(1)}}{t:.2f}%{{transform:scale(.84);box-shadow:0 0 14px rgba(255,255,255,.8)}}{t + .9:.2f}%{{transform:scale(1);box-shadow:none}}' for t in tiros) + '}'
+    kf_flash = _pisca('ffFlash', tiros, .5)
+    kf_rec = '@keyframes ffRec{' + ''.join(f'{t - .01:.2f}%{{transform:none}}{t:.2f}%{{transform:translate(-2px,3px) rotate(-2deg)}}{t + .6:.2f}%{{transform:none}}' for t in tiros) + '}'
+    kf_cross = '@keyframes ffSpread{' + ''.join(f'{t - .01:.2f}%{{transform:scale(1)}}{t:.2f}%{{transform:scale(1.7)}}{t + 1:.2f}%{{transform:scale(1)}}' for t in tiros) + '}'
+    kf_hit = _pisca('ffHitM', [12.5, 16.5, 20.5, 27], .9)
+    kf_w = ''.join(_pisca(f'ffW{k}', [t], 1.6) for k, t in enumerate([13, 17, 24, 26]))
+    kf_d = ''.join(f'@keyframes ffD{k}{{0%,{t - .01}%{{opacity:0;transform:none}}{t}%{{opacity:1;transform:scale(1.35)}}{t + .8}%{{transform:scale(1)}}{t + 4}%{{opacity:1;transform:translateY(-16px)}}{t + 5}%,100%{{opacity:0;transform:translateY(-18px)}}}}' for k, t in enumerate(tiros3))
+    # inimigos: E0 aparece no ato 1 e no ato 3; E1 e E2 só no ato 3
+    def kf_en(k, ini, morte):
+        a1 = '0%,33%{opacity:1;transform:none}10%{transform:translateX(7px)}18%{transform:translateX(-6px)}26%{transform:translateX(5px)}35%,50%{opacity:0;transform:none}' if k == 0 else f'0%,{ini - .5}%{{opacity:0;transform:translateX(-14px)}}'
+        return (f'@keyframes ffE{k}{{{a1}{ini}%{{opacity:1;transform:none}}{morte - .01}%{{opacity:1;transform:none}}'
+                f'{morte + .6}%{{opacity:1;transform:translateY(34px) rotate(-78deg);filter:saturate(.4) brightness(.8)}}'
+                f'{morte + 3.5}%{{opacity:1;transform:translateY(34px) rotate(-78deg);filter:saturate(.4) brightness(.8)}}{morte + 4.5}%,100%{{opacity:0;transform:translateY(34px) rotate(-78deg)}}}}'
+                f'@keyframes ffL{k}{{0%,{morte + 4}%{{opacity:0;transform:scale(.4)}}{morte + 5}%{{opacity:1;transform:scale(1.15)}}{morte + 6}%,96%{{opacity:1;transform:scale(1)}}98%,100%{{opacity:0}}}}')
+    kf_e = kf_en(0, 51, 58.5) + kf_en(1, 61, 68.5) + kf_en(2, 71, 78.5)
+    kf_feed = ''.join(f'@keyframes ffK{k}{{0%,{t}%{{opacity:0;transform:translateX(-14px)}}{t + 1.2}%,95%{{opacity:1;transform:none}}98%,100%{{opacity:0}}}}' for k, t in enumerate([58.8, 68.8, 78.8]))
+    kf_pop = ''.join(f'@keyframes ffP{k}{{0%,{t}%{{opacity:0;transform:translateX(-50%) scale(.5)}}{t + .8}%{{opacity:1;transform:translateX(-50%) scale(1.25)}}{t + 1.8}%,{t + 6}%{{opacity:1;transform:translateX(-50%) scale(1)}}{t + 7}%,100%{{opacity:0;transform:translateX(-50%) scale(1)}}}}' for k, t in enumerate([58.6, 68.6, 78.6]))
+    kf_ab = ''.join(f'@keyframes ffA{k}{{0%,{a}%{{opacity:0}}{a + .01}%,{b}%{{opacity:1}}{b + .01}%,100%{{opacity:0}}}}' for k, (a, b) in enumerate([(-1, 58.8), (58.8, 68.8), (68.8, 78.8), (78.8, 97)]))
+    dedo = [(0, '70%', '62%', 0), (4.5, '70%', '62%', 0), (5, '70%', '62%', 1), (8, '84%', '56%', 1), (10, '60%', '44%', 1), (12, '76%', '48%', 1), (14, '62%', '40%', 1),
+            (16, '74%', '44%', 1), (18, '64%', '40%', 1), (22, '70%', '42%', 1), (29, '69%', '43%', 1), (30, '69%', '43%', 0),
+            (41, 'calc(50% + 86px)', '194px', 0), (42, 'calc(50% + 86px)', '194px', 1), (43, 'calc(50% + 86px)', '194px', 1), (45, 'calc(50% + 86px)', '194px', 0),
+            (54, '74%', '66%', 0), (54.6, '74%', '66%', 1), (56.6, '74%', '42%', 1), (57.4, '74%', '40%', 0),
+            (64.6, '74%', '66%', 0), (65.2, '74%', '66%', 1), (66.6, '74%', '42%', 1), (67.4, '74%', '40%', 0),
+            (74.6, '74%', '66%', 0), (75.2, '74%', '66%', 1), (76.6, '74%', '42%', 1), (77.4, '74%', '40%', 0), (100, '74%', '40%', 0)]
+    kf_dedo = '@keyframes ffFinger{' + ''.join(f'{p}%{{left:{x};top:{y};opacity:{o}}}' for p, x, y, o in dedo) + '}'
+    kf_press = '@keyframes ffPress{0%,42.6%{transform:none}43%{transform:scale(.9);background:#f59e0b}44%,100%{transform:none}}'
+    kf_hp = '@keyframes ffHp{0%,12%{width:100%}13%,16%{width:78%}17%,20%{width:58%}21%,26%{width:44%}27%,49%{width:30%;background:#ef4444}50%,100%{width:100%}}'
+
+    css = f"""
+.vt--ff{{--vt:14s}}
+.vt--ff .vt-win{{height:250px;background:#7dd3fc;user-select:none}}
+.vt--ff .ff-sky{{position:absolute;inset:0;background:linear-gradient(180deg,#38bdf8,#bae6fd 55%,#e0f2fe)}}
+.vt--ff .ff-world{{position:absolute;inset:0;animation:ffWorld var(--vt) infinite ease-in-out}}
+.vt--ff .ff-hill{{position:absolute;left:-400px;right:-400px;top:calc(45% - 20px);height:60px;background:radial-gradient(ellipse 160px 40px at 30% 100%,#4d7c0f 98%,transparent),radial-gradient(ellipse 220px 50px at 70% 100%,#3f6212 98%,transparent)}}
+.vt--ff .ff-ground{{position:absolute;left:-400px;right:-400px;top:calc(45% + 20px);height:400px;background:linear-gradient(180deg,#65a30d,#4d7c0f 40%,#3f6212)}}
+.vt--ff .ff-road{{position:absolute;left:-400px;right:-400px;top:calc(45% + 56px);height:22px;background:#a8865a;box-shadow:inset 0 2px 0 rgba(0,0,0,.12)}}
+.vt--ff .ff-house{{position:absolute;width:70px;height:46px;background:#e7d8b9;border:2px solid #b49b6c}}
+.vt--ff .ff-house::before{{content:"";position:absolute;left:-8px;right:-8px;top:-24px;height:24px;background:#b91c1c;clip-path:polygon(50% 0,100% 100%,0 100%)}}
+.vt--ff .ff-house i{{position:absolute;left:26px;bottom:0;width:16px;height:24px;background:#6b4423}}
+.vt--ff .ff-h2{{width:56px;height:38px}}.vt--ff .ff-h2::before{{background:#1d4ed8}}
+.vt--ff .ff-tree{{position:absolute;width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#4ade80,#15803d 70%);box-shadow:14px 6px 0 -4px #166534}}
+.vt--ff .ff-tree::after{{content:"";position:absolute;left:14px;top:30px;width:7px;height:26px;background:#78350f}}
+.vt--ff .ff-rock{{position:absolute;width:40px;height:20px;border-radius:50% 50% 8px 8px;background:linear-gradient(180deg,#a8a29e,#57534e)}}
+.vt--ff .ff-en{{position:absolute;width:26px;height:58px;transform-origin:50% 100%;opacity:0}}
+.vt--ff .ff-sv{{display:block;width:26px !important;height:58px !important;max-width:none !important}}
+.vt--ff .ff-e0{{animation:ffE0 var(--vt) infinite}}.vt--ff .ff-e1{{animation:ffE1 var(--vt) infinite}}.vt--ff .ff-e2{{animation:ffE2 var(--vt) infinite}}
+.vt--ff .ff-loot{{position:absolute;width:18px;height:14px;border-radius:3px;background:linear-gradient(180deg,#facc15,#b45309);box-shadow:0 0 10px 3px rgba(250,204,21,.7);opacity:0}}
+.vt--ff .ff-l0{{animation:ffL0 var(--vt) infinite}}.vt--ff .ff-l1{{animation:ffL1 var(--vt) infinite}}.vt--ff .ff-l2{{animation:ffL2 var(--vt) infinite}}
+.vt--ff .ff-gloo{{position:absolute;width:52px;height:48px;border-radius:10px 10px 4px 4px;border:2px solid rgba(255,255,255,.85);
+  background:repeating-linear-gradient(60deg,rgba(255,255,255,.25) 0 2px,transparent 2px 10px),repeating-linear-gradient(-60deg,rgba(255,255,255,.25) 0 2px,transparent 2px 10px),rgba(125,211,252,.6);
+  box-shadow:0 0 12px rgba(186,230,253,.9);transform-origin:50% 100%;transform:scaleY(0);animation:ffGloo var(--vt) infinite}}
+@keyframes ffGloo{{0%,21.5%{{transform:scaleY(0)}}22.5%{{transform:scaleY(1.1)}}23.2%,33%{{transform:scaleY(1)}}35%,100%{{transform:scaleY(0)}}}}
+.vt--ff .ff-player{{position:absolute;left:calc(50% - 80px);bottom:-8px;width:68px;height:94px;z-index:2;animation:ffRec var(--vt) infinite}}
+.vt--ff .ff-me{{display:block;width:68px !important;height:94px !important;max-width:none !important}}
+.vt--ff .ff-flash{{position:absolute;left:61px;top:-6px;width:18px;height:18px;background:radial-gradient(circle,#fff,#fde047 40%,rgba(249,115,22,.0) 70%);opacity:0;animation:ffFlash var(--vt) infinite}}
+.vt--ff .ff-cross{{position:absolute;left:50%;top:45%;width:30px;height:30px;margin:-15px 0 0 -15px;z-index:3;animation:ffSpread var(--vt) infinite}}
+.vt--ff .ff-cross::before,.vt--ff .ff-cross::after{{content:"";position:absolute;background:#fff;filter:drop-shadow(0 0 1px #000)}}
+.vt--ff .ff-cross::before{{left:14px;top:0;width:2px;height:30px;clip-path:polygon(0 0,100% 0,100% 33%,0 33%,0 67%,100% 67%,100% 100%,0 100%)}}
+.vt--ff .ff-cross::after{{left:0;top:14px;width:30px;height:2px;clip-path:polygon(0 0,33% 0,33% 100%,0 100%,0 0,67% 0,100% 0,100% 100%,67% 100%)}}
+.vt--ff .ff-cross i{{position:absolute;left:13px;top:13px;width:4px;height:4px;border-radius:50%;background:#ef4444}}
+.vt--ff .ff-wd,.vt--ff .ff-miss{{position:absolute;left:calc(50% + 14px);top:calc(45% - 30px);color:#fff;font-size:12px;font-weight:900;text-shadow:0 1px 2px #000;opacity:0;z-index:3}}
+.vt--ff .ff-w0{{animation:ffW0 var(--vt) infinite}}.vt--ff .ff-w1{{animation:ffW1 var(--vt) infinite;left:calc(50% - 30px)}}
+.vt--ff .ff-w2,.vt--ff .ff-w3{{color:#bae6fd}}.vt--ff .ff-w2{{animation:ffW2 var(--vt) infinite}}.vt--ff .ff-w3{{animation:ffW3 var(--vt) infinite;left:calc(50% - 26px)}}
+.vt--ff .ff-miss{{left:calc(50% - 22px);top:calc(45% + 18px);font-size:10px;background:rgba(0,0,0,.5);padding:2px 6px;border-radius:4px;animation:ffMiss var(--vt) infinite}}
+@keyframes ffMiss{{0%,14%{{opacity:0}}15%,20%{{opacity:1}}21%,100%{{opacity:0}}}}
+.vt--ff .ff-dmg{{position:absolute;right:calc(50% + 16px);top:calc(45% - 30px);display:flex;align-items:center;gap:3px;color:#fb923c;font-size:17px;font-weight:900;font-style:italic;text-shadow:0 1px 0 #7c2d12,0 0 6px rgba(0,0,0,.6);opacity:0;z-index:3}}
+.vt--ff .ff-dmg i{{width:11px;height:11px;border-radius:50% 50% 3px 3px;background:#ef4444;box-shadow:inset 0 -3px 0 #991b1b}}
+.vt--ff .ff-d0{{animation:ffD0 var(--vt) infinite}}.vt--ff .ff-d1{{animation:ffD1 var(--vt) infinite}}.vt--ff .ff-d2{{animation:ffD2 var(--vt) infinite}}
+.vt--ff .ff-hit{{position:absolute;inset:0;box-shadow:inset 0 0 40px 10px rgba(239,68,68,.75);opacity:0;z-index:3;pointer-events:none;animation:ffHitM var(--vt) infinite}}
+.vt--ff .ff-hud>span{{position:absolute;z-index:4}}
+.vt--ff .ff-map{{right:8px;top:8px;width:54px;height:54px;border-radius:6px;overflow:hidden;background:linear-gradient(135deg,#4d7c0f,#65a30d 50%,#a8865a 52%,#65a30d 56%);border:1.5px solid rgba(255,255,255,.6);opacity:.92}}
+.vt--ff .ff-zone{{position:absolute;left:6px;top:4px;width:40px;height:40px;border-radius:50%;border:1.5px solid #fff}}
+.vt--ff .ff-me-dot{{position:absolute;left:24px;top:22px;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:9px solid #facc15}}
+.vt--ff .ff-red{{position:absolute;left:34px;top:14px;width:5px;height:5px;border-radius:50%;background:#ef4444;animation:ffRed 1s steps(2) infinite}}
+@keyframes ffRed{{50%{{opacity:0}}}}
+.vt--ff .ff-cnt{{right:8px;top:66px;display:flex;align-items:center;gap:3px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.5);color:#fff;font-size:9px;font-weight:900}}
+.vt--ff .ff-cnt em{{font-style:normal;color:#d1d5db;font-size:7px;font-weight:700}}
+.vt--ff .ff-ab{{position:relative;display:inline-block;width:8px;height:11px}}
+.vt--ff .ff-ab b{{position:absolute;inset:0;color:#facc15;opacity:0}}
+.vt--ff .ff-a0{{animation:ffA0 var(--vt) infinite}}.vt--ff .ff-a1{{animation:ffA1 var(--vt) infinite}}.vt--ff .ff-a2{{animation:ffA2 var(--vt) infinite}}.vt--ff .ff-a3{{animation:ffA3 var(--vt) infinite}}
+.vt--ff .ff-hp{{left:50%;bottom:6px;width:110px;margin-left:-55px;text-align:center}}
+.vt--ff .ff-hp small{{display:block;color:#fff;font-size:8px;font-weight:800;text-shadow:0 1px 2px #000}}
+.vt--ff .ff-hp>i{{display:block;height:6px;border-radius:2px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.5);overflow:hidden}}
+.vt--ff .ff-hp>i b{{display:block;height:100%;width:100%;background:#f8fafc;animation:ffHp var(--vt) infinite}}
+.vt--ff .ff-arm{{position:absolute;left:-26px;bottom:0;display:flex;gap:2px}}
+.vt--ff .ff-arm u{{width:11px;height:11px;border-radius:2px;background:#ca8a04;color:#fff;font-size:7px;font-weight:900;text-decoration:none;display:grid;place-items:center}}
+.vt--ff .ff-gun{{bottom:26px;padding:2px 6px;border-radius:4px;background:rgba(0,0,0,.45);color:#fff;font-size:8px;font-weight:800;border:1px solid rgba(255,255,255,.25)}}
+.vt--ff .ff-gun b{{display:block;font-size:7px;color:#d1d5db}}
+.vt--ff .ff-g1{{left:calc(50% - 46px);border-color:#facc15}}.vt--ff .ff-g2{{left:calc(50% + 4px)}}
+.vt--ff .ff-joy{{left:12px;bottom:12px;width:58px;height:58px;border-radius:50%;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.35)}}
+.vt--ff .ff-joy i{{position:absolute;left:16px;top:16px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.55);animation:ffJoy 3s ease-in-out infinite}}
+@keyframes ffJoy{{25%{{transform:translate(-6px,-3px)}}75%{{transform:translate(6px,-2px)}}}}
+.vt--ff .ff-fl{{left:16px;top:96px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.25);border:2px solid rgba(255,255,255,.4)}}
+.vt--ff .ff-fire{{right:12px;bottom:28px;width:50px;height:50px;border-radius:50%;background:rgba(0,0,0,.3);border:2px solid rgba(255,255,255,.6);animation:ffFire var(--vt) infinite}}
+.vt--ff .ff-fire i,.vt--ff .ff-fl::after{{content:"";position:absolute;left:50%;top:50%;width:8px;height:20px;margin:-10px 0 0 -4px;border-radius:4px 4px 1px 1px;background:#fff;opacity:.85}}
+.vt--ff .ff-fl::after{{width:5px;height:12px;margin:-6px 0 0 -2.5px}}
+.vt--ff .ff-btn{{width:26px;height:26px;border-radius:50%;background:rgba(0,0,0,.28);border:1.5px solid rgba(255,255,255,.5);color:#fff;font-size:9px;font-weight:900;display:grid;place-items:center}}
+.vt--ff .ff-scope{{right:70px;bottom:62px}}.vt--ff .ff-scope i{{width:12px;height:12px;border-radius:50%;border:1.5px solid #fff}}
+.vt--ff .ff-jump{{right:18px;bottom:90px}}.vt--ff .ff-crouch{{right:66px;bottom:24px}}.vt--ff .ff-med{{right:100px;bottom:28px;font-size:14px;color:#4ade80}}
+.vt--ff .ff-gel{{right:48px;bottom:118px;width:30px;height:30px;font-size:7px;border-radius:7px;background:rgba(56,189,248,.4);border-color:#bae6fd}}
+.vt--ff .ff-feed{{position:absolute;left:8px;top:32px;display:flex;flex-direction:column;align-items:flex-start;gap:2px;z-index:4}}
+.vt--ff .ff-k{{padding:2px 6px;border-radius:3px;background:rgba(0,0,0,.55);color:#e5e7eb;font-size:7.5px;font-weight:700;white-space:nowrap;opacity:0}}
+.vt--ff .ff-k b{{color:#facc15}}.vt--ff .ff-k em{{font-style:normal;color:#fb923c;font-weight:900}}
+.vt--ff .ff-k i{{display:inline-block;width:9px;height:4px;margin:0 2px;background:#fff;vertical-align:middle;clip-path:polygon(0 30%,70% 30%,70% 0,100% 50%,70% 100%,70% 70%,0 70%)}}
+.vt--ff .ff-k0{{animation:ffK0 var(--vt) infinite}}.vt--ff .ff-k1{{animation:ffK1 var(--vt) infinite}}.vt--ff .ff-k2{{animation:ffK2 var(--vt) infinite}}
+.vt--ff .ff-pop{{position:absolute;left:50%;top:calc(45% + 26px);color:#fff;font-size:20px;font-weight:900;font-style:italic;white-space:nowrap;
+  -webkit-text-stroke:1px #b45309;text-shadow:0 2px 0 #b45309,0 0 12px rgba(251,146,60,.9);opacity:0;z-index:4}}
+.vt--ff .ff-p0{{animation:ffP0 var(--vt) infinite}}.vt--ff .ff-p1{{animation:ffP1 var(--vt) infinite}}.vt--ff .ff-p2{{animation:ffP2 var(--vt) infinite}}
+.vt--ff .ff-finger{{position:absolute;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:rgba(255,255,255,.35);border:2px solid rgba(255,255,255,.9);
+  box-shadow:0 0 0 6px rgba(255,255,255,.12);z-index:6;opacity:0;animation:ffFinger var(--vt) infinite}}
+.vt--ff .ff-cfg{{position:absolute;left:50%;top:20px;width:236px;margin-left:-118px;padding:8px 10px 10px;border-radius:8px;background:rgba(24,27,33,.97);border:1px solid #3f3f46;
+  box-shadow:0 0 0 400px rgba(0,0,0,.45);z-index:5;opacity:0;animation:ffCfg var(--vt) infinite}}
+@keyframes ffCfg{{0%,33%{{opacity:0;transform:scale(.94)}}35%,47%{{opacity:1;transform:none}}49%,100%{{opacity:0;transform:scale(.96)}}}}
+.vt--ff .ff-tabs{{display:flex;gap:4px;margin-bottom:6px}}
+.vt--ff .ff-tabs u{{flex:1;padding:3px 0;border-radius:3px;background:#2a2e36;color:#9ca3af;font-size:7.5px;font-weight:800;text-align:center;text-decoration:none}}
+.vt--ff .ff-tabs u.on{{background:#f59e0b;color:#111}}
+.vt--ff .ff-r{{display:flex;align-items:center;gap:6px;margin-top:5px}}
+.vt--ff .ff-r span{{flex:0 0 70px;color:#e5e7eb;font-size:8.5px;white-space:nowrap}}
+.vt--ff .ff-r i{{position:relative;flex:1;height:4px;border-radius:2px;background:#3f3f46}}
+.vt--ff .ff-r i b{{position:absolute;left:0;top:0;bottom:0;width:38%;border-radius:2px;background:#f59e0b;animation:ffSl var(--vt) infinite}}
+.vt--ff .ff-r i b::after{{content:"";position:absolute;right:-5px;top:-3px;width:10px;height:10px;border-radius:50%;background:#fff}}
+@keyframes ffSl{{0%,36%{{width:38%}}41%,100%{{width:var(--v)}}}}
+.vt--ff .ff-r em{{position:relative;flex:0 0 22px;height:11px;font-style:normal}}
+.vt--ff .ff-r em u{{position:absolute;right:0;color:#fff;font-size:8.5px;font-weight:800;text-decoration:none}}
+.vt--ff .ff-r em u:first-child{{animation:ffV0 var(--vt) infinite}}.vt--ff .ff-r em u+u{{opacity:0;color:#fbbf24;animation:ffV1 var(--vt) infinite}}
+@keyframes ffV0{{0%,39%{{opacity:1}}40%,100%{{opacity:0}}}}@keyframes ffV1{{0%,39%{{opacity:0}}40%,100%{{opacity:1}}}}
+.vt--ff .ff-save{{display:block;width:70px;margin:8px 0 0 auto;padding:4px 0;border-radius:4px;background:#fbbf24;color:#111;font-size:9px;font-weight:900;text-align:center;animation:ffPress var(--vt) infinite}}
+.vt--ff .ff-ok{{position:absolute;left:10px;bottom:13px;color:#4ade80;font-size:8.5px;font-weight:800;opacity:0;animation:ffOk var(--vt) infinite}}
+@keyframes ffOk{{0%,43%{{opacity:0}}44%,100%{{opacity:1}}}}
+.vt--ff .ff-end{{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);padding:10px 18px;border-radius:10px;background:linear-gradient(180deg,rgba(0,0,0,.75),rgba(0,0,0,.6));
+  border:1px solid #f59e0b;text-align:center;z-index:5;opacity:0;animation:ffEnd var(--vt) infinite}}
+@keyframes ffEnd{{0%,83%{{opacity:0;transform:translate(-50%,-50%) scale(.7)}}85%{{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}86.5%,95%{{opacity:1;transform:translate(-50%,-50%) scale(1)}}97%,100%{{opacity:0}}}}
+.vt--ff .ff-end b{{display:block;color:#fbbf24;font-size:22px;font-weight:900;font-style:italic;white-space:nowrap}}
+.vt--ff .ff-end span{{display:block;color:#fff;font-size:10px;font-weight:800;white-space:nowrap}}
+.vt--ff .ff-end small{{display:block;margin-top:3px;color:#fcd34d;font-size:8.5px;font-weight:700;white-space:nowrap}}
+.vt--ff .ff-tag{{position:absolute;left:8px;top:8px;padding:3px 8px;border-radius:999px;font-size:8.5px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;z-index:6;white-space:nowrap}}
+.vt--ff .ff-t1{{background:rgba(0,0,0,.6);color:#fca5a5;animation:ffT1 var(--vt) infinite}}
+.vt--ff .ff-t2{{background:#f59e0b;color:#111;opacity:0;animation:ffT2 var(--vt) infinite}}
+@keyframes ffT1{{0%,32%{{opacity:1}}34%,100%{{opacity:0}}}}
+@keyframes ffT2{{0%,49%{{opacity:0}}51%,96%{{opacity:1}}100%{{opacity:0}}}}
+{kf_mundo}{kf_fire}{kf_flash}{kf_rec}{kf_cross}{kf_hit}{kf_w}{kf_d}{kf_e}{kf_feed}{kf_pop}{kf_ab}{kf_dedo}{kf_press}{kf_hp}
+"""
+    return card('ff', '#f59e0b', 'Veja a diferença na partida', 'Sem Sensi errando, com Sensi Premium é só capa', jan, css,
+                'Animação ilustrativa, com desenhos próprios. O resultado depende da sua prática e do seu aparelho.', passos)
