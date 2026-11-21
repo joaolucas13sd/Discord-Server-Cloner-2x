@@ -562,8 +562,15 @@
                         bFr.type = 'button'; bFr.className = 'rn-vg__cat rn-vg__cat--fr'; bFr.setAttribute('role', 'tab'); bFr.setAttribute('data-cat', 'franquias');
                         bFr.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/></svg>Franquias';
                         boxCats.insertBefore(bFr, boxCats.children[1] || null);
+                        // Rei dos Nitros: "Coleções" (Terror para a noite, Leves para PC fraco, Nota máxima...) ao lado de "Franquias" (dados de RN_COLECOES, rn-mais.js)
+                        var bCo = document.createElement('button');
+                        bCo.type = 'button'; bCo.className = 'rn-vg__cat rn-vg__cat--fr rn-vg__cat--co'; bCo.setAttribute('role', 'tab'); bCo.setAttribute('data-cat', 'colecoes');
+                        bCo.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg>Coleções';
+                        boxCats.insertBefore(bCo, bFr.nextSibling);
                         var boxFr = document.createElement('div'); boxFr.className = 'rn-vg__frs'; boxFr.id = 'rn-vg-frs'; boxFr.hidden = true;
                         boxCats.insertAdjacentElement('afterend', boxFr);
+                        var boxCo = document.createElement('div'); boxCo.className = 'rn-vg__frs rn-vg__cos'; boxCo.id = 'rn-vg-cos'; boxCo.hidden = true;
+                        boxFr.insertAdjacentElement('afterend', boxCo);
                         function montarFr() {
                           var FR = window.RN_FRANQUIAS || []; if (!FR.length) return false;
                           var temNome = {}; cards.forEach(function (c) { temNome[String(c.getAttribute('data-nome') || '').trim().toLowerCase()] = c; c._fr = []; });
@@ -575,12 +582,30 @@
                           boxFr.innerHTML = html + '<a class="rn-vg__frall" href="/franquias">Ver todas as franquias →</a>';
                           return true;
                         }
+                        function montarCo() {
+                          var CO = window.RN_COLECOES || []; if (!CO.length || !window.rnColecao) return false;
+                          var temNome = {}; cards.forEach(function (c) { temNome[String(c.getAttribute('data-nome') || '').trim().toLowerCase()] = c; c._co = []; });
+                          var html = '';
+                          CO.forEach(function (f) {
+                            var n = 0; window.rnColecao(f).forEach(function (v) { var c = temNome[String(v.name).trim().toLowerCase()]; if (c) { c._co.push(f.s); n++; } });
+                            if (n > 1) html += '<button type="button" class="rn-vg__fr" data-co="' + f.s + '">' + f.n + ' <span>' + n + '</span></button>';
+                          });
+                          boxCo.innerHTML = html + '<a class="rn-vg__frall" href="/colecoes">Ver todas as coleções →</a>';
+                          return true;
+                        }
                         boxCats.hidden = false;
                         boxCats.addEventListener('click', function (e) {
                           var b = e.target.closest('.rn-vg__cat'); if (!b) return;
                           cat = b.getAttribute('data-cat'); aberto = false;
                           [].forEach.call(boxCats.children, function (x) { var on = x === b; x.classList.toggle('rn-vg__cat--on', on); x.setAttribute('aria-selected', on ? 'true' : 'false'); });
                           boxFr.hidden = cat !== 'franquias';
+                          boxCo.hidden = cat !== 'colecoes';
+                          if (cat === 'colecoes' && !boxCo.children.length) {
+                            boxCo.innerHTML = '<span class="rn-vg__frload">Carregando coleções…</span>';
+                            var prontoCo = function () { montarCo(); aplicar(); };
+                            if (window.RN_JOGOS) prontoCo(); else if (window.rnJogos) window.rnJogos(prontoCo);
+                          }
+                          [].forEach.call(boxCo.querySelectorAll('.rn-vg__fr'), function (x) { x.classList.remove('rn-vg__fr--on'); });
                           if (cat === 'franquias' && !boxFr.children.length) {
                             boxFr.innerHTML = '<span class="rn-vg__frload">Carregando franquias…</span>';
                             var pronto = function () { montarFr(); aplicar(); };
@@ -588,6 +613,12 @@
                           }
                           [].forEach.call(boxFr.querySelectorAll('.rn-vg__fr'), function (x) { x.classList.remove('rn-vg__fr--on'); });
                           aplicar();
+                        });
+                        boxCo.addEventListener('click', function (e) {
+                          var b = e.target.closest('.rn-vg__fr'); if (!b) return;
+                          var ja = b.classList.contains('rn-vg__fr--on');
+                          [].forEach.call(boxCo.querySelectorAll('.rn-vg__fr'), function (x) { x.classList.toggle('rn-vg__fr--on', x === b && !ja); });
+                          cat = ja ? 'colecoes' : 'co:' + b.getAttribute('data-co'); aberto = true; aplicar();
                         });
                         boxFr.addEventListener('click', function (e) {
                           var b = e.target.closest('.rn-vg__fr'); if (!b) return;
@@ -600,7 +631,7 @@
                         var q = inp ? norm(inp.value.trim()) : '';
                         var vis = 0, total = 0;
                         cards.forEach(function (c) {
-                          var naCat = cat === 'franquias' ? !!(c._fr && c._fr.length) : cat.indexOf('fr:') === 0 ? !!(c._fr && c._fr.indexOf(cat.slice(3)) !== -1) : c._cats.indexOf(cat) !== -1;
+                          var naCat = cat === 'colecoes' ? !!(c._co && c._co.length) : cat.indexOf('co:') === 0 ? !!(c._co && c._co.indexOf(cat.slice(3)) !== -1) : cat === 'franquias' ? !!(c._fr && c._fr.length) : cat.indexOf('fr:') === 0 ? !!(c._fr && c._fr.indexOf(cat.slice(3)) !== -1) : c._cats.indexOf(cat) !== -1;
                           var combina = (!q || norm(c.getAttribute('data-nome')).indexOf(q) !== -1) && (q || naCat);
                           var escondidoPeloLimite = combina && !q && !aberto && total >= LIMITE && !c.classList.contains('rn-opt--on');
                           if (combina) total++;
