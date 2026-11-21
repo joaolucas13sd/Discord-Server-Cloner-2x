@@ -1125,3 +1125,78 @@ def combo_streaming(imagem, passos):
     css += (f'@keyframes cbPlay{{0%,{fim + 8}%{{opacity:1;transform:none}}{pt}%{{opacity:1;transform:scale(.94)}}{pt + .8}%,100%{{opacity:1;transform:none}}}}\n'
             f'@keyframes cbPbW{{0%,{pt + .6}%{{opacity:0}}{pt + 1.2}%,96%{{opacity:1}}98%,100%{{opacity:0}}}}@keyframes cbPb{{0%,{pt + 1.2}%{{width:0}}96%,100%{{width:100%}}}}\n')
     return html, BASE + css
+
+
+# ---------------------------------------------------------------- Fatal Fans (conta NFA): pedido → confirmação de maioridade → login → assinatura premium ativa
+def fatal_fans(passos):
+    P = 'fn'
+    tiles = ''.join(f'<span class="fn-tl fn-tt{k}"><i class="fn-art" style="--h:{h}"></i><u class="fn-lk"></u><b class="fn-ul">Liberado</b></span>' for k, h in enumerate([340, 280, 20, 310, 250, 10]))
+    jan = (
+        '<div class="fn-top fn-t1"><b>Rei dos Nitros</b><span>Seu pedido</span></div><div class="fn-top fn-t2"><b>Fatal Fans</b><span>Acesso</span></div><div class="fn-top fn-t3"><b>Fatal Fans</b><span class="on">Início</span><span>Criadores</span><span>Minha conta</span></div>'
+        '<div class="fn-sc fn-a"><div class="fn-box"><small class="fn-ok">✓ Pagamento aprovado</small><b class="fn-pn">Fatal Fans · Conta NFA</b>'
+        '<span class="fn-in fn-r1"><u>E-mail</u><em>email_do_pedido</em></span><span class="fn-in fn-r2"><u>Senha</u><em>••••••••••</em></span>'
+        '<span class="fn-bt fn-go">Abrir a Fatal Fans</span></div><span class="fn-toast fn-tc1">✓ E-mail copiado</span><span class="fn-toast fn-tc2">✓ Senha copiada</span></div>'
+        '<div class="fn-sc fn-b"><div class="fn-box fn-gate"><i class="fn-18">+18</i><b>Conteúdo para maiores de 18 anos</b><small>Confirme a sua idade para continuar.</small>'
+        '<div class="fn-gr"><span class="fn-bt fn-no">Sair</span><span class="fn-bt fn-yes">Tenho 18 anos ou mais</span></div></div></div>'
+        '<div class="fn-sc fn-c"><div class="fn-box fn-lbox"><b class="fn-wm">Fatal Fans</b>'
+        '<span class="fn-in fn-i1"><em class="fn-y1">email_do_pedido</em></span><span class="fn-in fn-i2"><em class="fn-y2">••••••••••</em></span>'
+        '<span class="fn-bt fn-b1">Entrar</span><i class="fn-spin"></i></div></div>'
+        '<div class="fn-sc fn-d"><div class="fn-sub"><i class="fn-crown"></i><div><b>Assinatura Premium</b><small>Conta NFA · acesso liberado</small></div><span class="fn-on">✓ ATIVA</span></div>'
+        f'<div class="fn-grid">{tiles}</div></div>'
+        '<span class="fn-cur"></span>')
+    html = (f'<div class="ed-card vt vt--fn" style="--vc:#fb7185"><span class="vt-k">Passo a passo</span><h2 class="vt-t">Como acessar a sua conta</h2>'
+            f'<div class="vt-win" role="img" aria-label="Como acessar a conta premium da Fatal Fans">{jan}</div><div class="fn-steps">{_fl_steps(P, passos)}</div></div>')
+    css = _fl_base(P, len(passos), [(0, 16), (16, 32), (32, 56), (56, 97)], '#fb7185').replace('@V', '24')
+    css += """
+.vt--fn .fn-top span.on{color:#fff}
+.vt--fn .fn-t1{animation:fnT1 var(--vt) infinite}.vt--fn .fn-t2{animation:fnT2 var(--vt) infinite}.vt--fn .fn-t3{animation:fnT3 var(--vt) infinite}
+.vt--fn .fn-a{animation:fnA var(--vt) infinite}.vt--fn .fn-b{animation:fnB var(--vt) infinite}.vt--fn .fn-c{animation:fnC var(--vt) infinite}.vt--fn .fn-d{animation:fnD var(--vt) infinite}
+.vt--fn .fn-ok{color:#4ade80;font-size:9px;font-weight:800}.vt--fn .fn-pn{margin:3px 0 8px;color:#fff;font-size:12.5px;font-weight:900}
+.vt--fn .fn-in u{flex:0 0 38px;color:#8f98a0;font-size:8px;font-weight:700}
+.vt--fn .fn-a .fn-in{margin-top:5px}.vt--fn .fn-a .fn-in em{width:auto;color:#fff}
+.vt--fn .fn-r1{animation:fnR1 var(--vt) infinite}.vt--fn .fn-r2{animation:fnR2 var(--vt) infinite}
+.vt--fn .fn-go{margin-top:9px;background:#e11d48;animation:fnGoP var(--vt) infinite}
+.vt--fn .fn-toast{position:absolute;left:50%;top:5px;transform:translateX(-50%);padding:4px 10px;border-radius:999px;background:rgba(34,197,94,.18);border:1px solid #22c55e;color:#4ade80;font-size:9px;font-weight:800;white-space:nowrap;opacity:0;z-index:3}
+.vt--fn .fn-tc1{animation:fnTc1 var(--vt) infinite}.vt--fn .fn-tc2{animation:fnTc2 var(--vt) infinite}
+.vt--fn .fn-gate{text-align:center;padding-top:14px}
+.vt--fn .vt-win .fn-18{width:44px;height:44px;margin:0 auto 8px;border-radius:50%;display:grid;place-items:center;background:#e11d48;color:#fff;font-size:14px;font-weight:900;box-shadow:0 0 18px #e11d4888;animation:fnPulse 2s ease-in-out infinite}
+@keyframes fnPulse{50%{transform:scale(1.07)}}
+.vt--fn .fn-gate>b{color:#fff;font-size:12px;font-weight:800}.vt--fn .fn-gate>small{margin-top:3px;color:#8f98a0;font-size:9px}
+.vt--fn .fn-gr{display:flex;gap:6px;margin-top:12px}.vt--fn .fn-gr .fn-bt{font-size:9px}.vt--fn .fn-no{flex:0 0 60px;background:#2a2f38}.vt--fn .fn-yes{flex:1;background:#e11d48;animation:fnYesP var(--vt) infinite}
+.vt--fn .fn-lbox{height:150px}
+.vt--fn .fn-wm{position:absolute;left:0;right:0;top:12px;text-align:center;font-size:19px;font-weight:900;background:linear-gradient(90deg,#fb7185,#e11d48);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.5px}
+.vt--fn .fn-i1,.vt--fn .fn-i2{position:absolute;left:12px;right:12px;margin:0}.vt--fn .fn-i1{top:48px}.vt--fn .fn-i2{top:78px}
+.vt--fn .fn-b1{position:absolute;left:12px;right:12px;top:112px;background:#e11d48;animation:fnB1 var(--vt) infinite}
+.vt--fn .fn-y1{animation:fnY1 var(--vt) infinite steps(15)}.vt--fn .fn-y2{animation:fnY2 var(--vt) infinite steps(10)}
+.vt--fn .fn-spin{position:absolute;left:50%;top:116px;width:16px;height:16px;margin-left:-8px;border-radius:50%;border:3px solid #2a2f38;border-top-color:#fb7185;opacity:0;animation:fnSpin .8s linear infinite,fnSpV var(--vt) infinite}
+@keyframes fnSpin{to{transform:rotate(360deg)}}
+.vt--fn .fn-sub{position:absolute;left:8px;right:8px;top:8px;height:46px;display:flex !important;align-items:center;gap:10px;padding:0 10px;border-radius:10px;background:linear-gradient(90deg,#4c0519,#1d2128);border:1px solid #9f1239}
+.vt--fn .fn-crown{flex:none;width:26px;height:20px;background:linear-gradient(180deg,#fcd34d,#f59e0b);clip-path:polygon(0 100%,0 25%,25% 55%,50% 0,75% 55%,100% 25%,100% 100%)}
+.vt--fn .fn-sub b{color:#fff;font-size:11.5px;font-weight:900}.vt--fn .fn-sub small{color:#fda4af;font-size:8.5px;margin-top:1px}
+.vt--fn .fn-on{margin-left:auto;padding:3px 8px;border-radius:999px;background:#16a34a;color:#fff;font-size:8px;font-weight:900;opacity:0;animation:fnOn var(--vt) infinite}
+.vt--fn .fn-grid{position:absolute;left:8px;right:8px;top:62px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.vt--fn .fn-tl{position:relative;height:72px;border-radius:9px;overflow:hidden;background:#23262d;opacity:0;transform:translateY(8px)}
+.vt--fn .fn-art{position:absolute;inset:0;background:linear-gradient(135deg,hsl(var(--h),70%,45%),hsl(calc(var(--h) + 50),70%,25%));filter:blur(6px);transform:scale(1.2);animation:none}
+.vt--fn .fn-art::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,.25),transparent 55%)}
+.vt--fn .fn-lk{position:absolute;left:50%;top:50%;width:18px;height:14px;margin:-4px 0 0 -9px;border-radius:3px;background:#fff;box-shadow:0 -7px 0 -3px #fff}
+.vt--fn .fn-ul{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:2px 8px;border-radius:999px;background:rgba(0,0,0,.55);color:#86efac;font-size:8.5px;font-weight:900;opacity:0}
+"""
+    css += ('@keyframes fnT1{0%,15.4%{opacity:1}16%,100%{opacity:0}}@keyframes fnT2{0%,15.6%{opacity:0}16.2%,31.6%{opacity:1}32.2%,100%{opacity:0}}@keyframes fnT3{0%,31.8%{opacity:0}32.4%,100%{opacity:1}}\n'
+            '@keyframes fnA{0%,15.4%{opacity:1}16.4%,100%{opacity:0}}@keyframes fnB{0%,15.8%{opacity:0}17.2%,31%{opacity:1}32.4%,100%{opacity:0}}@keyframes fnC{0%,31.8%{opacity:0}33.4%,54.4%{opacity:1}56%,100%{opacity:0}}@keyframes fnD{0%,55.4%{opacity:0}57%,96%{opacity:1}98%,100%{opacity:0}}\n'
+            '@keyframes fnR1{0%,6.5%{background:#2a2f38}7%,9%{background:#7f1d1d}10%,100%{background:#2a2f38}}@keyframes fnR2{0%,10.5%{background:#2a2f38}11%,13%{background:#7f1d1d}13.8%,100%{background:#2a2f38}}\n'
+            + _fl_vis('fnTc1', 7, 9.8, .5) + _fl_vis('fnTc2', 11, 13.4, .5) + _fl_press('fnGoP', 14.6) + _fl_press('fnYesP', 29.2)
+            + _fl_press('fnB1', 48.2) + _fl_type('fnY1', 34.5, 40, 15) + _fl_type('fnY2', 41, 45, 10) + '@keyframes fnSpV{0%,49.4%{opacity:0}50%,54%{opacity:1}54.6%,100%{opacity:0}}\n'
+            '@keyframes fnOn{0%,58%{opacity:0;transform:scale(.7)}59.4%,100%{opacity:1;transform:none}}\n')
+    for k in range(6):
+        a = 60 + k * 3.2
+        css += (f'.vt--fn .fn-tt{k}{{animation:fnTt{k} var(--vt) infinite}}.vt--fn .fn-tt{k} .fn-lk{{animation:fnLk{k} var(--vt) infinite}}.vt--fn .fn-tt{k} .fn-ul{{animation:fnUl{k} var(--vt) infinite}}.vt--fn .fn-tt{k} .fn-art{{animation:fnAr{k} var(--vt) infinite}}\n'
+                f'@keyframes fnTt{k}{{0%,{a - 3}%{{opacity:0;transform:translateY(8px)}}{a - 1.4}%,97%{{opacity:1;transform:none}}98.6%,100%{{opacity:0}}}}\n'
+                f'@keyframes fnLk{k}{{0%,{a + 3}%{{opacity:1}}{a + 4}%,100%{{opacity:0}}}}\n@keyframes fnUl{k}{{0%,{a + 3.2}%{{opacity:0;transform:translate(-50%,-50%) scale(.6)}}{a + 4.4}%,96%{{opacity:1;transform:translate(-50%,-50%) scale(1)}}98%,100%{{opacity:0}}}}\n'
+                f'@keyframes fnAr{k}{{0%,{a + 3}%{{filter:blur(8px)}}{a + 4.6}%,100%{{filter:blur(0)}}}}\n')
+    css += _fl_cur(P, [(0, '75%', '90%'), (5.5, 'calc(50% - 20px)', '104px'), (8, 'calc(50% - 20px)', '104px'), (9.4, 'calc(50% - 20px)', '132px'), (12, 'calc(50% - 20px)', '132px'),
+                       (13.6, 'calc(50% + 0px)', '172px'), (16, 'calc(50% + 0px)', '172px'),
+                       (22, 'calc(50% - 63px)', '178px'), (25, 'calc(50% + 33px)', '178px'), (29, 'calc(50% + 33px)', '178px'), (32, 'calc(50% + 33px)', '178px'),
+                       (34, 'calc(50% - 50px)', '107px'), (40.5, 'calc(50% - 50px)', '107px'), (41.6, 'calc(50% - 50px)', '137px'), (45.5, 'calc(50% - 50px)', '137px'),
+                       (47.4, 'calc(50% + 0px)', '169px'), (50.4, 'calc(50% + 0px)', '169px'), (54, 'calc(50% + 70px)', '210px'),
+                       (82, 'calc(50% + 70px)', '210px'), (88, 'calc(50% + 0px)', '165px'), (94, 'calc(50% + 0px)', '165px'), (100, '75%', '90%')])
+    return html, BASE + css

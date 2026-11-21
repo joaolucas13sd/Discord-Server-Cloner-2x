@@ -1,0 +1,134 @@
+<div class="hs-wrapper">
+
+<style>
+.hs-wrapper{--hs-accent:#ff6a1f;--hs-bg:#100806;--hs-card:#1a0f0b;--hs-item:#26150e;--hs-border:rgba(255,255,255,.08);--hs-text:#f5f5f6;--hs-muted:#c4b8b0;width:100%;max-width:500px;margin:0 auto;font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--hs-text)}
+.hs-wrapper *{box-sizing:border-box}
+.hs-container{background:var(--hs-bg);padding:14px 12px 10px;border-radius:16px}
+.hs-card{background:var(--hs-card);border:1px solid var(--hs-border);border-radius:18px;padding:22px 18px;margin-bottom:14px}
+.hs-h2{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;line-height:1.3;margin:0 0 16px}
+.hs-h2::before{content:"";width:4px;height:22px;border-radius:3px;background:var(--hs-accent);flex-shrink:0}
+.hs-quote{border-left:3px solid var(--hs-accent);padding-left:14px;margin:0 0 16px;font-size:15px;line-height:1.65;color:#e4e4e7}
+.hs-quote strong{color:#fff}
+.hs-text{color:var(--hs-muted);font-size:13.5px;line-height:1.7;margin:0 0 12px}
+.hs-text:last-child{margin-bottom:0}
+.hs-text strong{color:#fff}
+.hs-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.hs-chips span{background:var(--hs-item);border:1px solid rgba(255,106,31,.38);color:#ffb27a;font-size:12px;font-weight:800;padding:7px 12px;border-radius:999px}
+.hs-list{display:grid;gap:10px}
+.hs-item{display:flex;align-items:center;gap:14px;background:var(--hs-item);border:1px solid var(--hs-border);border-radius:12px;padding:13px 15px}
+.hs-item-hl{border-color:rgba(255,106,31,.5);background:rgba(255,106,31,.09)}
+.hs-item-icon{width:50px;height:50px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:14px;background:rgba(255,106,31,.10);border:1px solid rgba(255,106,31,.38)}
+.hs-item-icon svg{width:26px;height:26px;fill:none;stroke:#ffb27a;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hs-item-label{display:block;color:var(--hs-accent);font-size:12px;font-weight:800;margin-bottom:3px}
+.hs-item-text{color:#e4e4e7;font-size:14px;line-height:1.45}
+
+/* faixa de criadoras: rola sozinha, nome sobre a imagem */
+.hs-photos{overflow:hidden;margin:0 -6px;padding:6px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.hs-ptrack{display:flex;gap:12px;width:max-content;animation:hsScroll 60s linear infinite}
+.hs-photos:hover .hs-ptrack,.hs-photos:active .hs-ptrack{animation-play-state:paused}
+.hs-ph{position:relative;flex-shrink:0;width:170px;height:230px;margin:0;border-radius:14px;overflow:hidden;background:#2a1710;border:1px solid var(--hs-border)}
+.hs-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.hs-ph figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 10px 10px;background:linear-gradient(to top,rgba(0,0,0,.9),rgba(0,0,0,0));font-size:14px;font-weight:800;line-height:1.15;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.7)}
+@keyframes hsScroll{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 6px))}}
+@media(prefers-reduced-motion:reduce){.hs-ptrack{animation:none}.hs-photos{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.hs-ph:nth-child(n+10){display:none}}
+
+.hs-info-box{background:rgba(120,30,20,.30);border:1px solid rgba(239,68,68,.38);border-radius:12px;padding:16px}
+.hs-info-title{color:#ef6b6b;font-size:13px;font-weight:800;margin:0 0 12px}
+.hs-info{color:#c9c3c3;font-size:13px;line-height:1.65;margin:0 0 12px}
+.hs-info:last-child{margin-bottom:0}
+.hs-highlight{color:#ef6b6b;font-weight:800}
+@media(max-width:380px){.hs-card{padding:18px 14px}}
+</style>
+
+<div class="hs-container">
+
+    <!-- SOBRE -->
+    <div class="hs-card">
+        <h2 class="hs-h2">Fatal Fans</h2>
+        <p class="hs-quote">
+            <strong>Desbloqueie o seu prazer ao máximo.</strong>
+            Acesso a uma conta com assinatura na Fatal Fans, com diversos conteúdos liberados para você.
+        </p>
+        <div class="hs-chips"><span>Conteúdo Hot</span><span>+18</span></div>
+    </div>
+
+    <!-- O QUE VOCÊ GANHA -->
+    <div class="hs-card">
+        <h2 class="hs-h2">O que você ganha</h2>
+        <div class="hs-list">
+
+            <div class="hs-item hs-item-hl">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Acesso</span>
+                    <span class="hs-item-text">Conta com assinatura ativa na Fatal Fans</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Variedade</span>
+                    <span class="hs-item-text">Diversas formas de conteúdo liberadas para você</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Prazer</span>
+                    <span class="hs-item-text">Desbloqueie o seu prazer ao máximo</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- SOBRE A PLATAFORMA -->
+    <div class="hs-card">
+        <h2 class="hs-h2">Sobre a Fatal Fans</h2>
+        <p class="hs-text">A <strong>Fatal Fans</strong> é uma plataforma brasileira de conteúdo adulto por assinatura: criadores publicam fotos e vídeos exclusivos e os assinantes têm acesso a esse material.</p>
+        <p class="hs-text">Ela é operada pela <strong>Atlas Technologies</strong>, empresa de Pelotas (RS) que também mantém o site Fatal Model. Segundo a própria plataforma, são cerca de <strong>25 mil criadores</strong> e <strong>300 mil fãs</strong>.</p>
+        <p class="hs-text">Conteúdo destinado exclusivamente a maiores de 18 anos.</p>
+    </div>
+
+    <!-- CRIADORAS -->
+    <div class="hs-card">
+        <h2 class="hs-h2">Criadoras em destaque</h2>
+        <div class="hs-photos">
+            <div class="hs-ptrack">
+                <figure class="hs-ph"><img src="https://cdn.erbycloud.com/attachments/17944307198429905imagem.jpeg" alt="Mc Mirella"><figcaption>Mc Mirella</figcaption></figure>
+                <figure class="hs-ph"><img src="https://cdn.erbycloud.com/attachments/17944307218999288imagem.jpeg" alt="Ester Muniz"><figcaption>Ester Muniz</figcaption></figure>
+                <figure class="hs-ph"><img src="https://cdn.erbycloud.com/attachments/17944307294818443imagem.jpeg" alt="Martina Oliveira"><figcaption>Martina Oliveira</figcaption></figure>
+                <figure class="hs-ph"><img src="https://cdn.erbycloud.com/attachments/17944307235296518imagem.jpeg" alt="Bia Miranda"><figcaption>Bia Miranda</figcaption></figure>
+                <figure class="hs-ph"><img src="https://cdn.erbycloud.com/attachments/1794430718633965imagem.jpeg" alt="Marry Jane"><figcaption>Marry Jane</figcaption></figure>
+                <figure class="hs-ph"><img src="https://cdn.erbycloud.com/attachments/17944307210587055imagem.jpeg" alt="Letycia Soares"><figcaption>Letycia Soares</figcaption></figure>
+                <figure class="hs-ph"><img src="https://cdn.erbycloud.com/attachments/17944307268589385imagem.jpeg" alt="Camila Becker"><figcaption>Camila Becker</figcaption></figure>
+                <figure class="hs-ph"><img src="https://cdn.erbycloud.com/attachments/17944307255833152imagem.jpeg" alt="Rosiane Pinheiro"><figcaption>Rosiane Pinheiro</figcaption></figure>
+                <figure class="hs-ph"><img src="https://cdn.erbycloud.com/attachments/1794431417157493imagem.jpeg" alt="Leticia Disher"><figcaption>Leticia Disher</figcaption></figure>
+                <figure class="hs-ph" aria-hidden="true"><img src="https://cdn.erbycloud.com/attachments/17944307198429905imagem.jpeg" alt=""><figcaption>Mc Mirella</figcaption></figure>
+                <figure class="hs-ph" aria-hidden="true"><img src="https://cdn.erbycloud.com/attachments/17944307218999288imagem.jpeg" alt=""><figcaption>Ester Muniz</figcaption></figure>
+                <figure class="hs-ph" aria-hidden="true"><img src="https://cdn.erbycloud.com/attachments/17944307294818443imagem.jpeg" alt=""><figcaption>Martina Oliveira</figcaption></figure>
+                <figure class="hs-ph" aria-hidden="true"><img src="https://cdn.erbycloud.com/attachments/17944307235296518imagem.jpeg" alt=""><figcaption>Bia Miranda</figcaption></figure>
+                <figure class="hs-ph" aria-hidden="true"><img src="https://cdn.erbycloud.com/attachments/1794430718633965imagem.jpeg" alt=""><figcaption>Marry Jane</figcaption></figure>
+                <figure class="hs-ph" aria-hidden="true"><img src="https://cdn.erbycloud.com/attachments/17944307210587055imagem.jpeg" alt=""><figcaption>Letycia Soares</figcaption></figure>
+                <figure class="hs-ph" aria-hidden="true"><img src="https://cdn.erbycloud.com/attachments/17944307268589385imagem.jpeg" alt=""><figcaption>Camila Becker</figcaption></figure>
+                <figure class="hs-ph" aria-hidden="true"><img src="https://cdn.erbycloud.com/attachments/17944307255833152imagem.jpeg" alt=""><figcaption>Rosiane Pinheiro</figcaption></figure>
+                <figure class="hs-ph" aria-hidden="true"><img src="https://cdn.erbycloud.com/attachments/1794431417157493imagem.jpeg" alt=""><figcaption>Leticia Disher</figcaption></figure>
+            </div>
+        </div>
+    </div>
+
+    <!-- INFORMAÇÕES IMPORTANTES -->
+    <div class="hs-card">
+        <div class="hs-info-box">
+            <p class="hs-info-title">⚠️ Informações Importantes</p>
+            <p class="hs-info"><span class="hs-highlight">1.</span> A equipe Rei dos Nitros não realiza o reembolso após a confirmação do pagamento.</p>
+            <p class="hs-info"><span class="hs-highlight">2.</span> Após o encerramento da assinatura, o seu acesso é removido instantaneamente, sendo necessária uma renovação.</p>
+            <p class="hs-info"><span class="hs-highlight">3.</span> Produto exclusivo para maiores de 18 anos.</p>
+        </div>
+    </div>
+
+</div>
+
+</div>
