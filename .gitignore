@@ -6,3 +6,4 @@ node_modules
 
 # Banners: o HTML intermediário (imagens embutidas) não precisa ir pro Git
 banners/*.html
+__pycache__/
