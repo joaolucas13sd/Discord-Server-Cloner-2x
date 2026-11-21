@@ -601,3 +601,29 @@ def sensi(plat, passos):
 """
     return card('ff', '#f59e0b', 'Veja a diferença na partida', 'Sem Sensi errando, com Sensi Premium é só capa', jan, css,
                 'Animação ilustrativa, com desenhos próprios. O resultado depende da sua prática e do seu aparelho.', passos)
+
+
+# ---------------------------------------------------------------- Sensi v4: vídeos reais de antes e depois (enviados pelo dono da loja)
+def sensi_videos(plat, passos, base):
+    def vid(n, cls, tag, sub):
+        return (f'<figure class="sv2-v {cls}"><span class="sv2-tag">{tag}</span>'
+                f'<video src="{base}/sensi-{n}.mp4" poster="{base}/sensi-{n}.jpg" autoplay muted loop playsinline preload="metadata" aria-label="{esc(tag)}: {esc(sub)}"></video>'
+                f'<figcaption>{esc(sub)}</figcaption></figure>')
+    html_v = ('<div class="sv2-grid">' + vid('antes', 'sv2-a', 'Antes', 'Sem Sensi: tiros espalhados e poucas capas')
+              + '<span class="sv2-vs">VS</span>' + vid('depois', 'sv2-d', 'Depois', f'Com Sensi Premium · {plat}: mira na cabeça') + '</div>')
+    st = ''.join(f'<div class="vt-st"><i>{i + 1}</i><div><b>{esc(t)}</b><span>{esc(d)}</span></div></div>' for i, (t, d) in enumerate(passos))
+    html = (f'<div class="ed-card vt vt--sv2" style="--vc:#f59e0b"><span class="vt-k">Gameplay real</span><h2 class="vt-t">Antes e depois da Sensi Premium</h2>'
+            f'{html_v}<p class="vt-note">Vídeos de partidas reais. O resultado depende da sua prática e do seu aparelho.</p>'
+            f'<div class="vt-steps">{st}</div></div>')
+    css = """
+.vt--sv2 .sv2-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vt--sv2 .sv2-v{position:relative;margin:0 !important;padding:0 !important;border-radius:14px;overflow:hidden;background:#000;border:2px solid var(--b)}
+.vt--sv2 .sv2-a{--b:#ef4444}.vt--sv2 .sv2-d{--b:#22c55e;box-shadow:0 0 18px rgba(34,197,94,.35)}
+.vt--sv2 video{display:block;width:100% !important;max-width:none !important;aspect-ratio:1/1;height:auto !important;margin:0 !important;border-radius:0 !important;object-fit:cover;background:#000}
+.vt--sv2 .sv2-tag{position:absolute;left:8px;top:8px;z-index:2;padding:4px 10px;border-radius:999px;background:var(--b);color:#fff;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+.vt--sv2 figcaption{margin:0 !important;padding:8px 10px !important;background:#0c0d10;color:#d1d5db !important;font-size:12px !important;font-weight:700;line-height:1.35 !important;text-align:left}
+.vt--sv2 .sv2-d figcaption{color:#bbf7d0 !important}
+.vt--sv2 .sv2-vs{position:absolute;left:50%;top:calc(50% - 18px);z-index:3;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;display:grid;place-items:center;background:#f59e0b;color:#111;font-size:12px;font-weight:900;box-shadow:0 0 0 4px var(--ed-card,#131418)}
+@media (max-width:560px){.vt--sv2 .sv2-grid{grid-template-columns:1fr;gap:14px}.vt--sv2 .sv2-vs{top:50%}}
+"""
+    return html, BASE + css

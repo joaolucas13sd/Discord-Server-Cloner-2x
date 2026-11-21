@@ -46,7 +46,7 @@ def montar(id, ac, ac2, img, intro, paras, spec_list, anim, titulo_specs='O que 
 <div class="ed-box"><p>{intro}</p></div>
 {al}
 {paras[0]}
-{fig(img, d["PEDIDO"])}
+{img if img.startswith('<') else fig(img, d["PEDIDO"])}
 
 {paras[1]}
 
@@ -74,6 +74,16 @@ spv = importlib.util.spec_from_file_location('vt', os.path.join(AQUI, '..', 'com
 vt = importlib.util.module_from_spec(spv); spv.loader.exec_module(vt)
 P_SORTE = lambda acao: [('Compre pelo Pix', 'Aprovação na hora, a qualquer hora do dia.'), (acao, 'O resultado aparece na hora.'), ('Resgate com o suporte', 'Fale com a gente em até 5 dias para receber.')]
 ENG_P = lambda alvo: [('Informe o link', f'No pedido, coloque o link do seu {alvo}.'), ('Entrega gradual', 'Acompanhe tudo pela página da compra.'), ('Veja crescer', f'Mais alcance e prova social no seu {alvo}.')]
+
+SENSI_BASE = 'https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@8084fc83574831f87e0b43fd382843b6e1b560f7/midia/sensi'
+def bonus_sensi(id):
+    s = open(os.path.join(ORIG, id + '.html')).read()
+    a = s.index('<p class="hs-bt">'); b = s.index('</div>\n</div>', a)
+    corpo = s[a:b].rstrip()
+    css = '\n'.join(l for l in s.split('\n') if _re.match(r'\.hs-(bonus\{|bt\{|mq|art)|@keyframes nzSbMq', l))
+    css = css.replace('.hs-bonus{overflow:hidden;', '.hs-bonus{overflow:hidden;margin:4px 0 18px !important;padding:16px 0 6px !important;border-radius:16px;border:1px solid var(--ed-bd);')
+    return f'<div class="ed-card hs-bonus">{corpo}\n</div>', css
+
 VITRINE = {
     'prod_17869388132751565144210621030489': lambda: vt.raspadinha(P_SORTE('Raspe a sua cartela')),
     'prod_17869388375804631394758709421330': lambda: vt.roleta(P_SORTE('Gire a roleta')),
@@ -83,9 +93,9 @@ VITRINE = {
     'var_4onwVLK6XqM': lambda: vt.engajamento('tiktok', 'seguidores', '1.000 seguidores', 310, ENG_P('perfil')),
     'var_56avo4KEeBD': lambda: vt.engajamento('tiktok', 'curtidas', '1.000 curtidas', 87, ENG_P('vídeo')),
     'var_51AfVJ6LBlj': lambda: vt.engajamento('tiktok', 'visualizações', '1.000 visualizações', 240, ENG_P('vídeo')),
-    'var_7eb3gkpdVCv': lambda: vt.sensi('Android', [('Compre pelo Pix', 'Acesso imediato.'), ('Aplique a Sensi', 'Sensi, mira e HUD no seu Android.'), ('Jogue', 'Mira mais precisa e muito mais capas.')]),
-    'var_4JAac6ROH8L': lambda: vt.sensi('iPhone', [('Compre pelo Pix', 'Acesso imediato.'), ('Aplique a Sensi', 'Sensi, mira e HUD no seu iPhone.'), ('Jogue', 'Mira mais precisa e muito mais capas.')]),
-    'var_GW24WljUCsP': lambda: vt.sensi('Emulador', [('Compre pelo Pix', 'Acesso imediato.'), ('Aplique a Sensi', 'Sensi, mira e HUD no seu emulador.'), ('Jogue', 'Mira mais precisa e muito mais capas.')]),
+    'var_7eb3gkpdVCv': lambda: (lambda c, b: (c[0], c[1] + b[1]))(vt.sensi_videos('Android', [('Compre pelo Pix', 'Acesso imediato.'), ('Aplique a Sensi', 'Sensi, mira e HUD no seu Android.'), ('Jogue', 'Mira mais precisa e muito mais capas.')], SENSI_BASE), bonus_sensi('var_7eb3gkpdVCv')),
+    'var_4JAac6ROH8L': lambda: (lambda c, b: (c[0], c[1] + b[1]))(vt.sensi_videos('iPhone', [('Compre pelo Pix', 'Acesso imediato.'), ('Aplique a Sensi', 'Sensi, mira e HUD no seu iPhone.'), ('Jogue', 'Mira mais precisa e muito mais capas.')], SENSI_BASE), bonus_sensi('var_4JAac6ROH8L')),
+    'var_GW24WljUCsP': lambda: (lambda c, b: (c[0], c[1] + b[1]))(vt.sensi_videos('Emulador', [('Compre pelo Pix', 'Acesso imediato.'), ('Aplique a Sensi', 'Sensi, mira e HUD no seu emulador.'), ('Jogue', 'Mira mais precisa e muito mais capas.')], SENSI_BASE), bonus_sensi('var_GW24WljUCsP')),
     'prod_179020626470089209745564978097': lambda: vt.loja([('Faça as aulas', 'Aulas particulares para montar a sua loja.'), ('Receba os fornecedores', 'A lista de fornecedores privados.'), ('Comece a vender', 'Coloque a loja no ar e acompanhe as vendas.')]),
 }
 
@@ -134,7 +144,7 @@ for id, rede, qtd, tipo, de, para, extra in [
 # ---------- Sensi ----------
 SENSI = 'NuiAHxT888Nj7cYx9-a6bB/attachments/17912433667611476imagem.png'
 for id, plat in [('var_7eb3gkpdVCv', 'Android'), ('var_4JAac6ROH8L', 'iPhone'), ('var_GW24WljUCsP', 'Emulador')]:
-    montar(id, '#f59e0b', '#2a1a05', IMG(SENSI), f'Sensibilidade ajustada para o seu <strong>{plat}</strong> no <strong>Free Fire</strong>: mira mais precisa e muito mais capas.',
+    montar(id, '#f59e0b', '#2a1a05', bonus_sensi(id)[0], f'Sensibilidade ajustada para o seu <strong>{plat}</strong> no <strong>Free Fire</strong>: mira mais precisa e muito mais capas.',
            [LOJA + '\n<p>O acesso é imediato e <strong>sem programas externos</strong>: são as configurações de sensibilidade, mira e HUD feitas pelo time Hashira.</p>',
             '<p><strong>Seja o MVP das partidas.</strong> Sensi full vermelha, mira sem pinar, estabilização de mira, HUDs secretos e aulas exclusivas com o time Hashira e pro players.</p>'],
            [('Plataforma', plat), ('Mira', 'Sensi full vermelha, sem pinar'), ('Estabilização', 'Estabilização de mira'), ('HUDs', 'HUDs secretos'), ('Aulas', 'Com o time Hashira e pro players'), ('Segurança', 'Sem programas externos')],
