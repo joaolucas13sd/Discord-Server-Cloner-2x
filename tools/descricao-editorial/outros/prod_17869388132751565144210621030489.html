@@ -89,6 +89,23 @@
 @keyframes rpCoin{0%,4%{left:78%;top:78%;opacity:0}8%{left:12%;top:28%;opacity:1}16%{left:30%;top:68%}24%{left:44%;top:26%}32%{left:60%;top:70%}40%{left:76%;top:28%}46%{left:86%;top:62%;opacity:1}52%,100%{left:92%;top:88%;opacity:0}}
 .vt--rp .rp-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(34,197,94,.35),transparent 60%);opacity:0;animation:rpGlow var(--vt) infinite}
 @keyframes rpGlow{0%,47%{opacity:0}52%{opacity:1}75%,100%{opacity:0}}
+.il,.il *{box-sizing:border-box;line-height:normal}
+.il{position:relative;height:210px;margin:4px 0 18px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0d10;font-family:inherit}
+.il span,.il b,.il i,.il em,.il small,.il u{display:block;font-style:normal;text-decoration:none}
+.il-chips{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;z-index:3}
+.il-chips u{padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap}
+.il-chips u::before{content:"✓ ";color:var(--ia)}
+@media (max-width:440px){.il-chips u:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion:reduce){.il *{animation:none !important}}
+
+.il--ra{--ia:#22c55e;background:radial-gradient(circle at 50% 20%,rgba(34,197,94,.3),transparent 60%),#07120b}
+.il-rt{position:absolute;left:50%;top:14px;width:250px;max-width:calc(100% - 24px);height:140px;transform:translateX(-50%) rotate(-2deg);border-radius:14px;padding:9px 12px;background:linear-gradient(135deg,#166534,#14532d);border:2px dashed #86efac}
+.il-rt small{color:#bbf7d0;font-size:9px;font-weight:900;letter-spacing:.2em;text-align:center}
+.il-rg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:7px}
+.il-rg span{position:relative;height:46px;border-radius:8px;background:#f0fdf4;display:grid !important;place-items:center;overflow:hidden}
+.il-rg b{color:#15803d;font-size:12px;font-weight:900}
+.il-rg i{position:absolute;inset:0;background:repeating-linear-gradient(45deg,#a3a3a3 0 4px,#d4d4d4 4px 8px);animation:ilRa 7s infinite}
+@keyframes ilRa{0%,8%{clip-path:inset(0 0 0 0)}22%,92%{clip-path:inset(0 0 0 100%)}100%{clip-path:inset(0 0 0 0)}}
 </style>
 
 <div class="ed-box"><p>Raspe e receba <strong>de R$ 0,20 até R$ 1.000,00 em saldo</strong> para usar na loja. Todo participante recebe saldo.</p></div>
@@ -96,7 +113,7 @@
 
 <p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
 <p>A raspadinha revela o seu resultado na hora. O saldo é resgatado falando com o suporte, em até 5 dias, para usar na loja.</p>
-<figure class="ed-fig"><img class="ed-img" src="https://blast.erbystores.com/cdn/s/2sw_vMPa9p_aysyJSVmMwA/attachments/17699076098336933imagem.png" alt="Teste da Sorte" loading="lazy"></figure>
+<div role="img" aria-label="Teste da Sorte" class="il il--ra"><div class="il-rt"><small>RASPADINHA</small><div class="il-rg"><span><b>R$ 5</b><i style="animation-delay:0s"></i></span><span><b>R$ 50</b><i style="animation-delay:0.5s"></i></span><span><b>R$ 1</b><i style="animation-delay:1s"></i></span><span><b>R$ 50</b><i style="animation-delay:1.5s"></i></span><span><b>R$ 0,20</b><i style="animation-delay:2s"></i></span><span><b>R$ 50</b><i style="animation-delay:2.5s"></i></span></div></div><div class="il-chips"><u>Resultado na hora</u><u>Todo participante recebe saldo</u></div></div>
 
 <p><strong>Todo participante recebe saldo</strong>, o que muda é o valor. Ele é aleatório e pode ser menor do que o que você pagou.</p>
 

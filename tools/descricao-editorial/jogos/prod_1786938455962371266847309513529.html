@@ -335,13 +335,33 @@
 .sv--minecraft .sv-thumbs--img{align-items:flex-start}
 .sv--minecraft .sv-hb em:not(.sv-as){display:none}
 .sv--minecraft .sv-sun,.sv--minecraft .sv-mt{display:none}
+.il,.il *{box-sizing:border-box;line-height:normal}
+.il{position:relative;height:210px;margin:4px 0 18px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0d10;font-family:inherit}
+.il span,.il b,.il i,.il em,.il small,.il u{display:block;font-style:normal;text-decoration:none}
+.il-chips{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;z-index:3}
+.il-chips u{padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap}
+.il-chips u::before{content:"✓ ";color:var(--ia)}
+@media (max-width:440px){.il-chips u:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion:reduce){.il *{animation:none !important}}
+
+.il--mc{--ia:#4ade80;background:linear-gradient(180deg,#60a5fa,#bae6fd)}
+.il-msun{position:absolute;right:30px;top:18px;width:34px;height:34px;background:#fde68a;box-shadow:0 0 0 6px rgba(253,230,138,.35)}
+.il-mcl{position:absolute;left:-80px;top:30px;width:70px;height:16px;background:#fff;box-shadow:20px -12px 0 0 #fff,40px 0 0 0 #fff;animation:ilMc 20s linear infinite}
+@keyframes ilMc{to{transform:translateX(560px)}}
+.il-mt2{position:absolute;left:50%;bottom:0;width:300px;height:110px;margin-left:-150px}
+.il-mt2 i{position:absolute;bottom:0;width:20px;background:repeating-linear-gradient(180deg,#8b5a2b 0 9px,#7a4b20 9px 10px,#8b5a2b 10px 20px);border-top:6px solid #4ade80;box-shadow:inset 0 0 0 1px rgba(0,0,0,.12)}
+.il-mtr{position:absolute;left:calc(50% + 40px);bottom:100px}
+.il-mtr u{position:absolute;left:6px;top:28px;width:8px;height:32px;background:#6b4423}
+.il-mtr i{position:relative;z-index:1;width:36px;height:30px;margin-left:-8px;background:#15803d;box-shadow:inset 0 0 0 3px #166534}
+.il-mlab{position:absolute;left:12px;top:12px;padding:6px 9px;border-radius:8px;background:rgba(0,0,0,.55)}
+.il-mlab b{color:#fff;font-size:12px;font-weight:900}.il-mlab small{color:#bbf7d0;font-size:9.5px;font-weight:700}
 </style>
 
 <div class="ed-box"><p>Conta <strong>Full Access</strong> com <strong>Minecraft Java & Bedrock</strong> para PC: explore, construa e jogue com os amigos.</p></div>
 
 <p>Na <strong>Rei dos Nitros</strong>, os dados chegam na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
 <p>Você recebe uma <strong>conta Microsoft</strong> com o Minecraft e pode alterar os dados disponíveis, assumindo o controle do acesso. <strong>Sem cobrança mensal</strong>: o acesso é permanente.</p>
-<figure class="ed-fig"><img class="ed-img" src="https://blast.erbystores.com/cdn/s/MtWVcGtqcNzTLjhZrDFMbg/attachments/1785379317175102imagem.png" alt="Minecraft" loading="lazy"></figure>
+<div role="img" aria-label="Minecraft" class="il il--mc"><i class="il-msun"></i><i class="il-mcl"></i><div class="il-mt2"><i style="left:0px;height:60px"></i><i style="left:20px;height:60px"></i><i style="left:40px;height:80px"></i><i style="left:60px;height:80px"></i><i style="left:80px;height:60px"></i><i style="left:100px;height:40px"></i><i style="left:120px;height:40px"></i><i style="left:140px;height:60px"></i><i style="left:160px;height:80px"></i><i style="left:180px;height:100px"></i><i style="left:200px;height:100px"></i><i style="left:220px;height:80px"></i><i style="left:240px;height:60px"></i><i style="left:260px;height:60px"></i><i style="left:280px;height:40px"></i></div><div class="il-mtr"><i></i><u></u></div><span class="il-mlab"><b>Java &amp; Bedrock</b><small>Conta Full Access</small></span><div class="il-chips"><u>Sem mensalidade</u><u>Jogue com os amigos</u></div></div>
 
 <p><strong>Construa o seu mundo.</strong> Colete recursos, construa a primeira casa e transforme o mundo em cidades, castelos e fazendas automáticas, nas edições Java e Bedrock.</p>
 

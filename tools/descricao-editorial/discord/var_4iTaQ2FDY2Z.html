@@ -404,13 +404,41 @@
 .dz-lv3{margin-left:6px;padding:1px 6px;border-radius:999px;background:linear-gradient(90deg,#ff73fa,#b473f5);color:#fff;font-size:7.5px;font-weight:900}
 .dz-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
 .dz-chips em{font-style:normal;padding:2px 6px;border-radius:999px;background:#2b2d31;color:#dbdee1;font-size:8px;font-weight:600}
+.il,.il *{box-sizing:border-box;line-height:normal}
+.il{position:relative;height:210px;margin:4px 0 18px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0d10;font-family:inherit}
+.il span,.il b,.il i,.il em,.il small,.il u{display:block;font-style:normal;text-decoration:none}
+.il-chips{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;z-index:3}
+.il-chips u{padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap}
+.il-chips u::before{content:"✓ ";color:var(--ia)}
+@media (max-width:440px){.il-chips u:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion:reduce){.il *{animation:none !important}}
+
+.il--dz{--ia:#a78bfa;background:radial-gradient(circle at 50% 0,rgba(88,101,242,.4),transparent 60%),radial-gradient(circle at 90% 100%,rgba(236,72,153,.25),transparent 55%),#0b0c1d}
+.il-dp{position:absolute;left:50%;top:14px;width:250px;max-width:calc(100% - 24px);height:144px;transform:translateX(-50%);border-radius:14px;overflow:hidden;background:#111214;border:1px solid rgba(255,255,255,.1)}
+.il-db{height:46px;background:linear-gradient(90deg,#5865f2,#ec4899)}
+.il-da{position:absolute;left:14px;top:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#f472b6);border:5px solid #111214}
+.il-da::after{content:"";position:absolute;right:-2px;bottom:-2px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #111214}
+.il-dn{position:absolute;left:14px;top:80px;color:#fff;font-size:13px;font-weight:900}
+.il-dt{position:absolute;left:14px;top:98px;right:14px;color:#b5bac1;font-size:9.5px;font-weight:600}
+.il-dbadges{position:absolute;right:12px;top:54px;display:flex;gap:4px;padding:3px 5px;border-radius:7px;background:#1e1f22}
+.il-dbadges i{width:14px;height:14px;border-radius:4px;background:var(--c,#f472b6);transform:rotate(45deg) scale(.75)}
+
+.il-ip{padding:12px}
+.il-ih{display:flex;gap:9px;align-items:center}.il-ih b{color:#fff;font-size:12px;font-weight:900}.il-ih small{color:#f472b6;font-size:9.5px;font-weight:800}
+.il-is{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,#5865f2,#22d3ee)}
+.il-ig{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-top:12px}
+.il-ig i{height:16px;background:linear-gradient(135deg,#f9a8d4,#ec4899);clip-path:polygon(50% 0,100% 40%,50% 100%,0 40%);opacity:.25;animation:ilIg 6s infinite}
+@keyframes ilIg{0%,5%{opacity:.25;transform:scale(.7)}12%,94%{opacity:1;transform:none}100%{opacity:.25}}
+.il-ib{margin-top:12px;height:6px;border-radius:3px;background:#2b2d31;overflow:hidden}.il-ib i{height:100%;width:0;background:linear-gradient(90deg,#ec4899,#a855f7);animation:ilIb 6s infinite}
+@keyframes ilIb{0%,5%{width:0}60%,94%{width:100%}100%{width:0}}
+.il-il{display:flex !important;justify-content:space-between;margin-top:4px}.il-il u{color:#b5bac1;font-size:8.5px;font-weight:700}
 </style>
 
 <div class="ed-box"><p>Leve o seu servidor ao <strong>nível 3</strong> por <strong>1 mês</strong> com <strong>14 impulsos</strong>: áudio melhor, banner animado, link personalizado e mais status.</p></div>
 
 <p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
 <p>A entrega é feita pelo <strong>link do seu servidor</strong>, sem precisar da sua senha. Se os impulsos saírem em até 7 dias, a gente repõe.</p>
-<figure class="ed-fig"><img class="ed-img" src="https://blast.erbystores.com/cdn/s/M8nZnQzc21M5ASeSfagqrE/attachments/17690474984748571imagem.png" alt="14x Impulsos (1 mês)" loading="lazy"></figure>
+<div role="img" aria-label="14x Impulsos (1 mês)" class="il il--dz"><div class="il-dp il-ip"><div class="il-ih"><i class="il-is"></i><span><b>Seu servidor</b><small>Nível 3 · 14 impulsos</small></span></div><div class="il-ig"><i style="animation-delay:0.00s"></i><i style="animation-delay:0.18s"></i><i style="animation-delay:0.36s"></i><i style="animation-delay:0.54s"></i><i style="animation-delay:0.72s"></i><i style="animation-delay:0.90s"></i><i style="animation-delay:1.08s"></i><i style="animation-delay:1.26s"></i><i style="animation-delay:1.44s"></i><i style="animation-delay:1.62s"></i><i style="animation-delay:1.80s"></i><i style="animation-delay:1.98s"></i><i style="animation-delay:2.16s"></i><i style="animation-delay:2.34s"></i></div><div class="il-ib"><i></i></div><span class="il-il"><u>Nível 1</u><u>Nível 2</u><u>Nível 3</u></span></div><div class="il-chips"><u>14 impulsos · 1 mês</u><u>Nível 3</u><u>Sem senha</u></div></div>
 
 <p><strong>Servidor com cara profissional.</strong> Canais de voz com áudio de 384 kbps, banner animado, convite personalizado como discord.gg/suamarca e mais destaque para atrair membros.</p>
 

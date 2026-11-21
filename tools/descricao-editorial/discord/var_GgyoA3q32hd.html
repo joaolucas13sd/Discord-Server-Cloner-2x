@@ -404,13 +404,34 @@
 .dz-lv3{margin-left:6px;padding:1px 6px;border-radius:999px;background:linear-gradient(90deg,#ff73fa,#b473f5);color:#fff;font-size:7.5px;font-weight:900}
 .dz-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
 .dz-chips em{font-style:normal;padding:2px 6px;border-radius:999px;background:#2b2d31;color:#dbdee1;font-size:8px;font-weight:600}
+.il,.il *{box-sizing:border-box;line-height:normal}
+.il{position:relative;height:210px;margin:4px 0 18px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0d10;font-family:inherit}
+.il span,.il b,.il i,.il em,.il small,.il u{display:block;font-style:normal;text-decoration:none}
+.il-chips{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;z-index:3}
+.il-chips u{padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap}
+.il-chips u::before{content:"✓ ";color:var(--ia)}
+@media (max-width:440px){.il-chips u:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion:reduce){.il *{animation:none !important}}
+
+.il--dz{--ia:#a78bfa;background:radial-gradient(circle at 50% 0,rgba(88,101,242,.4),transparent 60%),radial-gradient(circle at 90% 100%,rgba(236,72,153,.25),transparent 55%),#0b0c1d}
+.il-dp{position:absolute;left:50%;top:14px;width:250px;max-width:calc(100% - 24px);height:144px;transform:translateX(-50%);border-radius:14px;overflow:hidden;background:#111214;border:1px solid rgba(255,255,255,.1)}
+.il-db{height:46px;background:linear-gradient(90deg,#5865f2,#ec4899)}
+.il-da{position:absolute;left:14px;top:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#f472b6);border:5px solid #111214}
+.il-da::after{content:"";position:absolute;right:-2px;bottom:-2px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #111214}
+.il-dn{position:absolute;left:14px;top:80px;color:#fff;font-size:13px;font-weight:900}
+.il-dt{position:absolute;left:14px;top:98px;right:14px;color:#b5bac1;font-size:9.5px;font-weight:600}
+.il-dbadges{position:absolute;right:12px;top:54px;display:flex;gap:4px;padding:3px 5px;border-radius:7px;background:#1e1f22}
+.il-dbadges i{width:14px;height:14px;border-radius:4px;background:var(--c,#f472b6);transform:rotate(45deg) scale(.75)}
+
+.il-dy{position:absolute;left:14px;top:112px;color:#fff;font-size:20px;font-weight:900;letter-spacing:.02em;animation:ilDy 3s ease-in-out infinite}
+@keyframes ilDy{50%{color:#fbbf24;text-shadow:0 0 12px rgba(251,191,36,.6)}}
 </style>
 
 <div class="ed-box"><p>Tenha uma <strong>conta Discord criada em 2017</strong>, com <strong>9 anos de história</strong>. Antiguidade no Discord é sinônimo de <strong>respeito e credibilidade</strong> nas comunidades.</p></div>
 
 <p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
 <p>Você recebe os dados da conta e o <strong>acesso ao e-mail original</strong>. A conta é <strong>Full Access</strong>: altere todos os dados e deixe ela 100% sua.</p>
-<figure class="ed-fig"><img class="ed-img" src="https://blast.erbystores.com/cdn/s/m9Qvoj-GPPIzbZ3ZPv8G2s/attachments/17690474922558455imagem.png" alt="Conta Antiga (2017)" loading="lazy"></figure>
+<div role="img" aria-label="Conta Antiga (2017)" class="il il--dz"><div class="il-dp"><div class="il-db"></div><i class="il-da"></i><span class="il-dbadges"><i style="--c:#f59e0b"></i><i style="--c:#5865f2"></i><i style="--c:#23a55a"></i></span><b class="il-dn">veterano</b><span class="il-dt">MEMBRO DO DISCORD DESDE</span><span class="il-dy">2017</span></div><div class="il-chips"><u>Criada em 2017</u><u>E-mail original</u><u>Full Access</u></div></div>
 
 <p><strong>Perfil de veterano.</strong> O "Membro desde 2017" aparece no seu perfil e passa mais confiança em comunidades, servidores e projetos.</p>
 

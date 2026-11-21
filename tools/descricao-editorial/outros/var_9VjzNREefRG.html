@@ -374,13 +374,32 @@
 .ox-fps{display:flex;gap:10px;margin-top:8px}
 .ox-fps span{padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.06);color:#d4d4d8;font-size:9px}
 .ox-fps b{display:block;color:#fff;font-size:15px}
+.il,.il *{box-sizing:border-box;line-height:normal}
+.il{position:relative;height:210px;margin:4px 0 18px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0d10;font-family:inherit}
+.il span,.il b,.il i,.il em,.il small,.il u{display:block;font-style:normal;text-decoration:none}
+.il-chips{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;z-index:3}
+.il-chips u{padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap}
+.il-chips u::before{content:"✓ ";color:var(--ia)}
+@media (max-width:440px){.il-chips u:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion:reduce){.il *{animation:none !important}}
+
+.il--ch{--ia:#10a37f;background:radial-gradient(circle at 50% 0,rgba(16,163,127,.3),transparent 60%),#06120e}
+.il-cw{position:absolute;left:50%;top:14px;width:280px;max-width:calc(100% - 24px);height:140px;transform:translateX(-50%);border-radius:14px;background:#111614;border:1px solid rgba(16,163,127,.4);padding:10px 12px}
+.il-ct{display:flex !important;align-items:center;gap:6px;color:#d1fae5;font-size:10px;font-weight:800}
+.il-ct u{padding:1px 6px;border-radius:5px;background:#10a37f;color:#04130d;font-size:8.5px;font-weight:900}
+.il-cu{margin:8px 0 0 auto;width:78%;padding:7px 9px;border-radius:12px 12px 3px 12px;background:#1f2937;color:#f3f4f6;font-size:10px;line-height:1.35 !important;animation:ilCu 7s infinite}
+@keyframes ilCu{0%,4%{opacity:0;transform:translateY(8px)}10%,94%{opacity:1;transform:none}100%{opacity:0}}
+.il-ca{display:grid;gap:5px;margin-top:9px;width:86%}
+.il-ca i{height:7px;border-radius:4px;background:linear-gradient(90deg,#10a37f,#34d399);width:0;animation:ilCa 7s infinite}
+.il-ca i:nth-child(2){animation-delay:.35s;--w:92%}.il-ca i:nth-child(3){animation-delay:.7s;--w:80%}.il-ca i:nth-child(4){animation-delay:1.05s;--w:55%}
+@keyframes ilCa{0%,22%{width:0}38%,94%{width:var(--w,100%)}100%{width:0}}
 </style>
 
 <div class="ed-box"><p>Tenha o <strong>ChatGPT Pro</strong> para escrever, estudar, programar e criar com a IA mais avançada.</p></div>
 
 <p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
 <p>Você recebe os dados de acesso com o <strong>ChatGPT Pro</strong> liberado e entra com eles.</p>
-<figure class="ed-fig"><img class="ed-img" src="https://blast.erbystores.com/cdn/s/I45Tjm01nBl8Tc9hNwz8V4/attachments/17787022523545117imagem.png" alt="ChatGPT Pro" loading="lazy"></figure>
+<div role="img" aria-label="ChatGPT Pro" class="il il--ch"><div class="il-cw"><span class="il-ct">Assistente de IA <u>Pro</u></span><span class="il-cu">Me ajuda a montar um resumo para a prova de amanhã?</span><div class="il-ca"><i></i><i></i><i></i><i></i></div></div><div class="il-chips"><u>Respostas mais rápidas</u><u>Modelos avançados</u><u>Imagens e arquivos</u></div></div>
 
 <p><strong>A IA no seu dia a dia.</strong> Textos, resumos, ideias, código e respostas detalhadas em segundos.</p>
 

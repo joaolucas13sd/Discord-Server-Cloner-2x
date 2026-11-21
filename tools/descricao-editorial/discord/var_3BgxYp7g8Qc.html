@@ -404,13 +404,40 @@
 .dz-lv3{margin-left:6px;padding:1px 6px;border-radius:999px;background:linear-gradient(90deg,#ff73fa,#b473f5);color:#fff;font-size:7.5px;font-weight:900}
 .dz-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
 .dz-chips em{font-style:normal;padding:2px 6px;border-radius:999px;background:#2b2d31;color:#dbdee1;font-size:8px;font-weight:600}
+.il,.il *{box-sizing:border-box;line-height:normal}
+.il{position:relative;height:210px;margin:4px 0 18px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0d10;font-family:inherit}
+.il span,.il b,.il i,.il em,.il small,.il u{display:block;font-style:normal;text-decoration:none}
+.il-chips{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;z-index:3}
+.il-chips u{padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap}
+.il-chips u::before{content:"✓ ";color:var(--ia)}
+@media (max-width:440px){.il-chips u:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion:reduce){.il *{animation:none !important}}
+
+.il--dz{--ia:#a78bfa;background:radial-gradient(circle at 50% 0,rgba(88,101,242,.4),transparent 60%),radial-gradient(circle at 90% 100%,rgba(236,72,153,.25),transparent 55%),#0b0c1d}
+.il-dp{position:absolute;left:50%;top:14px;width:250px;max-width:calc(100% - 24px);height:144px;transform:translateX(-50%);border-radius:14px;overflow:hidden;background:#111214;border:1px solid rgba(255,255,255,.1)}
+.il-db{height:46px;background:linear-gradient(90deg,#5865f2,#ec4899)}
+.il-da{position:absolute;left:14px;top:20px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#f472b6);border:5px solid #111214}
+.il-da::after{content:"";position:absolute;right:-2px;bottom:-2px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #111214}
+.il-dn{position:absolute;left:14px;top:80px;color:#fff;font-size:13px;font-weight:900}
+.il-dt{position:absolute;left:14px;top:98px;right:14px;color:#b5bac1;font-size:9.5px;font-weight:600}
+.il-dbadges{position:absolute;right:12px;top:54px;display:flex;gap:4px;padding:3px 5px;border-radius:7px;background:#1e1f22}
+.il-dbadges i{width:14px;height:14px;border-radius:4px;background:var(--c,#f472b6);transform:rotate(45deg) scale(.75)}
+
+.il-dr{position:absolute;left:calc(50% - 120px);top:26px;width:110px;height:110px}
+.il-dra{position:absolute;inset:16px;border-radius:50%;background:linear-gradient(135deg,#a78bfa,#f472b6)}
+.il-drr{position:absolute;inset:4px;border-radius:50%;background:conic-gradient(#fbbf24,#f472b6,#22d3ee,#a78bfa,#fbbf24);-webkit-mask:radial-gradient(circle,transparent 45px,#000 46px);mask:radial-gradient(circle,transparent 45px,#000 46px);animation:ilDr 4s linear infinite}
+@keyframes ilDr{to{transform:rotate(360deg)}}
+.il-drs{position:absolute;width:12px;height:12px;background:#fde68a;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:ilDs 2s ease-in-out infinite}
+.il-s1{left:-4px;top:10px}.il-s2{right:-6px;top:30px;animation-delay:.6s}.il-s3{left:18px;bottom:-6px;animation-delay:1.2s}
+@keyframes ilDs{50%{transform:scale(1.5) rotate(40deg);opacity:.5}}
+.il-dl{position:absolute;left:calc(50% + 4px);top:58px;width:140px}.il-dl b{color:#fff;font-size:14px;font-weight:900}.il-dl small{margin-top:3px;color:#c4b5fd;font-size:10px}
 </style>
 
 <div class="ed-box"><p>Deixe o seu perfil do Discord mais vivo com a <strong>decoração que você escolher</strong> na faixa de <strong>R$25,90</strong> da loja do Discord, pagando menos.</p></div>
 
 <p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
 <p>Depois da compra, você abre um <strong>ticket no nosso servidor do Discord</strong>, envia a print da decoração escolhida e a nossa equipe conclui a entrega no seu perfil.</p>
-<figure class="ed-fig"><img class="ed-img" src="https://blast.erbystores.com/cdn/s/lTHlM1hF2BE01ky-1y1zzu/attachments/17869374767533675imagem.png" alt="Decoração de R$25,90" loading="lazy"></figure>
+<div role="img" aria-label="Decoração de R$25,90" class="il il--dz il--de"><div class="il-dr"><i class="il-dra"></i><i class="il-drr"></i><i class="il-drs il-s1"></i><i class="il-drs il-s2"></i><i class="il-drs il-s3"></i></div><span class="il-dl"><b>Decoração de perfil</b><small>Moldura animada no seu avatar</small></span><div class="il-chips"><u>Anime, games e sazonais</u><u>Menos que na loja oficial</u></div></div>
 
 <p><strong>Seu avatar em destaque.</strong> Molduras animadas de coleções como anime, games, fofas e sazonais. Também dá para escolher a decoração e presentear alguém.</p>
 <div class="ed-decos"><span><img src="https://cdn.erbycloud.com/attachments/17949627235334230imagem.gif" alt="Gatinho de Laço" loading="lazy"></span><span><img src="https://cdn.erbycloud.com/attachments/17949633487513522imagem.gif" alt="Pãozinho de Folhas" loading="lazy"></span><span><img src="https://cdn.erbycloud.com/attachments/17949682887269059imagem.gif" alt="Sonhos Crescentes" loading="lazy"></span><span><img src="https://cdn.erbycloud.com/attachments/17951344731005574imagem.gif" alt="Coroa de Cristal" loading="lazy"></span></div>

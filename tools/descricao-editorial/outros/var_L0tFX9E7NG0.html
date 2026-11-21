@@ -388,6 +388,30 @@
 .ox-fps{display:flex;gap:10px;margin-top:8px}
 .ox-fps span{padding:6px 10px;border-radius:8px;background:rgba(255,255,255,.06);color:#d4d4d8;font-size:9px}
 .ox-fps b{display:block;color:#fff;font-size:15px}
+.il,.il *{box-sizing:border-box;line-height:normal}
+.il{position:relative;height:210px;margin:4px 0 18px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0d10;font-family:inherit}
+.il span,.il b,.il i,.il em,.il small,.il u{display:block;font-style:normal;text-decoration:none}
+.il-chips{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;z-index:3}
+.il-chips u{padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap}
+.il-chips u::before{content:"✓ ";color:var(--ia)}
+@media (max-width:440px){.il-chips u:nth-child(n+3){display:none}}
+@media (prefers-reduced-motion:reduce){.il *{animation:none !important}}
+
+.il--sk{--ia:var(--kc);background:radial-gradient(circle at 50% 35%,color-mix(in srgb,var(--kc) 30%,transparent),transparent 60%),#070b12}
+.il-kq{position:absolute;left:12%;top:18px;color:rgba(255,255,255,.08);font-size:90px;font-weight:900;animation:ilKq 5s ease-in-out infinite}
+.il-kq2{left:auto;right:10%;top:30px;font-size:70px;animation-delay:-2.5s}
+@keyframes ilKq{50%{transform:translateY(-8px) rotate(8deg)}}
+.il-kb,.il-kf{position:absolute;left:50%;top:22px;width:200px;height:120px;margin-left:-100px;border-radius:14px}
+.il-kb{background:#111827;border:1px solid rgba(255,255,255,.1)}
+.il-kb1{transform:rotate(-9deg) translateX(-18px)}.il-kb2{transform:rotate(7deg) translateX(18px)}
+.il-kf{padding:14px;background:linear-gradient(135deg,#0f172a,#1e293b);border:1.5px solid var(--kc);box-shadow:0 0 26px color-mix(in srgb,var(--kc) 55%,transparent);overflow:hidden;animation:ilKf 5s ease-in-out infinite}
+@keyframes ilKf{50%{transform:translateY(-4px)}}
+.il-kf::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%);transform:translateX(-100%);animation:ilKs 3s infinite}
+@keyframes ilKs{60%,100%{transform:translateX(100%)}}
+.il-kf small{color:#94a3b8;font-size:9px;font-weight:900;letter-spacing:.18em}
+.il-kf b{margin-top:2px;color:var(--kc);font-size:22px;font-weight:900;white-space:nowrap}
+.il-kc{margin-top:10px;padding:5px 0;border-radius:6px;background:rgba(0,0,0,.45);color:#e5e7eb;font-family:ui-monospace,monospace;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-align:center}
+.il-kr{margin-top:6px;color:#cbd5e1;font-size:9.5px;font-weight:700;text-align:center}
 </style>
 
 <div class="ed-box"><p>Receba uma <strong>key para Steam</strong> com <strong>um jogo com temática +18 (visual novels, anime e dating sims)</strong>. Você só descobre o jogo quando ativar a sua key.</p></div>
@@ -395,7 +419,7 @@
 
 <p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
 <p>A key é ativada na <strong>sua própria conta Steam</strong>: o jogo fica na sua biblioteca para sempre. O título é escolhido conforme o estoque disponível.</p>
-<figure class="ed-fig"><img class="ed-img" src="https://blast.erbystores.com/cdn/s/RDWRGer-06P5rUubVjeng4/attachments/1794495806624986imagem.png" alt="Steam Key +18" loading="lazy"></figure>
+<div role="img" aria-label="Steam Key +18" class="il il--sk" style="--kc:#fb7185"><i class="il-kq">?</i><i class="il-kq il-kq2">?</i><div class="il-kb il-kb1"></div><div class="il-kb il-kb2"></div><div class="il-kf"><small>STEAM KEY</small><b>+18</b><span class="il-kc">?????-?????-?????</span><span class="il-kr">Jogo surpresa</span></div><div class="il-chips"><u>Ativa na sua Steam</u><u>Jogo surpresa</u><u>Entrega na hora</u></div></div>
 
 <p><strong>A graça é a surpresa.</strong> Ative a key na Steam e descubra qual jogo entrou na sua biblioteca.</p>
 
