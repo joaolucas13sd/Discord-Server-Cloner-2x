@@ -1,0 +1,48 @@
+{
+  "tag": "STEAM · FULL ACESSO",
+  "titulo": "Conta Steam com 53 jogos",
+  "preco": "89,90",
+  "velho": "129,90",
+  "sub": "Conta <strong>full acesso</strong> nível 11 com <strong>God of War</strong>, <strong>Apex Legends</strong> e mais 51 jogos na biblioteca.",
+  "itens": [
+    [
+      "Biblioteca",
+      "53 jogos, incluindo God of War e Apex Legends."
+    ],
+    [
+      "Nível da conta",
+      "Conta Steam nível 11."
+    ],
+    [
+      "Full acesso",
+      "Você recebe login, senha e e-mail da conta e pode alterar os dados disponíveis, assumindo o controle após a entrega."
+    ]
+  ],
+  "plataforma": "STEAM",
+  "jogo": "God of War",
+  "chips": [
+    "53 jogos",
+    "Full acesso"
+  ],
+  "passos": [
+    "Escolha sua conta Steam e finalize a compra de forma <strong>rápida e segura</strong>.",
+    "Receba os <strong>dados da conta Steam</strong> e faça o login.",
+    "Pronto! Abra a <strong>biblioteca</strong> e jogue o que quiser."
+  ],
+  "info_txt": "Antes de comprar, confira as informações sobre a conta e o acesso fornecido.",
+  "info": [
+    [
+      "Conta Steam",
+      "A conta é entregue com os jogos e o nível informados no anúncio no momento da compra."
+    ],
+    [
+      "Full acesso",
+      "Depois de receber, troque o e-mail e a senha para deixar a conta só com você."
+    ],
+    [
+      "Suporte",
+      "Qualquer dúvida ou problema no login, basta abrir um ticket e consultar a staff."
+    ]
+  ],
+  "tipo": "steam"
+}

@@ -47,7 +47,7 @@ Crie o produto da conta na loja Ereemby pela API v2. A chave de API já está sa
    Confira com `curl -I` que responde 200 antes de usar.
 3. **Criar:** `POST https://api.ereemby.app/api/v2/products` com:
    - `name`: `Conta Fortnite | <N> Skins | <Destaque 1> + <Destaque 2>`
-   - `description`: HTML curto com skins de destaque, quantidade de skins/picaretas/emotes/V-Bucks, "Full Acesso: e-mail e senha com acesso completo para alterar os dados" e "Entrega automática após o pagamento".
+   - `description`: gere com `python3 tools/descricao-conta/gerar.py <conta.json> <saida.html>` (mesmo padrão visual das outras descrições da loja: topo com preço, "O que você recebe", "Como utilizar" com animação de login, passos, "Compre com tranquilidade", "Informações importantes", FAQ e botão). Copie e adapte `tools/descricao-conta/exemplos/fortnite.json` ou `steam.json`; preencha `preco` (e `velho` só se houver preço riscado) e use só informações que o usuário deu. Confira o HTML num print antes de enviar.
    - `category_id`: categoria **Contas Full Acesso** = `cat_17952171948422273489682181798` (se der `resource_missing`, liste `GET /api/v2/categories` e procure pelo nome).
    - `unit_amount` em **centavos** (R$ 89,90 = 8990), `active: true`, `delivery: {"type":"lines","automatic":true}`, `images: [<url raw>]`.
 4. **Estoque:** se o usuário mandou os dados de acesso da conta, adicione como 1 linha com `POST /api/v2/products/<id>/stock` e body `{"lines":["..."]}` (header `Idempotency-Key` com um UUID). Não repita os dados de acesso na resposta do chat. Sem dados de acesso, deixe sem estoque e avise que o produto aparece como "Sem estoque" até ele adicionar a conta no painel.
