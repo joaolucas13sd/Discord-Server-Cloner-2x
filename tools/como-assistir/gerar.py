@@ -422,3 +422,40 @@ TEMAS['premiere'] = """
 WORDS['spotify'] = '<b></b>Spotify'
 WORDS['youtube'] = '<b></b>YouTube<i>Premium</i>'
 WORDS['premiere'] = 'Premie<i>re</i>'
+
+TEMAS['canva'] = """
+.sv--canva{--sp:linear-gradient(135deg,#00c4cc,#7d2ae8)}
+.sv--canva .sv-word{color:#fff;font-family:"Brush Script MT","Segoe Script",cursive;font-style:italic;font-weight:700;letter-spacing:.01em}
+.sv--canva .sv-splash .sv-word{font-size:38px}
+.sv--canva .sv-log .sv-word{background:linear-gradient(90deg,#00c4cc,#7d2ae8);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:16px}
+.sv--canva .sv-wall{inset:0;transform:none;opacity:1;animation:none;background:linear-gradient(135deg,#e6fbfc,#f1e8ff);-webkit-mask-image:none;mask-image:none}
+.sv--canva .sv-log{background:#fff;border:0;border-radius:14px;box-shadow:0 6px 20px rgba(125,42,232,.15)}
+.sv--canva .sv-log>b{color:#0d1216}
+.sv--canva .sv-in{background:#fff;border:1px solid #c7cbd1;border-radius:6px}
+.sv--canva .sv-ty{color:#0d1216}
+.sv--canva .sv-btn{background:#8b3dff !important;border-radius:8px}
+.sv--canva .sv-sc3{background:linear-gradient(135deg,#0f2f3a,#2a1250)}
+.sv--canva .sv-inv-btn{background:#8b3dff;color:#fff}
+.sv--canva .sv-sc4{background:#ebecf0}
+.sv--canva .sv-hero{background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.sv--canva .sv-hero::before{content:"";position:absolute;right:16px;top:12px;width:96px;height:104px;border-radius:8px;background:linear-gradient(160deg,#ff7eb3,#ff758c 40%,#7d2ae8);animation:svBg var(--sv-t) infinite}
+.sv--canva .sv-hero::after{content:"";position:absolute;right:38px;top:28px;width:52px;height:88px;border-radius:26px 26px 6px 6px;background:radial-gradient(circle at 50% 18px,#ffd6b0 15px,transparent 16px),linear-gradient(180deg,transparent 34px,#2b2d42 34px)}
+@keyframes svBg{0%,81%{opacity:1}84%,100%{opacity:0}}
+.sv--canva .sv-ht{color:#0d1216}
+.sv--canva .sv-ht small{color:#5c6470}
+.sv--canva .sv-hb em{background:#f1f2f4;color:#0d1216}
+.sv--canva .sv-hb .sv-as{background:#8b3dff;color:#fff}
+.sv--canva .sv-badge{color:#8b3dff}
+.sv--canva .sv-sun,.sv--canva .sv-mt{display:none}
+.sv--canva .sv-tiles i{background:#fff;color:#0d1216;border-color:#dadce0;box-shadow:none}
+.sv--canva .sv-play{background:#ebecf0;display:grid;place-items:center}
+.sv--canva .sv-play::before{content:"";width:150px;height:150px;border-radius:10px;background:radial-gradient(circle at 50% 40px,#ffd6b0 26px,transparent 27px),linear-gradient(180deg,transparent 66px,#2b2d42 66px) 50% 0/90px 100% no-repeat,repeating-conic-gradient(#fff 0 25%,#e3e5e8 0 50%) 0 0/16px 16px;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+.sv--canva .sv-pbtn{top:auto;bottom:16px;width:auto;height:auto;padding:4px 10px;border-radius:999px;background:#22c55e;color:#fff;font-size:10px;font-weight:800;transform:translateX(-50%)}
+.sv--canva .sv-pbtn svg{display:none}
+.sv--canva .sv-pbtn::after{content:"✓ Fundo removido"}
+.sv--canva .sv-prog{display:none}
+.sv--canva .sv-pbtn{animation:svCvOk var(--sv-t) infinite}
+@keyframes svCvOk{0%,86%{opacity:0}88%,100%{opacity:1}}
+.sv--canva .sv-hb em:not(.sv-as){display:none}
+"""
+WORDS['canva'] = 'Canva'

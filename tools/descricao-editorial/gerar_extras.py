@@ -170,3 +170,22 @@ montar(CB, '#ec4899', '#2a0a1c',
        dict(P='ed', PEDIDO='Combo de streamings', MARCA='streaming', COR='#ec4899', SITE='Site do streaming', COR2='#8b5cf6',
             HERO=TM + '577eXC8wFQT0eUrJcgznSiFPRmk.jpg', THUMBS=tuple(T3 + f + '.jpg' for f in ['p34WRcgkN2QIHcds5FtFiSpV3PC', 'q3jHCb4dMfYF6ojikKuHd6LscxC', 'xMNH87maNLt9n2bMDYeI6db5VFm', 'bq28ajZaoMyzEIm6REelqyqtEDZ', 'lY2DhbA7Hy44fAKddr06UrXWWaQ']),
             TITULO='A Casa do Dragão', SUB='Fantasia · Série', BADGE='No combo'), CB, extra_mid=STRIP)
+
+# ---------------- Canva Pro ----------------
+CV = 'prod_179449617730898268204028352611'
+montar(CV, '#8b3dff', '#1c0b3a',
+       'Receba um convite para o <strong>Canva Pro</strong> na <strong>sua própria conta Canva</strong> e crie designs profissionais com os <strong>recursos premium</strong>.',
+       [LOJA_P + '\n<p>No pedido, você informa o <strong>e-mail da sua conta Canva</strong> e recebe o <strong>convite</strong>. É só aceitar: os seus <strong>projetos continuam com você</strong>.</p>',
+        '<p><strong>Tudo do Pro, na hora.</strong> Modelos, fontes e elementos premium, Remover Fundo em 1 clique, Redimensionar, Kit de Marca, agendamento de publicações e ferramentas de IA.</p>'],
+       img('https://blast.erbystores.com/cdn/s/MSWtbgnkl_yd7HETMxg4Fj/attachments/17944957902106547imagem.png', 'Canva Pro'), '',
+       [('Conteúdo premium', 'Modelos, fontes e elementos Pro'), ('Remover fundo', 'Em 1 clique'), ('Kit de Marca', 'Cores, fontes e logos à mão'), ('Ferramentas de IA', 'Redimensionar, agendar e criar com IA')],
+       dict(P='ed', PEDIDO='Canva Pro', MARCA='Canva', COR='#8b3dff', SITE='canva.com', COR2='#8b3dff', TEMA='canva', WORD=g.WORDS['canva'],
+            ROWS=[('Sua conta', 'seuemail@gmail.com'), ('Plano', 'Canva Pro'), ('Status', 'Convite enviado')], TY1='seuemail@gmail.com',
+            PAG=('Entrar', 'Convite', 'Editor'), BTN='Continuar', LOGIN_T='Entrar ou criar conta', SC3=g.convite('Canva Pro · Convite'),
+            TITULO='Seu design', SUB='Post para Instagram', BADGE='Pro', AS='Remover fundo', TILES=('Remover fundo', 'Redimensionar', 'Kit de Marca', 'Modelos Pro', 'IA'),
+            STEPS=[('Informe o seu e-mail', 'Na página do pedido, informe o e-mail da sua conta Canva.'),
+                   ('Entre no Canva', 'Abra o Canva e entre com a sua própria conta.'),
+                   ('Aceite o convite', 'Abra o convite do Canva Pro e confirme.'),
+                   ('Crie com o Pro', 'Use modelos premium, Remover Fundo, Kit de Marca e IA.')],
+            WARN='O convite é na sua própria conta Canva: não troque de conta nem passe a sua senha para ninguém. As instruções completas vêm no seu pedido.',
+            TITULO_CARD='Como começar a usar'), CV)
