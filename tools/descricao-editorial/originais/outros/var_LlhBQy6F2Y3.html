@@ -1,0 +1,686 @@
+<div class="vo-wrapper">
+
+<style>
+.vo-wrapper{
+    --vo-accent:#6366f1;
+    --vo-bg:#0b0b14;
+    --vo-card:#121222;
+    --vo-item:#181830;
+    --vo-border:rgba(255,255,255,.08);
+    --vo-text:#f5f5f6;
+    --vo-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--vo-text);
+}
+.vo-wrapper *{box-sizing:border-box}
+
+.vo-container{
+    background:var(--vo-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.vo-card{
+    background:var(--vo-card);
+    border:1px solid var(--vo-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.vo-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.vo-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--vo-accent);
+    flex-shrink:0;
+}
+
+.vo-quote{
+    border-left:3px solid var(--vo-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.vo-quote strong{color:#fff}
+
+.vo-text{
+    color:var(--vo-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.vo-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.vo-list{display:grid;gap:10px}
+.vo-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--vo-item);
+    border:1px solid var(--vo-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.vo-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(99,102,241,.10);
+    border:1px solid rgba(99,102,241,.38);
+}
+.vo-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#a5b4fc;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.vo-item-label{
+    display:block;
+    color:var(--vo-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.vo-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.vo-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#0c0c16;
+    border:1px solid var(--vo-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.vo-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--vo-border);
+}
+.vo-mock-bar span:first-child{color:#a5b4fc;font-weight:900;letter-spacing:.5px}
+
+.vo-dialog,
+.vo-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.vo-dialog{animation:voDialog 10s infinite}
+.vo-success{animation:voSuccess 10s infinite;opacity:0;top:62px}
+
+.vo-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.vo-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.vo-field{
+    background:#151517;
+    border:1px solid rgba(99,102,241,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.vo-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--vo-accent);
+}
+.vo-type-1{animation:voType1 10s steps(17,end) infinite}
+.vo-type-2{animation:voType2 10s steps(10,end) infinite}
+
+.vo-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.vo-btn-cancel,
+.vo-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.vo-btn-cancel{background:#34363c;color:#d4d4d8}
+.vo-btn-go{
+    position:relative;
+    background:#4f46e5;
+    color:#fff;
+    min-width:74px;
+    text-align:center;
+}
+.vo-btn-go span{display:block}
+.vo-btn-a{animation:voBtnA 10s infinite}
+.vo-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:voBtnB 10s infinite;
+}
+
+.vo-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.vo-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.vo-ok-name{font-size:11px;color:#a5b4fc;font-weight:700;margin-bottom:3px}
+.vo-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes voDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes voSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes voType1{
+    0%,6%{width:0}
+    24%,92%{width:17ch}
+    100%{width:0}
+}
+@keyframes voType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes voBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes voBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.vo-steps{display:grid;gap:10px}
+.vo-step{
+    background:var(--vo-item);
+    border:1px solid var(--vo-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.vo-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--vo-muted);
+    margin-bottom:8px;
+}
+.vo-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--vo-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.vo-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--vo-text);
+    margin:0;
+}
+.vo-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.vo-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.vo-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.vo-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.vo-info:last-child{margin-bottom:0}
+.vo-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .vo-card{padding:18px 14px}
+    .vo-dialog,.vo-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .vo-dialog,.vo-success,.vo-type,.vo-btn-a,.vo-btn-b{animation:none}
+    .vo-dialog{opacity:1}
+    .vo-type-1{width:17ch}
+    .vo-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.vo-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.vo-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--vo-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.vo-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.vo-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.vo-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.vo-hero-s strong{color:#fff}
+.vo-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--vo-border)}
+.vo-price-k{display:block;color:var(--vo-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.vo-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.vo-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.vo-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.vo-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.vo-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.vo-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vo-ben{background:var(--vo-item);border:1px solid var(--vo-border);border-radius:14px;padding:14px 12px}
+.vo-ben svg{width:26px;height:26px;fill:none;stroke:var(--vo-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.vo-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.vo-ben small{display:block;color:var(--vo-muted);font-size:12.5px;line-height:1.45}
+.vo-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.vo-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--vo-item);border:1px solid var(--vo-border);text-align:center}
+.vo-plan b{display:block;font-size:13px;color:var(--vo-muted);margin-bottom:6px}
+.vo-plan strong{display:block;font-size:22px;color:#fff}
+.vo-plan small{display:block;margin-top:4px;color:var(--vo-muted);font-size:12px}
+.vo-plan--on{border-color:var(--vo-accent);background:rgba(240,77,200,.10)}
+.vo-plan--on b{color:#ff7ad9}
+.vo-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--vo-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.vo-trust{display:grid;gap:10px}
+.vo-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.vo-trust strong{color:#fff}
+.vo-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.vo-info-title{display:flex;align-items:center;gap:8px}
+.vo-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.vo-nzgrid,.vo-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.vo-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.vo-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.vo-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.vo-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.vo-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.vo-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.vo-prof-body{padding:30px 12px 12px}
+.vo-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.vo-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.vo-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.vo-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.vo-prof-user b{color:#ff7ad9}
+.vo-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.vo-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.vo-mock:has(.vo-nzprof){height:auto !important;padding-bottom:16px}
+.vo-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.vo-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.vo-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.vo-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.vo-prof-name{white-space:nowrap}
+.vo-nzprof .vo-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.vo-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.vo-prof-av,.vo-prof-av span,.vo-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.vo-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.vo-rows{display:grid;gap:8px}
+.vo-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--vo-item);border:1px solid var(--vo-border);font-size:14px;color:#e4e4e7}
+.vo-row b{color:#fff;white-space:nowrap}
+.vo-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.vo-row--on{border-color:var(--vo-accent);background:rgba(240,77,200,.10)}
+.vo-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--vo-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.vo-cb-g{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 8px}
+.vo-cb-s{display:flex;flex-direction:column;align-items:center;gap:5px;width:62px}
+.vo-cb-s i{display:grid;place-items:center;width:46px;height:46px;border-radius:9px;background:var(--c);color:#fff;font-style:normal;font-weight:900;font-size:13px !important;line-height:1;letter-spacing:-.3px;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:none}
+.vo-cb-s small{font-size:10px !important;color:#d4d4d8;white-space:nowrap}
+.vo-cb-on i{animation:nzCbOn 10s infinite}
+@keyframes nzCbOn{0%,79%{box-shadow:0 4px 12px rgba(0,0,0,.4);transform:none}81%,96%{box-shadow:0 0 0 3px #fff;transform:scale(1.08)}}
+.vo-cb-tag{display:table !important;margin:12px auto 0 !important;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px !important;font-weight:800}
+
+.vo-yt-v{position:relative;height:118px;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#1e293b,#7f1d1d 60%,#dc2626)}
+.vo-yt-play{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:44px;height:32px;margin:-16px 0 0 -22px;border-radius:9px;background:#ff0033}
+.vo-yt-play svg{width:16px !important;height:16px !important;max-width:none !important;fill:#fff}
+.vo-yt-tag{position:absolute;left:8px;top:8px;padding:3px 7px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9.5px;font-weight:900;letter-spacing:.4px}
+.vo-yt-bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.25)}
+.vo-yt-bar i{display:block;height:100%;width:0;background:#ff0033;animation:nzMusBar 10s linear infinite}
+.vo-yt-t{display:block;margin:9px 2px 8px;font-size:13px;color:#fff}
+.vo-yt-acts{display:flex;gap:6px}
+.vo-yt-b{display:inline-flex;align-items:center;gap:5px;padding:7px 11px;border-radius:999px;background:#2e3035;color:#e4e4e7;font-size:11.5px;font-weight:700}
+.vo-yt-b svg{width:13px !important;height:13px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.vo-yt-b em{font-style:normal}
+.vo-yt-dl{position:relative}
+.vo-yt-ok{display:none}
+.vo-yt-dl{animation:nzYtDl 10s infinite}
+@keyframes nzYtDl{0%,80%{background:#2e3035;color:#e4e4e7}83%,96%{background:#22c55e;color:#04140a}}
+.vo-yt-a{animation:nzYtA 10s steps(1,end) infinite}
+@keyframes nzYtA{0%,81%{font-size:11.5px}82%,97%{font-size:0}}
+.vo-yt-dl::after{content:"Baixado";font-size:0;animation:nzYtOk 10s steps(1,end) infinite}
+@keyframes nzYtOk{0%,81%{font-size:0}82%,97%{font-size:11.5px}}
+
+.vo-mock:has(.vo-scr){height:270px !important}
+.vo-mock:has(.vo-cv-art){height:300px !important}
+.vo-success.vo-scr{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:12px 14px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important}
+.vo-scr-t{display:block;margin-bottom:10px;font-size:14px;color:#fff}
+.vo-mus-r{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;margin-bottom:4px}
+.vo-mus-on{background:rgba(255,255,255,.07)}
+.vo-mus-cap{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:6px;background:var(--c)}
+.vo-mus-cap svg{width:16px !important;height:16px !important;max-width:none !important;fill:#000}
+.vo-mus-r span{flex:1;min-width:0;display:flex;flex-direction:column}
+.vo-mus-r b{font-size:12.5px;color:#fff}.vo-mus-on b{color:var(--vo-accent)}
+.vo-mus-r small{font-size:10.5px;color:#9aa0a6}
+.vo-mus-r .vo-eq{flex:none;flex-direction:row;align-items:flex-end;gap:2px;height:14px}
+.vo-eq i{width:3px;height:100%;border-radius:2px;background:var(--vo-accent);transform-origin:bottom;animation:nzEq .9s ease-in-out infinite}
+.vo-eq i:nth-child(2){animation-delay:.2s}.vo-eq i:nth-child(3){animation-delay:.4s}.vo-eq i:nth-child(4){animation-delay:.1s}
+@keyframes nzEq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.vo-mus-bar{height:4px;margin:10px 8px 0;border-radius:4px;background:#2e3035;overflow:hidden}
+.vo-mus-bar i{display:block;height:100%;width:0;background:var(--vo-accent);animation:nzMusBar 10s linear infinite}
+@keyframes nzMusBar{0%,72%{width:0}96%,100%{width:70%}}
+.vo-cv-tools{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.vo-cv-btn,.vo-cv-btn2{display:inline-flex;align-items:center;gap:4px;padding:6px 9px;border-radius:7px;font-size:11px;font-weight:700}
+.vo-cv-btn{background:var(--vo-accent);color:#fff}.vo-cv-btn2{background:#2e3035;color:#d4d4d8}
+.vo-cv-btn svg{width:12px !important;height:12px !important;max-width:none !important;fill:#fff}
+.vo-cv-art{position:relative;height:150px;border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#3a3b42 0 25%,#2a2b31 0 50%) 0 0/16px 16px}
+.vo-cv-bg{position:absolute;inset:0;background:linear-gradient(160deg,#38bdf8,#22c55e 55%,#f59e0b);animation:nzCvBg 10s infinite}
+@keyframes nzCvBg{0%,80%{opacity:1}85%,100%{opacity:0}}
+.vo-cv-head{position:absolute;left:50%;top:26px;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:#f5d0b5}
+.vo-cv-body{position:absolute;left:50%;top:68px;width:84px;height:90px;margin-left:-42px;border-radius:42px 42px 0 0;background:#7c3aed}
+.vo-cv-ok{position:absolute;right:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:#22c55e;color:#04140a;font-size:10px;font-weight:900;opacity:0;animation:nzCvOk 10s infinite}
+@keyframes nzCvOk{0%,84%{opacity:0}87%,96%{opacity:1}100%{opacity:0}}
+
+.vo-ia-h{display:flex !important;align-items:center;gap:7px}
+.vo-ia-av{display:grid;place-items:center;flex:0 0 24px;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#4285f4,#9b72cb 55%,#d96570)}
+.vo-ia-av svg{width:13px !important;height:13px !important;max-width:none !important;fill:#fff}
+.vo-ia-u{margin-left:auto;width:fit-content;max-width:80%;padding:8px 11px;border-radius:14px 14px 4px 14px;background:#2f3341;color:#fff;font-size:12px !important;line-height:1.35;animation:nzIaU 10s infinite}
+.vo-ia-r{display:flex;gap:8px;margin-top:9px;color:#e4e4e7;font-size:12px !important;line-height:1.4;animation:nzIaR 10s infinite}
+.vo-ia-r>div{flex:1;min-width:0}
+.vo-ia-vid{position:relative;display:block;height:64px;margin-top:6px;border-radius:8px;background:linear-gradient(180deg,#38bdf8,#fde68a 62%,#f59e0b 63%,#d97706)}
+.vo-ia-vid b{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:rgba(0,0,0,.55)}
+.vo-ia-vid b svg{width:12px !important;height:12px !important;max-width:none !important;fill:#fff}
+.vo-ia-vid small{position:absolute;right:6px;bottom:4px;font-size:9px !important;font-weight:800;color:#fff;text-shadow:0 1px 2px #000}
+.vo-ia-gpt{background:#10a37f !important}
+.vo-ia-pl{display:block;margin-top:5px;padding:5px 8px;border-radius:7px;background:#26282e;font-size:11.5px !important;color:#e4e4e7}
+.vo-ia-pl b{display:inline-block;min-width:30px;color:#10a37f;font-weight:800}
+.vo-ia-li{display:block;height:7px;margin-top:6px;border-radius:4px;background:#3f3f46}
+@keyframes nzIaU{0%,70%{opacity:0;transform:translateY(6px)}72%,100%{opacity:1;transform:none}}
+@keyframes nzIaR{0%,73%{opacity:0;transform:translateY(6px)}75.5%,100%{opacity:1;transform:none}}
+
+.vo-mc-ban{position:relative;height:122px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#60a5fa,#93c5fd 70%)}
+.vo-mc-sol{position:absolute;right:18px;top:12px;width:22px;height:22px;background:#fde047;box-shadow:0 0 0 4px rgba(253,224,71,.35)}
+.vo-mc-chao{position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,#4ade80 0 10px,#16a34a 10px 14px,#92400e 14px);background-size:auto;}
+.vo-mc-chao::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px;background:repeating-linear-gradient(90deg,#4ade80 0 22px,transparent 22px 44px)}
+.vo-mc-chao::after{content:"";position:absolute;inset:16px 0 0;background:repeating-linear-gradient(90deg,rgba(0,0,0,.12) 0 8px,transparent 8px 16px),repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 8px,transparent 8px 16px)}
+.vo-mc-t{position:absolute;left:12px;top:12px;font-size:17px !important;line-height:1;color:#fff;text-shadow:2px 2px 0 #1f2937;font-weight:900;letter-spacing:.3px}
+.vo-mc-t small{display:block;margin-top:4px;font-size:10.5px !important;font-weight:800;text-shadow:1px 1px 0 #1f2937}
+.vo-mc-play{position:absolute;left:50%;bottom:9px;transform:translateX(-50%);z-index:2;padding:7px 22px;border-radius:4px;border:2px solid #14532d;background:#22c55e;color:#fff;font-size:12px !important;font-weight:900;letter-spacing:.6px;text-shadow:1px 1px 0 #14532d;animation:nzMcP 10s infinite}
+.vo-mc-play em{font-style:normal}
+.vo-mc-play::after{content:"ABRINDO...";font-size:0;animation:nzRkB 10s steps(1,end) infinite}
+@keyframes nzMcP{0%,80%{background:#22c55e}83%,96%{background:#15803d}}
+
+.vo-rk-ban{position:relative;height:122px;border-radius:10px;overflow:hidden;padding:12px;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.75)),linear-gradient(135deg,#f59e0b 0%,#ea580c 35%,#9d174d 70%,#3b0764 100%)}
+.vo-rk-tag{display:inline-block;padding:3px 7px;border-radius:5px;background:rgba(0,0,0,.45);color:#fff;font-size:9px !important;font-weight:900;letter-spacing:.4px}
+.vo-rk-t{position:absolute;left:12px;bottom:12px;max-width:55%;font-size:15px !important;line-height:1.15;color:#fff}
+.vo-rk-play{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:7px;background:#fcaf17;color:#111;font-size:12px !important;font-weight:800;animation:nzRkP 10s infinite}
+.vo-rk-play svg{width:12px !important;height:12px !important;max-width:none !important;fill:currentColor}
+.vo-rk-play em{font-style:normal}
+.vo-rk-b{display:none}
+.vo-rk-a{animation:nzRkA 10s steps(1,end) infinite}
+.vo-rk-play::after{content:"Abrindo...";font-size:0;animation:nzRkB 10s steps(1,end) infinite}
+@keyframes nzRkP{0%,80%{background:#fcaf17;color:#111}83%,96%{background:#22c55e;color:#04140a}}
+@keyframes nzRkA{0%,81%{font-size:12px}82%,97%{font-size:0}}
+@keyframes nzRkB{0%,81%{font-size:0}82%,97%{font-size:12px}}
+.vo-rk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.vo-rk-chips span{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11px !important;font-weight:800}
+.vo-rk-chips svg{width:12px !important;height:12px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+
+.vo-lib-n{font-size:12px !important;color:#a1a1aa;font-weight:600}
+.vo-lib-g{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.vo-lib-j{position:relative;aspect-ratio:3/4;border-radius:6px;background:var(--g);box-shadow:0 3px 8px rgba(0,0,0,.45);overflow:hidden}
+.vo-lib-j::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.55))}
+.vo-lib-j i{position:absolute;left:4px;right:3px;bottom:3px;z-index:1;font-style:normal;font-weight:900;font-size:8px !important;line-height:1.1;color:#fff;letter-spacing:.3px}
+.vo-lib-j[data-alvo]{animation:nzLibOn 10s infinite}
+@keyframes nzLibOn{0%,79%{outline:0 solid transparent;transform:none}81%,96%{outline:2px solid #fff;transform:scale(1.06)}}
+.vo-lib-tag{display:table !important;margin:10px auto 0 !important;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px !important;font-weight:800}
+
+.vo-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+
+.vo-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.vo-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+</style>
+
+
+<div class="vo-container">
+    <div class="vo-hero"><span class="vo-tag">IA DO GOOGLE · 18 MESES</span><h2 class="vo-hero-t">Google VEO3 por 18 meses por <span>R$ 32,99</span></h2><p class="vo-hero-s">Uma <strong>conta Google com IA avançada</strong> por 18 meses: crie vídeos, textos e automações.</p><div class="vo-price vo-pulse"><div><span class="vo-price-k">No Google</span><span class="vo-price-old">R$ 1745,82</span></div><div><span class="vo-price-k">Aqui</span><span class="vo-price-new">R$ 32,99</span></div><span class="vo-price-off">-98%</span><span class="vo-price-mes">Equivale a R$ 1,83 por mês. Você economiza R$ 1712,83.</span></div></div>
+    <div class="vo-card"><h2 class="vo-h2">Compare as opções</h2><div class="vo-rows"><div class="vo-row"><span>Chat Gpt Pro</span><b><s>R$ 100,00</s>R$ 32,99</b></div><div class="vo-row vo-row--on"><span>Google VEO3 18 Meses<span class="vo-row-tag">VOCÊ ESTÁ AQUI</span></span><b><s>R$ 1745,82</s>R$ 32,99</b></div></div><p class="vo-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="vo-card">
+
+        <h2 class="vo-h2">O que você pode fazer</h2>
+
+        <div class="vo-list">
+
+            <div class="vo-item">
+                <span class="vo-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></span>
+                <div>
+                    <span class="vo-item-label">Produtividade</span>
+                    <span class="vo-item-text">Automação de tarefas diárias</span>
+                </div>
+            </div>
+
+            <div class="vo-item">
+                <span class="vo-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"></path><path d="M20 3v4"></path><path d="M22 5h-4"></path><path d="M4 17v2"></path><path d="M5 18H3"></path></svg></span>
+                <div>
+                    <span class="vo-item-label">Aprendizado</span>
+                    <span class="vo-item-text">Aprendizado contínuo adaptativo</span>
+                </div>
+            </div>
+
+            <div class="vo-item">
+                <span class="vo-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5"></path><rect x="2" y="6" width="14" height="12" rx="2"></rect></svg></span>
+                <div>
+                    <span class="vo-item-label">Vídeos</span>
+                    <span class="vo-item-text">Geração de vídeos com Veo 3</span>
+                </div>
+            </div>
+
+            <div class="vo-item">
+                <span class="vo-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3v16a2 2 0 0 0 2 2h16"></path><path d="M18 17V9"></path><path d="M13 17V5"></path><path d="M8 17v-3"></path></svg></span>
+                <div>
+                    <span class="vo-item-label">Dados</span>
+                    <span class="vo-item-text">Análise inteligente de dados</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="vo-card">
+
+        <h2 class="vo-h2">Como utilizar</h2>
+
+        <div class="vo-mock">
+
+            <div class="vo-mock-bar">
+                <span>Google</span>
+                <span>Início</span>
+                <span>Veo 3</span>
+                <span>Projetos</span>
+            </div>
+
+            <div class="vo-dialog">
+                <div class="vo-dlg-title">Entrar</div>
+                <div class="vo-dlg-desc">Use o e-mail e a senha que chegaram no seu pedido.</div>
+
+                <div class="vo-field"><span class="vo-type vo-type-1">seuemail@gmail.com</span></div>
+                <div class="vo-field"><span class="vo-type vo-type-2">••••••••••</span></div>
+
+                <div class="vo-dlg-actions">
+                    <span class="vo-btn-cancel">Cancelar</span>
+                    <span class="vo-btn-go">
+                        <span class="vo-btn-a">Entrar</span>
+                        <span class="vo-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="vo-cur vo-cur2" aria-hidden="true" style="--x1:36.4%;--y1:141px;--x2:36.4%;--y2:178px;--x3:74.5%;--y3:216px;--x4:63.1%;--y4:226px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="vo-success vo-scr vo-ia">
+                <b class="vo-scr-t vo-ia-h"><i class="vo-ia-av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></i>Gemini</b>
+                <div class="vo-ia-u">Crie um vídeo de um pôr do sol na praia</div>
+                <div class="vo-ia-r"><i class="vo-ia-av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2c.6 5.4 4.6 9.4 10 10-5.4.6-9.4 4.6-10 10-.6-5.4-4.6-9.4-10-10 5.4-.6 9.4-4.6 10-10z"/></svg></i><div>Pronto! Aqui está o seu vídeo feito com o Veo 3:<span class="vo-ia-vid" data-alvo><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></b><small>0:08</small></span></div></div>
+            </div>
+        </div>
+
+        <div class="vo-steps">
+
+            <div class="vo-step">
+                <div class="vo-step-label"><span class="vo-step-num">1</span> Passo 1</div>
+                <p class="vo-step-text">
+                    Escolha sua conta Google VEO3 e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="vo-step">
+                <div class="vo-step-label"><span class="vo-step-num">2</span> Passo 2</div>
+                <p class="vo-step-text">
+                    Receba os <strong>dados de acesso</strong> em até 30 minutos após o pagamento.
+                </p>
+            </div>
+
+            <div class="vo-step">
+                <div class="vo-step-label"><span class="vo-step-num">3</span> Passo 3</div>
+                <p class="vo-step-text">
+                    Pronto! Pronto! Entre e comece a <strong>gerar vídeos com Veo 3</strong>.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="vo-card"><h2 class="vo-h2">Compre com tranquilidade</h2><div class="vo-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Dados da conta</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+<!-- TERMOS E GARANTIA -->
+    <div class="vo-card">
+
+        <h2 class="vo-h2">Informações importantes</h2>
+
+        <div class="vo-info-box">
+
+            <h3 class="vo-info-title">LEIA ANTES DE COMPRAR</h3>
+
+            <p class="vo-info">
+                <span class="vo-highlight">1. Solução compartilhada:</span><br>
+                Acesso compartilhado com algumas limitações para garantir uso equilibrado e eficiente.
+            </p>
+
+            <p class="vo-info">
+                <span class="vo-highlight">2. Liberação imediata:</span><br>
+                Acesso liberado em até 30 minutos após pagamento.
+            </p>
+
+            <p class="vo-info">
+                <span class="vo-highlight">3. Uso pessoal:</span><br>
+                Proibido revender ou redistribuir o acesso.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="vo-hero rn-cta2"><span class="vo-tag">PRONTO PARA GARANTIR?</span><h2 class="vo-hero-t">Google VEO3 18 Meses</h2><div class="vo-price vo-pulse"><div><span class="vo-price-k">No Google</span><span class="vo-price-old">R$ 1745,82</span></div><div><span class="vo-price-k">Aqui</span><span class="vo-price-new">R$ 32,99</span></div><span class="vo-price-off">-98%</span><span class="vo-price-mes">Equivale a R$ 1,83 por mês. Você economiza R$ 1712,83.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>
