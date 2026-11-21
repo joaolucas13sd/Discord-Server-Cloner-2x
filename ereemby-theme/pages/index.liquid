@@ -216,6 +216,11 @@
           cujo nome tem "discord" (maiúsculas ou minúsculas tanto faz).
         {% endcomment %}
         {% assign rn_cat_nome = category.name | downcase %}
+        {% comment %} Rei dos Nitros: "Peça a conta do seu jeito" abaixo de Contas Full Acesso {% endcomment %}
+        {% if rn_pedir_shown != true and rn_cat_nome contains 'full acesso' %}
+          {% assign rn_pedir_shown = true %}
+          {% include 'rn-pedir-conta' %}
+        {% endif %}
         {% if rn_deco_shown != true and rn_cat_nome contains 'discord' %}
           {% assign rn_deco_shown = true %}
           {% include 'rn-decoracoes' %}

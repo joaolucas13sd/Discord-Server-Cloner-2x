@@ -1,0 +1,241 @@
+{% comment %}
+  Rei dos Nitros: "Peça a conta do seu jeito" (conta sob medida).
+  Aparece abaixo da categoria "Contas Full Acesso" (Home e página da categoria).
+  O cliente preenche o formulário e o pedido vai para um canal do Discord pela webhook abaixo.
+
+  WEBHOOK: cole a URL da webhook do Discord entre as aspas.
+  Atenção: a URL fica visível no código da página (qualquer pessoa pode ver e usar para mandar mensagens
+  naquele canal). Use um canal só para pedidos. Para esconder a URL, dá para passar por um Cloudflare Worker
+  e colocar aqui a URL do Worker no lugar (o formato do envio é o mesmo).
+{% endcomment %}
+{% assign rn_pedido_webhook = '' %}
+{% assign rn_pedido_loja = 'Rei dos Nitros' %}
+
+<section class="rpc" aria-label="Peça a conta do seu jeito">
+  <button type="button" class="rpc__card" data-rpc-open>
+    <span class="rpc__ico" aria-hidden="true">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>
+    </span>
+    <span class="rpc__txt">
+      <span class="rpc__k">Conta sob medida</span>
+      <span class="rpc__t">Não achou a conta ideal?</span>
+      <span class="rpc__s">Peça a conta do seu jeito. A equipe procura pra você e responde no seu WhatsApp.</span>
+    </span>
+    <span class="rpc__go">Pedir minha conta <span aria-hidden="true">→</span></span>
+  </button>
+</section>
+
+<div class="rpm" id="rpm" hidden role="dialog" aria-modal="true" aria-labelledby="rpm-t" data-webhook="{{ rn_pedido_webhook | escape }}" data-loja="{{ rn_pedido_loja | escape }}">
+  <div class="rpm__box">
+    <button type="button" class="rpm__x" data-rpm-x aria-label="Fechar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="rpm__head">
+      <span class="rpm__ico" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg></span>
+      <div>
+        <span class="rpm__k">Conta sob medida</span>
+        <h2 class="rpm__t" id="rpm-t">Peça a conta do seu jeito</h2>
+        <p class="rpm__s">Conte o jogo e como quer a conta. A equipe procura pra você e responde no seu WhatsApp.</p>
+      </div>
+    </div>
+
+    <form class="rpm__form" id="rpm-form" novalidate>
+      <fieldset class="rpm__f">
+        <legend class="rpm__l">Jogo ou plataforma</legend>
+        <div class="rpm__chips" id="rpm-jogos">
+          {% assign rn_jogos = 'Fortnite,Steam,Epic Games,Ubisoft,Rockstar / GTA,EA,Minecraft,Valorant,Roblox,Outro' | split: ',' %}
+          {% for j in rn_jogos %}
+            <button type="button" class="rpm__chip{% if forloop.first %} on{% endif %}" data-jogo="{{ j }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">{{ j }}</button>
+          {% endfor %}
+        </div>
+      </fieldset>
+
+      <label class="rpm__f">
+        <span class="rpm__l">Como você quer a conta?</span>
+        <textarea id="rpm-desc" rows="4" maxlength="900" required placeholder="Ex.: Fortnite com a Renegade Raider, pelo menos 100 skins e conta de 2018."></textarea>
+        <span class="rpm__h">Skins, jogos, nível, rank, região... quanto mais detalhe, mais fácil de achar.</span>
+      </label>
+      <div class="rpm__tags" id="rpm-tags">
+        <button type="button" data-tag="Skins específicas: ">+ Skins específicas</button>
+        <button type="button" data-tag="Jogos específicos: ">+ Jogos específicos</button>
+        <button type="button" data-tag="Nível ou rank: ">+ Nível ou rank</button>
+        <button type="button" data-tag="Conta antiga (OG): ">+ Conta antiga (OG)</button>
+      </div>
+
+      <div class="rpm__row">
+        <label class="rpm__f">
+          <span class="rpm__l">Até quanto quer investir? <em>(opcional)</em></span>
+          <select id="rpm-orc">
+            <option>Prefiro não dizer</option>
+            <option>Até R$ 50</option>
+            <option>R$ 50 a R$ 100</option>
+            <option>R$ 100 a R$ 200</option>
+            <option>R$ 200 a R$ 500</option>
+            <option>Acima de R$ 500</option>
+          </select>
+        </label>
+        <label class="rpm__f">
+          <span class="rpm__l">Seu nome <em>(opcional)</em></span>
+          <input id="rpm-nome" type="text" maxlength="60" autocomplete="given-name" placeholder="Como podemos te chamar?">
+        </label>
+      </div>
+
+      <label class="rpm__f">
+        <span class="rpm__l">WhatsApp com DDD</span>
+        <span class="rpm__tel"><b>+55</b><input id="rpm-zap" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="16" required placeholder="(11) 91234-5678"></span>
+        <span class="rpm__h">É por aqui que a equipe vai te responder.</span>
+      </label>
+      <input type="text" id="rpm-site" class="rpm__hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+      <p class="rpm__erro" id="rpm-erro" role="alert" hidden></p>
+      <button type="submit" class="rpm__send" id="rpm-send">Enviar pedido</button>
+      <p class="rpm__legal">Ao enviar, você autoriza a equipe da {{ rn_pedido_loja }} a falar com você pelo WhatsApp sobre este pedido. Veja os <a href="/terms">Termos</a>.</p>
+    </form>
+
+    <div class="rpm__ok" id="rpm-ok" hidden>
+      <span class="rpm__okico" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></span>
+      <h3>Pedido enviado!</h3>
+      <p>A equipe vai procurar a conta e te chamar no WhatsApp <b id="rpm-ok-zap"></b>.</p>
+      <button type="button" class="rpm__send" data-rpm-x>Fechar</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .rpc{margin:22px 0 4px}
+  .rpc__card{position:relative;overflow:hidden;display:flex;flex-wrap:wrap;align-items:center;gap:14px 16px;width:100%;padding:20px;border-radius:22px;text-align:left;cursor:pointer;color:#fff;font-family:inherit;
+    background:radial-gradient(90% 120% at 100% 0%,rgba(46,232,107,.22),transparent 60%),linear-gradient(135deg,#101512,#0c0d0f);border:1px solid rgba(46,232,107,.35);transition:border-color .2s,transform .2s}
+  .rpc__card:hover{border-color:#2ee86b;transform:translateY(-2px)}
+  .rpc__ico,.rpm__ico{flex:0 0 auto;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;color:#2ee86b;background:linear-gradient(160deg,#1c2a22,#2a1a3d);border:1px solid rgba(255,255,255,.08)}
+  .rpc__txt{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:3px}
+  .rpc__k,.rpm__k{color:#2ee86b;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+  .rpc__t{font-family:var(--rn-font-round,inherit);font-size:24px;font-weight:800;line-height:1.1}
+  .rpc__s{color:#b8bcc2;font-size:14px;line-height:1.5}
+  .rpc__go{flex:1 1 100%;display:flex;align-items:center;justify-content:center;gap:8px;height:50px;border-radius:14px;background:#2ee86b;color:#04140a;font-size:16px;font-weight:800}
+  @media (min-width:760px){.rpc__go{flex:0 0 auto;padding:0 26px}}
+
+  .rpm{position:fixed;inset:0;z-index:10001;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:24px 12px;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);opacity:0;transition:opacity .2s}
+  .rpm.on{opacity:1}
+  .rpm[hidden]{display:none}
+  .rpm,.rpm *{box-sizing:border-box}
+  .rpm__box{position:relative;width:100%;max-width:640px;margin:auto 0;padding:22px 20px;border-radius:24px;background:#141517;border:1px solid #26282c;color:#fff;font-family:Inter,system-ui,sans-serif;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .rpm__x{position:absolute;top:14px;right:14px;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:#1b1d20;border:1px solid #2d3034;color:#fff;cursor:pointer}
+  .rpm__head{display:flex;gap:14px;padding-right:44px;margin-bottom:18px}
+  .rpm__t{margin:4px 0 6px;font-family:var(--rn-font-round,inherit);font-size:26px;font-weight:800;line-height:1.1}
+  .rpm__s{margin:0;color:#b8bcc2;font-size:14px;line-height:1.55}
+  .rpm__form{display:flex;flex-direction:column;gap:14px}
+  .rpm__f{display:flex;flex-direction:column;gap:7px;min-width:0;margin:0;padding:0;border:0}
+  .rpm__l{padding:0;font-size:14px;font-weight:700;color:#fff}
+  .rpm__l em{font-style:normal;font-weight:500;color:#8b8f94}
+  .rpm__chips{display:flex;flex-wrap:wrap;gap:8px}
+  .rpm__chip{padding:9px 15px;border-radius:999px;background:#1b1d20;border:1px solid #2d3034;color:#e4e6e8;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+  .rpm__chip.on{border-color:#2ee86b;background:rgba(46,232,107,.10);color:#2ee86b}
+  .rpm textarea,.rpm input,.rpm select{width:100%;border-radius:14px;background:#1b1d20;border:1px solid #2d3034;color:#fff;font-size:15px;font-family:inherit;outline:none}
+  .rpm textarea{min-height:110px;padding:12px 14px;resize:vertical;line-height:1.5}
+  .rpm input,.rpm select{height:50px;padding:0 14px}
+  .rpm textarea:focus,.rpm input:focus,.rpm select:focus{border-color:#2ee86b;box-shadow:0 0 0 3px rgba(46,232,107,.15)}
+  .rpm__h{color:#8b8f94;font-size:12.5px}
+  .rpm__tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:-4px}
+  .rpm__tags button{padding:8px 12px;border-radius:999px;background:transparent;border:1px dashed #3a3d42;color:#d4d6d9;font-size:13px;cursor:pointer;font-family:inherit}
+  .rpm__tags button:hover{border-color:#2ee86b;color:#2ee86b}
+  .rpm__row{display:grid;grid-template-columns:1fr;gap:14px}
+  @media (min-width:560px){.rpm__row{grid-template-columns:1fr 1fr}}
+  .rpm__tel{display:flex;align-items:center;border-radius:14px;background:#1b1d20;border:1px solid #2d3034;overflow:hidden}
+  .rpm__tel:focus-within{border-color:#2ee86b;box-shadow:0 0 0 3px rgba(46,232,107,.15)}
+  .rpm__tel b{flex:0 0 auto;padding:0 14px;height:50px;display:grid;place-items:center;border-right:1px solid #2d3034;font-size:15px}
+  .rpm__tel input{border:0;border-radius:0;box-shadow:none !important}
+  .rpm__hp{position:absolute !important;left:-9999px;width:1px;height:1px;opacity:0}
+  .rpm__erro{margin:0;padding:10px 12px;border-radius:12px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.4);color:#fca5a5;font-size:13.5px}
+  .rpm__erro[hidden]{display:none}
+  .rpm__send{width:100%;height:54px;border:0;border-radius:14px;background:#2ee86b;color:#04140a;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit}
+  .rpm__send:disabled{opacity:.6;cursor:wait}
+  .rpm__legal{margin:0;color:#8b8f94;font-size:12px;line-height:1.5;text-align:center}
+  .rpm__legal a{color:#c4c7cb;text-decoration:underline}
+  .rpm__ok{display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 6px 4px;text-align:center}
+  .rpm__ok[hidden]{display:none}
+  .rpm__okico{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:#2ee86b;color:#04140a}
+  .rpm__ok h3{margin:6px 0 0;font-family:var(--rn-font-round,inherit);font-size:26px;font-weight:800}
+  .rpm__ok p{margin:0 0 10px;color:#b8bcc2;font-size:15px;line-height:1.5}
+</style>
+
+<script>
+  (function () {
+    if (window.__rpcOn) return; window.__rpcOn = true;
+    var modal = document.getElementById('rpm'); if (!modal) return;
+    document.body.appendChild(modal); // fica no nível da página (nada do tema esconde a janela)
+    var form = document.getElementById('rpm-form'), ok = document.getElementById('rpm-ok'), erro = document.getElementById('rpm-erro');
+    var desc = document.getElementById('rpm-desc'), zap = document.getElementById('rpm-zap'), send = document.getElementById('rpm-send');
+    var jogo = 'Fortnite', antes = '', ultimoMem = 0;
+
+    function abrir() {
+      form.hidden = false; ok.hidden = true; erro.hidden = true;
+      antes = document.body.style.overflow; document.body.style.overflow = 'hidden';
+      modal.hidden = false; requestAnimationFrame(function () { modal.classList.add('on'); });
+      setTimeout(function () { desc.focus({ preventScroll: true }); }, 250);
+    }
+    function fechar() { modal.classList.remove('on'); document.body.style.overflow = antes; setTimeout(function () { modal.hidden = true; }, 200); }
+
+    document.addEventListener('click', function (ev) { if (ev.target.closest && ev.target.closest('[data-rpc-open]')) abrir(); });
+    modal.addEventListener('click', function (ev) {
+      if (ev.target === modal || ev.target.closest('[data-rpm-x]')) return fechar();
+      var c = ev.target.closest('.rpm__chip');
+      if (c) {
+        jogo = c.dataset.jogo;
+        [].forEach.call(modal.querySelectorAll('.rpm__chip'), function (x) { x.classList.toggle('on', x === c); x.setAttribute('aria-pressed', x === c ? 'true' : 'false'); });
+      }
+      var t = ev.target.closest('[data-tag]');
+      if (t) { desc.value = (desc.value.trim() ? desc.value.replace(/\s*$/, '\n') : '') + t.dataset.tag; desc.focus(); desc.setSelectionRange(desc.value.length, desc.value.length); }
+    });
+    document.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && !modal.hidden) fechar(); });
+
+    // máscara do WhatsApp: (11) 91234-5678
+    zap.addEventListener('input', function () {
+      var d = zap.value.replace(/\D/g, '').slice(0, 11), f = d;
+      if (d.length > 2) f = '(' + d.slice(0, 2) + ') ' + d.slice(2);
+      if (d.length > 7) f = '(' + d.slice(0, 2) + ') ' + d.slice(2, d.length - 4) + '-' + d.slice(-4);
+      zap.value = f;
+    });
+
+    function falha(msg) { erro.textContent = msg; erro.hidden = false; }
+    function corta(s, n) { s = String(s || '').trim(); return s.length > n ? s.slice(0, n - 1) + '…' : s; }
+
+    form.addEventListener('submit', function (ev) {
+      ev.preventDefault(); erro.hidden = true;
+      var texto = desc.value.trim(), num = zap.value.replace(/\D/g, ''), nome = document.getElementById('rpm-nome').value.trim(),
+          orc = document.getElementById('rpm-orc').value, url = modal.dataset.webhook;
+      if (document.getElementById('rpm-site').value) return; // robô
+      if (texto.length < 8) { desc.focus(); return falha('Conte um pouco mais sobre a conta que você quer.'); }
+      if (num.length < 10 || num.length > 11) { zap.focus(); return falha('Digite o WhatsApp com DDD, ex.: (11) 91234-5678.'); }
+      if (!url) return falha('Os pedidos ainda não estão ativos. Fale com a gente pelo WhatsApp ou Discord.');
+      var ultimo = ultimoMem; try { ultimo = Math.max(ultimo, +localStorage.getItem('rpc_ultimo') || 0); } catch (e) {}
+      if (Date.now() - ultimo < 60000) return falha('Você acabou de enviar um pedido. Espere um minuto para mandar outro.');
+
+      var fone = '+55 ' + zap.value;
+      var payload = {
+        username: (modal.dataset.loja || 'Loja') + ' · Pedidos',
+        allowed_mentions: { parse: [] },
+        embeds: [{
+          title: '🎮 Novo pedido de conta sob medida',
+          color: 0x2ee86b,
+          fields: [
+            { name: 'Jogo', value: corta(jogo, 100), inline: true },
+            { name: 'Orçamento', value: corta(orc, 100), inline: true },
+            { name: 'Nome', value: corta(nome || 'Não informado', 100), inline: true },
+            { name: 'Como quer a conta', value: corta(texto, 1000) },
+            { name: 'WhatsApp', value: corta(fone, 40) + '\nhttps://wa.me/55' + num }
+          ],
+          footer: { text: corta(location.pathname, 200) },
+          timestamp: new Date().toISOString()
+        }]
+      };
+      send.disabled = true; send.textContent = 'Enviando...';
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+        .then(function (r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          ultimoMem = Date.now(); try { localStorage.setItem('rpc_ultimo', String(ultimoMem)); } catch (e) {}
+          document.getElementById('rpm-ok-zap').textContent = fone;
+          form.reset(); form.hidden = true; ok.hidden = false;
+        })
+        .catch(function () { falha('Não foi possível enviar agora. Tente de novo em instantes ou fale com a gente pelo WhatsApp.'); })
+        .then(function () { send.disabled = false; send.textContent = 'Enviar pedido'; });
+    });
+  })();
+</script>

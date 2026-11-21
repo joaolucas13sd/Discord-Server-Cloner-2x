@@ -378,6 +378,9 @@
             </div>
           {% endif %}
 
+          {% comment %} Rei dos Nitros: "Peça a conta do seu jeito" na categoria Contas Full Acesso {% endcomment %}
+          {% if rn_cn contains 'full acesso' %}{% include 'rn-pedir-conta' %}{% endif %}
+
         </div>
       </div>
 
