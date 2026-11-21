@@ -3,10 +3,11 @@
 const { chromium } = require('playwright'); const fs = require('fs'); const { execFileSync } = require('child_process');
 const [specsFile, outDir] = process.argv.slice(2); const specs = JSON.parse(fs.readFileSync(specsFile, 'utf8'));
 const FE = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/';
-const svg = s => execFileSync('curl', ['-s', `https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/${s}.svg`]).toString().replace('<svg ', '<svg fill="#fff" ');
+const svg = s => { const [n, v] = s.split('@'); return execFileSync('curl', ['-s', `https://cdn.jsdelivr.net/npm/simple-icons@${v || '13.21.0'}/icons/${n}.svg`]).toString().replace('<svg ', '<svg fill="#fff" '); };
 const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 function logo(d) {
   if (d.logo.startsWith('emoji:')) { const b = execFileSync('curl', ['-s', FE + encodeURI(d.logo.slice(6))]); return `<img src="data:image/png;base64,${b.toString('base64')}">`; }
+  if (d.logo === 'multi') return `<div class="mg">${d.logos.map(l => l.startsWith('t:') ? `<b>${l.slice(2)}</b>` : svg(l)).join('')}</div>`;
   if (d.logo === 'bloco') return '<div class="blk"><i class="g"></i><i class="d"></i></div>';
   return svg(d.logo);
 }
@@ -24,6 +25,7 @@ h1{margin-top:18px;font-size:${d.t.length > 18 ? 70 : 84}px;font-weight:900;line
 p{margin-top:14px;font-size:34px;font-weight:700;color:${d.cor === '#d4d4d8' ? '#e5e7eb' : d.cor};filter:brightness(1.25)}
 .c{display:flex;gap:12px;margin-top:28px;flex-wrap:wrap}.c span{padding:10px 18px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);font-size:22px;font-weight:700}
 .c span::before{content:"✓  ";color:${d.cor}}
+.mg{display:grid;grid-template-columns:repeat(3,70px);gap:22px 18px;align-items:center;justify-items:center}.mg svg{width:62px;height:62px}.mg b{font-size:26px;font-weight:900;letter-spacing:-1px}
 .blk{position:relative;width:170px;height:170px;transform:rotate(-8deg)}.blk i{position:absolute;left:0;right:0}
 .blk .g{top:0;height:40%;background:repeating-linear-gradient(90deg,#5dbb3a 0 21px,#4ea52f 21px 42px,#6cc947 42px 63px);border-radius:10px 10px 0 0}
 .blk .d{bottom:0;height:60%;background:repeating-linear-gradient(90deg,#8b5a2b 0 28px,#7a4b20 28px 56px),#8b5a2b;border-radius:0 0 10px 10px;box-shadow:inset 0 10px 0 rgba(0,0,0,.15)}

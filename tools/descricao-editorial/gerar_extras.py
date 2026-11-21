@@ -7,6 +7,10 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 sp = importlib.util.spec_from_file_location('g', os.path.join(AQUI, '..', 'como-assistir', 'gerar.py'))
 g = importlib.util.module_from_spec(sp); sp.loader.exec_module(g)
 ORIG, OUT = sys.argv[1], sys.argv[2]
+sv = importlib.util.spec_from_file_location('vt', os.path.join(AQUI, '..', 'como-assistir', 'vitrine.py'))
+vt = importlib.util.module_from_spec(sv); sv.loader.exec_module(vt)
+sys.path.insert(0, AQUI)
+import banners
 TM, T3 = 'https://image.tmdb.org/t/p/w1280/', 'https://image.tmdb.org/t/p/w300/'
 FE = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/'
 base = open(os.path.join(AQUI, 'netflix-padrao.html')).read()
@@ -50,9 +54,11 @@ EXTRA_CSS = '''
 .ed-strip figcaption{margin-top:4px;color:var(--ed-mut);font-size:10px;text-align:center;line-height:1.2}
 '''
 
+OVERRIDE = {}
+
 def montar(id, ac, ac2, intro, paras, fig1, fig2, spec_list, anim, faq_id, extra_mid=''):
     css = ED_CSS.replace('--ed-ac:#e50914', f'--ed-ac:{ac}').replace('rgba(229,9,20', f'rgba({rgb(ac)}').replace('#2a1012', ac2).replace('#1d0b0d', ac2)
-    card, acss = g.bloco(**anim)
+    card, acss = (OVERRIDE[id]() if id in OVERRIDE else g.bloco(**anim))
     card = card.replace('<!-- COMO UTILIZAR -->\n    ', '')
     html = f'''<div class="ed">
 <style>{css}.ed-spec .ed-w{{grid-column:1 / -1}}
@@ -161,11 +167,15 @@ CB = 'prod_1786937842130505411744683'
 STRIP = ('<div class="ed-strip">' + ''.join(f'<figure><img src="{T3}{f}.jpg" alt="{esc(t)}" loading="lazy"><figcaption>{esc(s)}</figcaption></figure>' for f, t, s in [
     ('p34WRcgkN2QIHcds5FtFiSpV3PC', 'Alerta Vermelho', 'Netflix'), ('577eXC8wFQT0eUrJcgznSiFPRmk', 'A Casa do Dragão', 'HBO Max'), ('q3jHCb4dMfYF6ojikKuHd6LscxC', 'Loki', 'Disney+'),
     ('xMNH87maNLt9n2bMDYeI6db5VFm', 'Solo Leveling', 'Crunchyroll'), ('bq28ajZaoMyzEIm6REelqyqtEDZ', 'The Boys', 'Prime Video')]) + '</div>\n')
+OVERRIDE[CB] = lambda: vt.combo_streaming(TM + '577eXC8wFQT0eUrJcgznSiFPRmk.jpg', [
+    ('Veja os dados no pedido', 'Na página do seu pedido aparecem os dados de cada um dos 5 streamings.'),
+    ('Entre em cada streaming', 'Abra cada serviço e entre com o e-mail e a senha indicados.'),
+    ('Escolha o perfil e assista', 'Entre no perfil indicado, escolha um título e aproveite.')])
 montar(CB, '#ec4899', '#2a0a1c',
        'Tenha <strong>Netflix, HBO Max, Disney+, Crunchyroll e Prime Video</strong> numa única compra, por <strong>30 dias</strong>, com o <strong>plano Premium</strong> de cada serviço.',
        [LOJA_P + '\n<p>São <strong>5 streamings</strong> com filmes, séries, animações e animes, por muito menos do que assinar um por um. Os <strong>dados de cada streaming</strong> aparecem no seu pedido.</p>',
         '<p><strong>Um catálogo para cada momento.</strong> Os originais da Netflix, as séries da HBO, a Marvel e a Pixar no Disney+, os animes da Crunchyroll e os originais do Prime Video.</p>'],
-       img(TM + 'lY2DhbA7Hy44fAKddr06UrXWWaQ.jpg', 'The Last of Us', 'The Last of Us · disponível na HBO Max'), '',
+       img(banners.URL('combo-assinaturas'), 'Combo Assinaturas'), '',
        [('Streamings', 'Netflix, HBO Max, Disney+, Crunchyroll e Prime Video'), ('Planos', 'Premium de cada serviço'), ('Duração', '30 dias'), ('Entrega', 'Dados de cada streaming no pedido'), ('Uma compra só', 'Mais barato do que assinar um por um')],
        dict(P='ed', PEDIDO='Combo de streamings', MARCA='streaming', COR='#ec4899', SITE='Site do streaming', COR2='#8b5cf6',
             HERO=TM + '577eXC8wFQT0eUrJcgznSiFPRmk.jpg', THUMBS=tuple(T3 + f + '.jpg' for f in ['p34WRcgkN2QIHcds5FtFiSpV3PC', 'q3jHCb4dMfYF6ojikKuHd6LscxC', 'xMNH87maNLt9n2bMDYeI6db5VFm', 'bq28ajZaoMyzEIm6REelqyqtEDZ', 'lY2DhbA7Hy44fAKddr06UrXWWaQ']),

@@ -5,6 +5,10 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 sp = importlib.util.spec_from_file_location('j', os.path.join(AQUI, '..', 'como-assistir', 'jogos.py'))
 j = importlib.util.module_from_spec(sp); sp.loader.exec_module(j)
 g = j.g
+sv = importlib.util.spec_from_file_location('vt', os.path.join(AQUI, '..', 'como-assistir', 'vitrine.py'))
+vt = importlib.util.module_from_spec(sv); sv.loader.exec_module(vt)
+sys.path.insert(0, AQUI)
+import banners
 ORIG, OUT = sys.argv[1], sys.argv[2]
 FE = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/'
 base = open(os.path.join(AQUI, 'netflix-padrao.html')).read()
@@ -33,9 +37,11 @@ EXTRA = '''
 .ed-capas img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;border:1px solid var(--ed-bd)}
 '''
 
+OVERRIDE = {}
+
 def montar(id, ac, ac2, intro, paras, fig1, mid, spec_list, anim):
     css = ED_CSS.replace('--ed-ac:#e50914', f'--ed-ac:{ac}').replace('rgba(229,9,20', f'rgba({rgb(ac)}').replace('#2a1012', ac2).replace('#1d0b0d', ac2)
-    card, acss = g.bloco(**anim)
+    card, acss = (OVERRIDE[id]() if id in OVERRIDE else g.bloco(**anim))
     card = card.replace('<!-- COMO UTILIZAR -->\n    ', '')
     html = f'''<div class="ed">
 <style>{css}{EXTRA.strip()}
@@ -117,15 +123,18 @@ montar(RK, '#fcaf17', '#2a1d05', 'Conta <strong>Rockstar full acesso e licenciad
             'Conta para o FiveM: não é possível jogar GTA Online. Banimento global e de HWID não saem trocando de conta. Dúvidas no login: abra um ticket.', login='Iniciar sessão', as_='Jogar', TILES=('GTA V', 'FiveM', 'Loja', 'Downloads', 'Ajustes')))
 
 # ---------- Xbox Game Pass ----------
+XG_PASSOS = [('Veja os dados no pedido', 'Na página do seu pedido aparecem o e-mail e a senha da conta.'), ('Entre na conta Microsoft', 'Abra o app do Xbox e entre com esses dados.'),
+             ('Troque e-mail e senha', 'Nas configurações da conta, coloque o seu e-mail e uma senha nova.'), ('Instale o jogo', 'No catálogo do Game Pass, escolha um jogo e clique em Instalar.'), ('Jogue', 'Clique em Jogar e aproveite.')]
 XG = [(1551360, 'Forza Horizon 5'), (1240440, 'Halo Infinite'), (1716740, 'Starfield'), (2677660, 'Indiana Jones'), (962130, 'Grounded')]
 for id, plano, specs_p in [
     ('var_16PlZJ2lqtW', 'Essential', [('Catálogo', 'Mais de 50 jogos para console e PC'), ('Multiplayer online', 'Jogue com os amigos no console'), ('Cloud Gaming', 'Em dispositivos compatíveis'), ('Benefícios nos jogos', 'LoL, Warzone, Rainbow Six e mais'), ('Full Acesso', 'Troque e-mail e senha')]),
     ('var_4gSAM1IYbnO', 'Premium', [('Grandes franquias', 'Call of Duty, Forza, Minecraft, Halo e mais'), ('Biblioteca completa', 'Corrida, FPS, RPG, indies e mais'), ('Full Acesso', 'Troque e-mail e senha'), ('Duração', '1 mês')]),
     ('var_5BWiTAkmrwM', 'Ultimate', [('Grandes franquias', 'Call of Duty, Forza, Minecraft, Halo e mais'), ('Biblioteca completa', 'Corrida, FPS, RPG, indies e mais'), ('Full Acesso', 'Troque e-mail e senha'), ('Duração', '1 mês')])]:
+    OVERRIDE[id] = lambda plano=plano: vt.xbox_pass(plano, j.hero(1240440), [j.capa(a) for a, _ in XG], XG_PASSOS)
     montar(id, '#107c10', '#0a2a0a', f'Tenha <strong>1 mês de Xbox Game Pass {plano}</strong> e jogue uma enorme biblioteca de jogos, numa conta <strong>somente sua</strong>.',
            [LOJA + '\n<p>A conta é <strong>Full Acesso</strong>: depois de receber, você troca o e-mail e a senha e a assinatura fica com você.</p>',
             f'<p><strong>Uma biblioteca para cada estilo.</strong> Explore jogos de corrida, FPS, RPG, sobrevivência, multiplayer e indies no catálogo do Game Pass {plano}.</p>'],
-           fig(j.hero(1551360), 'Xbox Game Pass', 'Forza Horizon 5 · exemplo de jogo do catálogo'), capas(XG), specs_p,
+           fig(banners.URL('xbox-game-pass-' + plano.lower()), f'Xbox Game Pass {plano}'), capas(XG), specs_p,
            anim('xbox', f'Xbox Game Pass {plano}', 'xbox.com', '#107c10', '#0e6a0e', 1240440, [t for t, _ in XG], 'Halo Infinite', f'Game Pass {plano}',
                 'Conta Microsoft', [('E-mail', 'og••••••@email.com'), ('Senha', '••••••••••')],
                 FA_STEPS('app do Xbox', ('Jogue pelo Game Pass', 'Escolha um jogo do catálogo, instale e clique em Jogar.')),

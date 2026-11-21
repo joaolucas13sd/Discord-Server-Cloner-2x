@@ -885,3 +885,243 @@ def steam_key(nome, cor, passos):
                 f'@keyframes skS{k}{{0%,{a}%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}{a + .5}%,{b}%{{border-color:rgba(33,224,101,.5);background:rgba(33,224,101,.07)}}{b + .5}%,100%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}}}\n'
                 f'@keyframes skI{k}{{0%,{a}%{{background:#2a2f38;color:#c7d5e0}}{a + .5}%,100%{{background:#21e065;color:#06150b}}}}\n')
     return html, BASE + css
+
+
+# ---------------------------------------------------------------- base comum dos fluxos feitos à mão (cursor, janela, caixas, campos, botões, passos)
+def _fl_base(p, passos_n, marcas, cor_passo='#21e065'):
+    """CSS comum. p = prefixo (xg, cb). marcas = [(inicio%, fim%), ...] do realce de cada passo."""
+    css = """
+.vt--@P{--vt:@Vs}
+.vt--@P .vt-win{height:250px;background:#16191f}
+.vt--@P .vt-win *{box-sizing:border-box}
+.vt--@P .vt-win span,.vt--@P .vt-win small,.vt--@P .vt-win b,.vt--@P .vt-win em,.vt--@P .vt-win i,.vt--@P .vt-win u{display:block;font-style:normal;text-decoration:none}
+.vt--@P .@P-top{position:absolute;left:0;right:0;top:0;height:22px;display:flex;gap:12px;align-items:center;padding:0 10px;background:#0f1115;border-bottom:1px solid #23262d;z-index:4}
+.vt--@P .@P-top b,.vt--@P .@P-top span{color:#8f98a0;font-size:9px;font-weight:600}.vt--@P .@P-top b{color:#c7d5e0}
+.vt--@P .@P-sc{position:absolute;inset:22px 0 0;opacity:0}
+.vt--@P .@P-box{position:absolute;left:50%;top:22px;margin-left:-105px;width:210px;padding:10px 12px;border-radius:8px;background:#1d2128;border:1px solid #2a2f38}
+.vt--@P .@P-in{height:22px;margin-top:3px;padding:0 7px;border-radius:3px;background:#2a2f38;display:flex !important;align-items:center;overflow:hidden}
+.vt--@P .@P-in em{font-family:ui-monospace,Menlo,monospace;color:#e5e7eb;font-size:10px;white-space:nowrap;overflow:hidden;width:0;letter-spacing:.03em}
+.vt--@P .@P-bt{border-radius:4px;color:#fff;font-size:9.5px;font-weight:900;text-align:center;line-height:22px;height:22px}
+.vt--@P .@P-cur{position:absolute;z-index:9;width:14px;height:20px;margin:-2px 0 0 -2px;background:#fff;clip-path:polygon(0 0,0 80%,22% 62%,38% 98%,52% 92%,38% 58%,70% 58%);filter:drop-shadow(0 1px 2px #000);animation:@PCur var(--vt) infinite}
+.vt--@P .@P-steps{display:grid;gap:6px;margin-top:12px}
+.vt--@P .@P-st{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.vt--@P .@P-st i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#2a2f38;color:#c7d5e0;font-style:normal;font-size:11px;font-weight:900}
+.vt--@P .@P-st b{display:block;color:#fff;font-size:13.5px}.vt--@P .@P-st span{display:block;margin-top:1px;color:#9aa0a6;font-size:12px;line-height:1.45}
+""".replace('@P', p)
+    for k, (a, b) in enumerate(marcas[:passos_n]):
+        css += (f'.vt--{p} .{p}-s{k}{{animation:{p}S{k} var(--vt) infinite}}.vt--{p} .{p}-s{k} i{{animation:{p}I{k} var(--vt) infinite}}\n'
+                f'@keyframes {p}S{k}{{0%,{a}%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}{a + .5}%,{b}%{{border-color:{cor_passo}80;background:{cor_passo}12}}{b + .5}%,100%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}}}\n'
+                f'@keyframes {p}I{k}{{0%,{a}%{{background:#2a2f38;color:#c7d5e0}}{a + .5}%,100%{{background:{cor_passo};color:#06150b}}}}\n')
+    return css
+
+def _fl_cur(p, pts):
+    """pts = [(pct, left, top)] -> keyframes do cursor (sempre volta ao ponto inicial no fim)."""
+    return f'@keyframes {p}Cur{{' + ''.join(f'{t}%{{left:{x};top:{y}}}' for t, x, y in pts) + '}\n'
+
+def _fl_press(nome, t, dur=.9):
+    """Keyframes de 'aperto' de botão no instante t (% do ciclo)."""
+    return (f'@keyframes {nome}{{0%,{t - .4}%{{transform:none;filter:none}}{t}%{{transform:scale(.94);filter:brightness(.85)}}{t + dur}%,100%{{transform:none;filter:none}}}}\n')
+
+def _fl_vis(nome, a, b, f=.9):
+    """Aparece em a%, some em b%."""
+    return f'@keyframes {nome}{{0%,{a}%{{opacity:0}}{a + f}%,{b}%{{opacity:1}}{b + f}%,100%{{opacity:0}}}}\n'
+
+def _fl_steps(p, passos):
+    return ''.join(f'<div class="{p}-st {p}-s{i}"><i>{i + 1}</i><div><b>{esc(t)}</b><span>{esc(d)}</span></div></div>' for i, (t, d) in enumerate(passos))
+
+def _fl_type(nome, a, b, n):
+    return f'@keyframes {nome}{{0%,{a}%{{width:0}}{b}%,100%{{width:{n}ch}}}}\n'
+
+
+# ---------------------------------------------------------------- Xbox Game Pass: pedido → login Microsoft → trocar dados → catálogo → instalar → jogar
+def xbox_pass(plano, hero, capas, passos):
+    P = 'xg'; pl = esc(plano)
+    cov = ''.join(f'<img src="{c}" alt="">' for c in capas * 2)
+    jan = (
+        '<div class="xg-top xg-t1"><b>Rei dos Nitros</b><span>Seu pedido</span></div>'
+        '<div class="xg-top xg-t2"><b>Xbox</b><span>Entrar</span></div>'
+        '<div class="xg-top xg-t3"><b>Xbox</b><span class="on">Início</span><span>Game Pass</span><span>Loja</span><span>Biblioteca</span></div>'
+        # A. pedido
+        '<div class="xg-sc xg-a"><div class="xg-box"><small class="xg-ok">✓ Pagamento aprovado</small><b class="xg-pn">Xbox Game Pass ' + pl + '</b>'
+        '<span class="xg-in xg-r1"><u>E-mail</u><em>email_do_pedido</em></span><span class="xg-in xg-r2"><u>Senha</u><em>••••••••••</em></span>'
+        '<span class="xg-bt xg-go">Abrir o Xbox</span></div><span class="xg-toast xg-tc1">✓ E-mail copiado</span><span class="xg-toast xg-tc2">✓ Senha copiada</span></div>'
+        # B. login
+        '<div class="xg-sc xg-b"><div class="xg-box xg-lbox"><span class="xg-logo"><i></i><b>Xbox</b></span><b class="xg-lt xg-lt1">Entrar</b><b class="xg-lt xg-lt2">Digite a senha</b>'
+        '<span class="xg-in xg-i1"><em class="xg-y1">email_do_pedido</em></span><span class="xg-in xg-i2"><em class="xg-y2">••••••••••</em></span>'
+        '<span class="xg-bt xg-b1">Avançar</span><span class="xg-bt xg-b2">Entrar</span><i class="xg-spin"></i></div></div>'
+        # C. trocar dados
+        '<div class="xg-sc xg-c"><div class="xg-box xg-cbox"><b class="xg-lt">Conta Microsoft</b>'
+        '<span class="xg-in xg-v1"><u>E-mail</u><em class="xg-w1a">og••••••@email.com</em><em class="xg-w1b">voce@seuemail.com</em></span>'
+        '<span class="xg-in xg-v2"><u>Senha</u><em class="xg-w2a">••••••••••</em><em class="xg-w2b">••••••••••••••</em></span>'
+        '<span class="xg-bt xg-ed"><b class="xg-e1">Editar dados</b><b class="xg-e2">Salvo ✓</b></span></div><span class="xg-toast xg-tc3">✓ Dados trocados: a conta é sua</span></div>'
+        # D. app
+        '<div class="xg-sc xg-d"><div class="xg-hero" style="background-image:linear-gradient(90deg,rgba(0,0,0,.8),rgba(0,0,0,.1) 70%),url(' + hero + ')"><small>GAME PASS ' + pl.upper() + '</small><b>Halo Infinite</b></div>'
+        '<div class="xg-actb"><span class="xg-bt xg-inst">INSTALAR</span><span class="xg-bar"><i></i></span><small class="xg-dl">Instalando...</small>'
+        '<span class="xg-bt xg-play">JOGAR</span><span class="xg-bt xg-run">EXECUTANDO</span></div>'
+        f'<div class="xg-row"><div class="xg-mq">{cov}</div></div></div>'
+        '<span class="xg-cur"></span>')
+    html = (f'<div class="ed-card vt vt--xg" style="--vc:#5dc21e"><span class="vt-k">Passo a passo</span><h2 class="vt-t">Como começar a jogar</h2>'
+            f'<div class="vt-win" role="img" aria-label="Como usar o Xbox Game Pass {pl}">{jan}</div><div class="xg-steps">{_fl_steps(P, passos)}</div></div>')
+    css = _fl_base(P, len(passos), [(0, 15), (15, 40), (40, 56), (56, 84), (84, 97)], '#5dc21e').replace('@V', '26')
+    css += """
+.vt--xg .xg-top.on,.vt--xg .xg-top span.on{color:#fff}
+.vt--xg .xg-t1{animation:xgT1 var(--vt) infinite}.vt--xg .xg-t2{animation:xgT2 var(--vt) infinite}.vt--xg .xg-t3{animation:xgT3 var(--vt) infinite}
+.vt--xg .xg-ok{color:#4ade80;font-size:9px;font-weight:800}.vt--xg .xg-pn{margin:3px 0 8px;color:#fff;font-size:12.5px;font-weight:900}
+.vt--xg .xg-in u{flex:0 0 38px;color:#8f98a0;font-size:8px;font-weight:700}
+.vt--xg .xg-a .xg-in em{width:auto;font-size:10px;color:#fff}
+.vt--xg .xg-a .xg-in{margin-top:5px}
+.vt--xg .xg-r1{animation:xgR1 var(--vt) infinite}.vt--xg .xg-r2{animation:xgR2 var(--vt) infinite}
+.vt--xg .xg-go{margin-top:9px;background:#107c10;animation:xgGoP var(--vt) infinite}
+.vt--xg .xg-toast{position:absolute;left:50%;top:5px;transform:translateX(-50%);padding:4px 10px;border-radius:999px;background:rgba(34,197,94,.18);border:1px solid #22c55e;color:#4ade80;font-size:9px;font-weight:800;white-space:nowrap;opacity:0;z-index:3}
+.vt--xg .xg-tc1{animation:xgTc1 var(--vt) infinite}.vt--xg .xg-tc2{animation:xgTc2 var(--vt) infinite}.vt--xg .xg-tc3{top:auto;bottom:16px;animation:xgTc3 var(--vt) infinite}
+.vt--xg .xg-a{animation:xgA var(--vt) infinite}.vt--xg .xg-b{animation:xgB var(--vt) infinite}.vt--xg .xg-c{animation:xgC var(--vt) infinite}.vt--xg .xg-d{animation:xgD var(--vt) infinite}
+.vt--xg .xg-lbox{height:150px}
+.vt--xg .xg-logo{display:flex !important;align-items:center;gap:6px;margin-bottom:8px}
+.vt--xg .xg-logo i{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 50% 120%,#1d1d1d 0 5px,#5dc21e 5.5px);box-shadow:0 0 8px #5dc21e88}.vt--xg .xg-logo b{color:#fff;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase}
+.vt--xg .xg-lt{color:#fff;font-size:12.5px;font-weight:800;margin-bottom:6px;position:absolute;left:12px;top:36px}
+.vt--xg .xg-lt2{opacity:0;animation:xgLt2 var(--vt) infinite}.vt--xg .xg-lt1{animation:xgLt1 var(--vt) infinite}
+.vt--xg .xg-i1,.vt--xg .xg-i2{position:absolute;left:12px;right:12px;top:62px;margin:0}
+.vt--xg .xg-i2{opacity:0;animation:xgLt2 var(--vt) infinite}.vt--xg .xg-i1{animation:xgLt1 var(--vt) infinite}
+.vt--xg .xg-b1,.vt--xg .xg-b2{position:absolute;left:12px;right:12px;top:100px;background:#107c10}
+.vt--xg .xg-b2{opacity:0;animation:xgLt2 var(--vt) infinite}.vt--xg .xg-b1{animation:xgB1 var(--vt) infinite}
+.vt--xg .xg-spin{position:absolute;left:50%;top:104px;width:20px;height:20px;margin-left:-10px;border-radius:50%;border:3px solid #2a2f38;border-top-color:#5dc21e;opacity:0;animation:xgSpin var(--vt) infinite,xgSpV var(--vt) infinite}
+.vt--xg .xg-y1{animation:xgY1 var(--vt) infinite steps(15)}.vt--xg .xg-y2{animation:xgY2 var(--vt) infinite steps(10)}
+.vt--xg .xg-cbox .xg-in{margin-top:6px;position:relative}.vt--xg .xg-cbox .xg-lt{position:static;display:block;margin-bottom:8px}
+.vt--xg .xg-v1 em,.vt--xg .xg-v2 em{position:absolute;left:52px;width:auto;font-size:9.5px}
+.vt--xg .xg-w1b,.vt--xg .xg-w2b{color:#4ade80 !important;opacity:0}.vt--xg .xg-w1a,.vt--xg .xg-w2a{animation:xgWa var(--vt) infinite}.vt--xg .xg-w1b,.vt--xg .xg-w2b{animation:xgWb var(--vt) infinite}
+.vt--xg .xg-ed{position:relative;margin-top:10px;background:#107c10;animation:xgEdP var(--vt) infinite}
+.vt--xg .xg-ed b{position:absolute;inset:0}.vt--xg .xg-e2{opacity:0;animation:xgWb var(--vt) infinite}.vt--xg .xg-e1{animation:xgWa var(--vt) infinite}
+.vt--xg .xg-hero{position:absolute;left:10px;right:10px;top:6px;height:90px;border-radius:8px;background:#2a2f38 center/cover no-repeat;overflow:hidden}
+.vt--xg .xg-hero small{position:absolute;left:10px;top:12px;padding:2px 6px;border-radius:3px;background:#107c10;color:#fff;font-size:7.5px;font-weight:900;letter-spacing:.06em}
+.vt--xg .xg-hero b{position:absolute;left:10px;bottom:10px;color:#fff;font-size:17px;font-weight:900;text-shadow:0 2px 6px #000}
+.vt--xg .xg-actb{position:absolute;left:10px;right:10px;top:102px;height:24px}
+.vt--xg .xg-actb>*{position:absolute;left:0;top:0}.vt--xg .xg-actb .xg-bt{width:90px;background:#107c10}
+.vt--xg .xg-inst{animation:xgInst var(--vt) infinite}
+.vt--xg .xg-bar{left:0 !important;top:9px !important;width:90px;height:6px;border-radius:3px;background:#2a2f38;overflow:hidden;opacity:0;animation:xgBarW var(--vt) infinite}
+.vt--xg .xg-bar i{height:100%;width:0;background:#5dc21e;animation:xgBar var(--vt) infinite}
+.vt--xg .xg-dl{left:100px !important;top:6px !important;color:#8f98a0;font-size:8.5px;opacity:0;animation:xgBarW var(--vt) infinite}
+.vt--xg .xg-play{opacity:0;animation:xgPlay var(--vt) infinite}
+.vt--xg .xg-run{background:transparent !important;border:1.5px solid #5dc21e;color:#5dc21e;line-height:19px;opacity:0;animation:xgRun var(--vt) infinite}
+.vt--xg .xg-row{position:absolute;left:0;right:0;top:134px;height:84px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.vt--xg .xg-mq{display:flex;gap:8px;width:max-content;padding:0 10px;animation:xgMq 14s linear infinite}
+.vt--xg .xg-mq img{display:block;width:56px !important;height:84px !important;max-width:none !important;object-fit:cover;border-radius:6px;border:1px solid rgba(255,255,255,.12)}
+@keyframes xgMq{to{transform:translateX(-50%)}}
+@keyframes xgSpin{to{transform:rotate(360deg)}}
+"""
+    css += _fl_vis('xgT1', 0, 14.2, .4) + '@keyframes xgT2{0%,14.5%{opacity:0}15%,55.5%{opacity:1}55.9%,100%{opacity:0}}@keyframes xgT3{0%,55.5%{opacity:0}56%,100%{opacity:1}}\n'
+    css = css.replace('@keyframes xgT1{', '@keyframes xgT1{', 1)
+    css += ('@keyframes xgA{0%,14.5%{opacity:1}15.5%,100%{opacity:0}}@keyframes xgB{0%,14.8%{opacity:0}16.5%,38.5%{opacity:1}40%,100%{opacity:0}}'
+            '@keyframes xgC{0%,39.5%{opacity:0}41%,55%{opacity:1}56.5%,100%{opacity:0}}@keyframes xgD{0%,55.5%{opacity:0}57%,96%{opacity:1}98%,100%{opacity:0}}\n')
+    css += ('@keyframes xgR1{0%,6.5%{background:#2a2f38}7%,9%{background:#14532d}10%,100%{background:#2a2f38}}@keyframes xgR2{0%,9.5%{background:#2a2f38}10%,12%{background:#14532d}12.8%,100%{background:#2a2f38}}\n'
+            + _fl_vis('xgTc1', 7, 9.8, .5) + _fl_vis('xgTc2', 10, 12.6, .5) + _fl_press('xgGoP', 13.4) + _fl_vis('xgTc3', 47, 54, .6))
+    css += ('@keyframes xgLt1{0%,25%{opacity:1}26%,100%{opacity:0}}@keyframes xgLt2{0%,25.4%{opacity:0}26.4%,39%{opacity:1}40%,100%{opacity:0}}\n'
+            + _fl_press('xgB1', 24.2) + _fl_type('xgY1', 17.5, 22, 15) + _fl_type('xgY2', 27, 31, 10)
+            + '@keyframes xgSpV{0%,36.6%{opacity:0}37%,39.4%{opacity:1}39.8%,100%{opacity:0}}\n')
+    css += ('@keyframes xgWa{0%,46.6%{opacity:1}47%,100%{opacity:0}}@keyframes xgWb{0%,46.6%{opacity:0}47%,100%{opacity:1}}\n' + _fl_press('xgEdP', 45.6))
+    css += ('@keyframes xgInst{0%,61.6%{opacity:1;transform:none}62%{transform:scale(.94)}62.6%,100%{opacity:0}}@keyframes xgBarW{0%,62.2%{opacity:0}62.6%,78%{opacity:1}78.6%,100%{opacity:0}}@keyframes xgBar{0%,63%{width:0}78%,100%{width:100%}}\n'
+            '@keyframes xgPlay{0%,78.2%{opacity:0}78.8%,85.4%{opacity:1;transform:none}85.8%{opacity:1;transform:scale(.94)}86.4%,100%{opacity:0}}\n'
+            '@keyframes xgRun{0%,86%{opacity:0}86.6%,96%{opacity:1}98%,100%{opacity:0}}\n')
+    css += _fl_cur(P, [(0, '75%', '90%'), (5.5, 'calc(50% - 20px)', '104px'), (8, 'calc(50% - 20px)', '104px'), (9.2, 'calc(50% - 20px)', '132px'), (12, 'calc(50% - 20px)', '132px'),
+                       (13, 'calc(50% + 0px)', '172px'), (15, 'calc(50% + 0px)', '172px'),
+                       (17, 'calc(50% - 50px)', '107px'), (22.5, 'calc(50% - 50px)', '107px'), (23.4, 'calc(50% + 0px)', '145px'), (25.5, 'calc(50% + 0px)', '145px'),
+                       (26.5, 'calc(50% - 50px)', '107px'), (31.5, 'calc(50% - 50px)', '107px'), (34, 'calc(50% + 0px)', '145px'), (37, 'calc(50% + 0px)', '145px'),
+                       (39.5, 'calc(50% + 70px)', '200px'), (43, 'calc(50% + 0px)', '172px'), (47, 'calc(50% + 0px)', '172px'), (52, 'calc(50% + 70px)', '210px'),
+                       (58, '55px', '158px'), (61.5, '55px', '158px'), (68, '170px', '210px'), (79, '170px', '210px'), (84, '55px', '158px'), (86, '55px', '158px'),
+                       (92, '170px', '215px'), (100, '75%', '90%')])
+    return html, BASE + css
+
+
+# ---------------------------------------------------------------- Combo: pedido com 5 acessos → 5 logins → streamings ativos → assistir
+COMBO = [('Netflix', '#e50914', 'netflix'), ('HBO Max', '#7c3aed', 'hbo'), ('Disney+', '#1e50d0', None), ('Crunchyroll', '#f47521', 'crunchyroll'), ('Prime Video', '#00a8e1', 'primevideo')]
+SI = 'https://cdn.jsdelivr.net/npm/simple-icons@13.21.0/icons/'
+def _marca(slug, nome):
+    return f'<img src="{SI}{slug}.svg" alt="" style="filter:invert(1)">' if slug else f'<b>{esc(nome[0])}+</b>'
+
+def combo_streaming(imagem, passos):
+    P = 'cb'; N = len(COMBO); slot = 11.4; ini = 15.0
+    rows = ''.join(f'<span class="cb-row cb-rw{k}"><i style="background:{c}">{_marca(sl, n)}</i><b>{n}</b><em>dados no pedido</em></span>' for k, (n, c, sl) in enumerate(COMBO))
+    heads = ''.join(f'<span class="cb-hd cb-h{k}" style="--bc:{c}"><i style="background:{c}">{_marca(sl, n)}</i><b>{n}</b></span>' for k, (n, c, sl) in enumerate(COMBO))
+    btns = ''.join(f'<span class="cb-bt cb-bn{k}" style="background:{c}">Entrar</span>' for k, (n, c, sl) in enumerate(COMBO))
+    pills = ''.join(f'<span class="cb-pl cb-p{k}" style="--bc:{c}">{n}<u>✓</u></span>' for k, (n, c, sl) in enumerate(COMBO))
+    tiles = ''.join(f'<span class="cb-tl cb-tt{k}" style="background:{c}">{_marca(sl, n)}<small>ATIVO</small></span>' for k, (n, c, sl) in enumerate(COMBO))
+    jan = (
+        '<div class="cb-top cb-t1"><b>Rei dos Nitros</b><span>Seu pedido</span></div><div class="cb-top cb-t2"><b>Entrar</b><span>Streamings</span></div><div class="cb-top cb-t3"><b>Seus streamings</b><span>Combo · 30 dias</span></div>'
+        '<div class="cb-sc cb-a"><div class="cb-box"><small class="cb-ok">✓ Pagamento aprovado</small><b class="cb-pn">Combo de streamings · 30 dias</b>' + rows +
+        '<span class="cb-bt cb-go">Abrir os acessos</span></div></div>'
+        '<div class="cb-sc cb-b"><div class="cb-box cb-lbox">' + heads +
+        '<span class="cb-in cb-i1"><em class="cb-y1">email_do_pedido</em></span><span class="cb-in cb-i2"><em class="cb-y2">••••••••••</em></span>' + btns + '</div>'
+        f'<div class="cb-pills">{pills}</div></div>'
+        '<div class="cb-sc cb-c"><div class="cb-tiles">' + tiles + '</div>'
+        f'<div class="cb-hero" style="background-image:linear-gradient(90deg,rgba(0,0,0,.82),rgba(0,0,0,.1) 70%),url({imagem})"><small>NO COMBO</small><b>A Casa do Dragão</b><span class="cb-bt cb-play">▶ Assistir</span><span class="cb-pb"><i></i></span></div></div>'
+        '<span class="cb-cur"></span>')
+    html = (f'<div class="ed-card vt vt--cb" style="--vc:#ec4899"><span class="vt-k">Passo a passo</span><h2 class="vt-t">Como começar a assistir</h2>'
+            f'<div class="vt-win" role="img" aria-label="Como usar o combo de streamings">{jan}</div><div class="cb-steps">{_fl_steps(P, passos)}</div></div>')
+    fim = ini + slot * N  # fim dos 5 logins
+    css = _fl_base(P, len(passos), [(0, 15), (15, fim), (fim, 98)], '#ec4899').replace('@V', '30')
+    css = css.replace('.vt--cb .cb-bt{', '.vt--cb .cb-bt{')
+    css += """
+.vt--cb .cb-t1{animation:cbT1 var(--vt) infinite}.vt--cb .cb-t2{animation:cbT2 var(--vt) infinite}.vt--cb .cb-t3{animation:cbT3 var(--vt) infinite}
+.vt--cb .cb-a{animation:cbA var(--vt) infinite}.vt--cb .cb-b{animation:cbB var(--vt) infinite}.vt--cb .cb-c{animation:cbC var(--vt) infinite}
+.vt--cb .cb-ok{color:#4ade80;font-size:9px;font-weight:800}.vt--cb .cb-pn{margin:3px 0 7px;color:#fff;font-size:12px;font-weight:900}
+.vt--cb .cb-box{width:230px;margin-left:-115px}
+.vt--cb .cb-row{display:flex !important;align-items:center;gap:7px;height:20px;margin-top:3px;opacity:0}
+.vt--cb .cb-row i{flex:none;width:18px;height:18px;border-radius:5px;display:grid;place-items:center}.vt--cb .cb-row i img{width:11px !important;height:11px !important;max-width:none !important}.vt--cb .cb-row i b{color:#fff;font-size:8px;font-weight:900}
+.vt--cb .cb-row b{color:#fff;font-size:10px;font-weight:800}.vt--cb .cb-row em{margin-left:auto;color:#8f98a0;font-size:8.5px}
+.vt--cb .cb-go{margin-top:9px;background:#ec4899;animation:cbGoP var(--vt) infinite}
+.vt--cb .cb-lbox{height:158px;padding-top:12px}
+.vt--cb .cb-hd{position:absolute;left:12px;top:10px;display:flex !important;align-items:center;gap:8px;opacity:0}
+.vt--cb .cb-hd i{width:28px;height:28px;border-radius:8px;display:grid;place-items:center}.vt--cb .cb-hd i img{width:16px !important;height:16px !important;max-width:none !important}.vt--cb .cb-hd i b{color:#fff;font-size:11px;font-weight:900}
+.vt--cb .cb-hd b{color:#fff;font-size:13px;font-weight:900}
+.vt--cb .cb-in{position:absolute;left:12px;right:12px;margin:0}.vt--cb .cb-i1{top:50px}.vt--cb .cb-i2{top:80px}
+.vt--cb .cb-y1{animation:cbY1 var(--vt) infinite steps(15)}.vt--cb .cb-y2{animation:cbY2 var(--vt) infinite steps(10)}
+.vt--cb .cb-bt.cb-bn0,.vt--cb .cb-bn1,.vt--cb .cb-bn2,.vt--cb .cb-bn3,.vt--cb .cb-bn4{position:absolute;left:12px;right:12px;top:112px;opacity:0}
+.vt--cb .cb-pills{position:absolute;left:8px;right:8px;bottom:8px;display:flex;gap:4px;justify-content:center;flex-wrap:wrap}
+.vt--cb .cb-pl{display:flex !important;align-items:center;gap:3px;padding:3px 7px;border-radius:999px;background:#23262d;color:#6b7280;font-size:8px;font-weight:800;border:1px solid #2f343d}
+.vt--cb .cb-pl u{display:block;opacity:0;width:0;color:#fff;font-size:8px}
+.vt--cb .cb-tiles{position:absolute;left:8px;right:8px;top:8px;display:flex;gap:6px}
+.vt--cb .cb-tl{position:relative;flex:1;height:50px;border-radius:9px;display:grid !important;place-items:center;padding-bottom:10px;opacity:0;transform:translateY(8px)}
+.vt--cb .cb-tl img{width:20px !important;height:20px !important;max-width:none !important}.vt--cb .cb-tl b{color:#fff;font-size:12px;font-weight:900}
+.vt--cb .cb-tl small{position:absolute;left:50%;bottom:4px;transform:translateX(-50%);padding:1px 5px;border-radius:999px;background:rgba(0,0,0,.35);color:#86efac;font-size:6.5px;font-weight:900;letter-spacing:.05em}
+.vt--cb .cb-hero{position:absolute;left:8px;right:8px;top:68px;height:150px;border-radius:9px;background:#2a2f38 center/cover no-repeat;overflow:hidden}
+.vt--cb .cb-hero small{position:absolute;left:12px;top:14px;color:#f9a8d4;font-size:8px;font-weight:900;letter-spacing:.1em}
+.vt--cb .cb-hero>b{position:absolute;left:12px;top:30px;color:#fff;font-size:18px;font-weight:900;text-shadow:0 2px 8px #000}
+.vt--cb .cb-play{position:absolute;left:12px;bottom:34px;width:96px;background:#ec4899;animation:cbPlay var(--vt) infinite}
+.vt--cb .cb-pb{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.2);opacity:0;animation:cbPbW var(--vt) infinite}.vt--cb .cb-pb i{height:100%;width:0;background:#ec4899;animation:cbPb var(--vt) infinite}
+"""
+    css += ('@keyframes cbT1{0%,14.4%{opacity:1}15%,100%{opacity:0}}' + f'@keyframes cbT2{{0%,14.6%{{opacity:0}}15.2%,{fim - .4}%{{opacity:1}}{fim + .2}%,100%{{opacity:0}}}}'
+            + f'@keyframes cbT3{{0%,{fim}%{{opacity:0}}{fim + .6}%,100%{{opacity:1}}}}\n')
+    css += ('@keyframes cbA{0%,14%{opacity:1}15%,100%{opacity:0}}' + f'@keyframes cbB{{0%,14.4%{{opacity:0}}16%,{fim - .8}%{{opacity:1}}{fim + .2}%,100%{{opacity:0}}}}'
+            + f'@keyframes cbC{{0%,{fim - .2}%{{opacity:0}}{fim + 1.4}%,97%{{opacity:1}}98.6%,100%{{opacity:0}}}}\n')
+    for k in range(N):  # linhas do pedido aparecendo
+        css += f'.vt--cb .cb-rw{k}{{animation:cbRw{k} var(--vt) infinite}}' + _fl_vis(f'cbRw{k}', 2.5 + k * 1.4, 13.6, .6)
+    css += _fl_press('cbGoP', 12.6)
+    # logins: cada marca ocupa um intervalo
+    for k in range(N):
+        a = ini + slot * k; b = a + slot
+        css += f'.vt--cb .cb-h{k}{{animation:cbH{k} var(--vt) infinite}}.vt--cb .cb-bn{k}{{animation:cbBn{k} var(--vt) infinite}}\n'
+        css += _fl_vis(f'cbH{k}', a, b - .6, .4)
+        css += (f'@keyframes cbBn{k}{{0%,{a}%{{opacity:0;transform:none;filter:none}}{a + .4}%,{a + slot * .78}%{{opacity:1;transform:none;filter:none}}{a + slot * .8}%{{opacity:1;transform:scale(.94);filter:brightness(.85)}}'
+                f'{a + slot * .86}%{{opacity:1;transform:none;filter:none}}{b - .6}%{{opacity:1}}{b - .2}%,100%{{opacity:0}}}}\n')
+        css += (f'.vt--cb .cb-p{k}{{animation:cbP{k} var(--vt) infinite}}.vt--cb .cb-p{k} u{{animation:cbPu{k} var(--vt) infinite}}\n'
+                f'@keyframes cbP{k}{{0%,{b - .6}%{{background:#23262d;color:#6b7280;border-color:#2f343d}}{b}%,100%{{background:var(--bc);color:#fff;border-color:var(--bc)}}}}\n'
+                f'@keyframes cbPu{k}{{0%,{b - .6}%{{opacity:0;width:0}}{b}%,100%{{opacity:1;width:8px}}}}\n')
+        css += f'.vt--cb .cb-tt{k}{{animation:cbTt{k} var(--vt) infinite}}' + f'@keyframes cbTt{k}{{0%,{fim + 1 + k * 1.2}%{{opacity:0;transform:translateY(8px)}}{fim + 2.4 + k * 1.2}%,97%{{opacity:1;transform:none}}98.6%,100%{{opacity:0}}}}\n'
+    # digitação repetida em cada intervalo
+    for nome, off, fim_t, n in (('cbY1', .05, .30, 15), ('cbY2', .34, .52, 10)):
+        fr = '0%{width:0}'
+        for k in range(N):
+            a = ini + slot * k
+            fr += f'{a + .2:.2f}%{{width:0}}{a + slot * off + .2:.2f}%{{width:0}}{a + slot * fim_t:.2f}%{{width:{n}ch}}{a + slot - .7:.2f}%{{width:{n}ch}}{a + slot - .6:.2f}%{{width:0}}'
+        css += f'@keyframes {nome}{{{fr}100%{{width:0}}}}\n'
+    pts = [(0, '75%', '90%'), (6, 'calc(50% + 40px)', '172px'), (11.8, 'calc(50% + 40px)', '172px'), (12.8, 'calc(50% + 0px)', '174px'), (14.6, 'calc(50% + 0px)', '174px')]
+    for k in range(N):
+        a = ini + slot * k
+        pts += [(a + slot * .08, 'calc(50% - 50px)', '95px'), (a + slot * .32, 'calc(50% - 50px)', '95px'), (a + slot * .40, 'calc(50% - 50px)', '125px'), (a + slot * .56, 'calc(50% - 50px)', '125px'),
+                (a + slot * .66, 'calc(50% + 0px)', '156px'), (a + slot * .90, 'calc(50% + 0px)', '156px')]
+    pts += [(fim + 2, 'calc(50% + 60px)', '90px'), (fim + 6, 'calc(50% + 60px)', '90px'), (fim + 8.5, '62px', '186px'), (fim + 10.6, '62px', '186px'), (97, 'calc(50% + 90px)', '215px'), (100, '75%', '90%')]
+    pts = [(round(t, 2), x, y) for t, x, y in pts]; pts.sort(key=lambda q: q[0])
+    css += _fl_cur(P, pts)
+    pt = fim + 10.2
+    css += (f'@keyframes cbPlay{{0%,{fim + 8}%{{opacity:1;transform:none}}{pt}%{{opacity:1;transform:scale(.94)}}{pt + .8}%,100%{{opacity:1;transform:none}}}}\n'
+            f'@keyframes cbPbW{{0%,{pt + .6}%{{opacity:0}}{pt + 1.2}%,96%{{opacity:1}}98%,100%{{opacity:0}}}}@keyframes cbPb{{0%,{pt + 1.2}%{{width:0}}96%,100%{{width:100%}}}}\n')
+    return html, BASE + css
