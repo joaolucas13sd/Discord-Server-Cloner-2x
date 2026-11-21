@@ -32,8 +32,11 @@ LOJA = '<p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>pág
 def montar(id, ac, ac2, img, intro, paras, spec_list, anim, titulo_specs='O que você recebe', alerta=''):
     css = ED_CSS.replace('--ed-ac:#e50914', f'--ed-ac:{ac}').replace('rgba(229,9,20', f'rgba({rgb(ac)}').replace('#2a1012', ac2).replace('#1d0b0d', ac2)
     d = dict(P='ed', COR=ac, COR2=ac, GERENCIAR=False, TITULO_CARD='Como funciona'); d.update(anim)
-    card, acss = g.bloco(**d)
-    card = card.replace('<!-- COMO UTILIZAR -->\n    ', '')
+    if id in VITRINE:
+        card, acss = VITRINE[id]()
+    else:
+        card, acss = g.bloco(**d)
+        card = card.replace('<!-- COMO UTILIZAR -->\n    ', '')
     al = f'<div class="ed-alert">{alerta}</div>\n' if alerta else ''
     html = f'''<div class="ed">
 <style>{css}{EXTRA.strip()}
@@ -62,6 +65,26 @@ def montar(id, ac, ac2, img, intro, paras, spec_list, anim, titulo_specs='O que 
     print(id, d['PEDIDO'], tam, 'bytes')
 
 IMG = lambda p: 'https://blast.erbystores.com/cdn/s/' + p
+
+# Produtos que não são acesso a app: animação de vitrine (sem login), focada em mostrar o resultado.
+spv = importlib.util.spec_from_file_location('vt', os.path.join(AQUI, '..', 'como-assistir', 'vitrine.py'))
+vt = importlib.util.module_from_spec(spv); spv.loader.exec_module(vt)
+P_SORTE = lambda acao: [('Compre pelo Pix', 'Aprovação na hora, a qualquer hora do dia.'), (acao, 'O resultado aparece na hora.'), ('Resgate com o suporte', 'Fale com a gente em até 5 dias para receber.')]
+ENG_P = lambda alvo: [('Informe o link', f'No pedido, coloque o link do seu {alvo}.'), ('Entrega gradual', 'Acompanhe tudo pela página da compra.'), ('Veja crescer', f'Mais alcance e prova social no seu {alvo}.')]
+VITRINE = {
+    'prod_17869388132751565144210621030489': lambda: vt.raspadinha(P_SORTE('Raspe a sua cartela')),
+    'prod_17869388375804631394758709421330': lambda: vt.roleta(P_SORTE('Gire a roleta')),
+    'prod_1794496121754734900288573': lambda: vt.otimizacao([('Compre pelo Pix', 'O arquivo chega na página do pedido.'), ('Execute o arquivo', 'Crie um ponto de restauração e rode a otimização.'), ('Reinicie e jogue', 'Menos travadas e mais FPS.')]),
+    'var_Bi4PcjavJAV': lambda: vt.engajamento('instagram', 'seguidores', '1.000 seguidores', 1050, ENG_P('perfil')),
+    'var_1O1NaFf01NF': lambda: vt.engajamento('instagram', 'curtidas', '1.000 curtidas', 42, ENG_P('publicação')),
+    'var_4onwVLK6XqM': lambda: vt.engajamento('tiktok', 'seguidores', '1.000 seguidores', 310, ENG_P('perfil')),
+    'var_56avo4KEeBD': lambda: vt.engajamento('tiktok', 'curtidas', '1.000 curtidas', 87, ENG_P('vídeo')),
+    'var_51AfVJ6LBlj': lambda: vt.engajamento('tiktok', 'visualizações', '1.000 visualizações', 240, ENG_P('vídeo')),
+    'var_7eb3gkpdVCv': lambda: vt.sensi('Android', [('Compre pelo Pix', 'Acesso imediato.'), ('Aplique a Sensi', 'Sensi, mira e HUD no seu Android.'), ('Jogue', 'Mira mais precisa e muito mais capas.')]),
+    'var_4JAac6ROH8L': lambda: vt.sensi('iPhone', [('Compre pelo Pix', 'Acesso imediato.'), ('Aplique a Sensi', 'Sensi, mira e HUD no seu iPhone.'), ('Jogue', 'Mira mais precisa e muito mais capas.')]),
+    'var_GW24WljUCsP': lambda: vt.sensi('Emulador', [('Compre pelo Pix', 'Acesso imediato.'), ('Aplique a Sensi', 'Sensi, mira e HUD no seu emulador.'), ('Jogue', 'Mira mais precisa e muito mais capas.')]),
+    'prod_179020626470089209745564978097': lambda: vt.loja([('Faça as aulas', 'Aulas particulares para montar a sua loja.'), ('Receba os fornecedores', 'A lista de fornecedores privados.'), ('Comece a vender', 'Coloque a loja no ar e acompanhe as vendas.')]),
+}
 
 # ---------- Otimização ----------
 montar('prod_1794496121754734900288573', '#38bdf8', '#06213a', IMG('ItH5XCM1V7u5IUsGvlIriB/attachments/1794495797201978imagem.png'),
