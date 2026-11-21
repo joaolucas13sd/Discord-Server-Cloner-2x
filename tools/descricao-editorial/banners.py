@@ -56,6 +56,7 @@ EXTRAS = {
     'xbox-game-pass-essential': dict(logo='xbox@11.14.0', cor='#107c10', cor2='#0b3d0b', t='Xbox Game Pass', s='Essential · 1 mês', c=['Mais de 50 jogos', 'Multiplayer online', 'Full Acesso']),
     'xbox-game-pass-premium': dict(logo='xbox@11.14.0', cor='#107c10', cor2='#0b3d0b', t='Xbox Game Pass', s='Premium · 1 mês', c=['Grandes franquias', 'Biblioteca completa', 'Full Acesso']),
     'xbox-game-pass-ultimate': dict(logo='xbox@11.14.0', cor='#107c10', cor2='#0b3d0b', t='Xbox Game Pass', s='Ultimate · 1 mês', c=['Grandes franquias', 'Biblioteca completa', 'Full Acesso']),
+    'fatal-fans-conta-nfa': dict(logo='emoji:No one under eighteen/3D/no_one_under_eighteen_3d.png', cor='#e11d48', cor2='#9f1239', t='Fatal Fans', s='Conta Premium · NFA', c=['Acesso premium', 'Somente +18', 'Entrega na hora']),
     'combo-assinaturas': dict(logo='multi', logos=['netflix', 'hbo', 'primevideo', 'crunchyroll', 't:Disney+'], cor='#ec4899', cor2='#8b5cf6', t='Combo Assinaturas', s='5 streamings · 30 dias', c=['Plano Premium', 'Uma compra só']),
 }
 
