@@ -1,0 +1,495 @@
+<div class="rk-wrapper">
+
+<style>
+.rk-wrapper{
+--rk-accent:#2ee86b;
+--rk-bg:#0b0f0c;
+--rk-card:#121814;
+--rk-item:#18211b;
+--rk-border:rgba(255,255,255,.08);
+--rk-text:#f5f5f6;
+--rk-muted:#b4b8bf;
+width:100%;
+max-width:500px;
+margin:0 auto;
+font-family:'Inter',system-ui,-apple-system,sans-serif;
+color:var(--rk-text);
+}
+.rk-wrapper *{box-sizing:border-box}
+.rk-container{
+background:var(--rk-bg);
+padding:14px 12px 10px;
+border-radius:16px;
+}
+.rk-card{
+background:var(--rk-card);
+border:1px solid var(--rk-border);
+border-radius:18px;
+padding:22px 18px;
+margin-bottom:14px;
+}
+.rk-h2{
+display:flex;
+align-items:center;
+gap:10px;
+font-size:19px;
+font-weight:800;
+line-height:1.3;
+margin:0 0 16px;
+}
+.rk-h2::before{
+content:"";
+width:4px;
+height:22px;
+border-radius:3px;
+background:var(--rk-accent);
+flex-shrink:0;
+}
+.rk-text{
+color:var(--rk-muted);
+font-size:13.5px;
+line-height:1.7;
+margin:0;
+}
+.rk-list{display:grid;gap:10px}
+.rk-item{
+display:flex;
+align-items:center;
+gap:14px;
+background:var(--rk-item);
+border:1px solid var(--rk-border);
+border-radius:12px;
+padding:13px 15px;
+}
+.rk-item-icon{
+width:50px;
+height:50px;
+flex-shrink:0;
+display:flex;
+align-items:center;
+justify-content:center;
+border-radius:14px;
+background:rgba(46,232,107,.10);
+border:1px solid rgba(46,232,107,.38);
+}
+.rk-item-icon svg{
+width:26px;
+height:26px;
+fill:none;
+stroke:#7ef0a6;
+stroke-width:1.8;
+stroke-linecap:round;
+stroke-linejoin:round;
+}
+.rk-item-label{
+display:block;
+color:var(--rk-accent);
+font-size:12px;
+font-weight:800;
+margin-bottom:3px;
+}
+.rk-item-text{
+color:#e4e4e7;
+font-size:14px;
+line-height:1.45;
+}
+.rk-mock{
+position:relative;
+height:230px;
+border-radius:12px;
+background:#0c120e;
+border:1px solid var(--rk-border);
+overflow:hidden;
+margin-bottom:16px;
+}
+.rk-mock-bar{
+display:flex;
+gap:16px;
+padding:11px 16px;
+font-size:11px;
+color:#9aa0a6;
+border-bottom:1px solid var(--rk-border);
+}
+.rk-mock-bar span:first-child{color:#7ef0a6;font-weight:900;letter-spacing:.5px}
+.rk-dialog,
+.rk-success{
+position:absolute;
+left:50%;
+top:52px;
+transform:translateX(-50%);
+width:78%;
+border-radius:10px;
+padding:14px;
+background:#25272b;
+border:1px solid rgba(255,255,255,.10);
+box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.rk-dialog{animation:rkDialog 10s infinite}
+.rk-success{animation:rkSuccess 10s infinite;opacity:0;top:62px}
+.rk-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.rk-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+.rk-field{
+background:#151517;
+border:1px solid rgba(46,232,107,.55);
+border-radius:6px;
+padding:7px 9px;
+margin-bottom:7px;
+font-family:ui-monospace,Menlo,Consolas,monospace;
+font-size:11px;
+color:#fff;
+height:30px;
+display:flex;
+align-items:center;
+}
+.rk-type{
+display:inline-block;
+overflow:hidden;
+white-space:nowrap;
+width:0;
+border-right:1px solid var(--rk-accent);
+}
+.rk-type-1{animation:rkType1 10s steps(18,end) infinite}
+.rk-type-2{animation:rkType2 10s steps(10,end) infinite}
+.rk-dlg-actions{
+display:flex;
+justify-content:flex-end;
+gap:8px;
+margin-top:10px;
+}
+.rk-btn-cancel,
+.rk-btn-go{
+font-size:10.5px;
+font-weight:700;
+padding:6px 12px;
+border-radius:6px;
+}
+.rk-btn-cancel{background:#34363c;color:#d4d4d8}
+.rk-btn-go{
+position:relative;
+background:#16a34a;
+color:#fff;
+min-width:74px;
+text-align:center;
+}
+.rk-btn-go span{display:block}
+.rk-btn-a{animation:rkBtnA 10s infinite}
+.rk-btn-b{
+position:absolute;
+inset:6px 0 0 0;
+opacity:0;
+animation:rkBtnB 10s infinite;
+}
+@keyframes rkDialog{
+0%,66%{opacity:1}
+70%,96%{opacity:0}
+100%{opacity:1}
+}
+@keyframes rkSuccess{
+0%,66%{opacity:0}
+71%,94%{opacity:1}
+98%,100%{opacity:0}
+}
+@keyframes rkType1{
+0%,6%{width:0}
+24%,92%{width:18ch}
+100%{width:0}
+}
+@keyframes rkType2{
+0%,26%{width:0}
+38%,92%{width:10ch}
+100%{width:0}
+}
+@keyframes rkBtnA{
+0%,42%{opacity:1}
+44%,96%{opacity:0}
+100%{opacity:1}
+}
+@keyframes rkBtnB{
+0%,42%{opacity:0}
+44%,66%{opacity:1}
+68%,100%{opacity:0}
+}
+.rk-steps{display:grid;gap:10px}
+.rk-step{
+background:var(--rk-item);
+border:1px solid var(--rk-border);
+border-radius:14px;
+padding:14px 16px;
+}
+.rk-step-label{
+display:flex;
+align-items:center;
+gap:8px;
+font-size:11.5px;
+font-weight:800;
+letter-spacing:.8px;
+text-transform:uppercase;
+color:var(--rk-muted);
+margin-bottom:8px;
+}
+.rk-step-num{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:21px;
+height:21px;
+border-radius:50%;
+background:var(--rk-accent);
+color:#fff;
+font-size:11px;
+font-weight:900;
+letter-spacing:0;
+}
+.rk-step-text{
+font-size:14px;
+line-height:1.6;
+color:var(--rk-text);
+margin:0;
+}
+.rk-step-text strong{color:#fff;font-weight:800}
+.rk-info-box{
+background:rgba(115,45,50,.28);
+border:1px solid rgba(239,68,68,.38);
+border-radius:12px;
+padding:16px;
+}
+.rk-info-title{
+color:#ef6b6b;
+font-size:13px;
+font-weight:800;
+margin:0 0 12px;
+}
+.rk-info{
+color:#c9c3c3;
+font-size:13px;
+line-height:1.65;
+margin:0 0 12px;
+}
+.rk-info:last-child{margin-bottom:0}
+.rk-highlight{color:#ef6b6b;font-weight:800}
+@media(max-width:380px){
+.rk-card{padding:18px 14px}
+.rk-dialog,.rk-success{width:88%}
+}
+@media(prefers-reduced-motion:reduce){
+.rk-dialog,.rk-success,.rk-type,.rk-btn-a,.rk-btn-b{animation:none}
+.rk-dialog{opacity:1}
+.rk-type-1{width:18ch}
+.rk-type-2{width:10ch}
+}
+.rk-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(46,232,107,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(22,163,74,.30),transparent 60%),#0b160f;border:1px solid rgba(46,232,107,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.rk-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--rk-accent);color:#04140a;font-size:11px;font-weight:900;letter-spacing:.8px}
+.rk-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.rk-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#7ef0a6,#2ee86b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.rk-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.rk-hero-s strong{color:#fff}
+.rk-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--rk-border)}
+.rk-price-k{display:block;color:var(--rk-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.rk-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.rk-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.rk-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.rk-price-mes{flex-basis:100%;color:#7ef0a6;font-size:13px;font-weight:800}
+.rk-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(46,232,107,.18)}}
+.rk-trust{display:grid;gap:10px}
+.rk-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.rk-trust strong{color:#fff}
+.rk-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.rk-info-title{display:flex;align-items:center;gap:8px}
+.rk-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(prefers-reduced-motion:reduce){.rk-pulse{animation:none}}
+.rk-mock:has(.rk-scr){height:270px !important}
+.rk-success.rk-scr{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:12px 14px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important}
+.rk-scr-t{display:block;margin-bottom:10px;font-size:14px;color:#fff}
+.rk-rk-ban{position:relative;height:122px;border-radius:10px;overflow:hidden;padding:12px;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.75)),linear-gradient(135deg,#1b2838 0%,#2a475e 50%,#1a9fff 100%)}
+.rk-rk-tag{display:inline-block;padding:3px 7px;border-radius:5px;background:rgba(0,0,0,.45);color:#fff;font-size:9px !important;font-weight:900;letter-spacing:.4px}
+.rk-rk-t{position:absolute;left:12px;bottom:12px;max-width:55%;font-size:15px !important;line-height:1.15;color:#fff}
+.rk-rk-play{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:7px;background:#2ee86b;color:#111;font-size:12px !important;font-weight:800;animation:nzRkP 10s infinite}
+.rk-rk-play svg{width:12px !important;height:12px !important;max-width:none !important;fill:currentColor}
+.rk-rk-play em{font-style:normal}
+.rk-rk-b{display:none}
+.rk-rk-a{animation:nzRkA 10s steps(1,end) infinite}
+.rk-rk-play::after{content:"Abrindo...";font-size:0;animation:nzRkB 10s steps(1,end) infinite}
+@keyframes nzRkP{0%,80%{background:#2ee86b;color:#111}83%,96%{background:#22c55e;color:#04140a}}
+@keyframes nzRkA{0%,81%{font-size:12px}82%,97%{font-size:0}}
+@keyframes nzRkB{0%,81%{font-size:0}82%,97%{font-size:12px}}
+.rk-rk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.rk-rk-chips span{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11px !important;font-weight:800}
+.rk-rk-chips svg{width:12px !important;height:12px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.rk-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+.rk-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.rk-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+</style>
+
+
+<div class="rk-container">
+    <div class="rk-hero"><span class="rk-tag">STEAM · FULL ACESSO</span><h2 class="rk-hero-t">Conta Steam com 53 jogos por <span>R$ 89,90</span></h2><p class="rk-hero-s">Conta <strong>full acesso</strong> nível 11 com <strong>God of War</strong>, <strong>Apex Legends</strong> e mais 51 jogos na biblioteca.</p><div class="rk-price rk-pulse"><div><span class="rk-price-k">Preço normal</span><span class="rk-price-old">R$ 129,90</span></div><div><span class="rk-price-k">Aqui</span><span class="rk-price-new">R$ 89,90</span></div><span class="rk-price-off">-31%</span><span class="rk-price-mes">Você economiza R$ 40,00.</span></div></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="rk-card">
+
+        <h2 class="rk-h2">O que você recebe</h2>
+
+        <div class="rk-list">
+
+            <div class="rk-item">
+                <span class="rk-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" x2="10" y1="12" y2="12"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="15" x2="15.01" y1="13" y2="13"></line><line x1="18" x2="18.01" y1="11" y2="11"></line><rect width="20" height="12" x="2" y="6" rx="2"></rect></svg></span>
+                <div>
+                    <span class="rk-item-label">Biblioteca</span>
+                    <span class="rk-item-text">53 jogos, incluindo God of War e Apex Legends.</span>
+                </div>
+            </div>
+
+            <div class="rk-item">
+                <span class="rk-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <div>
+                    <span class="rk-item-label">Nível da conta</span>
+                    <span class="rk-item-text">Conta Steam nível 11.</span>
+                </div>
+            </div>
+
+            <div class="rk-item">
+                <span class="rk-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.78 4.78 4 4 0 0 1-6.74 0 4 4 0 0 1-4.78-4.78 4 4 0 0 1 0-6.74Z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <div>
+                    <span class="rk-item-label">Full acesso</span>
+                    <span class="rk-item-text">Você recebe login, senha e e-mail da conta e pode alterar os dados disponíveis, assumindo o controle após a entrega.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap');
+.rv-k{display:block;color:var(--rk-accent);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.rv-h{margin:4px 0 14px;color:#fff;font-size:22px;font-weight:900;line-height:1.15}
+.rv-grid{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -18px 14px 0;padding:0 18px 4px 0;scrollbar-width:none}
+.rv-grid::-webkit-scrollbar{display:none}
+.rv-t{position:relative;flex:0 0 42%;max-width:170px;aspect-ratio:4/5.3;padding:0;border:0;border-radius:12px;overflow:hidden;cursor:pointer;scroll-snap-align:start;
+background:radial-gradient(120% 90% at 50% 25%,var(--c1),var(--c2));box-shadow:inset 0 -4px 0 var(--c2),inset 0 0 0 1px rgba(255,255,255,.10)}
+.rv-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.rv-t::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.78))}
+.rv-t b{position:absolute;z-index:1;left:6px;right:6px;bottom:10px;color:#fff;font-family:Oswald,'Arial Narrow',sans-serif;font-size:17px;line-height:1.05;font-weight:700;text-transform:uppercase;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.rv-st{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
+.rv-st span{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 8px;border-radius:12px;background:var(--rk-item);border:1px solid var(--rk-border);color:var(--rk-muted);font-size:14px}
+.rv-st svg{width:19px;height:19px;flex:0 0 auto;fill:none;stroke:var(--rk-accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rv-st b{color:#fff;font-weight:800}
+.rv-open{display:none}
+.rv[data-rv-tipo=steam] .rv-t{flex-basis:38%;aspect-ratio:2/3;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.rv[data-rv-tipo=steam] .rv-t::after,.rv[data-rv-tipo=steam] .rv-t b{display:none}
+</style><style>.rc0{--c1:#2a475e;--c2:#171d25}</style>
+    <!-- VESTIÁRIO -->
+    <div class="rk-card rv" data-rv data-rv-tipo="steam">
+        <span class="rv-k">Biblioteca real desta conta</span>
+        <h2 class="rv-h">Biblioteca da conta</h2>
+        <div class="rv-grid" data-rv-grid><button type="button" class="rv-t rc0" data-r="steam" data-rt="Ação" data-n="God of War" data-d="Com a vingança contra os deuses do Olimpo em um passado distante, Kratos agora vive como um mortal no reino dos deuses e monstros nórdicos. É nesse mundo duro e implacável que ele deve lutar para sobreviver... e ensinar seu filho a fazer o mesmo." data-s="Santa Monica Studio" data-i="14/jan./2022" data-f="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1593500/library_600x900_2x.jpg"><img loading="lazy" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1593500/library_600x900.jpg" alt=""><b>God of War</b></button><button type="button" class="rv-t rc0" data-r="steam" data-rt="Ação" data-n="Apex Legends" data-d="Apex Legends é o premiado jogo de tiro em primeira pessoa de heróis e heroínas da Respawn Entertainment. Domine um elenco cada vez mais amplo de personagens lendários com habilidades poderosas, experimente partidas estratégicas e a jogabilidade inovadora na próxima evolução do gênero battle royale." data-s="Respawn" data-i="4/nov./2020" data-f="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1172470/library_600x900_2x.jpg"><img loading="lazy" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1172470/library_600x900.jpg" alt=""><b>Apex Legends</b></button><button type="button" class="rv-t rc0" data-r="steam" data-rt="Ação" data-n="Red Dead Redemption 2" data-d="Arthur Morgan e a gangue Van der Linde são forçados a fugir. Com agentes federais e caçadores de recompensas no seu encalço, a gangue precisa roubar, assaltar e lutar para sobreviver no impiedoso coração dos Estados Unidos." data-s="Rockstar Games" data-i="5/dez./2019" data-f="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900_2x.jpg"><img loading="lazy" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/library_600x900.jpg" alt=""><b>Red Dead Redemption 2</b></button><button type="button" class="rv-t rc0" data-r="steam" data-rt="RPG" data-n="Cyberpunk 2077" data-d="Cyberpunk 2077 é um RPG de ação e aventura em mundo aberto que se passa em Night City, uma megalópole perigosa onde todos são obcecados por poder, glamour e alterações corporais." data-s="CD PROJEKT RED" data-i="9/dez./2020" data-f="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/library_600x900_2x.jpg"><img loading="lazy" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/library_600x900.jpg" alt=""><b>Cyberpunk 2077</b></button><button type="button" class="rv-t rc0" data-r="steam" data-rt="Ação" data-n="ELDEN RING" data-d="O NOVO RPG DE AÇÃO E FANTASIA. Levante-se, Maculado, e seja guiado pela graça para portar o poder do Anel Prístino e se tornar um Lorde Prístino nas Terras Intermédias." data-s="FromSoftware, Inc." data-i="24/fev./2022" data-f="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/library_600x900_2x.jpg"><img loading="lazy" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/library_600x900.jpg" alt=""><b>ELDEN RING</b></button><button type="button" class="rv-t rc0" data-r="steam" data-rt="Ação" data-n="Forza Horizon 5" data-d="Explore as paisagens vibrantes de mundo aberto do México com diversão e velocidade sem limites com os melhores carros do mundo." data-s="Playground Games" data-i="8/nov./2021" data-f="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/library_600x900_2x.jpg"><img loading="lazy" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/library_600x900.jpg" alt=""><b>Forza Horizon 5</b></button><button type="button" class="rv-t rc0" data-r="steam" data-rt="Ação" data-n="Hogwarts Legacy" data-d="Hogwarts Legacy é um RPG de ação imersivo de mundo aberto. Agora você pode assumir o controle da ação e estar no centro de sua própria aventura no mundo bruxo." data-s="Avalanche Software" data-i="10/fev./2023" data-f="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/990080/library_600x900_2x.jpg"><img loading="lazy" src="https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/990080/library_600x900.jpg" alt=""><b>Hogwarts Legacy</b></button></div>
+        <div class="rv-st"><span data-aba="jogos"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg><b>53</b> Jogos</span><span><svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7L12 17.6 5.8 21l1.4-7L2 9.3l7-.8z"/></svg><b>11</b> Nível</span></div>
+        <button type="button" class="rv-open" data-rv-open>Abrir biblioteca</button>
+    </div>
+
+    <!-- COMO UTILIZAR -->
+    <div class="rk-card">
+
+        <h2 class="rk-h2">Como utilizar</h2>
+
+        <div class="rk-mock">
+
+            <div class="rk-mock-bar">
+                <span>STEAM</span>
+                <span>Início</span>
+                <span>Jogos</span>
+                <span>Suporte</span>
+            </div>
+
+            <div class="rk-dialog">
+                <div class="rk-dlg-title">Entrar</div>
+                <div class="rk-dlg-desc">Use o e-mail e a senha que chegaram no seu pedido.</div>
+
+                <div class="rk-field"><span class="rk-type rk-type-1">seuemail@gmail.com</span></div>
+                <div class="rk-field"><span class="rk-type rk-type-2">••••••••••</span></div>
+
+                <div class="rk-dlg-actions">
+                    <span class="rk-btn-cancel">Cancelar</span>
+                    <span class="rk-btn-go">
+                        <span class="rk-btn-a">Entrar</span>
+                        <span class="rk-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="rk-cur rk-cur2" aria-hidden="true" style="--x1:36.4%;--y1:141px;--x2:36.4%;--y2:178px;--x3:74.5%;--y3:216px;--x4:80.9%;--y4:180px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="rk-success rk-scr">
+                <b class="rk-scr-t">Início</b>
+                <div class="rk-rk-ban"><span class="rk-rk-tag">NA SUA BIBLIOTECA</span><b class="rk-rk-t">God of War</b><span class="rk-rk-play" data-alvo><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><em class="rk-rk-a">Jogar</em><em class="rk-rk-b">Abrindo...</em></span></div>
+                <div class="rk-rk-chips"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>53 jogos</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Full acesso</span></div>
+            </div>
+        </div>
+
+        <div class="rk-steps">
+
+            <div class="rk-step">
+                <div class="rk-step-label"><span class="rk-step-num">1</span> Passo 1</div>
+                <p class="rk-step-text">
+                    Escolha sua conta Steam e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="rk-step">
+                <div class="rk-step-label"><span class="rk-step-num">2</span> Passo 2</div>
+                <p class="rk-step-text">
+                    Receba os <strong>dados da conta Steam</strong> e faça o login.
+                </p>
+            </div>
+
+            <div class="rk-step">
+                <div class="rk-step-label"><span class="rk-step-num">3</span> Passo 3</div>
+                <p class="rk-step-text">
+                    Pronto! Abra a <strong>biblioteca</strong> e jogue o que quiser.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="rk-card"><h2 class="rk-h2">Compre com tranquilidade</h2><div class="rk-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Dados da conta</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+<!-- TERMOS E GARANTIA -->
+    <div class="rk-card">
+
+        <h2 class="rk-h2">Informações importantes</h2>
+
+        <p class="rk-text" style="margin-bottom:14px">Antes de comprar, confira as informações sobre a conta e o acesso fornecido.</p>
+
+        <div class="rk-info-box">
+
+            <h3 class="rk-info-title">ATENÇÃO — LEIA ANTES DE COMPRAR</h3>
+
+            <p class="rk-info">
+                <span class="rk-highlight">Conta Steam:</span><br>
+                A conta é entregue com os jogos e o nível informados no anúncio no momento da compra.
+            </p>
+
+            <p class="rk-info">
+                <span class="rk-highlight">Full acesso:</span><br>
+                Depois de receber, troque o e-mail e a senha para deixar a conta só com você.
+            </p>
+
+            <p class="rk-info">
+                <span class="rk-highlight">Suporte:</span><br>
+                Qualquer dúvida ou problema no login, basta abrir um ticket e consultar a staff.
+            </p>
+
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>A conta fica só comigo?</summary><p>Sim. A conta é <strong>full acesso</strong>: depois de receber, você pode assumir o controle dela.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="rk-hero rn-cta2"><span class="rk-tag">PRONTO PARA GARANTIR?</span><h2 class="rk-hero-t">Conta Steam com 53 jogos</h2><div class="rk-price rk-pulse"><div><span class="rk-price-k">Preço normal</span><span class="rk-price-old">R$ 129,90</span></div><div><span class="rk-price-k">Aqui</span><span class="rk-price-new">R$ 89,90</span></div><span class="rk-price-off">-31%</span><span class="rk-price-mes">Você economiza R$ 40,00.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>
