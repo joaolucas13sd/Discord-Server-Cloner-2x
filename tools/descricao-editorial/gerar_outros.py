@@ -193,6 +193,12 @@ KEYS = {'var_L0tFX9E7NG0': ('Steam Key +18', 'um jogo com temática +18 (visual 
         'var_6lH8hUTSumn': ('Steam Key Aleatória', 'um jogo aleatório', False), 'var_1SnWdtMBB8c': ('Steam Key Jade', 'um jogo aleatório da faixa Jade', False),
         'var_3ENZ5TGHwho': ('Steam Key Rubi', 'um jogo aleatório da faixa Rubi', False), 'var_0Z198NBoocZ': ('Steam Key Diamante', 'um jogo aleatório da faixa Diamante', False),
         'var_4OdfFNw0S9z': ('Steam Key Black', 'um jogo aleatório da faixa Black', False), 'var_582npYEAr2b': ('Steam Key Triple AAA', 'um jogo AAA aleatório', False)}
+_TC = {'Diamante': '#67e8f9', 'Jade': '#34d399', 'Rubi': '#f43f5e', 'Black': '#a1a1aa', 'Triple AAA': '#fbbf24', '+18': '#fb7185', 'Aleatória': '#a78bfa'}
+SK_PASSOS = [('Copie a sua key', 'Ela aparece no seu pedido, pronta para copiar.'), ('Entre na Steam', 'Abra a Steam na sua conta e, se pedir, digite o código do Steam Guard.'),
+             ('Ative o produto', 'Em Jogos > Ativar um produto na Steam, cole a key, aceite os termos e clique em Continuar.'),
+             ('Instale o jogo', 'O jogo entra na sua biblioteca: clique em Instalar e espere o download terminar.'), ('Jogue', 'Clique em Jogar e descubra o seu jogo.')]
+for _id, (_n, _o, _a) in KEYS.items():
+    VITRINE[_id] = (lambda n=_n: vt.steam_key(n, _TC.get(n.replace('Steam Key', '').strip(), '#a78bfa'), SK_PASSOS))
 for id, (nome, oque, adulto) in KEYS.items():
     montar(id, '#1a9fff', '#0d2236', IMG(SK), f'Receba uma <strong>key para Steam</strong> com <strong>{oque}</strong>. Você só descobre o jogo quando ativar a sua key.',
            [LOJA + '\n<p>A key é ativada na <strong>sua própria conta Steam</strong>: o jogo fica na sua biblioteca para sempre. O título é escolhido conforme o estoque disponível.</p>',

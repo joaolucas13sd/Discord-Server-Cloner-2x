@@ -746,3 +746,142 @@ def steam_offline(nome, hero, passos):
         css += (f'@keyframes soS{k}{{0%,{a}%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}{a + .5}%,{b}%{{border-color:rgba(33,224,101,.5);background:rgba(33,224,101,.07)}}{b + .5}%,100%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}}}\n'
                 f'@keyframes soI{k}{{0%,{a}%{{background:#2a2f38;color:#c7d5e0}}{a + .5}%,100%{{background:#21e065;color:#06150b}}}}\n')
     return html, BASE + css
+
+
+# ---------------------------------------------------------------- Steam Key: copiar a key → login (+Steam Guard) → Ativar um produto → biblioteca → instalar → jogar (sem modo offline)
+def steam_key(nome, cor, passos):
+    n = esc(nome)
+    st = ''.join(f'<div class="sk-st sk-s{i}"><i>{i + 1}</i><div><b>{esc(t)}</b><span>{esc(d)}</span></div></div>' for i, (t, d) in enumerate(passos))
+    code = ''.join(f'<u><b class="sk-c{k}">{c}</b></u>' for k, c in enumerate('NX7K2'))
+    jan = (
+        '<div class="sk-top sk-top1"><b>Rei dos Nitros</b><span>Seu pedido</span></div>'
+        '<div class="sk-top sk-top2"><b>Steam</b><span>Exibir</span><span>Amigos</span><span>Jogos</span><span>Ajuda</span></div>'
+        # A. pedido
+        '<div class="sk-sc sk-ped"><div class="sk-box sk-pbox"><small class="sk-ok">✓ Pagamento aprovado</small><b class="sk-pn">' + n + '</b>'
+        '<span class="sk-key"><em>7KQ2X-9VB4M-R3TZ8</em></span>'
+        '<div class="sk-row"><span class="sk-bt sk-copy">Copiar key</span><span class="sk-bt sk-go">Ativar na Steam</span></div></div>'
+        '<span class="sk-toast">✓ Key copiada</span></div>'
+        # B. login
+        '<div class="sk-sc sk-login"><div class="sk-box sk-lbox"><span class="sk-lt"><i class="sk-logo"></i>Iniciar sessão</span>'
+        '<small>Nome da conta</small><span class="sk-in"><em class="sk-ty1">sua_conta_steam</em></span>'
+        '<small>Senha</small><span class="sk-in"><em class="sk-ty2">••••••••••</em></span><span class="sk-bt sk-b1">Iniciar sessão</span></div></div>'
+        # C. Steam Guard
+        '<div class="sk-sc sk-guard"><i class="sk-shield"></i><b>Steam Guard</b><small>Digite o código enviado para o seu e-mail ou app</small>'
+        f'<div class="sk-code">{code}</div></div>'
+        # D. ativar produto
+        '<div class="sk-sc sk-act"><div class="sk-box sk-abox"><span class="sk-lt"><i class="sk-logo"></i>Ativar um produto na Steam</span>'
+        '<small>Código do produto</small><span class="sk-in sk-in2"><em class="sk-ty3">7KQ2X-9VB4M-R3TZ8</em></span>'
+        '<span class="sk-chk"><i class="sk-cb"></i>Concordo com os termos de assinatura</span><span class="sk-bt sk-b3">Continuar</span></div>'
+        '<div class="sk-done"><i class="sk-gem"></i><b>Ativação concluída!</b><small>O jogo foi adicionado à sua conta</small></div></div>'
+        # E. biblioteca
+        '<div class="sk-sc sk-lib"><div class="sk-tabs"><span>LOJA</span><span class="on">BIBLIOTECA</span><span>COMUNIDADE</span><em>● Online</em></div>'
+        '<div class="sk-side"><small>JOGOS</small><span class="sk-new">Seu jogo<u>NOVO</u></span></div>'
+        '<div class="sk-hero"><i class="sk-q">?</i><b>Seu jogo</b></div>'
+        '<div class="sk-actb"><span class="sk-bt sk-inst">INSTALAR</span><span class="sk-bar"><i></i></span><small class="sk-dl">Baixando...</small>'
+        '<span class="sk-bt sk-play">JOGAR</span><small class="sk-ready">Pronto para jogar</small><span class="sk-bt sk-run">EXECUTANDO</span></div></div>'
+        '<span class="sk-cur"></span>')
+    html = (f'<div class="ed-card vt vt--sk" style="--vc:#21e065"><span class="vt-k">Passo a passo</span><h2 class="vt-t">Como ativar a sua key</h2>'
+            f'<div class="vt-win" role="img" aria-label="Como ativar a key {n} na Steam">{jan}</div><div class="sk-steps">{st}</div></div>')
+    css = """
+.vt--sk{--vt:26s}
+.vt--sk .vt-win{height:250px;background:#16191f}
+.vt--sk .vt-win *{box-sizing:border-box}
+.vt--sk .vt-win span,.vt--sk .vt-win small,.vt--sk .vt-win b,.vt--sk .vt-win em,.vt--sk .vt-win i,.vt--sk .vt-win u{display:block;font-style:normal;text-decoration:none}
+.vt--sk .sk-top{position:absolute;left:0;right:0;top:0;height:22px;display:flex;gap:12px;align-items:center;padding:0 10px;background:#0f1115;border-bottom:1px solid #23262d;z-index:4}
+.vt--sk .sk-top b,.vt--sk .sk-top span{color:#8f98a0;font-size:9px;font-weight:600}.vt--sk .sk-top b{color:#c7d5e0}
+.vt--sk .sk-top1{animation:skT1 var(--vt) infinite}.vt--sk .sk-top2{animation:skT2 var(--vt) infinite}
+@keyframes skT1{0%,15%{opacity:1}15.5%,100%{opacity:0}}@keyframes skT2{0%,15%{opacity:0}15.5%,100%{opacity:1}}
+.vt--sk .sk-sc{position:absolute;inset:22px 0 0;opacity:0}
+.vt--sk .sk-ped{animation:skA var(--vt) infinite}.vt--sk .sk-login{animation:skB var(--vt) infinite}.vt--sk .sk-guard{animation:skC var(--vt) infinite}.vt--sk .sk-act{animation:skD var(--vt) infinite}.vt--sk .sk-lib{animation:skE var(--vt) infinite}
+@keyframes skA{0%,15%{opacity:1}16%,100%{opacity:0}}
+@keyframes skB{0%,15.5%{opacity:0}17%,29%{opacity:1}30.5%,100%{opacity:0}}
+@keyframes skC{0%,30%{opacity:0}31.5%,37%{opacity:1}38.5%,100%{opacity:0}}
+@keyframes skD{0%,38%{opacity:0}39.5%,57%{opacity:1}58.5%,100%{opacity:0}}
+@keyframes skE{0%,58%{opacity:0}59.5%,96%{opacity:1}98%,100%{opacity:0}}
+.vt--sk .sk-box{position:absolute;left:50%;top:22px;margin-left:-105px;width:210px;padding:10px 12px;border-radius:8px;background:#1d2128;border:1px solid #2a2f38}
+.vt--sk .sk-pbox{border-color:__COR__99;box-shadow:0 0 20px __COR__33}
+.vt--sk .sk-ok{color:#4ade80;font-size:9px;font-weight:800}
+.vt--sk .sk-pn{margin-top:3px;color:__COR__;font-size:13px;font-weight:900;filter:brightness(1.2)}
+.vt--sk .sk-key{margin-top:8px;height:26px;padding:0 8px;border-radius:4px;background:#0f1115;border:1px solid #2a2f38;display:flex !important;align-items:center;overflow:hidden}
+.vt--sk .sk-key em,.vt--sk .sk-in em{font-family:ui-monospace,Menlo,monospace;color:#e5e7eb;font-size:10px;white-space:nowrap;overflow:hidden;width:0;letter-spacing:.04em}
+.vt--sk .sk-key em{animation:skKey var(--vt) infinite steps(17)}
+@keyframes skKey{0%,2%{width:0}7%,100%{width:17ch}}
+.vt--sk .sk-row{display:flex;gap:6px;margin-top:8px}
+.vt--sk .sk-bt{border-radius:3px;background:#21e065;color:#06150b;font-size:9px;font-weight:900;text-align:center;line-height:22px;height:22px}
+.vt--sk .sk-row .sk-bt{flex:1;font-size:8.5px}
+.vt--sk .sk-copy{background:#2a2f38;color:#e5e7eb;animation:skCopy var(--vt) infinite}
+@keyframes skCopy{0%,10%{transform:none;background:#2a2f38}10.5%{transform:scale(.94)}11.5%,100%{transform:none;background:#2a2f38}}
+.vt--sk .sk-go{animation:skGo var(--vt) infinite}
+@keyframes skGo{0%,14%{transform:none}14.4%{transform:scale(.94);filter:brightness(.85)}15.2%,100%{transform:none}}
+.vt--sk .sk-toast{position:absolute;left:50%;top:6px;transform:translateX(-50%);padding:4px 10px;border-radius:999px;background:rgba(34,197,94,.18);border:1px solid #22c55e;color:#4ade80;font-size:9px;font-weight:800;opacity:0;animation:skToast var(--vt) infinite;white-space:nowrap}
+@keyframes skToast{0%,10.4%{opacity:0;transform:translate(-50%,-6px)}11.5%,14.6%{opacity:1;transform:translate(-50%,0)}15.5%,100%{opacity:0}}
+.vt--sk .sk-lt{display:flex !important;align-items:center;gap:6px;color:#fff;font-size:11.5px;font-weight:800;margin-bottom:6px;white-space:nowrap}
+.vt--sk .sk-logo{flex:none;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 65% 35%,#fff 0 3px,#1b2838 3.5px 5px,#fff 5.5px)}
+.vt--sk .sk-box small{color:#8f98a0;font-size:8px;font-weight:700;margin-top:5px}
+.vt--sk .sk-in{height:20px;margin-top:2px;padding:0 6px;border-radius:3px;background:#2a2f38;display:flex !important;align-items:center;overflow:hidden}
+.vt--sk .sk-ty1{animation:skTy1 var(--vt) infinite steps(15)}.vt--sk .sk-ty2{animation:skTy2 var(--vt) infinite steps(10)}.vt--sk .sk-ty3{animation:skTy3 var(--vt) infinite steps(17)}
+@keyframes skTy1{0%,17.5%{width:0}21%,100%{width:15ch}}@keyframes skTy2{0%,22%{width:0}24.5%,100%{width:10ch}}@keyframes skTy3{0%,40%{width:0}46%,100%{width:17ch}}
+.vt--sk .sk-b1{margin-top:9px;animation:skP1 var(--vt) infinite}.vt--sk .sk-b3{margin-top:9px;animation:skP3 var(--vt) infinite}
+@keyframes skP1{0%,25.6%{transform:none}26%{transform:scale(.95);filter:brightness(.85)}26.8%,100%{transform:none}}
+@keyframes skP3{0%,50.6%{transform:none}51%{transform:scale(.95);filter:brightness(.85)}51.8%,100%{transform:none}}
+.vt--sk .sk-guard{text-align:center;padding-top:30px}
+.vt--sk .sk-shield{width:24px;height:28px;margin:0 auto 6px;background:#a78bfa;clip-path:polygon(50% 0,100% 18%,100% 55%,50% 100%,0 55%,0 18%)}
+.vt--sk .sk-guard b{color:#fff;font-size:12px;font-weight:800}.vt--sk .sk-guard small{margin-top:3px;color:#8f98a0;font-size:8.5px}
+.vt--sk .sk-code{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.vt--sk .sk-code u{width:26px;height:30px;border-radius:4px;background:#2a2f38;border:1px solid #3a404b;display:grid !important;place-items:center}
+.vt--sk .sk-code b{color:#fff;font-size:13px;font-weight:900;opacity:0}
+.vt--sk .sk-c0{animation:skK0 var(--vt) infinite}.vt--sk .sk-c1{animation:skK1 var(--vt) infinite}.vt--sk .sk-c2{animation:skK2 var(--vt) infinite}.vt--sk .sk-c3{animation:skK3 var(--vt) infinite}.vt--sk .sk-c4{animation:skK4 var(--vt) infinite}
+@keyframes skK0{0%,32%{opacity:0}32.5%,100%{opacity:1}}@keyframes skK1{0%,33.2%{opacity:0}33.7%,100%{opacity:1}}@keyframes skK2{0%,34.4%{opacity:0}34.9%,100%{opacity:1}}@keyframes skK3{0%,35.6%{opacity:0}36.1%,100%{opacity:1}}@keyframes skK4{0%,36.8%{opacity:0}37.3%,100%{opacity:1}}
+.vt--sk .sk-chk{display:flex !important;align-items:center;gap:6px;margin-top:8px;color:#c7d5e0;font-size:8px}
+.vt--sk .sk-cb{flex:none;width:11px;height:11px;border-radius:2px;border:1px solid #6b7280;position:relative;animation:skCb var(--vt) infinite}
+.vt--sk .sk-cb::after{content:"";position:absolute;left:3px;top:0;width:3px;height:7px;border:solid #06150b;border-width:0 2px 2px 0;transform:rotate(45deg);opacity:0;animation:skCbT var(--vt) infinite}
+@keyframes skCb{0%,48%{background:none;border-color:#6b7280}48.4%,100%{background:#21e065;border-color:#21e065}}@keyframes skCbT{0%,48%{opacity:0}48.4%,100%{opacity:1}}
+.vt--sk .sk-abox{animation:skAb var(--vt) infinite}
+@keyframes skAb{0%,52%{opacity:1}53%,100%{opacity:0}}
+.vt--sk .sk-done{position:absolute;left:50%;top:48px;width:210px;margin-left:-105px;padding:16px 12px;border-radius:8px;background:#1d2128;border:1px solid #21e065;text-align:center;opacity:0;animation:skDone var(--vt) infinite}
+@keyframes skDone{0%,52.6%{opacity:0;transform:scale(.9)}54%,57.5%{opacity:1;transform:none}58.5%,100%{opacity:0}}
+.vt--sk .sk-gem{width:34px;height:34px;margin:0 auto 8px;border-radius:9px;background:linear-gradient(135deg,__COR__,#7c3aed);box-shadow:0 0 18px __COR__99;animation:skGem 1.6s ease-in-out infinite}
+@keyframes skGem{50%{transform:rotate(-8deg) scale(1.08)}}
+.vt--sk .sk-done b{color:#fff;font-size:13px;font-weight:900}.vt--sk .sk-done small{margin-top:3px;color:#8f98a0;font-size:9px}
+.vt--sk .sk-tabs{position:absolute;left:0;right:0;top:0;height:22px;display:flex;gap:10px;align-items:center;padding:0 10px}
+.vt--sk .sk-tabs span{color:#8f98a0;font-size:8px;font-weight:800}.vt--sk .sk-tabs span.on{color:#fff;border-bottom:2px solid #21e065}
+.vt--sk .sk-tabs em{position:absolute;right:10px;color:#21e065;font-size:8px;font-weight:800}
+.vt--sk .sk-side{position:absolute;left:8px;top:28px;width:66px}
+.vt--sk .sk-side small{color:#6b7280;font-size:7px;font-weight:800}
+.vt--sk .sk-new{display:flex !important;align-items:center;justify-content:space-between;margin-top:4px;padding:3px 5px;border-radius:3px;background:#2a3a5a;color:#fff;font-size:7.5px;font-weight:700;white-space:nowrap}
+.vt--sk .sk-new u{padding:0 3px;border-radius:2px;background:#21e065;color:#06150b;font-size:5.5px;font-weight:900}
+.vt--sk .sk-hero{position:absolute;left:82px;right:8px;top:28px;height:118px;border-radius:6px;overflow:hidden;background:linear-gradient(135deg,__COR__66,#7c3aed 65%,#1b2838)}
+.vt--sk .sk-hero::before{content:"";position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.35),transparent 65%)}
+.vt--sk .sk-q{position:absolute;right:18px;top:8px;color:rgba(255,255,255,.28);font-size:88px;font-weight:900;line-height:1 !important}
+.vt--sk .sk-hero b{position:absolute;left:10px;bottom:10px;color:#fff;font-size:17px;font-weight:900;text-shadow:0 2px 6px rgba(0,0,0,.6)}
+.vt--sk .sk-actb{position:absolute;left:82px;right:8px;top:156px;height:24px}
+.vt--sk .sk-actb>*{position:absolute;left:0;top:0}.vt--sk .sk-actb .sk-bt{width:78px}
+.vt--sk .sk-inst{background:#7c3aed;color:#fff;animation:skInst var(--vt) infinite}
+@keyframes skInst{0%,63.6%{opacity:1;transform:none}64%{transform:scale(.94)}64.6%,100%{opacity:0}}
+.vt--sk .sk-bar{left:0 !important;top:9px !important;width:78px;height:6px;border-radius:3px;background:#2a2f38;overflow:hidden;opacity:0;animation:skBarW var(--vt) infinite}
+.vt--sk .sk-bar i{height:100%;width:0;background:#7c3aed;animation:skBar var(--vt) infinite}
+@keyframes skBarW{0%,64.4%{opacity:0}64.6%,77%{opacity:1}77.5%,100%{opacity:0}}@keyframes skBar{0%,65%{width:0}77%,100%{width:100%}}
+.vt--sk .sk-dl{left:88px !important;top:6px !important;color:#8f98a0;font-size:8.5px;opacity:0;animation:skBarW var(--vt) infinite}
+.vt--sk .sk-play{opacity:0;animation:skPlay var(--vt) infinite}
+@keyframes skPlay{0%,77%{opacity:0}77.6%,82.6%{opacity:1;transform:none}83%{opacity:1;transform:scale(.94)}83.6%,100%{opacity:0}}
+.vt--sk .sk-ready{left:88px !important;top:6px !important;color:#8f98a0;font-size:8.5px;opacity:0;animation:skPlay var(--vt) infinite}
+.vt--sk .sk-run{background:transparent;border:1.5px solid #21e065;color:#21e065;line-height:19px;opacity:0;animation:skRun var(--vt) infinite}
+@keyframes skRun{0%,83.4%{opacity:0}83.8%,96%{opacity:1}98%,100%{opacity:0}}
+.vt--sk .sk-cur{position:absolute;z-index:9;width:14px;height:20px;margin:-2px 0 0 -2px;background:#fff;clip-path:polygon(0 0,0 80%,22% 62%,38% 98%,52% 92%,38% 58%,70% 58%);filter:drop-shadow(0 1px 2px #000);animation:skCur var(--vt) infinite}
+@keyframes skCur{0%{left:75%;top:90%}8%{left:calc(50% - 52px);top:134px}11.5%{left:calc(50% - 52px);top:134px}13.5%{left:calc(50% + 52px);top:134px}15.5%{left:calc(50% + 52px);top:134px}
+  18%{left:calc(50% - 60px);top:84px}21.5%{left:calc(50% - 60px);top:84px}22.5%{left:calc(50% - 40px);top:116px}25%{left:calc(50% - 40px);top:116px}
+  26%{left:calc(50% + 10px);top:156px}28%{left:calc(50% + 10px);top:156px}31%{left:calc(50% + 50px);top:205px}38%{left:calc(50% + 50px);top:205px}
+  40%{left:calc(50% - 40px);top:97px}47%{left:calc(50% - 40px);top:97px}48%{left:calc(50% - 88px);top:123px}49.5%{left:calc(50% - 88px);top:123px}
+  51%{left:calc(50% + 4px);top:149px}53%{left:calc(50% + 4px);top:149px}57%{left:calc(50% + 40px);top:215px}
+  62%{left:122px;top:190px}64%{left:122px;top:190px}70%{left:200px;top:222px}78%{left:200px;top:222px}
+  81%{left:122px;top:190px}83.4%{left:122px;top:190px}90%{left:200px;top:225px}100%{left:75%;top:90%}}
+.vt--sk .sk-steps{display:grid;gap:6px;margin-top:12px}
+.vt--sk .sk-st{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.vt--sk .sk-st i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#2a2f38;color:#c7d5e0;font-style:normal;font-size:11px;font-weight:900}
+.vt--sk .sk-st b{display:block;color:#fff;font-size:13.5px}.vt--sk .sk-st span{display:block;margin-top:1px;color:#9aa0a6;font-size:12px;line-height:1.45}
+""".replace('__COR__', cor)
+    for k, (a, b) in enumerate([(0, 16), (16, 38), (38, 58), (58, 77), (77, 97)][:len(passos)]):
+        css += (f'.vt--sk .sk-s{k}{{animation:skS{k} var(--vt) infinite}}.vt--sk .sk-s{k} i{{animation:skI{k} var(--vt) infinite}}\n'
+                f'@keyframes skS{k}{{0%,{a}%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}{a + .5}%,{b}%{{border-color:rgba(33,224,101,.5);background:rgba(33,224,101,.07)}}{b + .5}%,100%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}}}\n'
+                f'@keyframes skI{k}{{0%,{a}%{{background:#2a2f38;color:#c7d5e0}}{a + .5}%,100%{{background:#21e065;color:#06150b}}}}\n')
+    return html, BASE + css
