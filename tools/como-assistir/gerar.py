@@ -274,6 +274,7 @@ MOVE = """
 .sv-ty2{animation-name:svTy2,svCaret !important}
 @keyframes svCaret{50%{border-right-color:transparent}}
 .sv-log{animation:svLog var(--sv-t) infinite}
+.sv-log:has(.sv-lsub){margin-top:-10px}
 @keyframes svLog{0%,25.5%{transform:translate(-50%,-44%);opacity:0}28%,100%{transform:translate(-50%,-50%);opacity:1}}
 .sv-btn{transition:none}
 @keyframes svBtn{0%,43%{filter:none;transform:none;box-shadow:none}44%{filter:brightness(1.12);box-shadow:0 0 0 3px rgba(255,255,255,.18)}45%,46.5%{filter:brightness(1.25);transform:scale(.96)}47.5%,100%{filter:none;transform:none;box-shadow:none}}
