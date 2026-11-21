@@ -11,9 +11,21 @@ LOJA = 'Rei dos Nitros'
 def esc(t):
     return t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
-def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6'):
+def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6', TEMA='', WORD='', HERO='', THUMBS=(), TITULO='Filme em destaque', SUB='Aventura · Ficção', BADGE='', AS='Assistir', TILES=()):
+  # TEMA: netflix | hbo | disney | prime | crunchy (visual da abertura, do login, dos perfis e do início de cada serviço)
+  BRAND = f'<span class="sv-word">{WORD}</span>' if WORD else '<svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>' + esc(MARCA)
+  SPLASH = f'<div class="sv-splash"><span class="sv-word">{WORD}</span></div>' if WORD else ''
+  HSTYLE = f' style="background-image:linear-gradient(90deg,rgba(0,0,0,.78),rgba(0,0,0,.15) 70%),url({HERO})"' if HERO else ''
+  PSTYLE = f' style="background-image:url({HERO})"' if HERO else ''
+  BADGE_H = f'<span class="sv-badge">{BADGE}</span>' if BADGE else ''
+  if TILES:
+    ROW = '<div class="sv-tiles">' + ''.join(f'<i>{esc(t)}</i>' for t in TILES) + '</div>'
+  elif THUMBS:
+    ROW = '<div class="sv-thumbs sv-thumbs--img">' + ''.join(f'<i style="background-image:url({u})"></i>' for u in THUMBS) + '</div>'
+  else:
+    ROW = '<div class="sv-thumbs"><i></i><i></i><i></i><i></i><i></i></div>'
   CARD = f'''<!-- COMO UTILIZAR -->
-    <div class="{P}-card sv-card" style="--sv:{COR};--sv2:{COR2}">
+    <div class="{P}-card sv-card{" sv--" + TEMA if TEMA else ""}" style="--sv:{COR};--sv2:{COR2}">
       <div class="sv-head"><span class="sv-hico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></span><div><span class="sv-k">PASSO A PASSO</span><h2 class="sv-t">Como começar a assistir</h2></div></div>
       <div class="sv-win" role="img" aria-label="Animação: ver os dados no pedido, entrar no streaming, escolher o perfil e dar o play">
         <div class="sv-bar"><i></i><i></i><i></i><span class="sv-url"><b class="sv-u1">Seu pedido · {LOJA}</b><b class="sv-u2">{esc(SITE)} · Entrar</b><b class="sv-u3">{esc(SITE)} · Perfis</b><b class="sv-u4">{esc(SITE)} · Início</b></span></div>
@@ -22,16 +34,16 @@ def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6'):
             <div class="sv-row sv-r1"><span>E-mail</span><code>email_do_pedido</code></div>
             <div class="sv-row sv-r2"><span>Senha</span><code>••••••••••</code></div>
             <div class="sv-row sv-r3"><span>Perfil</span><code>Perfil 3</code></div></div></div>
-          <div class="sv-sc sv-sc2"><div class="sv-wall"></div><div class="sv-log"><span class="sv-brand"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>{esc(MARCA)}</span><b>Entrar</b>
+          <div class="sv-sc sv-sc2"><div class="sv-wall"></div><div class="sv-log"><span class="sv-brand">{BRAND}</span><b>Entrar</b>
             <div class="sv-in"><span class="sv-ty sv-ty1">email_do_pedido</span></div>
             <div class="sv-in"><span class="sv-ty sv-ty2">••••••••••</span></div>
-            <div class="sv-btn"><span class="sv-b1">Entrar</span><span class="sv-b2">Entrando...</span></div></div></div>
+            <div class="sv-btn"><span class="sv-b1">Entrar</span><span class="sv-b2">Entrando...</span></div></div>{SPLASH}</div>
           <div class="sv-sc sv-sc3"><b class="sv-who">Quem está assistindo?</b><div class="sv-pfs">
             <span class="sv-pf" style="--c:#e5484d"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Grinning%20face%20with%20big%20eyes/3D/grinning_face_with_big_eyes_3d.png" alt=""></i>Perfil 1</span><span class="sv-pf" style="--c:#3e63dd"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Star-struck/3D/star-struck_3d.png" alt=""></i>Perfil 2</span><span class="sv-pf sv-pf3" style="--c:#30a46c"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Smiling%20face%20with%20sunglasses/3D/smiling_face_with_sunglasses_3d.png" alt=""></i>Perfil 3</span><span class="sv-pf" style="--c:#f5a524"><i><img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Partying%20face/3D/partying_face_3d.png" alt=""></i>Perfil 4</span></div>
             <div class="sv-pin"><small>PIN do perfil</small><span><i class="sv-d1"></i><i class="sv-d2"></i><i class="sv-d3"></i><i class="sv-d4"></i></span></div></div>
-          <div class="sv-sc sv-sc4"><div class="sv-hero"><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht"><b>Filme em destaque</b><small>Aventura · Ficção</small><span class="sv-hb"><em class="sv-as"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>Assistir</em><em>+ Minha lista</em></span></div></div>
-            <div class="sv-thumbs"><i></i><i></i><i></i><i></i><i></i></div>
-            <div class="sv-play"><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-prog"><i></i></div></div></div>
+          <div class="sv-sc sv-sc4"><div class="sv-hero{" sv-hero--img" if HERO else ""}"{HSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht">{BADGE_H}<b>{esc(TITULO)}</b><small>{esc(SUB)}</small><span class="sv-hb"><em class="sv-as"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>{esc(AS)}</em><em>+ Minha lista</em></span></div></div>
+            {ROW}
+            <div class="sv-play{" sv-play--img" if HERO else ""}"{PSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-prog"><i></i></div></div></div>
           <span class="sv-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>
         </div>
       </div>
@@ -46,7 +58,7 @@ def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6'):
 
 '''
 
-  return CARD, CSS
+  return CARD, CSS + TEMA_BASE + TEMAS.get(TEMA, '')
 
 CSS = '''
 /* ===== Passo a passo animado "Como começar a assistir" (20s em loop) ===== */
@@ -214,3 +226,94 @@ if __name__ == '__main__':
   assert tam <= 65535, f'{tam} bytes passa do limite da API'
   open(dst, 'w').write(s)
   print(dst, tam, 'bytes')
+
+# ---------- temas por serviço ----------
+TEMA_BASE = """
+.sv-splash{position:absolute;inset:0;z-index:6;display:grid;place-items:center;background:var(--sp,#000);opacity:0;pointer-events:none;animation:svSplash var(--sv-t) infinite}
+.sv-card:has(.sv-splash) .sv-cur{animation:svCur var(--sv-t) infinite,svCurHide var(--sv-t) infinite}
+@keyframes svCurHide{0%,24.2%{opacity:1}24.7%,27.5%{opacity:0}28%,100%{opacity:1}}
+@keyframes svSplash{0%,24%{opacity:0}25%,27.2%{opacity:1}28.4%,100%{opacity:0}}
+.sv-word{display:flex;align-items:baseline;gap:4px;line-height:1;animation:svWord var(--sv-t) infinite}
+@keyframes svWord{0%,24.5%{transform:scale(.7);opacity:0}25.6%{transform:scale(1);opacity:1}27.4%{transform:scale(1.12);opacity:1}28.4%,100%{transform:scale(1.25);opacity:0}}
+.sv-splash .sv-word{font-size:26px}
+.sv-hero--img{background-size:cover;background-position:center}
+.sv-hero--img .sv-sun,.sv-hero--img .sv-mt,.sv-play--img .sv-sun,.sv-play--img .sv-mt{display:none}
+.sv-play--img{background-size:cover;background-position:center}
+.sv-thumbs--img i{background-size:cover !important;background-position:center !important}
+.sv-badge{display:inline-flex;align-items:center;gap:3px;margin-bottom:3px;font-size:7.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#fff;opacity:.9}
+.sv-badge svg{width:9px;height:9px}
+.sv-tiles{display:flex;gap:5px;margin:8px 10px 0}
+.sv-tiles i{flex:1;height:36px;border-radius:5px;display:grid;place-items:center;font-style:normal;font-size:7px;font-weight:800;color:#fff;text-align:center;line-height:1.1;padding:0 2px;
+  background:linear-gradient(180deg,#30333e,#1a1d29);border:1px solid rgba(255,255,255,.18);box-shadow:0 4px 10px rgba(0,0,0,.5)}
+.sv-card .sv-brand .sv-word{font-size:12px;animation:none !important;opacity:1 !important;transform:none !important}
+.sv-card .sv-brand{margin-bottom:2px}
+"""
+TEMAS = {
+'netflix': """
+.sv--netflix{--sp:#000}
+.sv--netflix .sv-word{color:#e50914;font-family:"Bebas Neue",Impact,"Arial Narrow",sans-serif;font-weight:900;letter-spacing:.02em;transform-origin:center}
+.sv--netflix .sv-splash .sv-word{font-size:34px}
+""",
+'hbo': """
+.sv--hbo{--sp:radial-gradient(80% 90% at 50% 50%,#1b2a8f,#05061a 70%)}
+.sv--hbo .sv-word{color:#fff;font-weight:900;letter-spacing:-.02em}
+.sv--hbo .sv-word i{font-style:normal;font-weight:500;letter-spacing:.01em}
+.sv--hbo .sv-wall{inset:0;transform:none;opacity:1;animation:none;background:radial-gradient(60% 80% at 15% 20%,rgba(43,76,255,.55),transparent 70%),radial-gradient(60% 80% at 90% 90%,rgba(122,40,255,.5),transparent 70%),#05061a;-webkit-mask-image:none;mask-image:none}
+.sv--hbo .sv-log{background:rgba(5,6,26,.75);border-color:rgba(255,255,255,.14)}
+.sv--hbo .sv-in{background:#161936}
+.sv--hbo .sv-btn{border-radius:999px}
+.sv--hbo .sv-sc3,.sv--hbo .sv-sc4{background:radial-gradient(70% 80% at 50% 0%,#141a5c,#05061a 75%)}
+.sv--hbo .sv-pf i{border-radius:50%}
+.sv--hbo .sv-hb .sv-as{border-radius:999px}
+""",
+'disney': """
+.sv--disney{--sp:radial-gradient(80% 90% at 50% 40%,#1f3a8a,#040714 72%)}
+.sv--disney .sv-word{color:#fff;font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:700;letter-spacing:-.01em}
+.sv--disney .sv-word i{font-style:normal;font-family:Inter,system-ui,sans-serif;font-weight:300;background:linear-gradient(180deg,#e8f6ff,#2fb8ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sv--disney .sv-wall{inset:0;transform:none;opacity:1;animation:none;background:radial-gradient(70% 70% at 50% 0%,rgba(28,90,190,.55),transparent 70%),#040714;-webkit-mask-image:none;mask-image:none}
+.sv--disney .sv-log{background:#1a1d29;border-color:transparent}
+.sv--disney .sv-in{background:#31343e}
+.sv--disney .sv-btn{border-radius:5px;letter-spacing:.06em;text-transform:uppercase}
+.sv--disney .sv-sc3,.sv--disney .sv-sc4{background:radial-gradient(80% 80% at 50% 0%,#1a2a5c,#040714 75%)}
+.sv--disney .sv-pf i{border-radius:50%}
+""",
+'prime': """
+.sv--prime{--sp:#0f171e}
+.sv--prime .sv-word{color:#fff;font-weight:800;letter-spacing:-.02em;text-transform:lowercase;position:relative;padding-bottom:5px}
+.sv--prime .sv-brand .sv-word{padding-bottom:3px}
+.sv--prime .sv-word::after{content:"";position:absolute;left:4%;right:30%;bottom:0;height:6px;border-bottom:2px solid #1a98ff;border-radius:0 0 50% 50%}
+.sv--prime .sv-wall{inset:0;transform:none;opacity:1;animation:none;background:#fff;-webkit-mask-image:none;mask-image:none}
+.sv--prime .sv-log{background:#fff;border:1px solid #d5d9d9;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.sv--prime .sv-log .sv-word{color:#232f3e}
+.sv--prime .sv-log>b{color:#0f1111}
+.sv--prime .sv-in{background:#fff;border:1px solid #888c8c;border-radius:4px}
+.sv--prime .sv-ty{color:#0f1111}
+.sv--prime .sv-btn{background:#ffd814 !important;color:#0f1111;border-radius:999px;border:1px solid #fcd200}
+.sv--prime .sv-sc3,.sv--prime .sv-sc4{background:#0f171e}
+.sv--prime .sv-pf i{border-radius:50%}
+.sv--prime .sv-badge{color:#1a98ff}
+""",
+'crunchy': """
+.sv--crunchy{--sp:#f47521}
+.sv--crunchy .sv-word{color:#f47521;font-weight:900;letter-spacing:-.03em;text-transform:lowercase}
+.sv--crunchy .sv-splash .sv-word{color:#fff}
+.sv--crunchy .sv-wall{inset:0;transform:none;opacity:1;animation:none;background:radial-gradient(70% 90% at 100% 0%,rgba(244,117,33,.45),transparent 65%),#000;-webkit-mask-image:none;mask-image:none}
+.sv--crunchy .sv-log{background:#141519;border-color:rgba(255,255,255,.08)}
+.sv--crunchy .sv-in{background:#23252b;border-bottom:2px solid #59595b;border-radius:4px 4px 0 0}
+.sv--crunchy .sv-btn{color:#000;border-radius:4px;text-transform:uppercase;letter-spacing:.04em}
+.sv--crunchy .sv-sc3,.sv--crunchy .sv-sc4{background:#000}
+.sv--crunchy .sv-pf i{border-radius:50%}
+.sv--crunchy .sv-pf3 i{animation-name:svPfCr}
+@keyframes svPfCr{0%,56.5%{border-color:transparent;transform:none}57.5%,100%{border-color:#f47521;transform:scale(1.1);box-shadow:0 0 14px rgba(244,117,33,.5)}}
+.sv--crunchy .sv-hb .sv-as{background:#f47521;color:#000}
+.sv--crunchy .sv-badge{color:#f47521}
+""",
+}
+
+WORDS = {
+  'netflix': 'NETFLIX',
+  'hbo': 'HBO<i>Max</i>',
+  'disney': 'Disney<i>+</i>',
+  'prime': 'prime video',
+  'crunchy': 'crunchyroll',
+}
