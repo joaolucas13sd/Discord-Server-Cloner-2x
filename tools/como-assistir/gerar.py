@@ -6,17 +6,17 @@
 #   prefixo: o das classes da descrição (ex.: cb para cb-card), marca: texto do logo no site do streaming.
 import sys, re
 
-src, dst, P, PEDIDO, MARCA, COR = sys.argv[1:7]
 LOJA = 'Rei dos Nitros'
 
 def esc(t):
     return t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
-CARD = f'''<!-- COMO UTILIZAR -->
-    <div class="{P}-card sv-card" style="--sv:{COR}">
+def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6'):
+  CARD = f'''<!-- COMO UTILIZAR -->
+    <div class="{P}-card sv-card" style="--sv:{COR};--sv2:{COR2}">
       <div class="sv-head"><span class="sv-hico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></span><div><span class="sv-k">PASSO A PASSO</span><h2 class="sv-t">Como começar a assistir</h2></div></div>
       <div class="sv-win" role="img" aria-label="Animação: ver os dados no pedido, entrar no streaming, escolher o perfil e dar o play">
-        <div class="sv-bar"><i></i><i></i><i></i><span class="sv-url"><b class="sv-u1">Seu pedido · {LOJA}</b><b class="sv-u2">Site do streaming · Entrar</b><b class="sv-u3">Site do streaming · Perfis</b><b class="sv-u4">Site do streaming · Início</b></span></div>
+        <div class="sv-bar"><i></i><i></i><i></i><span class="sv-url"><b class="sv-u1">Seu pedido · {LOJA}</b><b class="sv-u2">{esc(SITE)} · Entrar</b><b class="sv-u3">{esc(SITE)} · Perfis</b><b class="sv-u4">{esc(SITE)} · Início</b></span></div>
         <div class="sv-scr">
           <div class="sv-sc sv-sc1"><div class="sv-ord"><span class="sv-ok">✓ Pagamento aprovado</span><b>{esc(PEDIDO)}</b>
             <div class="sv-row sv-r1"><span>E-mail</span><code>email_do_pedido</code></div>
@@ -45,6 +45,8 @@ CARD = f'''<!-- COMO UTILIZAR -->
     </div>
 
 '''
+
+  return CARD, CSS
 
 CSS = '''
 /* ===== Passo a passo animado "Como começar a assistir" (20s em loop) ===== */
@@ -91,7 +93,7 @@ CSS = '''
 @keyframes svWall{to{background-position:46px 0,46px 0,322px 0,345px 33px}}
 .sv-log{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62%;padding:12px;border-radius:10px;background:rgba(12,12,14,.92);border:1px solid rgba(255,255,255,.08)}
 .sv-brand{display:block;color:#fff;font-size:10px;font-weight:800}
-.sv-brand{text-shadow:0 0 1px var(--sv)}
+.sv-brand{color:var(--sv) !important;letter-spacing:.04em}
 .sv-log>b{display:block;margin:4px 0 8px;color:#fff;font-size:14px}
 .sv-in{height:24px;margin-bottom:6px;padding:0 8px;border-radius:5px;background:#26272c;display:flex;align-items:center}
 .sv-ty{display:inline-block;overflow:hidden;white-space:nowrap;width:0;color:#fff;font:600 10px ui-monospace,Menlo,Consolas,monospace;border-right:1px solid var(--sv)}
@@ -99,7 +101,7 @@ CSS = '''
 .sv-ty2{animation:svTy2 var(--sv-t) steps(10,end) infinite}
 @keyframes svTy1{0%,29%{width:0}36%,100%{width:15ch}}
 @keyframes svTy2{0%,37%{width:0}42%,100%{width:10ch}}
-.sv-btn{position:relative;height:26px;border-radius:5px;background:linear-gradient(90deg,var(--sv),#8b5cf6);color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;animation:svBtn var(--sv-t) infinite}
+.sv-btn{position:relative;height:26px;border-radius:5px;background:linear-gradient(90deg,var(--sv),var(--sv2,#8b5cf6));color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;animation:svBtn var(--sv-t) infinite}
 .sv-btn span{grid-area:1/1}
 .sv-b2{opacity:0;animation:svOn2 var(--sv-t) infinite}.sv-b1{animation:svOff2 var(--sv-t) infinite}
 @keyframes svBtn{0%,44%{filter:none;transform:none}45%,47%{filter:brightness(1.25);transform:scale(.97)}48%,100%{filter:none;transform:none}}
@@ -182,14 +184,17 @@ CSS = '''
 @media (prefers-reduced-motion:reduce){.sv-card *{animation-duration:0s !important;animation-iteration-count:1 !important}}
 '''
 
-s = open(src).read()
-a = s.find('<!-- COMO UTILIZAR -->')
-b = s.find(f'<div class="{P}-card">', a + 30)
-assert a > 0 and b > a and 'Como utilizar' in s[a:b], 'card Como utilizar não encontrado'
-s = s[:a] + CARD + '        ' + s[b:]
-assert s.count('</style>') == 1
-s = s.replace('</style>', CSS + '</style>')
-tam = len(s.encode())
-assert tam <= 65535, f'{tam} bytes passa do limite da API'
-open(dst, 'w').write(s)
-print(dst, tam, 'bytes')
+if __name__ == '__main__':
+  src, dst, P, PEDIDO, MARCA, COR = sys.argv[1:7]
+  CARD, _ = bloco(P, PEDIDO, MARCA, COR)
+  s = open(src).read()
+  a = s.find('<!-- COMO UTILIZAR -->')
+  b = s.find(f'<div class="{P}-card">', a + 30)
+  assert a > 0 and b > a and 'Como utilizar' in s[a:b], 'card Como utilizar não encontrado'
+  s = s[:a] + CARD + '        ' + s[b:]
+  assert s.count('</style>') == 1
+  s = s.replace('</style>', CSS + '</style>')
+  tam = len(s.encode())
+  assert tam <= 65535, f'{tam} bytes passa do limite da API'
+  open(dst, 'w').write(s)
+  print(dst, tam, 'bytes')
