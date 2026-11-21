@@ -66,7 +66,7 @@ def montar(id, ac, ac2, intro, paras, fig1, mid, spec_list, anim):
 '''
     tam = len(html.encode()); assert tam <= 65535, (id, tam)
     assert 'globo' not in html.lower()
-    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('banners').aplicar(html))  # troca o banner da loja por uma foto ligada ao produto
+    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('polir').aplicar(__import__('banners').aplicar(html)))  # troca o banner da loja por uma foto ligada ao produto
     print(id, anim['PEDIDO'], tam, 'bytes')
 
 LOJA = '<p>Na <strong>Rei dos Nitros</strong>, os dados chegam na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>'

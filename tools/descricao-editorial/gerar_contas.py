@@ -2,6 +2,7 @@
 # Uso: python3 tools/descricao-editorial/gerar_contas.py <pasta-dos-originais> <pasta-de-saida>
 import sys, os, re, json, importlib.util
 AQUI = os.path.dirname(os.path.abspath(__file__))
+import sys as _s; _s.path.insert(0, AQUI)
 sp = importlib.util.spec_from_file_location('j', os.path.join(AQUI, '..', 'como-assistir', 'jogos.py'))
 j = importlib.util.module_from_spec(sp); sp.loader.exec_module(j)
 g = j.g
@@ -93,7 +94,7 @@ def montar(id, cfg, cor, cor2, anim, fig, intro, paras, com_specs=True, curto=No
     html = podar(html)
     tam = len(html.encode()); assert tam <= 65535, (id, tam)
     assert 'globo' not in html.lower()
-    open(os.path.join(OUT, id + '.html'), 'w').write(html); print(id, c['titulo'], tam, 'bytes')
+    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('polir').aplicar(html)); print(id, c['titulo'], tam, 'bytes')
 
 FA = lambda app, final: [('Veja os dados no pedido', 'Na página do seu pedido aparecem o e-mail e a senha da conta.'), (f'Entre no {app}', f'Abra o {app} e entre com esses dados.'),
                          ('Troque e-mail e senha', 'Nas configurações da conta, coloque o seu e-mail e uma senha nova.'), final]

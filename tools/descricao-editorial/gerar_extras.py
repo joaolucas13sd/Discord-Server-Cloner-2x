@@ -88,7 +88,7 @@ def montar(id, ac, ac2, intro, paras, fig1, fig2, spec_list, anim, faq_id, extra
 </div>
 '''
     tam = len(html.encode()); assert tam <= 65535, (id, tam)
-    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('banners').aplicar(html))  # troca o banner da loja por uma foto ligada ao produto
+    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('polir').aplicar(__import__('banners').aplicar(html)))  # troca o banner da loja por uma foto ligada ao produto
     print(id, tam, 'bytes')
 
 LOJA_P = '<p>Na <strong>Rei dos Nitros</strong>, o acesso chega na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>'

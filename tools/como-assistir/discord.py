@@ -112,7 +112,7 @@ CSS = """
 .dz-ver{display:inline-block;margin-top:5px;padding:5px 10px;border-radius:3px;background:#5865f2;color:#fff;font-size:9px;font-weight:700}
 .sv-card.sv--discord .sv-cur,.sv-card.sv--discord:has(.sv-splash) .sv-cur{animation:dzCur var(--sv-t) infinite,svCurHide var(--sv-t) infinite}
 @keyframes dzCur{
-  0%,3%{left:calc(50% + 120px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  0%,3%{left:calc(50% + 96px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   8%{left:calc(50% + 46px);top:116px}10%{left:calc(50% + 46px);top:116px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   12.5%{left:calc(50% + 46px);top:148px}14%{left:calc(50% + 46px);top:148px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   16.5%{left:calc(50% + 46px);top:180px}23%{left:calc(50% + 46px);top:180px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
@@ -122,7 +122,7 @@ CSS = """
   55%{left:calc(50% + 28px);top:93px}58%{left:calc(50% + 28px);top:93px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   62%{left:calc(50% + 70px);top:178px}72%{left:calc(50% + 70px);top:178px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   80%{left:var(--dz-vx,103px);top:var(--dz-vy,105px)}84%{left:var(--dz-vx,103px);top:var(--dz-vy,105px);animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  92%,100%{left:calc(50% + 120px);top:186px}}
+  92%,100%{left:calc(50% + 96px);top:186px}}
 .dz-final{position:absolute;inset:0;z-index:3;display:grid;place-items:center;background:rgba(0,0,0,.55) !important}
 .dz-final .sv-sun,.dz-final .sv-mt{display:none}
 .dz-prof{width:172px;border-radius:8px;overflow:hidden;background:#232428;box-shadow:0 8px 24px rgba(0,0,0,.5);animation:dzPop var(--sv-t) infinite}

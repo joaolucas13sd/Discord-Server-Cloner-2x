@@ -2,6 +2,7 @@
 # Uso: python3 tools/descricao-editorial/gerar_outros.py <pasta-dos-originais> <pasta-de-saida>
 import sys, os, importlib.util
 AQUI = os.path.dirname(os.path.abspath(__file__))
+import sys as _s; _s.path.insert(0, AQUI)
 sp = importlib.util.spec_from_file_location('o', os.path.join(AQUI, '..', 'como-assistir', 'outros.py'))
 o = importlib.util.module_from_spec(sp); sp.loader.exec_module(o)
 g, j = o.g, o.j
@@ -61,7 +62,7 @@ def montar(id, ac, ac2, img, intro, paras, spec_list, anim, titulo_specs='O que 
 '''
     tam = len(html.encode()); assert tam <= 65535, (id, tam)
     assert 'globo' not in html.lower()
-    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('banners').aplicar(html))  # troca o banner da loja por uma foto ligada ao produto
+    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('polir').aplicar(__import__('banners').aplicar(html)))  # troca o banner da loja por uma foto ligada ao produto
     print(id, d['PEDIDO'], tam, 'bytes')
 
 IMG = lambda p: 'https://blast.erbystores.com/cdn/s/' + p

@@ -3,6 +3,7 @@
 # Uso: python3 tools/descricao-editorial/gerar_jogos_steam.py <pasta-dos-originais> <pasta-de-saida>
 import sys, os, re, json, html as H, importlib.util, subprocess
 AQUI = os.path.dirname(os.path.abspath(__file__))
+import sys as _s; _s.path.insert(0, AQUI)
 sv = importlib.util.spec_from_file_location('vt', os.path.join(AQUI, '..', 'como-assistir', 'vitrine.py'))
 vt = importlib.util.module_from_spec(sv); sv.loader.exec_module(vt)
 sp = importlib.util.spec_from_file_location('j', os.path.join(AQUI, '..', 'como-assistir', 'jogos.py'))
@@ -43,7 +44,7 @@ def dados(id):
     return d
 
 def banner(app):
-    for f in ('capsule_616x353.jpg', 'header.jpg'):
+    for f in ('capsule_616x353.jpg', 'header.jpg', 'library_hero.jpg'):
         if existe(ST + f'{app}/{f}'): return ST + f'{app}/{f}'
     return ST + f'{app}/header.jpg'
 def hero(app): return j.hero(app) if existe(j.hero(app)) else banner(app)
@@ -120,7 +121,7 @@ def gerar(v, vizinhos):
 '''
     tam = len(html.encode()); assert tam <= 65535, (id, tam)
     assert 'globo' not in html.lower(), id
-    open(os.path.join(OUT, id + '.html'), 'w').write(html)
+    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('polir').aplicar(html))
     return tam
 
 if __name__ == '__main__':

@@ -2,7 +2,8 @@
 # e salvo em banners/descricoes/). aplicar(html) troca o banner da loja que estava repetido no topo da descrição.
 import re
 SHA = '3bf775830a432cfbd70bdcbd1acdff3ac9bd9d1d'
-URL = lambda nome: f'https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@{SHA}/banners/descricoes/{nome}.jpg'
+SHA_ALT = {'instagram-1-000-seguidores': '3306ace5ba2cde99a75a46e08def05f823a2ef12'}  # no SHA atual o jsDelivr devolve 403 para esta imagem
+URL = lambda nome: f'https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@{SHA_ALT.get(nome, SHA)}/banners/descricoes/{nome}.jpg'
 FE = 'https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/'
 TIERS = {'Diamante': '#67e8f9', 'Jade': '#34d399', 'Rubi': '#f43f5e', 'Black': '#d4d4d8', 'Triple AAA': '#fbbf24', '+18': '#fb7185', 'Aleatória': '#a78bfa'}
 DZ = ('discord', '#5865F2')

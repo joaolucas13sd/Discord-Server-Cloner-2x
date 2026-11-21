@@ -169,11 +169,11 @@
 .sv-prog i{display:block;height:100%;width:0;border-radius:2px;background:var(--sv);animation:svProg var(--sv-t) linear infinite}
 @keyframes svProg{0%,86%{width:0}100%{width:38%}}
 /* cursor */
-.sv-cur{position:absolute;z-index:5;width:18px;height:18px;margin:-2px 0 0 -3px;left:calc(50% + 120px);top:186px;animation:svCur var(--sv-t) infinite}
+.sv-cur{position:absolute;z-index:5;width:18px;height:18px;margin:-2px 0 0 -3px;left:calc(50% + 96px);top:186px;animation:svCur var(--sv-t) infinite}
 .sv-cur svg{display:block;width:18px;height:18px;fill:#fff;stroke:#111;stroke-width:1.4;stroke-linejoin:round;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));transform-origin:20% 15%;animation:svPress var(--sv-t) infinite}
 .sv-cur::before{content:"";position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.55);opacity:0;transform:scale(.3);animation:svClick var(--sv-t) infinite}
 @keyframes svCur{
-  0%,3%{left:calc(50% + 120px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  0%,3%{left:calc(50% + 96px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   8%{left:calc(50% + 46px);top:116px}10%{left:calc(50% + 46px);top:116px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   12.5%{left:calc(50% + 46px);top:148px}14%{left:calc(50% + 46px);top:148px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   16.5%{left:calc(50% + 46px);top:180px}23%{left:calc(50% + 46px);top:180px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
@@ -183,7 +183,7 @@
   55%{left:calc(50% + 28px);top:93px}58%{left:calc(50% + 28px);top:93px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   62%{left:calc(50% + 70px);top:178px}72%{left:calc(50% + 70px);top:178px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   80%{left:52px;top:118px}84%{left:52px;top:118px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  92%,100%{left:calc(50% + 120px);top:186px}}
+  92%,100%{left:calc(50% + 96px);top:186px}}
 @keyframes svPress{0%,28%,29.5%,37%,38.5%,45%,46.5%,56%,57.5%,81%,82.5%,100%{transform:none}28.7%,37.7%,45.7%,56.7%,81.7%{transform:scale(.82)}}
 @keyframes svClick{0%,28.4%{opacity:0;transform:scale(.3)}28.6%{opacity:.8;transform:scale(.3)}30.5%{opacity:0;transform:scale(1.7)}
   37.4%{opacity:0;transform:scale(.3)}37.6%{opacity:.8;transform:scale(.3)}39.5%{opacity:0;transform:scale(1.7)}
@@ -366,7 +366,7 @@
 .dz-ver{display:inline-block;margin-top:5px;padding:5px 10px;border-radius:3px;background:#5865f2;color:#fff;font-size:9px;font-weight:700}
 .sv-card.sv--discord .sv-cur,.sv-card.sv--discord:has(.sv-splash) .sv-cur{animation:dzCur var(--sv-t) infinite,svCurHide var(--sv-t) infinite}
 @keyframes dzCur{
-  0%,3%{left:calc(50% + 120px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  0%,3%{left:calc(50% + 96px);top:186px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   8%{left:calc(50% + 46px);top:116px}10%{left:calc(50% + 46px);top:116px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   12.5%{left:calc(50% + 46px);top:148px}14%{left:calc(50% + 46px);top:148px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   16.5%{left:calc(50% + 46px);top:180px}23%{left:calc(50% + 46px);top:180px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
@@ -376,7 +376,7 @@
   55%{left:calc(50% + 28px);top:93px}58%{left:calc(50% + 28px);top:93px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   62%{left:calc(50% + 70px);top:178px}72%{left:calc(50% + 70px);top:178px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   80%{left:var(--dz-vx,103px);top:var(--dz-vy,105px)}84%{left:var(--dz-vx,103px);top:var(--dz-vy,105px);animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  92%,100%{left:calc(50% + 120px);top:186px}}
+  92%,100%{left:calc(50% + 96px);top:186px}}
 .dz-final{position:absolute;inset:0;z-index:3;display:grid;place-items:center;background:rgba(0,0,0,.55) !important}
 .dz-final .sv-sun,.dz-final .sv-mt{display:none}
 .dz-prof{width:172px;border-radius:8px;overflow:hidden;background:#232428;box-shadow:0 8px 24px rgba(0,0,0,.5);animation:dzPop var(--sv-t) infinite}
@@ -404,13 +404,14 @@
 .dz-lv3{margin-left:6px;padding:1px 6px;border-radius:999px;background:linear-gradient(90deg,#ff73fa,#b473f5);color:#fff;font-size:7.5px;font-weight:900}
 .dz-chips{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px}
 .dz-chips em{font-style:normal;padding:2px 6px;border-radius:999px;background:#2b2d31;color:#dbdee1;font-size:8px;font-weight:600}
+.ic3{display:inline-block !important;width:1.15em !important;height:1.15em !important;max-width:none !important;margin:0 .12em !important;padding:0 !important;vertical-align:-.22em;border-radius:0 !important;object-fit:contain}.ic-s{display:inline-block !important;width:1em !important;height:1em !important;max-width:none !important;vertical-align:-.14em;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}.ic-s.ic-f{fill:currentColor;stroke:none}
 </style>
 
 <div class="ed-box"><p>Tenha uma <strong>conta Discord criada em 2016</strong>, com <strong>10 anos de história</strong>. Antiguidade no Discord é sinônimo de <strong>respeito e credibilidade</strong> nas comunidades.</p></div>
 
 <p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
 <p>Você recebe os dados da conta e o <strong>acesso ao e-mail original</strong>. A conta é <strong>Full Access</strong>: altere todos os dados e deixe ela 100% sua.</p>
-<figure class="ed-fig"><img class="ed-img" src="https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@8243d2f834ec81a800acb319bf1c85fabea4bbb7/banners/descricoes/conta-discord-2016-membro-desde-2016.jpg" alt="Conta Antiga (2016)" loading="lazy"></figure>
+<figure class="ed-fig"><img class="ed-img" src="https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@3bf775830a432cfbd70bdcbd1acdff3ac9bd9d1d/banners/descricoes/conta-discord-2016-membro-desde-2016.jpg" alt="Conta Antiga (2016)" loading="lazy"></figure>
 
 <p><strong>Perfil de veterano.</strong> O "Membro desde 2016" aparece no seu perfil e passa mais confiança em comunidades, servidores e projetos.</p>
 
@@ -436,7 +437,7 @@
             <div class="sv-in"><span class="sv-ty sv-ty2">••••••••••</span></div>
             <div class="sv-btn"><span class="sv-b1">Entrar</span><span class="sv-b2">Entrando...</span></div></div><div class="sv-load"><i></i></div><div class="sv-splash"><span class="sv-word"><b class="dz-clyde"><svg viewBox="0 0 127 96" aria-hidden="true"><path fill="currentColor" d="M107.7 8.1A105 105 0 0 0 81.5 0a72 72 0 0 0-3.4 6.8 97.7 97.7 0 0 0-29.1 0A72 72 0 0 0 45.6 0a105.9 105.9 0 0 0-26.3 8.1C2.8 32.7-1.7 56.6.5 80.2a105.7 105.7 0 0 0 32.2 16.2 77.7 77.7 0 0 0 6.9-11.2 68.4 68.4 0 0 1-10.9-5.2l2.7-2.1a75.6 75.6 0 0 0 64.3 0l2.7 2.1a68.7 68.7 0 0 1-10.9 5.2 77 77 0 0 0 6.9 11.2 105.3 105.3 0 0 0 32.2-16.2c2.6-27.3-4.5-51-18.9-72.1ZM42.5 65.7c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Zm42.2 0c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Z"/></svg></b>Discord</span></div></div>
           <div class="sv-sc sv-sc3"><div class="dz3 dz3--cfg"><b class="dz-cfg-t">Minha conta</b><div class="dz-cfg"><div class="dz-cfg-r"><small>E-MAIL</small><span>og••••••@email.com</span></div><div class="dz-cfg-r"><small>SENHA</small><span>••••••••••</span></div></div><span class="sv-inv-btn dz-btn"><em class="sv-ib1">Editar</em><em class="sv-ib2">Salvo</em></span><span class="sv-inv-ok dz-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Dados trocados: a conta é sua</span></div></div>
-          <div class="sv-sc sv-sc4"><div class="dz-rail"><i class="dz-home"><svg viewBox="0 0 127 96" aria-hidden="true"><path fill="currentColor" d="M107.7 8.1A105 105 0 0 0 81.5 0a72 72 0 0 0-3.4 6.8 97.7 97.7 0 0 0-29.1 0A72 72 0 0 0 45.6 0a105.9 105.9 0 0 0-26.3 8.1C2.8 32.7-1.7 56.6.5 80.2a105.7 105.7 0 0 0 32.2 16.2 77.7 77.7 0 0 0 6.9-11.2 68.4 68.4 0 0 1-10.9-5.2l2.7-2.1a75.6 75.6 0 0 0 64.3 0l2.7 2.1a68.7 68.7 0 0 1-10.9 5.2 77 77 0 0 0 6.9 11.2 105.3 105.3 0 0 0 32.2-16.2c2.6-27.3-4.5-51-18.9-72.1ZM42.5 65.7c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Zm42.2 0c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Z"/></svg></i><i></i><i></i><i></i></div><div class="dz-main"><div class="dz-top"># geral</div><div class="dz-msg"><span class="dz-av"></span><div><b>você</b><p>tudo pronto por aqui ✨</p></div></div><div class="dz-msg dz-bot"><span class="dz-av"></span><div><b>Rei dos Nitros</b> <i class="dz-tag">BOT</i><p>Tudo certo! Confira o resultado:</p><span class="sv-as dz-ver">Ver perfil</span></div></div></div><div class="sv-play dz-final"><div class="dz-prof"><div class="dz-pban"></div><span class="dz-pav"><i></i></span><div class="dz-pb"><b>você</b><span class="dz-pu">voce </span><div class="dz-pr"><small>Membro desde</small><span>13 de mar. de 2016</span></div><div class="dz-pr"><small>Conta</small><span>Veterana · 10 anos de Discord</span></div></div></div></div></div>
+          <div class="sv-sc sv-sc4"><div class="dz-rail"><i class="dz-home"><svg viewBox="0 0 127 96" aria-hidden="true"><path fill="currentColor" d="M107.7 8.1A105 105 0 0 0 81.5 0a72 72 0 0 0-3.4 6.8 97.7 97.7 0 0 0-29.1 0A72 72 0 0 0 45.6 0a105.9 105.9 0 0 0-26.3 8.1C2.8 32.7-1.7 56.6.5 80.2a105.7 105.7 0 0 0 32.2 16.2 77.7 77.7 0 0 0 6.9-11.2 68.4 68.4 0 0 1-10.9-5.2l2.7-2.1a75.6 75.6 0 0 0 64.3 0l2.7 2.1a68.7 68.7 0 0 1-10.9 5.2 77 77 0 0 0 6.9 11.2 105.3 105.3 0 0 0 32.2-16.2c2.6-27.3-4.5-51-18.9-72.1ZM42.5 65.7c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Zm42.2 0c-6.3 0-11.4-5.7-11.4-12.7s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.7-11.4 12.7Z"/></svg></i><i></i><i></i><i></i></div><div class="dz-main"><div class="dz-top"># geral</div><div class="dz-msg"><span class="dz-av"></span><div><b>você</b><p>tudo pronto por aqui <img class="ic3" src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@1ffb34c752ecf5d402f04cfb4b392c77f57c54bc/assets/Sparkles/3D/sparkles_3d.png" alt="" loading="lazy"></p></div></div><div class="dz-msg dz-bot"><span class="dz-av"></span><div><b>Rei dos Nitros</b> <i class="dz-tag">BOT</i><p>Tudo certo! Confira o resultado:</p><span class="sv-as dz-ver">Ver perfil</span></div></div></div><div class="sv-play dz-final"><div class="dz-prof"><div class="dz-pban"></div><span class="dz-pav"><i></i></span><div class="dz-pb"><b>você</b><span class="dz-pu">voce </span><div class="dz-pr"><small>Membro desde</small><span>13 de mar. de 2016</span></div><div class="dz-pr"><small>Conta</small><span>Veterana · 10 anos de Discord</span></div></div></div></div></div>
           <span class="sv-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>
         </div>
       </div>

@@ -69,4 +69,4 @@ html = f'''<div class="ed">
 '''
 tam = len(html.encode()); assert tam <= 65535, tam
 assert 'globo' not in html.lower()
-open(os.path.join(OUT, 'var_5MY38aZwLib.html'), 'w').write(html); print(tam, 'bytes')
+open(os.path.join(OUT, 'var_5MY38aZwLib.html'), 'w').write(__import__('polir').aplicar(html)); print(tam, 'bytes')

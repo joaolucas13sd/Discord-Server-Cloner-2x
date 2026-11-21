@@ -5,6 +5,7 @@
 #   Os originais (descrição antiga de cada variação, <id>.html) só são usados para copiar as perguntas frequentes.
 import sys, os, re, importlib.util
 AQUI = os.path.dirname(os.path.abspath(__file__))
+import sys as _s; _s.path.insert(0, AQUI)
 sp = importlib.util.spec_from_file_location('g', os.path.join(AQUI, '..', 'como-assistir', 'gerar.py'))
 g = importlib.util.module_from_spec(sp); sp.loader.exec_module(g)
 ORIG, OUT = sys.argv[1], sys.argv[2]
@@ -132,5 +133,5 @@ for v in VARS:
 </div>
 '''
     tam = len(html.encode()); assert tam <= 65535, (v['id'], tam)
-    open(os.path.join(OUT, v['id'] + '.html'), 'w').write(html)
+    open(os.path.join(OUT, v['id'] + '.html'), 'w').write(__import__('polir').aplicar(html))
     print(v['id'], v['plano'], tam, 'bytes')

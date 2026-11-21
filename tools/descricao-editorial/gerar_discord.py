@@ -2,6 +2,7 @@
 # Uso: python3 tools/descricao-editorial/gerar_discord.py <pasta-dos-originais> <pasta-de-saida> <decos.json>
 import sys, os, json, importlib.util
 AQUI = os.path.dirname(os.path.abspath(__file__))
+import sys as _s; _s.path.insert(0, AQUI)
 sp = importlib.util.spec_from_file_location('dz', os.path.join(AQUI, '..', 'como-assistir', 'discord.py'))
 dz = importlib.util.module_from_spec(sp); sp.loader.exec_module(dz)
 ORIG, OUT, DECOS = sys.argv[1], sys.argv[2], json.load(open(sys.argv[3]))
@@ -64,7 +65,7 @@ def montar(id, intro, paras, mid, spec_list, anim):
 '''
     tam = len(html.encode()); assert tam <= 65535, (id, tam)
     assert 'globo' not in html.lower()
-    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('banners').aplicar(html))  # troca o banner da loja por uma foto ligada ao produto
+    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('polir').aplicar(__import__('banners').aplicar(html)))  # troca o banner da loja por uma foto ligada ao produto
     print(id, anim['pedido'], tam, 'bytes')
 
 LOJA = '<p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>'
