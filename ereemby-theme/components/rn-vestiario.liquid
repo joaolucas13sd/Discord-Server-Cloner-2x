@@ -126,21 +126,26 @@
       });
     }
 
+    // A imagem grande (featured) vem em data-f ou sai do link da imagem pequena.
+    function grande(t) { return t.dataset.f || t.querySelector('img').src.replace(/smallicon\.png$/, 'featured.png'); }
     function mostrar(i) {
       pos = (i + lista.length) % lista.length;
       var t = lista[pos], d = t.dataset, img = document.getElementById('rvm-img');
-      modal.style.setProperty('--c1', t.style.getPropertyValue('--c1'));
-      modal.style.setProperty('--c2', t.style.getPropertyValue('--c2'));
+      var cs = getComputedStyle(t);
+      modal.style.setProperty('--c1', cs.getPropertyValue('--c1'));
+      modal.style.setProperty('--c2', cs.getPropertyValue('--c2'));
       img.style.opacity = '0';
       img.onload = function () { img.style.opacity = '1'; };
-      img.src = d.f || t.querySelector('img').src; img.alt = d.n;
+      var peq = t.querySelector('img').src, tentou = false;
+      img.onerror = function () { if (tentou) return; tentou = true; img.src = peq.replace(/(smallicon|featured)\.png$/, 'icon.png'); };
+      img.src = grande(t); img.alt = d.n;
       txt(document.getElementById('rvm-n'), (pos + 1) + '/' + lista.length);
       document.getElementById('rvm-k').innerHTML = '';
       document.getElementById('rvm-k').append(d.g || '', el('i'), 'Traje');
       txt(document.getElementById('rvm-t'), d.n);
       txt(document.getElementById('rvm-d'), d.d);
       [['rvm-s', d.s], ['rvm-i', d.i]].forEach(function (r) { var row = document.getElementById(r[0]); row.hidden = !r[1]; txt(row.querySelector('b'), r[1]); });
-      [1, -1].forEach(function (k) { var n = lista[(pos + k + lista.length) % lista.length]; if (n && n.dataset.f) (new Image()).src = n.dataset.f; });
+      [1, -1].forEach(function (k) { var n = lista[(pos + k + lista.length) % lista.length]; if (n) (new Image()).src = grande(n); });
     }
     function abrir(i) {
       if (i < 0) return;

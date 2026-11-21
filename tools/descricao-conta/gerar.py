@@ -109,23 +109,68 @@ VEST_CSS = """<style>
 
 def vestiario_html(skins, extras=None):
     """skins: lista do vestiario.mjs. extras: dict opcional {'Picaretas': n, 'Gestos': n, 'Asas-delta': n} (só contagem)."""
-    tiles = []
+    tiles, cores = [], {}
     for sk in skins:
         c1, c2 = _cores(sk)
+        cls = cores.setdefault((c1, c2), 'rc%d' % len(cores))
         rot = (sk.get('series') or sk.get('rarityTxt') or '').strip()
+        f = sk.get('featured') or ''
+        small = sk.get('small') or sk.get('icon') or ''
+        extra = '' if (f and small.endswith('/smallicon.png') and f == small[:-len('smallicon.png')] + 'featured.png') else f' data-f="{_e(f)}"'
         tiles.append(
-            f'<button type="button" class="rv-t" style="--c1:{c1};--c2:{c2}" data-r="{_e(sk.get("rarity") or "")}" '
-            f'data-rt="{_e(rot)}" data-n="{_e(sk["name"])}" data-d="{_e(sk.get("desc") or "")}" '
-            f'data-s="{_e(sk.get("set") or "")}" data-i="{_e(_intro(sk.get("intro")))}" data-f="{_e(sk.get("featured") or sk.get("icon") or "")}">'
-            f'<img loading="lazy" src="{_e(sk.get("small") or sk.get("icon"))}" alt="{_e(sk["name"])}"><b>{_e(sk["name"])}</b></button>')
+            f'<button type="button" class="rv-t {cls}" data-r="{_e(sk.get("rarity") or "")}" data-rt="{_e(rot)}" data-n="{_e(sk["name"])}"'
+            + (f' data-d="{_e(sk["desc"])}"' if sk.get('desc') else '')
+            + (f' data-s="{_e(sk["set"])}"' if sk.get('set') else '')
+            + (f' data-i="{_e(_intro(sk.get("intro")))}"' if sk.get('intro') else '')
+            + f'{extra}><img loading="lazy" src="{_e(small)}" alt=""><b>{_e(sk["name"])}</b></button>')
+    cores_css = '<style>' + ''.join(f'.{c}{{--c1:{a};--c2:{b}}}' for (a, b), c in cores.items()) + '</style>'
     abas = [f'<span class="rv-tab on" data-aba="trajes">Trajes<em>{len(skins)}</em></span>']
     for k, v in (extras or {}).items():
         abas.append(f'<span class="rv-tab" data-aba="{_e(k.lower())}">{_e(k)}<em>{_e(str(v))}</em></span>')
-    return (VEST_CSS + '\n    <!-- VESTIÁRIO -->\n    <div class="rk-card rv" data-rv>\n        <h2 class="rk-h2">Vestiário da conta</h2>\n'
+    return (VEST_CSS + cores_css + '\n    <!-- VESTIÁRIO -->\n    <div class="rk-card rv" data-rv>\n        <h2 class="rk-h2">Vestiário da conta</h2>\n'
             '        <p class="rv-sub">Toque em uma skin para ver os detalhes.</p>\n'
             f'        <div class="rv-tabs">{"".join(abas)}</div>\n'
             f'        <p class="rv-count" data-rv-count>{len(skins)} trajes</p>\n'
             f'        <div class="rv-grid" data-rv-grid>{"".join(tiles)}</div>\n    </div>\n\n')
+
+def podar_css(html):
+    """Remove do CSS as regras cujas classes não aparecem no HTML (o modelo traz estilos de outros produtos)."""
+    corpo = re.sub(r'<style>.*?</style>', '', html, flags=re.S)
+    usadas = set()
+    for m in re.finditer(r'class="([^"]+)"', corpo):
+        usadas.update(m.group(1).split())
+    def sel_ok(sel):
+        return all(c in usadas for c in re.findall(r'\.([A-Za-z_][\w-]*)', sel))
+    def bloco(css):
+        out, i = [], 0
+        while i < len(css):
+            j = css.find('{', i)
+            if j < 0: out.append(css[i:]); break
+            cab = css[i:j]; prof, k = 1, j + 1
+            while prof and k < len(css):
+                prof += {'{': 1, '}': -1}.get(css[k], 0); k += 1
+            dentro = css[j + 1:k - 1]; c = cab.strip()
+            if c.startswith('@media') or c.startswith('@supports'):
+                inner = bloco(dentro)
+                if inner.strip(): out.append(f'{cab}{{{inner}}}')
+            elif c.startswith('@'):
+                out.append(css[i:k])
+            else:
+                sels = [x for x in cab.split(',') if sel_ok(x)]
+                if sels: out.append(','.join(sels) + '{' + dentro + '}')
+            i = k
+        return ''.join(out)
+    def limpa(m):
+        css = re.sub(r'/\*.*?\*/', '', m.group(1), flags=re.S)
+        css = bloco(css)
+        # keyframes que nenhuma regra usa
+        for nome in re.findall(r'@keyframes\s+([\w-]+)', css):
+            resto = re.sub(r'@keyframes\s+' + re.escape(nome) + r'\s*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}', '', css)
+            if not re.search(r'\b' + re.escape(nome) + r'\b', resto):
+                css = re.sub(r'@keyframes\s+' + re.escape(nome) + r'\s*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}', '', css)
+        css = re.sub(r'\s*\n\s*', '\n', css)
+        return '<style>' + css + '</style>'
+    return re.sub(r'<style>(.*?)</style>', limpa, html, flags=re.S)
 
 BANS = {
     'fortnite': 'linear-gradient(135deg,#1d4ed8 0%,#6d28d9 45%,#9333ea 75%,#0ea5e9 100%)',
@@ -140,5 +185,10 @@ if c.get('vestiario'):
     bloco = vestiario_html(json.load(open(vj)), c.get('vestiario_extras'))
     assert html.count('<!-- COMO UTILIZAR -->') == 1
     html = html.replace('    <!-- COMO UTILIZAR -->', bloco + '    <!-- COMO UTILIZAR -->')
+html = podar_css(html)
+tam = len(html.encode())
+if tam > 65535:
+    sys.exit(f'Descrição com {tam} bytes: passa do limite de 65535 da API da Ereemby. Diminua o conteúdo.')
 open(sys.argv[2], 'w').write(html)
+print(f'{tam} bytes (limite da API: 65535)')
 print('Descrição salva em', sys.argv[2])
