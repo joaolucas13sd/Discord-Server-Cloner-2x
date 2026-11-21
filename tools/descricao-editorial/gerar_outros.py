@@ -61,7 +61,7 @@ def montar(id, ac, ac2, img, intro, paras, spec_list, anim, titulo_specs='O que 
 '''
     tam = len(html.encode()); assert tam <= 65535, (id, tam)
     assert 'globo' not in html.lower()
-    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('ilustras').aplicar(html))  # troca o banner pela ilustração do produto
+    open(os.path.join(OUT, id + '.html'), 'w').write(__import__('banners').aplicar(html))  # troca o banner da loja por uma foto ligada ao produto
     print(id, d['PEDIDO'], tam, 'bytes')
 
 IMG = lambda p: 'https://blast.erbystores.com/cdn/s/' + p

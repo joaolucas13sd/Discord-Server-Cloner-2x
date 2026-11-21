@@ -86,24 +86,6 @@
 .vt--rl .rl-win{position:absolute;left:50%;top:92px;transform:translate(-50%,-50%) scale(.6);display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#facc15;color:#1c1400;font-size:15px;font-weight:900;white-space:nowrap;box-shadow:0 0 30px rgba(250,204,21,.7);opacity:0;z-index:3;animation:rlWin var(--vt) infinite}
 .vt--rl .rl-win small{padding:2px 6px;border-radius:999px;background:#16a34a;color:#fff;font-size:8px}
 @keyframes rlWin{0%,62%{opacity:0;transform:translate(-50%,-50%) scale(.6)}66%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}70%,92%{opacity:1;transform:translate(-50%,-50%) scale(1)}96%,100%{opacity:0}}
-.il,.il *{box-sizing:border-box;line-height:normal}
-.il{position:relative;height:210px;margin:4px 0 18px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0d10;font-family:inherit}
-.il span,.il b,.il i,.il em,.il small,.il u{display:block;font-style:normal;text-decoration:none}
-.il-chips{position:absolute;left:12px;right:12px;bottom:12px;display:flex;flex-wrap:wrap;gap:6px;justify-content:center;z-index:3}
-.il-chips u{padding:4px 9px;border-radius:999px;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.14);color:#fff;font-size:10.5px;font-weight:800;white-space:nowrap}
-.il-chips u::before{content:"✓ ";color:var(--ia)}
-@media (max-width:440px){.il-chips u:nth-child(n+3){display:none}}
-@media (prefers-reduced-motion:reduce){.il *{animation:none !important}}
-
-.il--ro{--ia:#f43f5e;background:radial-gradient(circle at 50% 40%,rgba(244,63,94,.32),transparent 60%),#12060a}
-.il-rw{position:absolute;left:50%;top:12px;width:132px;height:132px;margin-left:-66px;border-radius:50%;border:4px solid #fde68a;
-  background:conic-gradient(#f43f5e 0 60deg,#7c3aed 60deg 120deg,#f59e0b 120deg 180deg,#0ea5e9 180deg 240deg,#22c55e 240deg 300deg,#ec4899 300deg 360deg);animation:ilRw 6s cubic-bezier(.2,.8,.2,1) infinite}
-@keyframes ilRw{0%{transform:rotate(0)}70%,100%{transform:rotate(1470deg)}}
-.il-rw u{position:absolute;left:50%;top:50%;width:44px;margin:-6px 0 0 -22px;color:#fff;font-size:10px;font-weight:900;text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.6)}
-.il-rh{position:absolute;left:50%;top:66px;width:26px;height:26px;margin-left:-13px;border-radius:50%;background:#fde68a;box-shadow:0 0 0 4px rgba(0,0,0,.25)}
-.il-rp{position:absolute;left:50%;top:4px;z-index:2;margin-left:-8px;border-left:8px solid transparent;border-right:8px solid transparent;border-top:16px solid #fff;filter:drop-shadow(0 2px 2px rgba(0,0,0,.5))}
-.il-rr{position:absolute;right:12px;top:12px;padding:3px 8px;border-radius:999px;background:rgba(0,0,0,.5);color:#fecdd3;font-size:9.5px;font-weight:800}
-.il-rr b{display:inline !important;color:#fff}
 </style>
 
 <div class="ed-box"><p>Gire a roleta e receba <strong>de 10 até 10.000 Robux</strong>. Todo giro tem prêmio, no mínimo 10 Robux.</p></div>
@@ -111,7 +93,7 @@
 
 <p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
 <p>O resultado aparece assim que você gira. O prêmio em Robux é resgatado falando com o suporte, em até 5 dias.</p>
-<div role="img" aria-label="Roleta Robux · 1 giro" class="il il--ro"><i class="il-rp"></i><div class="il-rw"><u style="transform:rotate(30deg) translateY(-48px) rotate(90deg)">10</u><u style="transform:rotate(90deg) translateY(-48px) rotate(90deg)">100</u><u style="transform:rotate(150deg) translateY(-48px) rotate(90deg)">500</u><u style="transform:rotate(210deg) translateY(-48px) rotate(90deg)">1.000</u><u style="transform:rotate(270deg) translateY(-48px) rotate(90deg)">2.000</u><u style="transform:rotate(330deg) translateY(-48px) rotate(90deg)">10.000</u></div><i class="il-rh"></i><span class="il-rr">R$ ⟶ <b>Robux</b></span><div class="il-chips"><u>Prêmio garantido</u><u>De 10 a 10.000 Robux</u></div></div>
+<figure class="ed-fig"><img class="ed-img" src="https://image.tmdb.org/t/p/w1280/7py8kUCYaOdFn1TfVS87BDBySOz.jpg" alt="Roleta Robux · 1 giro" loading="lazy"></figure>
 
 <p><strong>Não existe resultado vazio:</strong> todo giro dá no mínimo 10 Robux. O valor é aleatório e pode ser menor do que o que você pagou.</p>
 
