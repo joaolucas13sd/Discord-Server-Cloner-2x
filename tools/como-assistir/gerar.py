@@ -80,6 +80,14 @@ def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6', TEMA=
   return CARD, CSS + TEMA_BASE + MOVE + (INV_CSS if 'sv-inv' in SC3_H else '') + TEMAS.get(TEMA, '') + TEMAS2.get(TEMA, '')
 
 CSS = '''
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-cfg-r span,.dz-cfg-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-ord>b{display:block !important}
 /* ===== Passo a passo animado "Como começar a assistir" (20s em loop) ===== */
 .sv-card{--sv-t:20s}
 .sv-card *{box-sizing:border-box}
@@ -593,9 +601,9 @@ def conta_tela(titulo, campos, btn='Editar', btn2='Salvo', ok='Dados trocados: a
             f'<span class="sv-inv-ok sv-cfg-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>{esc(ok)}</span></div>')
 
 INV_CSS += """
-.sv-cfg-w{position:absolute;inset:0;padding:43px 14px 0}
-.sv-cfg-t{position:absolute;left:14px;top:16px;color:#fff;font-size:12px}
-.sv-cfg{padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.06);max-width:260px}
+.sv-cfg-w{position:absolute;inset:0;padding:75px 14px 0}
+.sv-cfg-t{position:absolute;left:14px;top:50px;color:#fff;font-size:12px}
+.sv-cfg{padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.06);max-width:calc(50% - 22px)}
 .sv-cfg-r+.sv-cfg-r{margin-top:6px}
 .sv-cfg-r small{display:block;color:#9aa0a6;font-size:7.5px;font-weight:800;text-transform:uppercase}
 .sv-cfg-r span{color:#f2f3f5;font-size:9.5px}

@@ -25,6 +25,28 @@
 .ed-fig .ed-img{margin:0 !important}
 .ed-fig figcaption{margin-top:6px;color:var(--ed-mut);font-size:11.5px;text-align:center}
 .ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-cfg-r span,.dz-cfg-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-ord>b{display:block !important}
 .ed-spec .ed-w{grid-column:1 / -1}
 .ed-fig{margin:4px 0 18px !important;padding:0 !important}
 .ed-fig .ed-img{margin:0 !important}
@@ -54,6 +76,14 @@
 .ed-strip figure{margin:0 !important;padding:0 !important}
 .ed-strip img{display:block;width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:8px;border:1px solid var(--ed-bd)}
 .ed-strip figcaption{margin-top:4px;color:var(--ed-mut);font-size:10px;text-align:center;line-height:1.2}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-cfg-r span,.dz-cfg-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-ord>b{display:block !important}
 /* ===== Passo a passo animado "Como começar a assistir" (20s em loop) ===== */
 .sv-card{--sv-t:20s}
 .sv-card *{box-sizing:border-box}
@@ -237,6 +267,7 @@
 .sv-ty2{animation-name:svTy2,svCaret !important}
 @keyframes svCaret{50%{border-right-color:transparent}}
 .sv-log{animation:svLog var(--sv-t) infinite}
+.sv-log:has(.sv-lsub){margin-top:-10px}
 @keyframes svLog{0%,25.5%{transform:translate(-50%,-44%);opacity:0}28%,100%{transform:translate(-50%,-50%);opacity:1}}
 .sv-btn{transition:none}
 @keyframes svBtn{0%,43%{filter:none;transform:none;box-shadow:none}44%{filter:brightness(1.12);box-shadow:0 0 0 3px rgba(255,255,255,.18)}45%,46.5%{filter:brightness(1.25);transform:scale(.96)}47.5%,100%{filter:none;transform:none;box-shadow:none}}
@@ -285,6 +316,15 @@
 .sv-inv-ok{display:flex;align-items:center;gap:4px;margin-top:14px;color:#22c55e;font-size:10px;font-weight:700;opacity:0;animation:svInvOk var(--sv-t) infinite}
 .sv-inv-ok svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 @keyframes svInvOk{0%,58.5%{opacity:0;transform:translateY(4px)}60%,100%{opacity:1;transform:none}}
+
+.sv-cfg-w{position:absolute;inset:0;padding:75px 14px 0}
+.sv-cfg-t{position:absolute;left:14px;top:50px;color:#fff;font-size:12px}
+.sv-cfg{padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.06);max-width:calc(50% - 22px)}
+.sv-cfg-r+.sv-cfg-r{margin-top:6px}
+.sv-cfg-r small{display:block;color:#9aa0a6;font-size:7.5px;font-weight:800;text-transform:uppercase}
+.sv-cfg-r span{color:#f2f3f5;font-size:9.5px}
+.sv-cfg-btn{position:absolute !important;left:calc(50% + 28px);top:81px;width:96px !important;height:24px !important;margin-left:-48px;border-radius:4px !important}
+.sv-cfg-ok{position:absolute;left:0;right:0;top:152px;justify-content:center;margin:0 !important}
 
 .sv--canva{--sp:linear-gradient(135deg,#00c4cc,#7d2ae8)}
 .sv--canva .sv-word{color:#fff;font-family:"Brush Script MT","Segoe Script",cursive;font-style:italic;font-weight:700;letter-spacing:.01em}

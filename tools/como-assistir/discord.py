@@ -84,8 +84,8 @@ CSS = """
 @keyframes svInvB{0%,56.4%{transform:translate(-50%,-50%)}56.7%,57.6%{transform:translate(-50%,-50%) scale(.95)}58%,100%{transform:translate(-50%,-50%)}}
 .dz-ok{position:absolute;left:0;right:0;top:118px;justify-content:center;margin:0 !important}
 .dz-cfg-t{display:block;color:#f2f3f5;font-size:12px;margin-bottom:8px}
-.dz-cfg{padding:8px 10px;border-radius:6px;background:#2b2d31;max-width:260px}
-.dz3--cfg{padding-top:43px}
+.dz-cfg{padding:8px 10px;border-radius:6px;background:#2b2d31;max-width:calc(50% - 22px)}
+.dz3--cfg{padding-top:60px}
 .dz3--cfg .dz-ok{top:152px}
 .dz-cfg-r+.dz-cfg-r{margin-top:6px}
 .dz-cfg-r small{display:block;color:#b5bac1;font-size:7.5px;font-weight:800}
@@ -121,7 +121,7 @@ CSS = """
   44.5%{left:calc(50% + 4px);top:161px}49%{left:calc(50% + 4px);top:161px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   55%{left:calc(50% + 28px);top:93px}58%{left:calc(50% + 28px);top:93px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
   62%{left:calc(50% + 70px);top:178px}72%{left:calc(50% + 70px);top:178px;animation-timing-function:cubic-bezier(.45,0,.25,1)}
-  80%{left:var(--dz-vx,103px);top:var(--dz-vy,124px)}84%{left:var(--dz-vx,103px);top:var(--dz-vy,124px);animation-timing-function:cubic-bezier(.45,0,.25,1)}
+  80%{left:var(--dz-vx,103px);top:var(--dz-vy,105px)}84%{left:var(--dz-vx,103px);top:var(--dz-vy,105px);animation-timing-function:cubic-bezier(.45,0,.25,1)}
   92%,100%{left:calc(50% + 120px);top:186px}}
 .dz-final{position:absolute;inset:0;z-index:3;display:grid;place-items:center;background:rgba(0,0,0,.55) !important}
 .dz-final .sv-sun,.dz-final .sv-mt{display:none}

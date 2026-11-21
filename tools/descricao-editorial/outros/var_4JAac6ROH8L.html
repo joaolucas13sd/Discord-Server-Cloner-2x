@@ -25,12 +25,42 @@
 .ed-fig .ed-img{margin:0 !important}
 .ed-fig figcaption{margin-top:6px;color:var(--ed-mut);font-size:11.5px;text-align:center}
 .ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-cfg-r span,.dz-cfg-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-ord>b{display:block !important}
 .ed-fig{margin:4px 0 18px !important;padding:0 !important}
 .ed-fig .ed-img{margin:0 !important}
 .ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
 .ed-spec .ed-w{grid-column:1 / -1}
 .ed-alert{margin:0 0 18px;padding:12px 14px;border-radius:12px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.45);color:#fde68a;font-size:13px;line-height:1.55}
 .ed-alert strong{color:#fff}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-cfg-r span,.dz-cfg-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-ord>b{display:block !important}
 /* ===== Passo a passo animado "Como começar a assistir" (20s em loop) ===== */
 .sv-card{--sv-t:20s}
 .sv-card *{box-sizing:border-box}
@@ -264,9 +294,9 @@
 .sv-inv-ok svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 @keyframes svInvOk{0%,58.5%{opacity:0;transform:translateY(4px)}60%,100%{opacity:1;transform:none}}
 
-.sv-cfg-w{position:absolute;inset:0;padding:43px 14px 0}
-.sv-cfg-t{position:absolute;left:14px;top:16px;color:#fff;font-size:12px}
-.sv-cfg{padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.06);max-width:260px}
+.sv-cfg-w{position:absolute;inset:0;padding:75px 14px 0}
+.sv-cfg-t{position:absolute;left:14px;top:50px;color:#fff;font-size:12px}
+.sv-cfg{padding:8px 10px;border-radius:6px;background:rgba(255,255,255,.06);max-width:calc(50% - 22px)}
 .sv-cfg-r+.sv-cfg-r{margin-top:6px}
 .sv-cfg-r small{display:block;color:#9aa0a6;font-size:7.5px;font-weight:800;text-transform:uppercase}
 .sv-cfg-r span{color:#f2f3f5;font-size:9.5px}
@@ -286,8 +316,9 @@
 
 .ox-w .sv-cfg-btn{animation-name:oxInvB !important}
 @keyframes oxInvB{0%,56.4%{transform:none}56.7%,57.6%{transform:scale(.95)}58%,100%{transform:none}}
+.sv-cfg-w.ox-w{padding-top:43px}
 .ox-w .sv-cfg-t{top:12px}
-.ox-list{display:flex;flex-direction:column;gap:5px;max-width:122px;margin-top:-14px}
+.ox-list{display:flex;flex-direction:column;gap:5px;max-width:calc(50% - 30px);margin-top:-14px}
 .ox-li{display:flex;align-items:center;gap:6px;color:#c9ccd1;font-size:8.5px}
 .ox-li i{flex:none;width:11px;height:11px;border-radius:50%;border:1.5px solid #5c6066;position:relative}
 .ox-li i::after{content:"";position:absolute;inset:1px;border-radius:50%;background:var(--sv);opacity:0;animation:oxLi var(--sv-t) infinite;animation-delay:calc(var(--d) * .35s)}
@@ -372,7 +403,7 @@
             <div class="sv-in"><span class="sv-ty sv-ty1">Geral: 100</span></div>
             <div class="sv-in"><span class="sv-ty sv-ty2">Ponto vermelho: 95</span></div>
             <div class="sv-btn"><span class="sv-b1">Salvar</span><span class="sv-b2">Salvando...</span></div></div><div class="sv-load"><i></i></div><div class="sv-splash"><span class="sv-word">Free Fire</span></div></div>
-          <div class="sv-sc sv-sc3"><div class="sv-cfg-w ox-w"><b class="sv-cfg-t">Ajustes da Sensi</b><div class="ox-list"><div class="ox-li" style="--d:0"><i></i>Sensi full vermelha</div><div class="ox-li" style="--d:1"><i></i>Mira sem pinar</div><div class="ox-li" style="--d:2"><i></i>Estabilização de mira</div><div class="ox-li" style="--d:3"><i></i>HUD secreto</div></div><span class="sv-inv-btn sv-cfg-btn"><em class="sv-ib1">Aplicar</em><em class="sv-ib2">Aplicado</em></span><span class="sv-inv-ok sv-cfg-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Sensi aplicada</span></div></div>
+          <div class="sv-sc sv-sc3"><div class="sv-cfg-w ox-w"><b class="sv-cfg-t">Ajustes da Sensi</b><div class="ox-list"><div class="ox-li" style="--d:0"><i></i>Sensi vermelha</div><div class="ox-li" style="--d:1"><i></i>Mira sem pinar</div><div class="ox-li" style="--d:2"><i></i>Estabilização</div><div class="ox-li" style="--d:3"><i></i>HUD secreto</div></div><span class="sv-inv-btn sv-cfg-btn"><em class="sv-ib1">Aplicar</em><em class="sv-ib2">Aplicado</em></span><span class="sv-inv-ok sv-cfg-ok"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Sensi aplicada</span></div></div>
           <div class="sv-sc sv-sc4"><div class="ox-r4"><b class="ox-h">Partida</b><span class="ox-sub">Mira ajustada · iPhone</span><span class="sv-as ox-b4">Jogar</span></div><div class="sv-play ox-final"><div class="ox-pop"><small>Free Fire</small><b>CAPA!</b><span>Mira mais precisa</span></div></div></div>
           <span class="sv-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>
         </div>

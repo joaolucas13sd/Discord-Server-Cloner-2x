@@ -58,8 +58,9 @@ def resultado(topo, botao, final):
 CSS = """
 .ox-w .sv-cfg-btn{animation-name:oxInvB !important}
 @keyframes oxInvB{0%,56.4%{transform:none}56.7%,57.6%{transform:scale(.95)}58%,100%{transform:none}}
+.sv-cfg-w.ox-w{padding-top:43px}
 .ox-w .sv-cfg-t{top:12px}
-.ox-list{display:flex;flex-direction:column;gap:5px;max-width:122px;margin-top:-14px}
+.ox-list{display:flex;flex-direction:column;gap:5px;max-width:calc(50% - 30px);margin-top:-14px}
 .ox-li{display:flex;align-items:center;gap:6px;color:#c9ccd1;font-size:8.5px}
 .ox-li i{flex:none;width:11px;height:11px;border-radius:50%;border:1.5px solid #5c6066;position:relative}
 .ox-li i::after{content:"";position:absolute;inset:1px;border-radius:50%;background:var(--sv);opacity:0;animation:oxLi var(--sv-t) infinite;animation-delay:calc(var(--d) * .35s)}
