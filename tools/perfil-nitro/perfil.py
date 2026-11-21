@@ -11,12 +11,12 @@ GIFT = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d=
 
 HTML = f'''<div class="dp" role="img" aria-label="Seu perfil com Nitro"><div class="dp-in">
 <div class="dp-ban"><span class="dp-spark dp-s1">✦</span><span class="dp-spark dp-s2">✦</span><span class="dp-spark dp-s3">✦</span></div>
-<div class="dp-av"><span class="dp-img"></span><img class="dp-dec" src="{DECO}" alt=""><i class="dp-st"></i></div>
+<div class="dp-av"><span class="dp-img"></span><i class="dp-st"></i></div>
 <div class="dp-bub"><span>✨</span>Nitro ativo</div>
 <div class="dp-body">
 <div class="dp-name">Seu perfil com Nitro</div>
 <div class="dp-user">voce<i>•</i>ele/dele</div>
-<div class="dp-badges"><img src="{NITRO}" alt="Nitro">{BOOST}{HYPE}</div>
+<div class="dp-badges"><img src="{NITRO}" alt="Nitro"></div>
 <div class="dp-box">
 <div class="dp-sec"><div class="dp-h">Sobre mim</div><div class="dp-p">Nitro ativo ✦ aproveitando tudo 💜<br>Avatar animado, banner e emojis em qualquer servidor.</div></div>
 <div class="dp-sec"><div class="dp-h">Membro desde</div><div class="dp-dt"><span class="dp-dl">{DISC}</span>13 de mar. de 2021</div></div>
