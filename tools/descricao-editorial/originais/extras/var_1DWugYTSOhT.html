@@ -1,0 +1,637 @@
+<div class="sp-wrapper">
+
+<style>
+.sp-wrapper{
+    --sp-accent:#1db954;
+    --sp-bg:#0a0f0c;
+    --sp-card:#101712;
+    --sp-item:#161e18;
+    --sp-border:rgba(255,255,255,.08);
+    --sp-text:#f5f5f6;
+    --sp-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--sp-text);
+}
+.sp-wrapper *{box-sizing:border-box}
+
+.sp-container{
+    background:var(--sp-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.sp-card{
+    background:var(--sp-card);
+    border:1px solid var(--sp-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.sp-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.sp-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--sp-accent);
+    flex-shrink:0;
+}
+
+.sp-quote{
+    border-left:3px solid var(--sp-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.sp-quote strong{color:#fff}
+
+.sp-text{
+    color:var(--sp-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.sp-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.sp-list{display:grid;gap:10px}
+.sp-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--sp-item);
+    border:1px solid var(--sp-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.sp-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(29,185,84,.10);
+    border:1px solid rgba(29,185,84,.38);
+}
+.sp-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#5be08a;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.sp-item-label{
+    display:block;
+    color:var(--sp-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.sp-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.sp-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#0b110d;
+    border:1px solid var(--sp-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.sp-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--sp-border);
+}
+.sp-mock-bar span:first-child{color:#5be08a;font-weight:900;letter-spacing:.5px}
+
+.sp-dialog,
+.sp-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.sp-dialog{animation:spDialog 10s infinite}
+.sp-success{animation:spSuccess 10s infinite;opacity:0;top:62px}
+
+.sp-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.sp-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.sp-field{
+    background:#151517;
+    border:1px solid rgba(29,185,84,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.sp-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--sp-accent);
+}
+.sp-type-1{animation:spType1 10s steps(17,end) infinite}
+.sp-type-2{animation:spType2 10s steps(10,end) infinite}
+
+.sp-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.sp-btn-cancel,
+.sp-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.sp-btn-cancel{background:#34363c;color:#d4d4d8}
+.sp-btn-go{
+    position:relative;
+    background:#169c46;
+    color:#fff;
+    min-width:74px;
+    text-align:center;
+}
+.sp-btn-go span{display:block}
+.sp-btn-a{animation:spBtnA 10s infinite}
+.sp-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:spBtnB 10s infinite;
+}
+
+.sp-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.sp-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.sp-ok-name{font-size:11px;color:#5be08a;font-weight:700;margin-bottom:3px}
+.sp-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes spDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes spSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes spType1{
+    0%,6%{width:0}
+    24%,92%{width:17ch}
+    100%{width:0}
+}
+@keyframes spType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes spBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes spBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.sp-steps{display:grid;gap:10px}
+.sp-step{
+    background:var(--sp-item);
+    border:1px solid var(--sp-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.sp-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--sp-muted);
+    margin-bottom:8px;
+}
+.sp-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--sp-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.sp-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--sp-text);
+    margin:0;
+}
+.sp-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.sp-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.sp-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.sp-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.sp-info:last-child{margin-bottom:0}
+.sp-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .sp-card{padding:18px 14px}
+    .sp-dialog,.sp-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .sp-dialog,.sp-success,.sp-type,.sp-btn-a,.sp-btn-b{animation:none}
+    .sp-dialog{opacity:1}
+    .sp-type-1{width:17ch}
+    .sp-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.sp-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.sp-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--sp-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.sp-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.sp-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sp-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.sp-hero-s strong{color:#fff}
+.sp-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--sp-border)}
+.sp-price-k{display:block;color:var(--sp-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.sp-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.sp-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.sp-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.sp-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.sp-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.sp-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sp-ben{background:var(--sp-item);border:1px solid var(--sp-border);border-radius:14px;padding:14px 12px}
+.sp-ben svg{width:26px;height:26px;fill:none;stroke:var(--sp-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.sp-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.sp-ben small{display:block;color:var(--sp-muted);font-size:12.5px;line-height:1.45}
+.sp-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.sp-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--sp-item);border:1px solid var(--sp-border);text-align:center}
+.sp-plan b{display:block;font-size:13px;color:var(--sp-muted);margin-bottom:6px}
+.sp-plan strong{display:block;font-size:22px;color:#fff}
+.sp-plan small{display:block;margin-top:4px;color:var(--sp-muted);font-size:12px}
+.sp-plan--on{border-color:var(--sp-accent);background:rgba(240,77,200,.10)}
+.sp-plan--on b{color:#ff7ad9}
+.sp-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--sp-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.sp-trust{display:grid;gap:10px}
+.sp-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.sp-trust strong{color:#fff}
+.sp-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.sp-info-title{display:flex;align-items:center;gap:8px}
+.sp-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.sp-grid,.sp-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.sp-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.sp-prof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.sp-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.sp-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.sp-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.sp-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.sp-prof-body{padding:30px 12px 12px}
+.sp-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.sp-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.sp-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.sp-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.sp-prof-user b{color:#ff7ad9}
+.sp-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.sp-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.sp-mock:has(.sp-prof){height:auto !important;padding-bottom:16px}
+.sp-prof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.sp-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.sp-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.sp-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.sp-prof-name{white-space:nowrap}
+.sp-prof .sp-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.sp-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.sp-prof-av,.sp-prof-av span,.sp-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.sp-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.sp-rows{display:grid;gap:8px}
+.sp-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--sp-item);border:1px solid var(--sp-border);font-size:14px;color:#e4e4e7}
+.sp-row b{color:#fff;white-space:nowrap}
+.sp-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.sp-row--on{border-color:var(--sp-accent);background:rgba(240,77,200,.10)}
+.sp-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--sp-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.sp-inv{display:flex;align-items:center;gap:10px;margin:4px 0 12px;padding:10px;border-radius:8px;background:#151517;border:1px solid rgba(255,255,255,.08)}
+.sp-inv-av{display:grid;place-items:center;flex:0 0 34px;width:34px;height:34px;border-radius:50%;background:var(--sp-accent)}
+.sp-inv-av svg{width:17px !important;height:17px !important;max-width:none !important;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.sp-inv b{display:block;font-size:12.5px;color:#fff}
+.sp-inv small{display:block;margin-top:2px;font-size:11px;color:#a1a1aa}
+.sp-cur.sp-cur3{animation-name:nzCur3 !important}
+.sp-cur.sp-cur3 svg{animation-name:nzClk3 !important}
+@keyframes nzCur3{0%{left:60%;top:250px;opacity:0}5%{opacity:1}12%,30%{left:var(--x1);top:var(--y1);opacity:1}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+@keyframes nzClk3{0%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}44.5%,79.5%{transform:scale(.8)}}
+
+.sp-cb-g{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 8px}
+.sp-cb-s{display:flex;flex-direction:column;align-items:center;gap:5px;width:62px}
+.sp-cb-s i{display:grid;place-items:center;width:46px;height:46px;border-radius:9px;background:var(--c);color:#fff;font-style:normal;font-weight:900;font-size:13px !important;line-height:1;letter-spacing:-.3px;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:none}
+.sp-cb-s small{font-size:10px !important;color:#d4d4d8;white-space:nowrap}
+.sp-cb-on i{animation:nzCbOn 10s infinite}
+@keyframes nzCbOn{0%,79%{box-shadow:0 4px 12px rgba(0,0,0,.4);transform:none}81%,96%{box-shadow:0 0 0 3px #fff;transform:scale(1.08)}}
+.sp-cb-tag{display:table !important;margin:12px auto 0 !important;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px !important;font-weight:800}
+
+.sp-yt-v{position:relative;height:118px;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#1e293b,#7f1d1d 60%,#dc2626)}
+.sp-yt-play{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:44px;height:32px;margin:-16px 0 0 -22px;border-radius:9px;background:#ff0033}
+.sp-yt-play svg{width:16px !important;height:16px !important;max-width:none !important;fill:#fff}
+.sp-yt-tag{position:absolute;left:8px;top:8px;padding:3px 7px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9.5px;font-weight:900;letter-spacing:.4px}
+.sp-yt-bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.25)}
+.sp-yt-bar i{display:block;height:100%;width:0;background:#ff0033;animation:nzMusBar 10s linear infinite}
+.sp-yt-t{display:block;margin:9px 2px 8px;font-size:13px;color:#fff}
+.sp-yt-acts{display:flex;gap:6px}
+.sp-yt-b{display:inline-flex;align-items:center;gap:5px;padding:7px 11px;border-radius:999px;background:#2e3035;color:#e4e4e7;font-size:11.5px;font-weight:700}
+.sp-yt-b svg{width:13px !important;height:13px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.sp-yt-b em{font-style:normal}
+.sp-yt-dl{position:relative}
+.sp-yt-ok{display:none}
+.sp-yt-dl{animation:nzYtDl 10s infinite}
+@keyframes nzYtDl{0%,80%{background:#2e3035;color:#e4e4e7}83%,96%{background:#22c55e;color:#04140a}}
+.sp-yt-a{animation:nzYtA 10s steps(1,end) infinite}
+@keyframes nzYtA{0%,81%{font-size:11.5px}82%,97%{font-size:0}}
+.sp-yt-dl::after{content:"Baixado";font-size:0;animation:nzYtOk 10s steps(1,end) infinite}
+@keyframes nzYtOk{0%,81%{font-size:0}82%,97%{font-size:11.5px}}
+
+.sp-mock:has(.sp-scr){height:270px !important}
+.sp-mock:has(.sp-cv-art){height:300px !important}
+.sp-success.sp-scr{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:12px 14px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important}
+.sp-scr-t{display:block;margin-bottom:10px;font-size:14px;color:#fff}
+.sp-mus-r{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;margin-bottom:4px}
+.sp-mus-on{background:rgba(255,255,255,.07)}
+.sp-mus-cap{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:6px;background:var(--c)}
+.sp-mus-cap svg{width:16px !important;height:16px !important;max-width:none !important;fill:#000}
+.sp-mus-r span{flex:1;min-width:0;display:flex;flex-direction:column}
+.sp-mus-r b{font-size:12.5px;color:#fff}.sp-mus-on b{color:var(--sp-accent)}
+.sp-mus-r small{font-size:10.5px;color:#9aa0a6}
+.sp-mus-r .sp-eq{flex:none;flex-direction:row;align-items:flex-end;gap:2px;height:14px}
+.sp-eq i{width:3px;height:100%;border-radius:2px;background:var(--sp-accent);transform-origin:bottom;animation:nzEq .9s ease-in-out infinite}
+.sp-eq i:nth-child(2){animation-delay:.2s}.sp-eq i:nth-child(3){animation-delay:.4s}.sp-eq i:nth-child(4){animation-delay:.1s}
+@keyframes nzEq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.sp-mus-bar{height:4px;margin:10px 8px 0;border-radius:4px;background:#2e3035;overflow:hidden}
+.sp-mus-bar i{display:block;height:100%;width:0;background:var(--sp-accent);animation:nzMusBar 10s linear infinite}
+@keyframes nzMusBar{0%,72%{width:0}96%,100%{width:70%}}
+.sp-cv-tools{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.sp-cv-btn,.sp-cv-btn2{display:inline-flex;align-items:center;gap:4px;padding:6px 9px;border-radius:7px;font-size:11px;font-weight:700}
+.sp-cv-btn{background:var(--sp-accent);color:#fff}.sp-cv-btn2{background:#2e3035;color:#d4d4d8}
+.sp-cv-btn svg{width:12px !important;height:12px !important;max-width:none !important;fill:#fff}
+.sp-cv-art{position:relative;height:150px;border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#3a3b42 0 25%,#2a2b31 0 50%) 0 0/16px 16px}
+.sp-cv-bg{position:absolute;inset:0;background:linear-gradient(160deg,#38bdf8,#22c55e 55%,#f59e0b);animation:nzCvBg 10s infinite}
+@keyframes nzCvBg{0%,80%{opacity:1}85%,100%{opacity:0}}
+.sp-cv-head{position:absolute;left:50%;top:26px;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:#f5d0b5}
+.sp-cv-body{position:absolute;left:50%;top:68px;width:84px;height:90px;margin-left:-42px;border-radius:42px 42px 0 0;background:#7c3aed}
+.sp-cv-ok{position:absolute;right:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:#22c55e;color:#04140a;font-size:10px;font-weight:900;opacity:0;animation:nzCvOk 10s infinite}
+@keyframes nzCvOk{0%,84%{opacity:0}87%,96%{opacity:1}100%{opacity:0}}
+
+.sp-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+
+.sp-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.sp-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+</style>
+
+
+<div class="sp-container">
+    <div class="sp-hero"><span class="sp-tag">CONVITE NA SUA CONTA</span><h2 class="sp-hero-t">Spotify Premium mensal por <span>R$ 10,99</span></h2><p class="sp-hero-s">Entre num plano Premium com a <strong>sua própria conta</strong>: suas playlists continuam. Música sem anúncios, no modo offline.</p><div class="sp-price sp-pulse"><div><span class="sp-price-k">No Spotify</span><span class="sp-price-old">R$ 23,90</span></div><div><span class="sp-price-k">Aqui</span><span class="sp-price-new">R$ 10,99</span></div><span class="sp-price-off">-54%</span><span class="sp-price-mes">Você economiza R$ 12,91.</span></div></div>
+    <div class="sp-card"><h2 class="sp-h2">O que o Premium libera</h2><div class="sp-grid"><div class="sp-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4zM15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></svg><b>Sem anúncios</b><small>Ouça tudo sem interrupções.</small></div><div class="sp-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M5 21h14"/></svg><b>Modo offline</b><small>Baixe músicas e podcasts.</small></div><div class="sp-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg><b>Pule à vontade</b><small>Escolha qualquer música, na ordem que quiser.</small></div><div class="sp-ben"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10z"/></svg><b>Qualidade alta</b><small>Som melhor em todos os aparelhos.</small></div></div></div>
+    <div class="sp-card"><h2 class="sp-h2">Compare os planos</h2><div class="sp-rows"><div class="sp-row"><span>Convite Spotify Premium Anual</span><b><s>R$ 239,00</s>R$ 50,99</b></div><div class="sp-row"><span>Conta Spotify Premium Trimensal</span><b><s>R$ 72,00</s>R$ 14,99</b></div><div class="sp-row sp-row--on"><span>Convite Spotify Premium Mensal<span class="sp-row-tag">VOCÊ ESTÁ AQUI</span></span><b><s>R$ 23,90</s>R$ 10,99</b></div><div class="sp-row"><span>Conta Spotify Premium Mensal</span><b><s>R$ 23,90</s>R$ 5,99</b></div></div><p class="sp-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="sp-card">
+
+        <h2 class="sp-h2">O que o plano oferece</h2>
+
+        <div class="sp-list">
+
+            <div class="sp-item">
+                <span class="sp-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg></span>
+                <div>
+                    <span class="sp-item-label">Qualidade de áudio muito alta</span>
+                    <span class="sp-item-text">Curta ainda mais sua experiência musical com qualidade de som de até ~320 kbps.</span>
+                </div>
+            </div>
+
+            <div class="sp-item">
+                <span class="sp-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m4.9 4.9 14.2 14.2"></path></svg></span>
+                <div>
+                    <span class="sp-item-label">Ouça música sem anúncios</span>
+                    <span class="sp-item-text">Apenas músicas, sem nenhum anúncio. Só as batidas, sem parar.</span>
+                </div>
+            </div>
+
+            <div class="sp-item">
+                <span class="sp-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" x2="12" y1="15" y2="3"></line></svg></span>
+                <div>
+                    <span class="sp-item-label">Stream no modo offline</span>
+                    <span class="sp-item-text">Baixe milhares de músicas ou deixe o Backup offline fazer isso por você.</span>
+                </div>
+            </div>
+
+            <div class="sp-item">
+                <span class="sp-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m18 14 4 4-4 4"></path><path d="m18 2 4 4-4 4"></path><path d="M2 18h1.973a4 4 0 0 0 3.3-1.7l5.454-8.6a4 4 0 0 1 3.3-1.7H22"></path><path d="M2 6h1.972a4 4 0 0 1 3.6 2.2"></path><path d="M22 18h-6.041a4 4 0 0 1-3.3-1.8l-.359-.45"></path></svg></span>
+                <div>
+                    <span class="sp-item-label">Ouça músicas na ordem que quiser</span>
+                    <span class="sp-item-text">Repita músicas, ouça álbuns na ordem e pule de faixa quantas vezes quiser.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="sp-card">
+
+        <h2 class="sp-h2">Como utilizar</h2>
+
+        <div class="sp-mock">
+
+            <div class="sp-mock-bar">
+                <span>Spotify</span>
+                <span>Início</span>
+                <span>Buscar</span>
+                <span>Biblioteca</span>
+            </div>
+
+            <div class="sp-dialog">
+                <div class="sp-dlg-title">Aceitar convite</div>
+                <div class="sp-dlg-desc">Você recebeu um convite para entrar no plano família.</div>
+
+                <div class="sp-inv"><i class="sp-inv-av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l9 6 9-6M4 6h16v12H4z"/></svg></i><span><b>Você foi convidado!</b><small>Spotify Premium · Família</small></span></div>
+
+                <div class="sp-dlg-actions">
+                    <span class="sp-btn-cancel">Cancelar</span>
+                    <span class="sp-btn-go">
+                        <span class="sp-btn-a">Aceitar</span>
+                        <span class="sp-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="sp-cur sp-cur2 sp-cur3" aria-hidden="true" style="--x1:77.2%;--y1:154px;--x2:77.2%;--y2:154px;--x3:74.5%;--y3:207px;--x4:59.0%;--y4:109px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="sp-success sp-scr">
+                <b class="sp-scr-t">Tocando sem anúncios</b>
+                <div class="sp-mus-r sp-mus-on" data-alvo><i class="sp-mus-cap" style="--c:#1db954"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></i><span><b>Sua playlist favorita</b><small>Tocando agora</small></span><span class="sp-eq"><i></i><i></i><i></i><i></i></span></div>
+                <div class="sp-mus-r"><i class="sp-mus-cap" style="--c:#8b5cf6"></i><span><b>Para treinar</b><small>Baixada · ouça offline</small></span></div>
+                <div class="sp-mus-r"><i class="sp-mus-cap" style="--c:#f59e0b"></i><span><b>Relaxar</b><small>Pule quantas quiser</small></span></div>
+                <div class="sp-mus-bar"><i></i></div>
+            </div>
+        </div>
+
+        <div class="sp-steps">
+
+            <div class="sp-step">
+                <div class="sp-step-label"><span class="sp-step-num">1</span> Passo 1</div>
+                <p class="sp-step-text">
+                    Escolha seu plano Spotify Premium e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="sp-step">
+                <div class="sp-step-label"><span class="sp-step-num">2</span> Passo 2</div>
+                <p class="sp-step-text">
+                    Receba o <strong>convite</strong> para o plano família e aceite com a sua conta Spotify.
+                </p>
+            </div>
+
+            <div class="sp-step">
+                <div class="sp-step-label"><span class="sp-step-num">3</span> Passo 3</div>
+                <p class="sp-step-text">
+                    Pronto! Ouça suas <strong>músicas favoritas</strong> e aproveite o Spotify Premium.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="sp-card"><h2 class="sp-h2">Compre com tranquilidade</h2><div class="sp-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Entrega</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte por 7 dias</strong> depois do resgate, se precisar de reenvio.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+<!-- TERMOS E GARANTIA -->
+    <div class="sp-card">
+
+        <h2 class="sp-h2">Termos e garantia</h2>
+
+        <div class="sp-info-box">
+
+            <h3 class="sp-info-title">LEIA ANTES DE COMPRAR</h3>
+
+            <p class="sp-info">
+                <span class="sp-highlight">1. Este produto trata-se de um convite para um plano família.</span>
+            </p>
+
+            <p class="sp-info">
+                <span class="sp-highlight">2. Certifique-se de não ter entrado em mais de 2 planos famílias anteriormente.</span>
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Vou perder as minhas playlists?</summary><p>Não. O convite é na <strong>sua própria conta</strong>, então tudo o que você já tem continua lá.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="sp-hero rn-cta2"><span class="sp-tag">PRONTO PARA GARANTIR?</span><h2 class="sp-hero-t">Convite Spotify Premium Mensal</h2><div class="sp-price sp-pulse"><div><span class="sp-price-k">No Spotify</span><span class="sp-price-old">R$ 23,90</span></div><div><span class="sp-price-k">Aqui</span><span class="sp-price-new">R$ 10,99</span></div><span class="sp-price-off">-54%</span><span class="sp-price-mes">Você economiza R$ 12,91.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

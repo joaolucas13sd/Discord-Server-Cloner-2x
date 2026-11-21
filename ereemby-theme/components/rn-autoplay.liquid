@@ -1,0 +1,62 @@
+{% comment %}
+  Rei dos Nitros: faz as vitrines de cards da Home passarem sozinhas
+  (Comunidade, Afiliado/Regras/Cashback e o carrossel de Categorias). Começa ~1s depois que a vitrine aparece na tela
+  e avança 1 card a cada 3s; no fim volta ao primeiro. Pausa quando o cliente arrasta para o lado
+  ou com o mouse em cima. Para incluir outra vitrine, acrescente [id da faixa, classe do card] na lista.
+{% endcomment %}
+<script>
+  (function () {
+    if (window.__rnAutoOn) return;
+    window.__rnAutoOn = true;
+    var LISTA = [['rn-com-track', '.rn-com__card'], ['rn-aff-track', '.rn-aff__card']];
+    var est = {};
+    LISTA.forEach(function (x) { est[x[0]] = { pausaAte: 0, autoAte: 0, proxEm: 0, via: false, mouse: false }; });
+    function pausar(id) { var e = est[id]; if (e) { e.pausaAte = Date.now() + 5000; e.proxEm = 0; } }
+    document.addEventListener('scroll', function (ev) { var id = ev.target && ev.target.id; if (est[id] && Date.now() > est[id].autoAte) pausar(id); }, true);
+    document.addEventListener('wheel', function (ev) {
+      if (Math.abs(ev.deltaX) <= Math.abs(ev.deltaY) || !ev.target || !ev.target.closest) return;
+      LISTA.forEach(function (x) { if (ev.target.closest('#' + x[0])) pausar(x[0]); });
+    }, { passive: true, capture: true });
+    document.addEventListener('mouseover', function (ev) {
+      LISTA.forEach(function (x) { est[x[0]].mouse = !!(ev.target && ev.target.closest && ev.target.closest('#' + x[0])); });
+    });
+    function naTela(t) { var r = t.getBoundingClientRect(); return r.bottom > 60 && r.top < window.innerHeight * 0.9; }
+    setInterval(function () {
+      var agora = Date.now();
+      LISTA.forEach(function (x) {
+        var t = document.getElementById(x[0]), e = est[x[0]];
+        if (!t || document.hidden || !naTela(t)) { e.via = false; return; }
+        if (!e.via) { e.via = true; e.proxEm = agora + 1000; return; }
+        if (e.mouse || agora < e.pausaAte) return;
+        if (!e.proxEm) e.proxEm = agora + 1500;
+        if (agora < e.proxEm) return;
+        e.proxEm = agora + 3000;
+        if (t.scrollWidth <= t.clientWidth + 4) return;
+        var cards = t.querySelectorAll(x[1]); if (!cards.length) return;
+        var base = cards[0].offsetLeft, best = 0, dist = Infinity;
+        cards.forEach(function (c, i) { var d = Math.abs(c.offsetLeft - base - t.scrollLeft); if (d < dist) { dist = d; best = i; } });
+        var fim = t.scrollLeft + t.clientWidth >= t.scrollWidth - 4;
+        var alvo = fim ? 0 : cards[Math.min(cards.length - 1, best + 1)].offsetLeft - base;
+        e.autoAte = agora + 1200;
+        t.scrollTo({ left: alvo, behavior: 'smooth' });
+      });
+    }, 200);
+
+    // carrossel de categorias (usa o Swiper da página)
+    var cat = { via: false, proxEm: 0, pausaAte: 0, mouse: false };
+    document.addEventListener('pointerdown', function (ev) { if (ev.target && ev.target.closest && ev.target.closest('.categories-swiper, .categories-nav-wrapper')) { cat.pausaAte = Date.now() + 5000; cat.proxEm = 0; } }, true);
+    document.addEventListener('mouseover', function (ev) { cat.mouse = !!(ev.target && ev.target.closest && ev.target.closest('.categories-swiper')); });
+    setInterval(function () {
+      var elc = document.querySelector('.categories-swiper'), sw = elc && elc.swiper;
+      if (!sw || sw.destroyed || document.hidden || !naTela(elc)) { cat.via = false; return; }
+      var agora = Date.now();
+      if (!cat.via) { cat.via = true; cat.proxEm = agora + 1000; return; }
+      if (cat.mouse || agora < cat.pausaAte) return;
+      if (!cat.proxEm) cat.proxEm = agora + 1500;
+      if (agora < cat.proxEm) return;
+      cat.proxEm = agora + 3000;
+      if (sw.isLocked) return;
+      if (sw.isEnd) sw.slideTo(0, 600); else sw.slideNext(500);
+    }, 200);
+  })();
+</script>

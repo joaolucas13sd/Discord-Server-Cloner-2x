@@ -1,0 +1,101 @@
+{% comment %}
+  Rei dos Nitros — Comunidade (Discord + WhatsApp) + bloco de vantagens.
+  Usado só na Home (pages/index.liquid) com {% include 'rn-comunidade' %}.
+
+  ---- CONFIGURAÇÃO ----
+{% endcomment %}
+{% assign rn_discord_link = 'https://discord.gg/dFr88Y8rJb' %}
+{% assign rn_discord_img = 'https://cdn.erbycloud.com/attachments/17944490706817594imagem.png' %}
+
+{% comment %}
+  Número do WhatsApp com país e DDD, só dígitos. Ex.: '5511999999999'.
+  Se ficar vazio, usa o WhatsApp das redes sociais do painel (se houver).
+  Se nenhum dos dois existir, o botão aparece como "Em breve".
+{% endcomment %}
+{% assign rn_whatsapp_number = '5521986513171' %}
+{% assign rn_whatsapp_msg = 'Olá! Preciso de ajuda.' %}
+{% assign rn_whatsapp_img = 'https://cdn.erbycloud.com/attachments/17944490739667744imagem.png' %}
+
+{% comment %} Cashback mostrado nas vantagens. Use o mesmo valor de components/product-card.liquid {% endcomment %}
+{% assign rn_cashback = 4 %}
+{% comment %} ---------------------- {% endcomment %}
+
+{% assign rn_whats_link = '' %}
+{% if rn_whatsapp_number != '' %}
+  {% assign rn_msg = rn_whatsapp_msg | url_encode | replace: '+', '%20' %}
+  {% assign rn_whats_link = 'https://wa.me/' | append: rn_whatsapp_number | append: '?text=' | append: rn_msg %}
+{% elsif social.whatsapp %}
+  {% if social.whatsapp contains 'http' %}
+    {% assign rn_whats_link = social.whatsapp %}
+  {% else %}
+    {% assign rn_whats_link = 'https://wa.me/' | append: social.whatsapp %}
+  {% endif %}
+{% endif %}
+
+<section class="rn-com" id="rn-com">
+  <div class="rn-com__track" id="rn-com-track">
+    <article class="rn-com__card rn-com__card--discord">
+      <img class="rn-com__img" src="{{ rn_discord_img }}" alt="Comunidade no Discord" loading="lazy">
+      <div class="rn-com__body">
+        <h3 class="rn-com__title">Comunidade no Discord</h3>
+        <p class="rn-com__desc">Entre no servidor para conversar, tirar dúvidas e acompanhar as novidades da loja.</p>
+        <a class="rn-com__btn rn-com__btn--discord" href="{{ rn_discord_link }}" target="_blank" rel="noopener">Entrar no servidor →</a>
+      </div>
+    </article>
+    <article class="rn-com__card rn-com__card--whats">
+      <img class="rn-com__img" src="{{ rn_whatsapp_img }}" alt="Suporte via WhatsApp" loading="lazy">
+      <div class="rn-com__body">
+        <h3 class="rn-com__title">Suporte via WhatsApp</h3>
+        <p class="rn-com__desc">Fale com a gente para tirar dúvidas e receber ajuda com o seu pedido.</p>
+        {% if rn_whats_link != '' %}
+          <a class="rn-com__btn rn-com__btn--whats" href="{{ rn_whats_link }}" target="_blank" rel="noopener">Falar no WhatsApp →</a>
+        {% else %}
+          <span class="rn-com__btn rn-com__btn--off">Em breve</span>
+        {% endif %}
+      </div>
+    </article>
+  </div>
+  <div class="rn-com__dots" id="rn-com-dots" aria-hidden="true">
+    <span class="rn-com__dot rn-com__dot--on"></span><span class="rn-com__dot"></span>
+  </div>
+</section>
+
+<section class="rn-perks" id="rn-perks">
+  <div class="rn-perks__grid">
+    <div class="rn-perk">
+      <span class="rn-perk__ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"></rect><rect x="14" y="3" width="7" height="7" rx="1.5"></rect><rect x="3" y="14" width="7" height="7" rx="1.5"></rect><path d="M14 14h3v3h-3zM20 14v.01M20 20v.01M14 20h3"></path></svg></span>
+      <div><div class="rn-perk__t">Pix na hora</div><div class="rn-perk__s">Aprovação rápida</div></div>
+    </div>
+    <div class="rn-perk">
+      <span class="rn-perk__ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg></span>
+      <div><div class="rn-perk__t">Entrega automática</div><div class="rn-perk__s">Na maioria dos produtos</div></div>
+    </div>
+    {% if rn_cashback > 0 %}
+      <div class="rn-perk">
+        <span class="rn-perk__ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="5"></circle><path d="M18.1 10.4A5 5 0 1 1 10.4 18.1"></path><path d="M7 6h1v4"></path><path d="m16.7 13.9.7.7-2.8 2.8"></path></svg></span>
+        <div><div class="rn-perk__t">{{ rn_cashback }}% de cashback</div><div class="rn-perk__s">Vira saldo para a próxima</div></div>
+      </div>
+    {% endif %}
+    <div class="rn-perk">
+      <span class="rn-perk__ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"></path><rect x="3" y="14" width="4" height="6" rx="2"></rect><rect x="17" y="14" width="4" height="6" rx="2"></rect></svg></span>
+      <div><div class="rn-perk__t">Suporte humano</div><div class="rn-perk__s">WhatsApp e Discord</div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var track = document.getElementById('rn-com-track');
+    var dots = document.querySelectorAll('#rn-com-dots .rn-com__dot');
+    if (!track || !dots.length) return;
+    track.addEventListener('scroll', function () {
+      var cards = track.querySelectorAll('.rn-com__card');
+      var best = 0, dist = Infinity;
+      cards.forEach(function (c, i) {
+        var d = Math.abs(c.offsetLeft - track.scrollLeft - 16);
+        if (d < dist) { dist = d; best = i; }
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('rn-com__dot--on', i === best); });
+    }, { passive: true });
+  })();
+</script>

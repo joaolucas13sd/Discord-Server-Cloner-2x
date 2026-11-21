@@ -1,0 +1,21 @@
+{
+  "/": "pages/index.liquid",
+  "/product/:id/:variant": "pages/product.liquid",
+  "/product/:id": "pages/product.liquid",
+  "/category/:id": "pages/category.liquid",
+  "/categories": "pages/categories.liquid",
+  "/terms": "pages/terms.liquid",
+  "/regras": "pages/regras.liquid",
+  "/affiliate": "pages/affiliate.liquid",
+  "/cashback": "pages/cashback.liquid",
+  "/como-vender": "pages/como-vender.liquid",
+  "/black-friday": "pages/black-friday.liquid",
+  "/roleta": "pages/roleta.liquid",
+  "/raspadinha": "pages/raspadinha.liquid",
+  "/franquias": "pages/franquias.liquid",
+  "/presente": "pages/presente.liquid",
+  "/colecoes": "pages/colecoes.liquid",
+  "/qual-streaming": "pages/qual-streaming.liquid",
+  "/novidades": "pages/novidades.liquid",
+  "/decoracoes": "pages/decoracoes.liquid"
+}

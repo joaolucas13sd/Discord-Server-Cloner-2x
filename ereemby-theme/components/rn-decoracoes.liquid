@@ -1,0 +1,207 @@
+{% comment %}
+  Rei dos Nitros: vitrine "Decorações em Destaque" com RODÍZIO DIÁRIO (igual aos Jogos Steam em destaque).
+  Todo dia à meia-noite (Brasília) mostra 10 decorações (4 das coleções novas + 6 das outras), em rodízio, e atalhos para as coleções novas.
+  Todas custam R$ 15,99 (de R$ 19,00) e levam para a mesma opção da loja (link em RN_DECO_LINK).
+  Para incluir uma decoração: acrescente {"n": "Nome", "i": "link da imagem"} na lista.
+{% endcomment %}
+<section class="rn-deco rn-dv" id="rn-decoracoes" aria-label="Decorações em destaque">
+  <div class="rn-dv__head">
+    <div class="rn-dv__txt">
+      <div class="rn-dv__top"><span class="rn-deco__kicker">DECORAÇÕES DO DISCORD</span><span class="rn-steam__novo rn-deco__novo" id="rn-deco-novo"></span></div>
+      <h2 class="rn-deco__title">Decorações em <span>Destaque</span></h2>
+      <p class="rn-deco__sub" id="rn-deco-sub"></p>
+    </div>
+    <a class="rn-deco__btn rn-dv__btn" href="/decoracoes">Ver decorações <span aria-hidden="true">→</span></a>
+  </div>
+  <div class="rn-dv__cols" id="rn-deco-cols"></div>
+  <div class="rn-deco__track rn-dv__track" id="rn-deco-track"></div>
+  <div class="rn-dv__dots" id="rn-deco-dots" aria-hidden="true"></div>
+  <a class="rn-deco__all rn-dv__all" href="/decoracoes" id="rn-deco-all">Ver todas as decorações <span aria-hidden="true">→</span></a>
+</section>
+<style>
+  #rn-decoracoes.rn-dv { padding: 22px 0 20px; }
+  .rn-dv__head { display: flex; align-items: flex-end; justify-content: space-between; gap: 14px; padding: 0 18px; }
+  .rn-dv__top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+  .rn-dv .rn-deco__title { margin: 8px 0 0; }
+  .rn-dv .rn-deco__sub { margin: 6px 0 0; }
+  .rn-dv__btn { flex: none; display: none !important; }
+  .rn-dv__cols { display: flex; gap: 8px; margin: 14px 0 0; padding: 0 18px 2px; overflow-x: auto; scrollbar-width: none; }
+  .rn-dv__cols::-webkit-scrollbar { display: none; }
+  .rn-dv__cols:empty { display: none; }
+  .rn-dv__col { position: relative; flex: none; display: flex; align-items: flex-end; width: 150px; height: 58px; padding: 6px 9px; border-radius: 12px; overflow: hidden; background: #1b1c22 left center / cover no-repeat; border: 1px solid rgba(255,255,255,.08); color: #fff !important; text-decoration: none !important; font-size: 12px; font-weight: 800; }
+  .rn-dv__col::before { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.75), rgba(0,0,0,0) 70%); }
+  .rn-dv__col span { position: relative; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rn-dv__col i { position: absolute; top: 6px; left: 7px; padding: 2px 6px; border-radius: 999px; background: #22f26a; color: #04140a; font-size: 9px; font-style: normal; font-weight: 900; }
+  #rn-decoracoes .rn-dv__track { display: flex; gap: 12px; margin-top: 14px; padding: 2px 18px 6px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding: 0 18px; scrollbar-width: none; }
+  #rn-decoracoes .rn-dv__track::-webkit-scrollbar { display: none; }
+  #rn-decoracoes .rn-dv__track .rn-deco__card { flex: 0 0 42%; max-width: 190px; scroll-snap-align: start; text-decoration: none !important; transition: transform .18s, border-color .18s; border: 1px solid #26272c; }
+  #rn-decoracoes .rn-deco__card:hover { transform: translateY(-3px); border-color: #5865f2; }
+  #rn-decoracoes .rn-deco__media { position: relative; }
+  #rn-decoracoes .rn-deco__media::before { content: ""; position: absolute; left: 50%; top: 50%; width: 62%; height: 62%; transform: translate(-50%, -50%); border-radius: 50%; background: #5865f2 center / 58% no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 127 96'%3E%3Cpath fill='%23fff' d='M107.7 8.1A105 105 0 0 0 81.5 0a72 72 0 0 0-3.4 6.8 97.7 97.7 0 0 0-29.1 0A72 72 0 0 0 45.6 0a105.9 105.9 0 0 0-26.3 8.1C2.8 32.7-1.7 56.6.5 80.2A105.7 105.7 0 0 0 32.7 96a77.7 77.7 0 0 0 6.9-11.1 68.4 68.4 0 0 1-10.9-5.2c.9-.7 1.8-1.4 2.7-2.1a75.6 75.6 0 0 0 64.3 0c.9.7 1.8 1.4 2.7 2.1a68.7 68.7 0 0 1-10.9 5.2A77 77 0 0 0 94.4 96a105.3 105.3 0 0 0 32.2-15.8c2.6-27.3-4.5-51-18.9-72.1ZM42.5 65.7c-6.3 0-11.4-5.7-11.4-12.8s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.8-11.4 12.8Zm42.2 0c-6.3 0-11.4-5.7-11.4-12.8s5-12.8 11.4-12.8 11.5 5.8 11.4 12.8-5 12.8-11.4 12.8Z'/%3E%3C/svg%3E"); }
+  #rn-decoracoes .rn-deco__media img { position: relative; }
+  .rn-dv__tag { position: absolute; left: 14px; top: 14px; z-index: 2; padding: 2px 7px; border-radius: 999px; background: #22f26a; color: #04140a; font-size: 9.5px; font-weight: 900; letter-spacing: .3px; }
+  #rn-decoracoes .rn-dv__all { margin: 14px 18px 0; max-width: none; }
+  @media (min-width: 760px) {
+    .rn-dv__head { padding: 0 28px; }
+    .rn-dv__btn { display: inline-flex !important; }
+    .rn-dv__cols { padding: 0 28px 2px; overflow: visible; }
+    .rn-dv__col { width: auto; flex: 1 1 0; min-width: 0; height: 64px; }
+    #rn-decoracoes .rn-dv__track { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding: 2px 28px 4px; overflow: visible; }
+    #rn-decoracoes .rn-dv__track .rn-deco__card { max-width: none; }
+    #rn-decoracoes .rn-dv__all { width: max-content; margin: 18px auto 0; padding: 12px 26px; }
+  }
+  /* ---- melhorias: coleções maiores com nome fora da arte, nomes inteiros, desconto e pontinhos ---- */
+  .rn-dv__cols { gap: 10px; margin-top: 16px; padding-bottom: 4px; scroll-snap-type: x mandatory; scroll-padding: 0 18px; }
+  .rn-dv__col { flex-direction: column; align-items: stretch; width: 168px; height: auto; padding: 0; border-radius: 14px; background: #16171b; font-size: 13px; scroll-snap-align: start; transition: border-color .18s, transform .18s; }
+  .rn-dv__col:hover { border-color: rgba(34,242,106,.55); transform: translateY(-2px); }
+  .rn-dv__col::before { display: none; }
+  .rn-dv__ban { position: relative; display: block; height: 62px; background: #1f2027 center / cover no-repeat; }
+  .rn-dv__ban--logo { background: radial-gradient(120% 120% at 50% 0%, #2a2c38, #15161a); }
+  .rn-dv__ban--logo img { position: absolute; inset: 8px 14px; width: calc(100% - 28px); height: calc(100% - 16px); object-fit: contain; }
+  .rn-dv__col i { top: 6px; left: auto; right: 6px; padding: 2px 7px; font-size: 9px; letter-spacing: .3px; box-shadow: 0 2px 6px rgba(0,0,0,.35); }
+  .rn-dv__col span { display: flex; flex-direction: column; gap: 1px; padding: 8px 10px 9px; white-space: normal; }
+  .rn-dv__col b { display: block; font-size: 13px; font-weight: 800; line-height: 1.25; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rn-dv__col small { color: #8d8f96; font-size: 11.5px; font-weight: 600; }
+  #rn-decoracoes .rn-deco__name { white-space: normal !important; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.2; }
+  #rn-decoracoes .rn-deco__card .rn-deco__info { flex: 1; display: flex; flex-direction: column; }
+  #rn-decoracoes .rn-deco__card .rn-deco__prices { margin-top: auto; padding-top: 6px; }
+  #rn-decoracoes .rn-deco__col { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rn-dv__off { position: absolute; right: 14px; top: 14px; z-index: 2; padding: 2px 7px; border-radius: 999px; background: #0d0e11; border: 1px solid rgba(34,242,106,.5); color: #22f26a; font-size: 10px; font-weight: 900; }
+  .rn-dv__dots { display: flex; justify-content: center; gap: 6px; margin-top: 12px; }
+  .rn-dv__dots:empty { display: none; }
+  .rn-dv__dots i { width: 6px; height: 6px; border-radius: 999px; background: #34363d; transition: width .25s, background .25s; }
+  .rn-dv__dots i.on { width: 18px; background: #22f26a; }
+  @media (min-width: 760px) {
+    .rn-dv__cols { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); overflow: visible; }
+    .rn-dv__col:nth-child(n+7) { display: none; }
+    .rn-dv__col { width: auto; height: auto; }
+    .rn-dv__ban { height: 70px; }
+    .rn-dv__dots { display: none; }
+  }
+  @media (min-width: 1180px) { .rn-dv__cols { grid-template-columns: repeat(8, minmax(0, 1fr)); } .rn-dv__col:nth-child(n+7) { display: flex; } }
+  @media (min-width: 760px) and (max-width: 1020px) { #rn-decoracoes .rn-dv__track { grid-template-columns: repeat(4, minmax(0, 1fr)); } #rn-decoracoes .rn-dv__track .rn-deco__card:nth-child(n+9) { display: none; } }
+</style>
+<script>
+  (function () {
+    var POR_DIA = 10, DIA = 86400, BRT = 3 * 3600;
+    function el(id) { return document.getElementById(id); }
+    function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); }
+    function diaHoje() { return Math.floor((Date.now() / 1000 - BRT) / DIA); }
+    function norm(t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim(); }
+    function brl(v) { return Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+    function slug(n) { return 'col-' + norm(n).replace(/[^a-z0-9]+/g, '-'); }
+    // só decorações de avatar (sem plaquinha/efeito/moldura) e uma por grupo de cor, com o preço da faixa de cada coleção
+    function todas() {
+      var out = [], vistos = {};
+      (window.RN_DECO_COLECOES || []).forEach(function (c) { (c.d || []).forEach(function (d) {
+        if (d.t || String(d.i).indexOf('http') !== 0) return;
+        if (d.g) { if (vistos[c.n + d.g]) return; vistos[c.n + d.g] = 1; }
+        out.push({ n: d.n, i: d.i, c: c.n, f: d.f || c.f || '', novo: !!c.lg });
+      }); });
+      return out.length ? out : (window.RN_DECOS || []).map(function (d) { return { n: d.n, i: d.i, c: '', f: '' }; });
+    }
+    function faixa(nome) {
+      var prod = null, v = null; nome = norm(nome || window.RN_DECO_FAIXA || 'Decorações de R$15,99');
+      (window.CATALOG_PRODUCTS || []).forEach(function (p) { if (norm(p.name) === 'decoracoes de perfil') prod = p; });
+      ((prod && prod.variants) || []).forEach(function (x) { if (norm(x.name) === nome) v = x; });
+      return v;
+    }
+    function rodizio(lista, n, dia, passo) {
+      var r = [], usados = {};
+      for (var k = 0; r.length < Math.min(n, lista.length) && k < lista.length * 3; k++) {
+        var i = (dia * n * passo + k * passo) % lista.length; while (usados[i]) i = (i + 1) % lista.length;
+        usados[i] = 1; r.push(lista[i]);
+      }
+      return r;
+    }
+    function montar() {
+      var track = el('rn-deco-track'); if (!track) return;
+      var lista = todas(); if (!lista.length) return;
+      // rodízio diário: 4 das coleções novas + 6 das outras
+      var dia = diaHoje(), novas = lista.filter(function (d) { return d.novo; }), velhas = lista.filter(function (d) { return !d.novo; });
+      var hoje = rodizio(novas, 4, dia, 5).concat(rodizio(velhas, POR_DIA - Math.min(4, novas.length), dia, 7));
+      track.setAttribute('data-dia', dia);
+      track.innerHTML = hoje.map(function (d) {
+        var v = faixa(d.f), preco = v ? Number(v.price) : 0, antes = v ? Number(v.comparison) || 0 : 0;
+        var off = antes > preco && preco > 0 ? Math.round((1 - preco / antes) * 100) : 0;
+        return '<a class="rn-deco__card" href="/decoracoes?d=' + encodeURIComponent(d.n) + '">' + (d.novo ? '<span class="rn-dv__tag">NOVA</span>' : '') + (off ? '<span class="rn-dv__off">-' + off + '%</span>' : '') +
+          '<div class="rn-deco__media"><img src="' + esc(d.i) + '" alt="' + esc(d.n) + '" loading="lazy"></div>' +
+          '<div class="rn-deco__info"><h3 class="rn-deco__name">' + esc(d.n) + '</h3>' + (d.c ? '<small class="rn-deco__col">' + esc(d.c) + '</small>' : '') +
+          (v ? '<div class="rn-deco__prices"><span class="rn-deco__price">' + brl(preco) + '</span>' + (antes > preco ? '<s class="rn-deco__old">' + brl(antes) + '</s>' : '') + '</div>' : '') + '</div></a>';
+      }).join('');
+      // atalhos para as coleções novas (com banner)
+      var C = (window.RN_DECO_COLECOES || []), total = 0; C.forEach(function (c) { total += (c.d || []).length; });
+      var cl = el('rn-deco-cols');
+      if (cl) cl.innerHTML = C.filter(function (c) { return c.lg && (String(c.b).indexOf('http') === 0 || String(c.lg).indexOf('http') === 0); }).slice(0, 8).map(function (c) {
+        var temBan = String(c.b).indexOf('http') === 0, n = (c.d || []).length;
+        var ban = temBan
+          ? '<span class="rn-dv__ban" style="background-image:url(\'' + esc(c.b) + '\');' + (c.bp ? 'background-position:' + esc(c.bp) : '') + '"></span>'
+          : '<span class="rn-dv__ban rn-dv__ban--logo"><img src="' + esc(c.lg) + '" alt="" loading="lazy"></span>';
+        return '<a class="rn-dv__col" href="/decoracoes#' + slug(c.n) + '">' + ban + '<i>NOVA</i><span><b>' + esc(c.n) + '</b><small>' + n + (n === 1 ? ' item' : ' itens') + '</small></span></a>';
+      }).join('');
+      var sub = el('rn-deco-sub');
+      if (sub) sub.textContent = total + ' itens em ' + C.length + ' coleções. Toque numa decoração para ver como fica no seu perfil.';
+      var all = el('rn-deco-all'); if (all) all.innerHTML = 'Ver todas as ' + C.length + ' coleções <span aria-hidden="true">→</span>';
+      track.scrollLeft = 0;
+      var dots = el('rn-deco-dots');
+      if (dots) { dots.innerHTML = hoje.map(function (_, i) { return '<i' + (i ? '' : ' class="on"') + '></i>'; }).join(''); }
+    }
+    document.addEventListener('scroll', function (e) {
+      var t = e.target; if (!t || t.id !== 'rn-deco-track') return;
+      var dots = el('rn-deco-dots'), card = t.querySelector('.rn-deco__card'); if (!dots || !card) return;
+      var fim = t.scrollLeft + t.clientWidth >= t.scrollWidth - 4;
+      var i = fim ? dots.children.length - 1 : Math.round(t.scrollLeft / (card.getBoundingClientRect().width + 12));
+      [].forEach.call(dots.children, function (d, k) { d.className = k === i ? 'on' : ''; });
+    }, true);
+    // monta já e sempre que a vitrine aparecer vazia (troca de página sem recarregar) ou virar o dia
+    montar();
+    if (window.__rnDecoDia) return;
+    window.__rnDecoDia = true;
+    function pad(n) { return (n < 10 ? '0' : '') + n; }
+    setInterval(function () {
+      var track = el('rn-deco-track'); if (!track) return;
+      var dia = diaHoje();
+      if (!track.children.length || +track.getAttribute('data-dia') !== dia) montar();
+      var novo = el('rn-deco-novo'); if (!novo) return;
+      var r = Math.max(0, Math.floor((dia + 1) * DIA + BRT - Date.now() / 1000));
+      novo.innerHTML = '<span class="rn-steam__pulse"></span>Novas em <b>' + pad(Math.floor(r / 3600)) + ':' + pad(Math.floor(r % 3600 / 60)) + ':' + pad(r % 60) + '</b>';
+    }, 1000);
+  })();
+</script>
+<script>
+  (function () {
+    // vale também quando a loja troca de página sem recarregar: sempre usa a vitrine que está na tela
+    if (window.__rnDecoOn) return;
+    window.__rnDecoOn = true;
+    function track() { return document.getElementById('rn-deco-track'); }
+    function passo(t) { var card = t.querySelector('.rn-deco__card'); return card ? card.getBoundingClientRect().width + 12 : t.clientWidth * 0.8; }
+    function avancar(t) {
+      var fim = t.scrollWidth - t.clientWidth - 4;
+      autoAte = Date.now() + 1200;
+      if (t.scrollLeft >= fim) t.scrollTo({ left: 0, behavior: 'smooth' });
+      else t.scrollBy({ left: passo(t), behavior: 'smooth' });
+    }
+
+
+    // passa sozinho: começa ~1s depois que aparece na tela e avança 1 card a cada 3s; no fim volta ao primeiro.
+    // pausa quando o cliente arrasta para o lado ou com o mouse em cima.
+    var pausaAte = 0, mouseDentro = false, autoAte = 0, proxEm = 0, viaAntes = false;
+    function pausar(ms) { pausaAte = Date.now() + (ms || 5000); proxEm = 0; }
+    document.addEventListener('scroll', function (e) { if (e.target && e.target.id === 'rn-deco-track' && Date.now() > autoAte) pausar(); }, true);
+    document.addEventListener('wheel', function (e) { if (e.target && e.target.closest && e.target.closest('#rn-deco-track') && Math.abs(e.deltaX) > Math.abs(e.deltaY)) pausar(); }, { passive: true, capture: true });
+    document.addEventListener('mouseover', function (e) { mouseDentro = !!(e.target && e.target.closest && e.target.closest('#rn-deco-track')); });
+    function naTela(t) { var r = t.getBoundingClientRect(); return r.bottom > 60 && r.top < window.innerHeight * 0.9; }
+    setInterval(function () {
+      var t = track();
+      if (!t || document.hidden || !naTela(t)) { viaAntes = false; return; }
+      var agora = Date.now();
+      if (!viaAntes) { viaAntes = true; proxEm = agora + 1000; return; }
+      if (mouseDentro || agora < pausaAte) return;
+      if (!proxEm) proxEm = agora + 1500;
+      if (agora < proxEm) return;
+      proxEm = agora + 3000;
+      if (t.scrollWidth <= t.clientWidth + 4) return;
+      avancar(t);
+    }, 200);
+  })();
+</script>

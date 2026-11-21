@@ -1,0 +1,638 @@
+<div class="hs-wrapper">
+
+<style>
+.hs-wrapper{
+    --hs-accent:#8b5cf6;
+    --hs-bg:#0b0912;
+    --hs-card:#130f1d;
+    --hs-item:#1a1428;
+    --hs-border:rgba(255,255,255,.08);
+    --hs-text:#f5f5f6;
+    --hs-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--hs-text);
+}
+.hs-wrapper *{box-sizing:border-box}
+
+.hs-container{
+    background:var(--hs-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.hs-card{
+    background:var(--hs-card);
+    border:1px solid var(--hs-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.hs-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.hs-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--hs-accent);
+    flex-shrink:0;
+}
+
+.hs-quote{
+    border-left:3px solid var(--hs-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.hs-quote strong{color:#fff}
+
+.hs-text{
+    color:var(--hs-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.hs-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.hs-list{display:grid;gap:10px}
+.hs-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--hs-item);
+    border:1px solid var(--hs-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.hs-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(139,92,246,.10);
+    border:1px solid rgba(139,92,246,.38);
+}
+.hs-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#c4b0ff;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.hs-item-label{
+    display:block;
+    color:var(--hs-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.hs-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.hs-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#0d0a15;
+    border:1px solid var(--hs-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.hs-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--hs-border);
+}
+.hs-mock-bar span:first-child{color:#c4b0ff;font-weight:900;letter-spacing:.5px}
+
+.hs-dialog,
+.hs-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.hs-dialog{animation:hsDialog 10s infinite}
+.hs-success{animation:hsSuccess 10s infinite;opacity:0;top:62px}
+
+.hs-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.hs-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.hs-field{
+    background:#151517;
+    border:1px solid rgba(139,92,246,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.hs-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--hs-accent);
+}
+.hs-type-1{animation:hsType1 10s steps(18,end) infinite}
+.hs-type-2{animation:hsType2 10s steps(10,end) infinite}
+
+.hs-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.hs-btn-cancel,
+.hs-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.hs-btn-cancel{background:#34363c;color:#d4d4d8}
+.hs-btn-go{
+    position:relative;
+    background:#6d3fd1;
+    color:#fff;
+    min-width:74px;
+    text-align:center;
+}
+.hs-btn-go span{display:block}
+.hs-btn-a{animation:hsBtnA 10s infinite}
+.hs-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:hsBtnB 10s infinite;
+}
+
+.hs-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.hs-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.hs-ok-name{font-size:11px;color:#c4b0ff;font-weight:700;margin-bottom:3px}
+.hs-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes hsDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes hsSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes hsType1{
+    0%,6%{width:0}
+    24%,92%{width:18ch}
+    100%{width:0}
+}
+@keyframes hsType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes hsBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes hsBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.hs-steps{display:grid;gap:10px}
+.hs-step{
+    background:var(--hs-item);
+    border:1px solid var(--hs-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.hs-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--hs-muted);
+    margin-bottom:8px;
+}
+.hs-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--hs-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.hs-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--hs-text);
+    margin:0;
+}
+.hs-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.hs-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.hs-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.hs-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.hs-info:last-child{margin-bottom:0}
+.hs-highlight{color:#ef6b6b;font-weight:800}
+
+/* CHIPS */
+.hs-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:0 0 14px;
+}
+.hs-chips span{
+    background:var(--hs-item);
+    border:1px solid rgba(139,92,246,.38);
+    color:#c4b0ff;
+    font-size:12px;
+    font-weight:800;
+    padding:7px 12px;
+    border-radius:999px;
+}
+
+/* CARROSSEL DE FOTOS */
+.hs-photos{
+    overflow:hidden;
+    margin:0 -6px;
+    padding:6px 0;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+}
+.hs-ptrack{
+    display:flex;
+    gap:12px;
+    width:max-content;
+    animation:hsScroll 70s linear infinite;
+}
+.hs-photos:hover .hs-ptrack,
+.hs-photos:active .hs-ptrack{animation-play-state:paused}
+.hs-ptrack img{
+    display:block;
+    flex-shrink:0;
+    height:250px;
+    width:auto;
+    border-radius:12px;
+}
+@keyframes hsScroll{
+    from{transform:translateX(0)}
+    to{transform:translateX(calc(-50% - 6px))}
+}
+@media(prefers-reduced-motion:reduce){
+    .hs-ptrack{animation:none}
+    .hs-photos{overflow-x:auto;-webkit-mask-image:none;mask-image:none}
+    .hs-ptrack img:nth-child(n+23){display:none}
+}
+
+@media(max-width:380px){
+    .hs-card{padding:18px 14px}
+    .hs-dialog,.hs-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .hs-dialog,.hs-success,.hs-type,.hs-btn-a,.hs-btn-b{animation:none}
+    .hs-dialog{opacity:1}
+    .hs-type-1{width:18ch}
+    .hs-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.hs-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.hs-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--hs-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.hs-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.hs-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hs-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.hs-hero-s strong{color:#fff}
+.hs-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--hs-border)}
+.hs-price-k{display:block;color:var(--hs-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.hs-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.hs-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.hs-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.hs-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.hs-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.hs-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hs-ben{background:var(--hs-item);border:1px solid var(--hs-border);border-radius:14px;padding:14px 12px}
+.hs-ben svg{width:26px;height:26px;fill:none;stroke:var(--hs-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.hs-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.hs-ben small{display:block;color:var(--hs-muted);font-size:12.5px;line-height:1.45}
+.hs-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.hs-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--hs-item);border:1px solid var(--hs-border);text-align:center}
+.hs-plan b{display:block;font-size:13px;color:var(--hs-muted);margin-bottom:6px}
+.hs-plan strong{display:block;font-size:22px;color:#fff}
+.hs-plan small{display:block;margin-top:4px;color:var(--hs-muted);font-size:12px}
+.hs-plan--on{border-color:var(--hs-accent);background:rgba(240,77,200,.10)}
+.hs-plan--on b{color:#ff7ad9}
+.hs-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--hs-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.hs-trust{display:grid;gap:10px}
+.hs-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.hs-trust strong{color:#fff}
+.hs-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.hs-info-title{display:flex;align-items:center;gap:8px}
+.hs-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.hs-nzgrid,.hs-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.hs-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.hs-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.hs-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.hs-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.hs-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.hs-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.hs-prof-body{padding:30px 12px 12px}
+.hs-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.hs-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.hs-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.hs-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.hs-prof-user b{color:#ff7ad9}
+.hs-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.hs-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.hs-mock:has(.hs-nzprof){height:auto !important;padding-bottom:16px}
+.hs-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.hs-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.hs-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.hs-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.hs-prof-name{white-space:nowrap}
+.hs-nzprof .hs-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.hs-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.hs-prof-av,.hs-prof-av span,.hs-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.hs-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.hs-rows{display:grid;gap:8px}
+.hs-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--hs-item);border:1px solid var(--hs-border);font-size:14px;color:#e4e4e7}
+.hs-row b{color:#fff;white-space:nowrap}
+.hs-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.hs-row--on{border-color:var(--hs-accent);background:rgba(240,77,200,.10)}
+.hs-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--hs-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.hs-bonus{overflow:hidden;padding-left:0 !important;padding-right:0 !important;background:radial-gradient(circle at 50% 0%,rgba(250,204,21,.10),transparent 55%),radial-gradient(circle at 50% 100%,rgba(139,92,246,.16),transparent 60%),#07070b !important}
+.hs-bt{margin:6px 0 14px !important;padding:0 16px !important;text-align:center;font-size:30px !important;line-height:1.02 !important;font-weight:900;text-transform:uppercase;letter-spacing:-.5px;color:#fff}
+.hs-mq{position:relative;margin:0 0 10px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.hs-mq-t{display:flex;gap:12px;width:max-content;padding:10px 6px}
+.hs-mq-a{animation:nzSbMqA 50s linear infinite}
+.hs-mq-b{animation:nzSbMqB 46s linear infinite}
+@keyframes nzSbMqA{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes nzSbMqB{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.hs-art{flex:0 0 auto;display:block;width:132px;height:194px;border-radius:11px;background-color:#141018;background-size:cover;background-position:center}
+.hs-art-g{box-shadow:0 0 12px rgba(250,204,21,.55)}
+.hs-art-p{box-shadow:0 0 12px rgba(139,92,246,.6)}
+</style>
+
+
+<div class="hs-container">
+    <div class="hs-hero"><span class="hs-tag">FREE FIRE · ANDROID</span><h2 class="hs-hero-t">Sensi Premium Android por <span>R$ 10,99</span></h2><p class="hs-hero-s">Sensibilidade ajustada para o seu <strong>Android</strong>: mira mais precisa e muito mais capas.</p><div class="hs-price hs-pulse"><div><span class="hs-price-k">Preço normal</span><span class="hs-price-old">R$ 59,99</span></div><div><span class="hs-price-k">Aqui</span><span class="hs-price-new">R$ 10,99</span></div><span class="hs-price-off">-82%</span><span class="hs-price-mes">Você economiza R$ 49,00.</span></div></div>
+    <div class="hs-card"><h2 class="hs-h2">Escolha a sua plataforma</h2><div class="hs-rows"><div class="hs-row"><span>Sensi Emulador</span><b><s>R$ 59,99</s>R$ 10,99</b></div><div class="hs-row"><span>Sensi iPhone</span><b><s>R$ 59,99</s>R$ 10,99</b></div><div class="hs-row hs-row--on"><span>Sensi Android<span class="hs-row-tag">VOCÊ ESTÁ AQUI</span></span><b><s>R$ 59,99</s>R$ 10,99</b></div></div><p class="hs-text" style="margin-top:12px">Para trocar de opção, toque nela na lista acima do botão de comprar.</p></div>
+    <!-- O QUE VOCÊ GANHA -->
+    <div class="hs-card">
+
+        <h2 class="hs-h2">O que você ganha com a Hashira?</h2>
+
+        <div class="hs-list">
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Entrega</span>
+                    <span class="hs-item-text">Acesso imediato</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Desempenho</span>
+                    <span class="hs-item-text">Seja o MVP das partidas</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"></path><path d="m9 12 2 2 4-4"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Segurança</span>
+                    <span class="hs-item-text">Sem programas externos</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></span>
+                <div>
+                    <span class="hs-item-label">Sensi</span>
+                    <span class="hs-item-text">Sensi Full Vermelha</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="22" x2="18" y1="12" y2="12"></line><line x1="6" x2="2" y1="12" y2="12"></line><line x1="12" x2="12" y1="6" y2="2"></line><line x1="12" x2="12" y1="22" y2="18"></line></svg></span>
+                <div>
+                    <span class="hs-item-label">Mira</span>
+                    <span class="hs-item-text">Mira sem pinar</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ANDROID -->
+    <div class="hs-card">
+
+        <h2 class="hs-h2">Android</h2>
+
+        <div class="hs-chips">
+            <span>Samsung</span>
+            <span>Xiaomi</span>
+            <span>Motorola</span>
+            <span>Realme</span>
+            <span>LG</span>
+            <span>Asus</span>
+        </div>
+
+        <div class="hs-list">
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"></path><path d="M22 10v6"></path><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Aulas</span>
+                    <span class="hs-item-text">Aulas exclusivas com o time Hashira e pro players</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect><path d="M12 18h.01"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Compatibilidade</span>
+                    <span class="hs-item-text">Sensi de todos os Androids</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="22" x2="18" y1="12" y2="12"></line><line x1="6" x2="2" y1="12" y2="12"></line><line x1="12" x2="12" y1="6" y2="2"></line><line x1="12" x2="12" y1="22" y2="18"></line></svg></span>
+                <div>
+                    <span class="hs-item-label">Estabilização</span>
+                    <span class="hs-item-text">Estabilização de mira</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M9 21V9"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">HUDs</span>
+                    <span class="hs-item-text">HUDs secretos</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 14 4-4"></path><path d="M3.34 19a10 10 0 1 1 17.32 0"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Desempenho</span>
+                    <span class="hs-item-text">Otimização para deixar o celular mais rápido</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg></span>
+                <div>
+                    <span class="hs-item-label">Método</span>
+                    <span class="hs-item-text">Métodos da sensi sem pinar</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"></circle><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Mira</span>
+                    <span class="hs-item-text">Mira 2× 4× Full vermelho</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path><path d="M21 3v5h-5"></path><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path><path d="M8 16H3v5"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Atualizações</span>
+                    <span class="hs-item-text">Atualizações mensais de sensi</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Suporte</span>
+                    <span class="hs-item-text">Suporte no WhatsApp</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="hs-hero rn-cta2"><span class="hs-tag">PRONTO PARA GARANTIR?</span><h2 class="hs-hero-t">Sensi Android</h2><div class="hs-price hs-pulse"><div><span class="hs-price-k">Preço normal</span><span class="hs-price-old">R$ 59,99</span></div><div><span class="hs-price-k">Aqui</span><span class="hs-price-new">R$ 10,99</span></div><span class="hs-price-off">-82%</span><span class="hs-price-mes">Você economiza R$ 49,00.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+    <!-- BÔNUS -->
+    <div class="hs-card hs-bonus">
+        <p class="hs-bt">Você ganha<br>de bônus</p>
+        <div class="hs-mq"><div class="hs-mq-t hs-mq-a"><span class="hs-art hs-art-g" data-rn-art="g0"></span><span class="hs-art hs-art-g" data-rn-art="g1"></span><span class="hs-art hs-art-g" data-rn-art="g2"></span><span class="hs-art hs-art-g" data-rn-art="g3"></span><span class="hs-art hs-art-g" data-rn-art="g4"></span><span class="hs-art hs-art-g" data-rn-art="g5"></span><span class="hs-art hs-art-g" data-rn-art="g6"></span><span class="hs-art hs-art-g" data-rn-art="g7"></span><span class="hs-art hs-art-g" data-rn-art="g8"></span><span class="hs-art hs-art-g" data-rn-art="g9"></span><span class="hs-art hs-art-g" data-rn-art="g10"></span><span class="hs-art hs-art-g" data-rn-art="g11"></span><span class="hs-art hs-art-g" data-rn-art="g0"></span><span class="hs-art hs-art-g" data-rn-art="g1"></span><span class="hs-art hs-art-g" data-rn-art="g2"></span><span class="hs-art hs-art-g" data-rn-art="g3"></span><span class="hs-art hs-art-g" data-rn-art="g4"></span><span class="hs-art hs-art-g" data-rn-art="g5"></span><span class="hs-art hs-art-g" data-rn-art="g6"></span><span class="hs-art hs-art-g" data-rn-art="g7"></span><span class="hs-art hs-art-g" data-rn-art="g8"></span><span class="hs-art hs-art-g" data-rn-art="g9"></span><span class="hs-art hs-art-g" data-rn-art="g10"></span><span class="hs-art hs-art-g" data-rn-art="g11"></span></div></div>
+        <div class="hs-mq"><div class="hs-mq-t hs-mq-b"><span class="hs-art hs-art-p" data-rn-art="p0"></span><span class="hs-art hs-art-p" data-rn-art="p1"></span><span class="hs-art hs-art-p" data-rn-art="p2"></span><span class="hs-art hs-art-p" data-rn-art="p3"></span><span class="hs-art hs-art-p" data-rn-art="p4"></span><span class="hs-art hs-art-p" data-rn-art="p5"></span><span class="hs-art hs-art-p" data-rn-art="p6"></span><span class="hs-art hs-art-p" data-rn-art="p7"></span><span class="hs-art hs-art-p" data-rn-art="p8"></span><span class="hs-art hs-art-p" data-rn-art="p9"></span><span class="hs-art hs-art-p" data-rn-art="p10"></span><span class="hs-art hs-art-p" data-rn-art="p0"></span><span class="hs-art hs-art-p" data-rn-art="p1"></span><span class="hs-art hs-art-p" data-rn-art="p2"></span><span class="hs-art hs-art-p" data-rn-art="p3"></span><span class="hs-art hs-art-p" data-rn-art="p4"></span><span class="hs-art hs-art-p" data-rn-art="p5"></span><span class="hs-art hs-art-p" data-rn-art="p6"></span><span class="hs-art hs-art-p" data-rn-art="p7"></span><span class="hs-art hs-art-p" data-rn-art="p8"></span><span class="hs-art hs-art-p" data-rn-art="p9"></span><span class="hs-art hs-art-p" data-rn-art="p10"></span></div></div>
+    </div>
+</div>

@@ -1,0 +1,118 @@
+<div class="ed">
+<style>
+.ed{--ed-ac:#f59e0b;--ed-tx:#c4c7cc;--ed-mut:#8b8f96;--ed-card:#131418;--ed-bd:#24262b;max-width:560px;margin:0 auto;color:var(--ed-tx);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.7}
+.ed *{box-sizing:border-box}
+.ed p{margin:0 0 14px !important;color:var(--ed-tx) !important;font-size:14px !important;line-height:1.7 !important}
+.ed strong{color:#fff;font-weight:700}
+.ed-box{margin:0 0 18px;padding:16px 18px;border-radius:14px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-box p{margin:0 !important}
+.ed-h{margin:26px 0 12px !important;padding:0 !important;border:0 !important;color:#fff !important;font-size:16px !important;font-weight:800 !important;line-height:1.3 !important}
+.ed-h::before{display:none !important}
+.ed-img{display:block;width:100%;height:auto;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd)}
+/* ilustração: aparelhos */
+.ed-dev{display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:26px 14px 18px;background:radial-gradient(100% 120% at 50% 100%,#2a1a05,#0c0c0e 70%)}
+.ed-dev span{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-dev svg{fill:none;stroke:#e6e7e9;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ed-dev .ed-scr{fill:url(#edG)}
+/* ficha do plano */
+.ed-spec{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 18px}
+.ed-spec div{padding:11px 12px;border-radius:12px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-spec small{display:block;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-spec b{display:block;color:#fff;font-size:13.5px;font-weight:700;margin-top:2px}
+@media (min-width:520px){.ed-dev{gap:26px}}
+.ed-art{position:relative;overflow:hidden;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd)}
+.ed-fig{margin:4px 0 18px !important;padding:0 !important}
+.ed-fig .ed-img{margin:0 !important}
+.ed-fig figcaption{margin-top:6px;color:var(--ed-mut);font-size:11.5px;text-align:center}
+.ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-ord>b{display:block !important}
+/* blindagem contra o reset de descrição do tema (line-height herdado, padding em code, margens) */
+.sv-card,.sv-card *{line-height:normal}
+.sv-card code{padding:0 !important;border-radius:0 !important;background:none !important}
+.sv-card b,.sv-card small,.sv-card span,.sv-card em,.sv-card i{margin-top:0;margin-bottom:0}
+.sv-ord>b,.sv-row code,.sv-lsub,.sv-cfg-r span,.sv-url b,.sv-pf,.dz-gift-r b,.dz-gift-r span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-row code{max-width:62%;text-align:right}
+.sv-cfg-r span,.dz-cfg-r span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sv-ord>b{display:block !important}
+.ed-fig{margin:4px 0 18px !important;padding:0 !important}
+.ed-fig .ed-img{margin:0 !important}
+.ed-card{margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-spec .ed-w{grid-column:1 / -1}
+.ed-alert{margin:0 0 18px;padding:12px 14px;border-radius:12px;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.45);color:#fde68a;font-size:13px;line-height:1.55}
+.ed-alert strong{color:#fff}
+.vt,.vt *{box-sizing:border-box;line-height:normal}
+.vt{--vt:10s;margin:22px 0 6px;padding:16px;border-radius:16px;background:var(--ed-card,#131418);border:1px solid var(--ed-bd,#24262b)}
+.vt-k{display:block;color:var(--vc);font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.vt-t{margin:3px 0 12px !important;padding:0 !important;border:0 !important;color:#fff !important;font-size:18px !important;font-weight:800 !important;line-height:1.2 !important}
+.vt-t::before{display:none !important}
+.vt-win{position:relative;height:240px;border-radius:14px;overflow:hidden;background:#0c0d10;border:1px solid rgba(255,255,255,.08)}
+.vt-note{margin:8px 0 0 !important;color:#8b8f96 !important;font-size:11.5px !important;line-height:1.45 !important;text-align:center}
+.vt-steps{display:grid;gap:6px;margin-top:12px}
+.vt-st{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06)}
+.vt-st i{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--vc);color:#06110a;font-style:normal;font-size:11px;font-weight:900}
+.vt-st b{display:block;color:#fff;font-size:13.5px}
+.vt-st span{display:block;margin-top:1px;color:#9aa0a6;font-size:12px;line-height:1.45}
+.vt-conf{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.vt-conf i{position:absolute;top:-10px;width:6px;height:10px;border-radius:2px;opacity:0}
+@media (prefers-reduced-motion:reduce){.vt *{animation-duration:0s !important;animation-iteration-count:1 !important}}
+
+.vt--sv2 .sv2-grid{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.vt--sv2 .sv2-v{position:relative;margin:0 !important;padding:0 !important;border-radius:14px;overflow:hidden;background:#000;border:2px solid var(--b)}
+.vt--sv2 .sv2-a{--b:#ef4444}.vt--sv2 .sv2-d{--b:#22c55e;box-shadow:0 0 18px rgba(34,197,94,.35)}
+.vt--sv2 video{display:block;width:100% !important;max-width:none !important;aspect-ratio:1/1;height:auto !important;margin:0 !important;border-radius:0 !important;object-fit:cover;background:#000}
+.vt--sv2 .sv2-tag{position:absolute;left:8px;top:8px;z-index:2;padding:4px 10px;border-radius:999px;background:var(--b);color:#fff;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+.vt--sv2 figcaption{margin:0 !important;padding:8px 10px !important;background:#0c0d10;color:#d1d5db !important;font-size:12px !important;font-weight:700;line-height:1.35 !important;text-align:left}
+.vt--sv2 .sv2-d figcaption{color:#bbf7d0 !important}
+.vt--sv2 .sv2-vs{position:absolute;left:50%;top:calc(50% - 18px);z-index:3;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;display:grid;place-items:center;background:#f59e0b;color:#111;font-size:12px;font-weight:900;box-shadow:0 0 0 4px var(--ed-card,#131418)}
+@media (max-width:560px){.vt--sv2 .sv2-grid{grid-template-columns:1fr;gap:14px}.vt--sv2 .sv2-vs{top:50%}}
+.hs-bonus{overflow:hidden;margin:4px 0 18px !important;padding:16px 0 6px !important;border-radius:16px;border:1px solid var(--ed-bd);padding-left:0 !important;padding-right:0 !important;background:radial-gradient(circle at 50% 0%,rgba(250,204,21,.10),transparent 55%),radial-gradient(circle at 50% 100%,rgba(139,92,246,.16),transparent 60%),#07070b !important}
+.hs-bt{margin:6px 0 14px !important;padding:0 16px !important;text-align:center;font-size:30px !important;line-height:1.02 !important;font-weight:900;text-transform:uppercase;letter-spacing:-.5px;color:#fff}
+.hs-mq{position:relative;margin:0 0 10px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.hs-mq-t{display:flex;gap:12px;width:max-content;padding:10px 6px}
+.hs-mq-a{animation:nzSbMqA 50s linear infinite}
+.hs-mq-b{animation:nzSbMqB 46s linear infinite}
+@keyframes nzSbMqA{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes nzSbMqB{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.hs-art{flex:0 0 auto;display:block;width:132px;height:194px;border-radius:11px;background-color:#141018;background-size:cover;background-position:center}
+.hs-art-g{box-shadow:0 0 12px rgba(250,204,21,.55)}
+.hs-art-p{box-shadow:0 0 12px rgba(139,92,246,.6)}
+</style>
+
+<div class="ed-box"><p>Sensibilidade ajustada para o seu <strong>Emulador</strong> no <strong>Free Fire</strong>: mira mais precisa e muito mais capas.</p></div>
+
+<p>Na <strong>Rei dos Nitros</strong>, a entrega aparece na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
+<p>O acesso é imediato e <strong>sem programas externos</strong>: são as configurações de sensibilidade, mira e HUD feitas pelo time Hashira.</p>
+<div class="ed-card hs-bonus"><p class="hs-bt">Você ganha<br>de bônus</p>
+        <div class="hs-mq"><div class="hs-mq-t hs-mq-a"><span class="hs-art hs-art-g" data-rn-art="g0"></span><span class="hs-art hs-art-g" data-rn-art="g1"></span><span class="hs-art hs-art-g" data-rn-art="g2"></span><span class="hs-art hs-art-g" data-rn-art="g3"></span><span class="hs-art hs-art-g" data-rn-art="g4"></span><span class="hs-art hs-art-g" data-rn-art="g5"></span><span class="hs-art hs-art-g" data-rn-art="g6"></span><span class="hs-art hs-art-g" data-rn-art="g7"></span><span class="hs-art hs-art-g" data-rn-art="g8"></span><span class="hs-art hs-art-g" data-rn-art="g9"></span><span class="hs-art hs-art-g" data-rn-art="g10"></span><span class="hs-art hs-art-g" data-rn-art="g11"></span><span class="hs-art hs-art-g" data-rn-art="g0"></span><span class="hs-art hs-art-g" data-rn-art="g1"></span><span class="hs-art hs-art-g" data-rn-art="g2"></span><span class="hs-art hs-art-g" data-rn-art="g3"></span><span class="hs-art hs-art-g" data-rn-art="g4"></span><span class="hs-art hs-art-g" data-rn-art="g5"></span><span class="hs-art hs-art-g" data-rn-art="g6"></span><span class="hs-art hs-art-g" data-rn-art="g7"></span><span class="hs-art hs-art-g" data-rn-art="g8"></span><span class="hs-art hs-art-g" data-rn-art="g9"></span><span class="hs-art hs-art-g" data-rn-art="g10"></span><span class="hs-art hs-art-g" data-rn-art="g11"></span></div></div>
+        <div class="hs-mq"><div class="hs-mq-t hs-mq-b"><span class="hs-art hs-art-p" data-rn-art="p0"></span><span class="hs-art hs-art-p" data-rn-art="p1"></span><span class="hs-art hs-art-p" data-rn-art="p2"></span><span class="hs-art hs-art-p" data-rn-art="p3"></span><span class="hs-art hs-art-p" data-rn-art="p4"></span><span class="hs-art hs-art-p" data-rn-art="p5"></span><span class="hs-art hs-art-p" data-rn-art="p6"></span><span class="hs-art hs-art-p" data-rn-art="p7"></span><span class="hs-art hs-art-p" data-rn-art="p8"></span><span class="hs-art hs-art-p" data-rn-art="p9"></span><span class="hs-art hs-art-p" data-rn-art="p10"></span><span class="hs-art hs-art-p" data-rn-art="p0"></span><span class="hs-art hs-art-p" data-rn-art="p1"></span><span class="hs-art hs-art-p" data-rn-art="p2"></span><span class="hs-art hs-art-p" data-rn-art="p3"></span><span class="hs-art hs-art-p" data-rn-art="p4"></span><span class="hs-art hs-art-p" data-rn-art="p5"></span><span class="hs-art hs-art-p" data-rn-art="p6"></span><span class="hs-art hs-art-p" data-rn-art="p7"></span><span class="hs-art hs-art-p" data-rn-art="p8"></span><span class="hs-art hs-art-p" data-rn-art="p9"></span><span class="hs-art hs-art-p" data-rn-art="p10"></span></div></div>
+</div>
+
+<p><strong>Seja o MVP das partidas.</strong> Sensi full vermelha, mira sem pinar, estabilização de mira, HUDs secretos e aulas exclusivas com o time Hashira e pro players.</p>
+
+<h3 class="ed-h">O que você recebe</h3>
+<div class="ed-spec">
+<div><small>Plataforma</small><b>Emulador</b></div>
+<div><small>Mira</small><b>Sensi full vermelha, sem pinar</b></div>
+<div><small>Estabilização</small><b>Estabilização de mira</b></div>
+<div><small>HUDs</small><b>HUDs secretos</b></div>
+<div><small>Aulas</small><b>Com o time Hashira e pro players</b></div>
+<div><small>Segurança</small><b>Sem programas externos</b></div>
+</div>
+
+<div class="ed-card vt vt--sv2" style="--vc:#f59e0b"><span class="vt-k">Gameplay real</span><h2 class="vt-t">Antes e depois da Sensi Premium</h2><div class="sv2-grid"><figure class="sv2-v sv2-a"><span class="sv2-tag">Antes</span><video src="https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@8084fc83574831f87e0b43fd382843b6e1b560f7/midia/sensi/sensi-antes.mp4" poster="https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@8084fc83574831f87e0b43fd382843b6e1b560f7/midia/sensi/sensi-antes.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Antes: Sem Sensi: tiros espalhados e poucas capas"></video><figcaption>Sem Sensi: tiros espalhados e poucas capas</figcaption></figure><span class="sv2-vs">VS</span><figure class="sv2-v sv2-d"><span class="sv2-tag">Depois</span><video src="https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@8084fc83574831f87e0b43fd382843b6e1b560f7/midia/sensi/sensi-depois.mp4" poster="https://cdn.jsdelivr.net/gh/joaolucas13sd/Discord-Server-Cloner-2x@8084fc83574831f87e0b43fd382843b6e1b560f7/midia/sensi/sensi-depois.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Depois: Com Sensi Premium · Emulador: mira na cabeça"></video><figcaption>Com Sensi Premium · Emulador: mira na cabeça</figcaption></figure></div><p class="vt-note">Vídeos de partidas reais. O resultado depende da sua prática e do seu aparelho.</p><div class="vt-steps"><div class="vt-st"><i>1</i><div><b>Compre pelo Pix</b><span>Acesso imediato.</span></div></div><div class="vt-st"><i>2</i><div><b>Aplique a Sensi</b><span>Sensi, mira e HUD no seu emulador.</span></div></div><div class="vt-st"><i>3</i><div><b>Jogue</b><span>Mira mais precisa e muito mais capas.</span></div></div></div></div>
+
+<!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div></div><!--/RN-CONV-->
+</div>

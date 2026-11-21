@@ -1,0 +1,240 @@
+<div class="hs-wrapper">
+
+<style>
+.hs-wrapper{--hs-accent:#ff5470;--hs-bg:#14080e;--hs-card:#1e0f17;--hs-item:#2d1522;--hs-border:rgba(255,255,255,.08);--hs-text:#f5f5f6;--hs-muted:#d3bfc6;width:100%;max-width:500px;margin:0 auto;font-family:'Inter',system-ui,-apple-system,sans-serif;color:var(--hs-text)}
+.hs-wrapper *{box-sizing:border-box}
+.hs-container{background:var(--hs-bg);padding:14px 12px 10px;border-radius:16px}
+.hs-card{background:var(--hs-card);border:1px solid var(--hs-border);border-radius:18px;padding:22px 18px;margin-bottom:14px}
+.hs-h2{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;line-height:1.3;margin:0 0 16px}
+.hs-h2::before{content:"";width:4px;height:22px;border-radius:3px;background:var(--hs-accent);flex-shrink:0}
+.hs-quote{border-left:3px solid var(--hs-accent);padding-left:14px;margin:0 0 16px;font-size:15px;line-height:1.65;color:#e4e4e7}
+.hs-quote strong{color:#fff}
+.hs-text{color:var(--hs-muted);font-size:13.5px;line-height:1.7;margin:0 0 12px}
+.hs-text:last-child{margin-bottom:0}
+.hs-text strong{color:#fff}
+.hs-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0}
+.hs-chips span{background:var(--hs-item);border:1px solid rgba(255,84,112,.38);color:#ffb3c1;font-size:12px;font-weight:800;padding:7px 12px;border-radius:999px}
+.hs-list{display:grid;gap:10px}
+.hs-item{display:flex;align-items:center;gap:14px;background:var(--hs-item);border:1px solid var(--hs-border);border-radius:12px;padding:13px 15px}
+.hs-item-hl{border-color:rgba(255,84,112,.5);background:rgba(255,84,112,.09)}
+.hs-item-icon{width:50px;height:50px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:14px;background:rgba(255,84,112,.10);border:1px solid rgba(255,84,112,.38)}
+.hs-item-icon svg{width:26px;height:26px;fill:none;stroke:#ffb3c1;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hs-item-label{display:block;color:var(--hs-accent);font-size:12px;font-weight:800;margin-bottom:3px}
+.hs-item-text{color:#e4e4e7;font-size:14px;line-height:1.45}
+
+/* faixa de criadoras: rola sozinha, nome sobre a imagem */
+.hs-photos{overflow:hidden;margin:0 -6px;padding:6px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+.hs-ptrack{display:flex;gap:12px;width:max-content;animation:hsScroll 32s linear infinite}
+.hs-photos:hover .hs-ptrack,.hs-photos:active .hs-ptrack{animation-play-state:paused}
+.hs-ph{position:relative;flex-shrink:0;width:170px;height:240px;margin:0;border-radius:14px;overflow:hidden;background:#2d1522;border:1px solid var(--hs-border)}
+.hs-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.hs-ph figcaption{position:absolute;left:0;right:0;bottom:0;padding:34px 10px 10px;background:linear-gradient(to top,rgba(0,0,0,.9),rgba(0,0,0,0));font-size:14px;font-weight:800;line-height:1.15;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.7)}
+@keyframes hsScroll{from{transform:translateX(0)}to{transform:translateX(calc(-50% - 6px))}}
+@media(prefers-reduced-motion:reduce){.hs-ptrack{animation:none}.hs-photos{overflow-x:auto;-webkit-mask-image:none;mask-image:none}.hs-ph:nth-child(n+5){display:none}}
+
+.hs-info-box{background:rgba(120,30,20,.30);border:1px solid rgba(239,68,68,.38);border-radius:12px;padding:16px}
+.hs-info-title{color:#ef6b6b;font-size:13px;font-weight:800;margin:0 0 12px}
+.hs-info{color:#c9c3c3;font-size:13px;line-height:1.65;margin:0 0 12px}
+.hs-info:last-child{margin-bottom:0}
+.hs-highlight{color:#ef6b6b;font-weight:800}
+@media(max-width:380px){.hs-card{padding:18px 14px}}
+
+.hs-wheel{position:relative;width:100%;max-width:300px;margin:4px auto 0}
+.hs-wheel{aspect-ratio:1/1}
+.hs-disc{position:absolute;inset:5px;border-radius:50%;border:4px solid var(--hs-accent);background:conic-gradient(#4a1a33 0 25%,#2d1522 0 50%,#4a1a33 0 75%,#8a2342 0 100%);box-sizing:border-box;overflow:hidden;transition:transform 4.6s cubic-bezier(.12,.6,.1,1)}
+.hs-lb{position:absolute;inset:0;transform:rotate(var(--a));text-align:center;padding-top:15%;box-sizing:border-box;color:#fff;font-weight:900;font-size:24px;line-height:1}
+.hs-lb em{display:block;margin-top:5px;font-style:normal;font-size:10px;font-weight:800;color:#ffb3c1;letter-spacing:.04em}
+.hs-lines{position:absolute;inset:0;background:linear-gradient(rgba(255,84,112,.5),rgba(255,84,112,.5)) center/1px 100% no-repeat,linear-gradient(rgba(255,84,112,.5),rgba(255,84,112,.5)) center/100% 1px no-repeat}
+.hs-hub{position:absolute;left:50%;top:50%;width:40px;height:40px;margin:-20px 0 0 -20px;border-radius:50%;background:#14080e;border:3px solid var(--hs-accent);box-sizing:border-box}
+.hs-chk{position:absolute;opacity:0;width:1px;height:1px;pointer-events:none}
+.hs-chk:checked~.hs-wheel .hs-disc{transform:rotate(1845deg)}
+.hs-chk:focus-visible~.hs-btn{outline:3px solid #fff;outline-offset:2px}
+.hs-t2{display:none}.hs-btn{text-align:center}
+.hs-chk:checked~.hs-btn{opacity:.55;pointer-events:none}
+.hs-chk:checked~.hs-btn .hs-t1{display:none}
+.hs-chk:checked~.hs-btn .hs-t2{display:inline}
+.hs-res{opacity:0}
+.hs-chk:checked~.hs-res{animation:hsShow .5s 4.7s forwards}
+@keyframes hsShow{to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.hs-disc{transition-duration:.01s}.hs-chk:checked~.hs-res{animation-delay:.1s}}
+.hs-pointer{position:absolute;left:50%;top:-4px;margin-left:-12px;width:0;height:0;border-left:12px solid transparent;border-right:12px solid transparent;border-top:22px solid var(--hs-accent);filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));z-index:2}
+.hs-res{min-height:56px;margin:14px 0 0;text-align:center}
+.hs-res small{display:block;font-size:11px;letter-spacing:.14em;color:#ffb3c1;font-weight:800}
+.hs-res b{font-size:26px;font-weight:900;color:#fff}
+.hs-wnote{text-align:center;font-size:12px;color:var(--hs-muted);margin:10px 0 0}
+.hs-btn:disabled{opacity:.55;cursor:not-allowed}
+.hs-btn{display:block;width:100%;max-width:340px;margin:12px auto 0;padding:12px;border:0;border-radius:12px;background:var(--hs-accent);color:#1a0b04;font-weight:800;font-size:14px;cursor:pointer}
+
+/* ===== DESTAQUE ===== */
+.hs-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.hs-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--hs-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.hs-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.hs-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hs-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.hs-hero-s strong{color:#fff}
+.hs-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--hs-border)}
+.hs-price-k{display:block;color:var(--hs-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.hs-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.hs-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.hs-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.hs-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.hs-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.hs-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hs-ben{background:var(--hs-item);border:1px solid var(--hs-border);border-radius:14px;padding:14px 12px}
+.hs-ben svg{width:26px;height:26px;fill:none;stroke:var(--hs-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.hs-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.hs-ben small{display:block;color:var(--hs-muted);font-size:12.5px;line-height:1.45}
+.hs-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.hs-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--hs-item);border:1px solid var(--hs-border);text-align:center}
+.hs-plan b{display:block;font-size:13px;color:var(--hs-muted);margin-bottom:6px}
+.hs-plan strong{display:block;font-size:22px;color:#fff}
+.hs-plan small{display:block;margin-top:4px;color:var(--hs-muted);font-size:12px}
+.hs-plan--on{border-color:var(--hs-accent);background:rgba(240,77,200,.10)}
+.hs-plan--on b{color:#ff7ad9}
+.hs-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--hs-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.hs-trust{display:grid;gap:10px}
+.hs-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.hs-trust strong{color:#fff}
+.hs-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.hs-info-title{display:flex;align-items:center;gap:8px}
+.hs-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.hs-nzgrid,.hs-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.hs-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.hs-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.hs-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.hs-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.hs-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.hs-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.hs-prof-body{padding:30px 12px 12px}
+.hs-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.hs-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.hs-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.hs-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.hs-prof-user b{color:#ff7ad9}
+.hs-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.hs-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.hs-mock:has(.hs-nzprof){height:auto !important;padding-bottom:16px}
+.hs-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.hs-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.hs-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.hs-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.hs-prof-name{white-space:nowrap}
+.hs-nzprof .hs-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.hs-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.hs-prof-av,.hs-prof-av span,.hs-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.hs-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.hs-rows{display:grid;gap:8px}
+.hs-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--hs-item);border:1px solid var(--hs-border);font-size:14px;color:#e4e4e7}
+.hs-row b{color:#fff;white-space:nowrap}
+.hs-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.hs-row--on{border-color:var(--hs-accent);background:rgba(240,77,200,.10)}
+.hs-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--hs-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.hs-rmock{margin:4px 0 12px;border-radius:12px;border:1px solid rgba(255,255,255,.09);background:radial-gradient(circle at 50% 35%,rgba(250,204,21,.12),transparent 60%),linear-gradient(180deg,#160f1c,#0d0a12);overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.hs-rbar{display:flex;align-items:center;gap:12px;white-space:nowrap;padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(0,0,0,.25)}
+.hs-rbar b{font-size:12px !important;font-weight:900;letter-spacing:.6px;color:#facc15}
+.hs-rbar span{font-size:11px !important;color:#a1a1aa}
+.hs-rsaldo{margin-left:auto;white-space:nowrap;padding:3px 9px;border-radius:999px;background:rgba(250,204,21,.14);color:#facc15;font-style:normal;font-size:10.5px !important;font-weight:800}
+
+.hs-rbox{position:relative;padding:26px 0 18px;text-align:center}
+.hs-rwheel{position:relative;width:236px;height:236px;margin:0 auto}
+.hs-rdisc{position:absolute;inset:0;border-radius:50%;border:6px solid #1f1626;box-shadow:0 0 0 3px #facc15,0 0 26px rgba(250,204,21,.45),inset 0 0 22px rgba(0,0,0,.45);animation:nzRspin 12s infinite}
+.hs-rlb{position:absolute;left:50%;top:50%;width:0;height:0;transform:rotate(var(--a))}
+.hs-rlb b,.hs-rlb em{position:absolute;left:-40px;width:80px;text-align:center;font-style:normal;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.hs-rlb b{top:-100px;font-size:15px !important;line-height:1 !important;font-weight:900}
+.hs-rlb em{top:-84px;font-size:7.5px !important;line-height:1 !important;font-weight:800;letter-spacing:.6px;opacity:.9}
+.hs-rpt{position:absolute;left:50%;top:-12px;z-index:3;width:0;height:0;margin-left:-13px;border-left:13px solid transparent;border-right:13px solid transparent;border-top:24px solid #fff;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+.hs-rhub{position:absolute;left:50%;top:50%;z-index:2;width:46px;height:46px;margin:-23px 0 0 -23px;display:grid;place-items:center;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fde68a,#ca8a04);border:3px solid #1f1626;color:#1f1626;font-style:normal;font-weight:900;font-size:18px !important}
+@keyframes nzRspin{0%,5%{transform:rotate(202.5deg);animation-timing-function:cubic-bezier(.12,.75,.18,1)}40%,100%{transform:rotate(2002.5deg)}}
+.hs-rres{position:relative;height:40px;margin:14px 0 10px}
+.hs-rres span{position:absolute;left:50%;top:0;transform:translateX(-50%) scale(.8);display:inline-flex;align-items:center;gap:7px;padding:8px 16px;border-radius:999px;background:#22c55e;color:#04140a;font-size:15px !important;font-weight:900;white-space:nowrap;opacity:0;box-shadow:0 6px 20px rgba(34,197,94,.4)}
+.hs-rres small{font-size:9px !important;font-weight:800;opacity:.75;letter-spacing:.5px}
+.hs-rr1{animation:nzRr1 12s infinite;background:linear-gradient(90deg,#facc15,#22c55e) !important;box-shadow:0 0 24px rgba(250,204,21,.5) !important}
+@keyframes nzRr1{0%,40%{opacity:0;transform:translateX(-50%) scale(.8)}43%{opacity:1;transform:translateX(-50%) scale(1.12)}46%,95%{opacity:1;transform:translateX(-50%) scale(1)}98%,100%{opacity:0}}
+@keyframes nzRr2{0%,82%{opacity:0;transform:translateX(-50%) scale(.8)}84%,97%{opacity:1;transform:translateX(-50%) scale(1)}99%,100%{opacity:0}}
+.hs-rbtn{position:relative;display:inline-block;padding:11px 26px;border-radius:12px;background:linear-gradient(180deg,#facc15,#eab308);color:#1f1626;font-size:14px !important;font-weight:900;letter-spacing:.4px;box-shadow:0 4px 0 #a16207;animation:nzRbtn 12s infinite}
+@keyframes nzRbtn{0%,3.5%,6%,100%{transform:translateY(0);box-shadow:0 4px 0 #a16207}4.5%{transform:translateY(3px);box-shadow:0 1px 0 #a16207}}
+.hs-scur{position:absolute;left:60%;top:55%;width:22px;height:22px;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzRcur 12s infinite}
+.hs-scur svg{display:block;width:22px !important;height:22px !important;max-width:none !important}
+@keyframes nzRcur{0%{transform:translate(70px,40px);opacity:0}2%{opacity:1}3.5%,4%{transform:translate(0,0)}4.5%{transform:translate(0,0) scale(.82)}5.5%,12%{transform:translate(0,0) scale(1);opacity:1}22%,100%{transform:translate(80px,50px);opacity:0}}
+</style>
+
+<div class="hs-container">
+    <div class="hs-hero"><span class="hs-tag">PRÊMIO EM ROBUX</span><h2 class="hs-hero-t">Roleta Robux por <span>R$ 3,99</span></h2><p class="hs-hero-s">Gire a roleta e receba <strong>de 10 até 10.000 Robux</strong>. Todo giro tem prêmio, no mínimo 10 Robux. O valor é aleatório e pode ser menor do que o que você pagou.</p><div class="hs-price hs-pulse"><div><span class="hs-price-k">Preço</span><span class="hs-price-new">R$ 3,99</span></div></div></div>
+    <!-- COMO FUNCIONA -->
+    <div class="hs-card">
+        <h2 class="hs-h2">Como a Roleta Robux funciona</h2>
+        <div class="hs-list">
+
+            <div class="hs-item hs-item-hl">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z"></path><path d="M3 7l9 5 9-5M12 12v10"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Prêmios em ROBUX</span>
+                    <span class="hs-item-text">Resultados que variam de 10 até 10.000 ROBUX</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Resultado instantâneo</span>
+                    <span class="hs-item-text">Descubra o resultado após finalizar o giro da roleta</span>
+                </div>
+            </div>
+
+            <div class="hs-item">
+                <span class="hs-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg></span>
+                <div>
+                    <span class="hs-item-label">Prêmio garantido</span>
+                    <span class="hs-item-text">Não existe resultado vazio: todos os resultados dão no mínimo 10 ROBUX</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ROLETA -->
+    <div class="hs-card">
+        <h2 class="hs-h2">Veja a roleta girando</h2>
+        <div class="hs-rmock"><div class="hs-rbar"><b>ROLETA</b><span>Início</span><span>Prêmios</span><span>Resgate</span><i class="hs-rsaldo">Giros: 1</i></div><div class="hs-rbox">
+            <div class="hs-rwheel"><i class="hs-rpt"></i><div class="hs-rdisc" style="background:conic-gradient(#ef4444 0deg 45deg,#f59e0b 45deg 90deg,#22c55e 90deg 135deg,#3b82f6 135deg 180deg,#a855f7 180deg 225deg,#ec4899 225deg 270deg,#14b8a6 270deg 315deg,#eab308 315deg 360deg)"><span class="hs-rlb" style="--a:22.5deg"><b>10</b><em>ROBUX</em></span><span class="hs-rlb" style="--a:67.5deg"><b>100</b><em>ROBUX</em></span><span class="hs-rlb" style="--a:112.5deg"><b>10</b><em>ROBUX</em></span><span class="hs-rlb" style="--a:157.5deg"><b>1.000</b><em>ROBUX</em></span><span class="hs-rlb" style="--a:202.5deg"><b>10</b><em>ROBUX</em></span><span class="hs-rlb" style="--a:247.5deg"><b>100</b><em>ROBUX</em></span><span class="hs-rlb" style="--a:292.5deg"><b>10</b><em>ROBUX</em></span><span class="hs-rlb" style="--a:337.5deg"><b>10.000</b><em>ROBUX</em></span></div><i class="hs-rhub">R</i></div>
+            <div class="hs-rres"><span class="hs-rr1"><small>EXEMPLO</small>1.000 ROBUX</span></div>
+            <span class="hs-rbtn">GIRAR ROLETA<span class="hs-scur" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span></span>
+        </div></div>
+        <p class="hs-wnote">Exemplo ilustrativo. O resultado mostrado aqui não é o seu prêmio e as fatias não representam a chance real de cada valor.</p>
+    </div>
+
+        <div class="hs-card"><h2 class="hs-h2">Compre com tranquilidade</h2><div class="hs-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Resgate em até 5 dias</strong> falando com o suporte.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Menores de idade:</strong> só com autorização de um responsável.</span></div></div></div>
+<!-- INFORMAÇÕES IMPORTANTES -->
+    <div class="hs-card">
+        <div class="hs-info-box">
+            <p class="hs-info-title">LEIA ANTES DE PARTICIPAR</p>
+            <p class="hs-info"><span class="hs-highlight">Regra do risco zero:</span> não existe caixa vazia. Todos os resultados disponíveis possuem uma recompensa mínima de 10 ROBUX.</p>
+            <p class="hs-info"><span class="hs-highlight">Prazo para resgate:</span> após receber o resultado, você terá até 5 dias para entrar em contato com o suporte e solicitar o resgate.</p>
+            <p class="hs-info"><span class="hs-highlight">Atendimento:</span> em caso de dúvidas ou problemas, abra um ticket e fale com a nossa equipe.</p>
+            <p class="hs-info"><span class="hs-highlight">Menores de idade:</span> participe somente com a autorização de um responsável.</p>
+        </div>
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Como eu resgato o prêmio?</summary><p>Depois do resultado, fale com o suporte em até <strong>5 dias</strong> para solicitar o resgate.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="hs-hero rn-cta2"><span class="hs-tag">PRONTO PARA GARANTIR?</span><h2 class="hs-hero-t">Roleta Robux</h2><div class="hs-price hs-pulse"><div><span class="hs-price-k">Preço</span><span class="hs-price-new">R$ 3,99</span></div></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

@@ -1,0 +1,54 @@
+{% comment %}
+  Rei dos Nitros: barra de navegação fixa no rodapé (só no celular).
+  Início, Categorias, Buscar e Conta.
+{% endcomment %}
+<nav class="rn-bnav" id="rn-bnav" aria-label="Navegação principal">
+  <a class="rn-bnav__item" href="/" data-match="^/$">
+    <span class="rn-bnav__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .7-1.5l7-6a2 2 0 0 1 2.6 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span>
+    <span>Início</span>
+  </a>
+  <a class="rn-bnav__item" href="/categories" data-match="^/(categories|category)">
+    <span class="rn-bnav__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span>
+    <span>Categorias</span>
+  </a>
+  <button type="button" class="rn-bnav__item" id="rn-bnav-search" aria-label="Buscar produtos">
+    <span class="rn-bnav__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></span>
+    <span>Buscar</span>
+  </button>
+  <a class="rn-bnav__item" href="{% if user.name %}/account/my_purchases{% else %}/login{% endif %}" data-match="^/(account|login)">
+    <span class="rn-bnav__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.66V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.66"/></svg></span>
+    <span>Conta</span>
+  </a>
+</nav>
+<script>
+  (function () {
+    // marca o botão da página atual (o site troca de página sem recarregar, então acompanha o endereço)
+    var ultimo = null;
+    function marcar() {
+      var path = location.pathname.replace(/\/+$/, '') || '/';
+      if (path === ultimo) return;
+      ultimo = path;
+      document.querySelectorAll('#rn-bnav .rn-bnav__item[data-match]').forEach(function (a) {
+        a.classList.toggle('rn-bnav__item--on', new RegExp(a.getAttribute('data-match')).test(path));
+      });
+      window.dispatchEvent(new Event('rn:rota'));
+    }
+    ['pushState', 'replaceState'].forEach(function (m) {
+      var orig = history[m];
+      if (orig && !orig.__rn) {
+        history[m] = function () { var r = orig.apply(this, arguments); setTimeout(marcar, 0); return r; };
+        history[m].__rn = true;
+      }
+    });
+    window.addEventListener('popstate', marcar);
+    setInterval(marcar, 400);
+    marcar();
+    document.documentElement.classList.add('rn-has-bnav');
+
+    // Buscar: abre a busca do celular
+    document.getElementById('rn-bnav-search').addEventListener('click', function () {
+      var b = document.getElementById('mobile-search-btn');
+      if (b) b.click(); else { var i = document.getElementById('search-input'); if (i) i.focus(); }
+    });
+  })();
+</script>

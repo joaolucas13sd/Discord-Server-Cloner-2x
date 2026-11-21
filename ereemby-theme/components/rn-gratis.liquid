@@ -1,0 +1,443 @@
+{% comment %}
+  Rei dos Nitros: promoção "Compre 2, leve 1 grátis" no topo da página de Jogos Steam.
+  O jogo grátis escolhido entra no carrinho como item normal; o cupom LEVE3 (criado na Ereemby) zera o valor dele no checkout, e a Ereemby entrega os 3 jogos.
+  Os jogos grátis são TODAS as variações deste produto, menos as que têm "combo" no nome.
+  A capa em pé vem da Steam pelo número do app (lista RN_FREE_APPS abaixo); jogo sem número usa a imagem da própria variação.
+{% endcomment %}
+{% assign rn_free_cupom = 'LEVE3' %}{% comment %} cupom criado na Ereemby: R$ 15,99 off com 3+ jogos (R$ 47,97) do produto Jogos Steam {% endcomment %}
+<section class="rn-free" id="rn-free" aria-label="Compre 2 e leve 1 jogo grátis">
+  <div class="rn-free__head">
+    <span class="rn-free__icon" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></span>
+    <div>
+      <h2 class="rn-free__title">Escolha seu jogo grátis</h2>
+      <p class="rn-free__sub">Compre 2 jogos quaisquer e leve <span id="rn-free-qtd">1 deles</span> de graça.</p>
+    </div>
+  </div>
+  <div class="rn-free__steps">
+    <span class="rn-free__step"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"/></svg>Compre 2</span>
+    <span class="rn-free__plus" aria-hidden="true">+</span>
+    <span class="rn-free__step rn-free__step--on"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/></svg>Leve 1 grátis</span>
+  </div>
+  <div class="rn-free__prog" id="rn-free-prog">
+    <div class="rn-free__bar"><i id="rn-free-fill"></i></div>
+    <span id="rn-free-prog-t">0 de 2 jogos no carrinho</span>
+  </div>
+  <label class="rn-free__search">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input type="search" id="rn-free-busca" placeholder="Buscar jogo pelo nome..." autocomplete="off" aria-label="Buscar jogo grátis">
+  </label>
+  <p class="rn-free__vazio" id="rn-free-vazio" hidden>Nenhum jogo encontrado com esse nome.</p>
+  <div class="rn-free__track" id="rn-free-track"></div>
+  <div class="rn-free__pick" id="rn-free-pick">
+    <p id="rn-free-msg">Use o botão "+ Carrinho" nos jogos de "Escolha sua opção". Com 2 no carrinho, o jogo grátis é liberado.</p>
+    <button type="button" class="rn-free__btn" id="rn-free-btn" hidden>Copiar cupom {{ rn_free_cupom }}</button>
+  </div>
+  <p class="rn-free__rules">O jogo grátis entra no carrinho junto com os seus jogos. No checkout, cole o cupom que aparece no carrinho para zerar o valor dele, e todos os jogos são entregues automaticamente. A cada 2 jogos pagos, mais 1 brinde (até 10 por pedido).</p>
+</section>
+
+<div class="rn-free-pop" id="rn-free-pop" hidden>
+  <div class="rn-free-pop__box" role="dialog" aria-modal="true" aria-labelledby="rn-free-pop-t">
+    <div class="rn-free-pop__icon" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg></div>
+    <h3 id="rn-free-pop-t">Você ganhou um jogo grátis!</h3>
+    <p>Você já tem 2 jogos no carrinho. Escolha agora o seu 3º jogo, de graça.</p>
+    <button type="button" class="rn-free-pop__go" id="rn-free-pop-go">Escolher meu jogo grátis</button>
+    <a class="rn-free-pop__cart" href="/cart" id="rn-free-pop-cart">Ir para o carrinho</a>
+  </div>
+</div>
+<script>
+  (function () {
+    var box = document.getElementById('rn-free');
+    if (!box || box.dataset.ok) return; box.dataset.ok = '1';
+    var CUPOM_BASE = '{{ rn_free_cupom }}';
+    function CUP() { return window.RNB ? window.RNB.cupom() : CUPOM_BASE; }
+    var PD = window.PRODUCT_DATA || {};
+    var VARS = PD.variants || [];
+    // recarregou a página de Jogos Steam: devolve os jogos guardados na saída (só vale por alguns segundos)
+    try {
+      var bkp = JSON.parse(sessionStorage.getItem('rn_steam_bkp') || 'null');
+      sessionStorage.removeItem('rn_steam_bkp');
+      if (bkp && bkp.pid === String(PD.id) && Date.now() - bkp.t < 8000 && bkp.itens && bkp.itens.length) {
+        var atual0 = JSON.parse(localStorage.getItem('cart') || '[]').filter(function (i) { return String(i.product) !== bkp.pid; });
+        localStorage.setItem('cart', JSON.stringify(atual0.concat(bkp.itens)));
+        if (bkp.pick) localStorage.setItem('rn_free_pick', bkp.pick);
+        if (bkp.vid) localStorage.setItem('rn_free_vid', bkp.vid);
+        if (bkp.bs) localStorage.setItem('rn_brindes', bkp.bs);
+        if (window.EreembyCart) { var c0 = EreembyCart.getCart(); if (c0.length) { var x0 = c0[0]; EreembyCart.removeItem(x0.product, x0.variant); EreembyCart.addItem(x0); } }
+      }
+    } catch (e) {}
+    // número do app na Steam de cada jogo (para a capa em pé)
+    var APPS = {"f1 24": "2488620", "the alters": "1601570", "silent hill 2": "2124490", "resident evil 6": "221040", "assassin's creed iv black flag": "242050", "combo: todos os farcry": "2369390", "watch dogs: legion": "2239550", "watch dogs": "243470", "spiderman miles morales": "1817190", "terraria": "105600", "streamer life simulator 2": "2890830", "subnautica bellow zero": "848450", "subnautica": "264710", "resident evil village": "1196590", "little nightmares 3": "1392860", "little nightmares 2": "860510", "little nightmares": "424840", "hogwarts legacy": "990080", "ghost of tsushima": "2215430", "ghostrunner 2": "2144740", "ghostrunner": "1139900", "god of war ragnarok": "2322010", "gorilla tag": "1533390", "fear therapy": "1695840", "elden ring: nightreign": "2622380", "dead by daylight": "381210", "death stranding": "1850570", "dying light": "239140", "cyberpunk 2077": "1091500", "cuphead": "268910", "assassin's creed syndicate": "368500", "assassin's creed unity": "289650", "silent hill f": "2947440", "dark souls iii": "374320", "dragon ball fighterz": "678950", "detroit: become human": "1222140", "dead island definitive edition": "383150", "euro truck simulator 2": "227300", "five nights at freddy's: security breach": "747660", "forza horizon 4": "1293830", "garry's mod": "4000", "grand theft auto: vice city": "1546990", "it takes two": "1426210", "left 4 dead 2": "550", "no man's sky": "275850", "mortal kombat x": "307780", "mortal kombat 11": "976310", "no, i'm not a human": "3180070", "microsoft flight simulator 40th anniversary edition": "1250410", "r.e.p.o.": "3241660", "red dead redemption 2": "1174180", "resident evil 7: biohazard": "418370", "palworld": "1623730", "payday 2": "218620", "phasmophobia": "739630", "project zomboid": "108600", "the forest": "242760", "the last of us": "1888930", "the last of us 2": "2531310", "combo: todos os poppy playtime": "1721470", "titan souls": "297130", "the planet crafter": "1284190", "the callisto protocol": "1544020", "subnautica 2": "1962700", "assassin's creed origins": "582160", "black mesa": "362890", "bully scholarship edition": "12200", "castlevania: lords of shadow – ultimate edition": "234080", "castlevania: lords of shadow 2": "239250", "celeste": "504230", "days gone": "1259420", "dead space": "1693980", "dying light 2 stay human: reloaded edition": "534380", "dying light: the beast": "3008130", "gris": "683320", "hellblade: senua's sacrifice": "414340", "horizon forbidden west edição completa": "2420110", "indiana jones and the great circle": "2677660", "inside": "304430", "lies of p": "1627720", "limbo": "48000", "ori and the will of the wisps": "1057090", "outer wilds": "753640", "planet of lana": "1608230", "reanimal": "2129530", "rise of the tomb raider": "391220", "slime rancher 2": "1657630", "split fiction": "2001120", "stray": "1332010", "uncharted: coleção legado dos ladrões": "1659420", "black myth: wukong": "2358720", "marvel's spider-man 2": "2651280", "disney's hercules": "987400", "naruto shippuden: ultimate ninja storm 4": "349040", "half-life 2": "220", "schedule i": "3164500", "enter x exit the gungeon": "311690", "beyond: two souls": "960990", "hotline miami": "219150", "just cause 3": "225540", "castle crashers": "204360", "one piece pirate warriors 3 - gold edition": "331600", "doom": "379720", "dead cells": "588650", "the evil within": "268050", "cult of the lamb": "1313140", "vampire survivors": "1794680", "katana zero": "460950", "hollow knight": "367520", "blasphemous 2": "2114740", "borderlands 3": "397540", "one piece: pirate warriors 4": "1089090", "blasphemous": "774361", "the evil within 2": "601430", "evil west": "1065310", "marvel's guardians of the galaxy": "1088850", "devil may cry 5 deluxe + vergil": "601150", "robocop: rogue city": "1681430", "god of war": "1593500", "combo: grand theft auto: the trilogy – the definitive edition": "1547000", "grand theft auto v": "3240220", "elden ring": "1245620", "sekiro: shadows die twice - goty edition": "814380", "the elder scrolls iv: oblivion remastered deluxe edition": "2623190", "mafia: definitive edition": "1030840", "combo: crash bandicoot n. sane trilogy": "731490", "assetto corsa": "244210", "descenders": "681280", "v-rally 4": "658700", "mx vs atv legends": "1205970", "automobilista 2": "1066890", "forza horizon 5": "1551360", "forza horizon 6": "2483190", "riders republic skate edition": "2290180", "9 kings": "2784470", "fallout 4": "377160", "hades": "1145360", "the elder scrolls v: skyrim special edition": "489830", "kingdom come: deliverance": "379430", "wuchang: fallen feathers deluxe edition": "2277560", "dark souls: remastered": "570940", "dark souls ii: deluxe edition": "335300", "the witcher 3": "292030", "oxygen not included": "457140", "session: skate sim": "861650", "ranch simulator: build, hunt, farm": "1119730", "planet coaster": "493340", "thehunter: call of the wild": "518790", "scribblenauts unmasked - a dc comics adventure + scribblenauts unlimited": "249870", "potion craft: alchemist simulator": "1210320", "astroneer": "361420", "ultimate fishing simulator": "468920", "streamer life simulator": "1261040", "stardew valley": "413150", "house flipper": "613100", "car mechanic simulator 2021": "1190000", "kerbal space program": "220200", "dave the diver": "1868140", "rimworld": "294100", "planet zoo": "703080", "jurassic world evolution 2": "1244460", "cities: skylines": "255710", "snowrunner": "1465360", "sid meier's civilization vi": "289070", "resident evil 4 remake": "2050650", "milk inside a bag of milk inside a bag of milk": "1392820", "miside": "2527500", "buckshot roulette": "2835570", "the binding of isaac": "113200", "outlast 2": "414700", "inscryption": "1092790", "resident evil 0": "339340", "manhunt": "12130", "7 days to die": "251570", "resident evil revelations": "222480", "sons of the forest": "1326470", "resident evil 5": "21690", "resident evil 3": "952060", "resident evil 2": "883710", "resident evil 4": "254700"};
+    function esc(t) { return String(t).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); }
+    var gratis = VARS.filter(function (v) { return !/combo/i.test(v.name || ''); });
+    var cdn = 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/';
+    document.getElementById('rn-free-track').innerHTML = gratis.map(function (v) {
+      var app = APPS[String(v.name || '').trim().toLowerCase()] || '';
+      var img = app ? cdn + app + '/library_600x900_2x.jpg' : ((v.images && v.images[0]) || v.icon || (PD.images && PD.images[0]) || '');
+      return '<button type="button" class="rn-free__card" data-nome="' + esc(v.name) + '" data-app="' + app + '" data-alt="' + esc((v.images && v.images[0]) || '') + '">' +
+        '<span class="rn-free__cover"><img src="' + esc(img) + '" alt="' + esc(v.name) + '" loading="lazy"><span class="rn-free__tag">GRÁTIS</span>' +
+        '<span class="rn-free__ok" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span></span>' +
+        '<span class="rn-free__name">' + esc(v.name) + '</span>' +
+        '<span class="rn-free__price"><s>R$ 15,99</s> <b>R$ 0,00</b></span></button>';
+    }).join('');
+    document.getElementById('rn-free-qtd').textContent = '1 destes ' + gratis.length;
+    var cards = [].slice.call(box.querySelectorAll('.rn-free__card'));
+    var msg = document.getElementById('rn-free-msg'), btn = document.getElementById('rn-free-btn');
+    var fill = document.getElementById('rn-free-fill'), progT = document.getElementById('rn-free-prog-t');
+    var pop = document.getElementById('rn-free-pop');
+    // a janela vai direto para o <body>: dentro do painel (que tem efeito de desfoque no PC) ela ficava presa na coluna
+    if (pop && pop.parentNode !== document.body) {
+      document.querySelectorAll('body > #rn-free-pop').forEach(function (velho) { if (velho !== pop) velho.remove(); });
+      document.body.appendChild(pop);
+    }
+    function brl(v) { return Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+    function norm(t) { return String(t || '').trim().toLowerCase(); }
+    function same(a, b) { return String(a == null ? '' : a) === String(b == null ? '' : b); }
+    function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k); if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) { return null; } }
+    function toast(t) {
+      var el = document.getElementById('toast'), m = document.getElementById('toast-message');
+      if (!el || !m) return;
+      m.textContent = t; el.classList.remove('hidden');
+      clearTimeout(toast.t); toast.t = setTimeout(function () { el.classList.add('hidden'); }, 3000);
+    }
+    function carrinho() { try { return (window.EreembyCart && EreembyCart.getCart()) || JSON.parse(localStorage.getItem('cart') || '[]'); } catch (e) { return []; } }
+    function qtdJogos() { return carrinho().reduce(function (n, i) { return same(i.product, PD.id) ? n + (i.amount || 1) : n; }, 0); }
+    // pelo id da variação: o mesmo jogo pode ter entrado no carrinho por outra página (franquias, presente)
+    function noCarrinho(v) { return carrinho().some(function (i) { return same(i.variant, v.id); }); }
+    function tirar(v) { carrinho().forEach(function (i) { if (same(i.variant, v.id)) EreembyCart.removeItem(i.product, i.variant); }); }
+    function temEstoque(v) { return v.type === 'texto' || v.stock_amount > 0; }
+    // o jogo grátis fica no carrinho como item normal; guardamos qual opção ele é
+    function freeVid() { if (!window.RNB) return ls('rn_free_vid'); var l = RNB.brindes(); return l.length ? l[l.length - 1] : null; }
+    function freeNoCarrinho() { if (window.RNB) return RNB.brindes().length > 0; var id = freeVid(); return !!id && carrinho().some(function (i) { return same(i.product, PD.id) && same(i.variant, id); }); }
+    function nomesBrindes() { return window.RNB ? RNB.brindes().map(function (id) { var v = RNB.porId(id); return v ? v.name : null; }).filter(Boolean) : []; }
+    function qtdPagos() { return window.RNB ? RNB.pagos() : qtdJogos() - (freeNoCarrinho() ? 1 : 0); }
+    function copiarCupom(el) {
+      if (el && el.nodeType === 1) {
+        clearTimeout(el._t);
+        el.classList.remove('rn-copied'); void el.offsetWidth; el.classList.add('rn-copied');
+        el.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Copiado!';
+        var box = el.closest('.rn-cp__cupom'); if (box) { box.classList.remove('rn-cp__cupom--ok'); void box.offsetWidth; box.classList.add('rn-cp__cupom--ok'); }
+        el._t = setTimeout(function () { if (box) box.classList.remove('rn-cp__cupom--ok'); }, 2200); // o botão fica "Copiado!" (verde no escuro)
+      }
+      try { navigator.clipboard.writeText(CUP()).catch(function () {}); } catch (e) {
+        try { var t = document.createElement('textarea'); t.value = CUP(); document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); } catch (x) {}
+      }
+      toast('Cupom ' + CUP() + ' copiado! Cole no checkout.');
+    }
+    var ocupado = false;
+    // escolhe o jogo grátis: tira o grátis anterior do carrinho e coloca o novo
+    function escolherGratis(nome) {
+      var v = gratis.filter(function (x) { return x.name === nome; })[0];
+      if (!v || !window.RNB) return false;
+      ocupado = true; var ok = RNB.escolher(v, { quieto: true }); ocupado = false;
+      atualizar();
+      return ok;
+    }
+    window.rnFreeChoose = function (nome) { if (escolherGratis(nome) && window.rnFreeAfterPick) window.rnFreeAfterPick(nome); };
+
+    // busca pelo nome dos jogos grátis
+    (function () {
+      var bx = document.getElementById('rn-free-busca'), vazio = document.getElementById('rn-free-vazio'), tr = document.getElementById('rn-free-track');
+      if (!bx || !tr) return;
+      function sem(t) { return String(t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/['\u2019.]/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim(); }
+      bx.addEventListener('input', function () {
+        var q = sem(bx.value), vis = 0;
+        tr.querySelectorAll('.rn-free__card').forEach(function (c) {
+          var ok = !q || sem(c.dataset.nome).indexOf(q) !== -1;
+          c.hidden = !ok; if (ok) vis++;
+        });
+        vazio.hidden = vis > 0;
+        tr.scrollLeft = 0;
+      });
+    })();
+
+    // preço riscado de cada brinde vem da loja
+    cards.forEach(function (c) {
+      var v = VARS.filter(function (x) { return norm(x.name) === norm(c.dataset.nome); })[0];
+      if (v && Number(v.price) > 0) c.querySelector('.rn-free__price s').textContent = brl(v.price);
+      var img = c.querySelector('img'), passo = 0;
+      img.addEventListener('error', function () {
+        passo++;
+        var base = 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/' + c.dataset.app + '/';
+        if (!c.dataset.app) { if (passo === 1 && c.dataset.alt) img.src = c.dataset.alt; return; }
+        if (passo === 1) img.src = base + 'library_600x900.jpg';
+        else if (passo === 2) img.src = c.dataset.alt || base + 'header.jpg';
+      });
+    });
+
+    // adiciona o jogo tocado na grade ao carrinho
+    function adicionar(v) {
+      if (!window.EreembyCart) return;
+      if (!temEstoque(v) && !noCarrinho(v)) { toast(v.name + ' está esgotado no momento.'); return; }
+      if (noCarrinho(v)) { tirar(v); toast(v.name + ' removido do carrinho.'); return; }
+      EreembyCart.addItem({
+        product: PD.id, category: PD.category_id || '', variant: v.id, type: v.type || 'default',
+        name: v.name, icon: v.icon || (v.images && v.images[0]) || (PD.images && PD.images[0]) || null,
+        stock: v.stock_amount || 999, min: (v.quantity && v.quantity.min) || 1,
+        max: v.quantity && v.quantity.max > 0 ? v.quantity.max : (v.stock_amount || 999),
+        value: v.price, amount: 1, fields: [], automatic: v.automatic
+      });
+      var n = qtdPagos();
+      var lv = window.RNB ? RNB.livres() : (n >= 2 ? 1 : 0), ft = window.RNB ? RNB.faltaPara() : 2 - n;
+      toast(lv > 0 ? v.name + ' adicionado! Jogo grátis liberado.' : v.name + ' adicionado! Falta ' + ft + ' para ganhar ' + (n >= 2 ? 'mais ' : '') + '1 grátis.');
+    }
+    // botão "+ Carrinho" em cada card da grade (tocar no card só seleciona)
+    function pintar() {
+      document.querySelectorAll('.rn-vg__card').forEach(function (c) {
+        var v = VARS[+c.dataset.variantIndex]; if (!v) return;
+        var b = c.querySelector('.rn-vg__add');
+        if (!b) { b = document.createElement('span'); b.className = 'rn-vg__add'; b.setAttribute('role', 'button'); b.tabIndex = 0; c.appendChild(b); }
+        var dentro = noCarrinho(v), ehGratis = dentro && (window.RNB ? RNB.ehBrinde(v.id) : same(freeVid(), v.id));
+        b.classList.toggle('rn-vg__add--in', dentro);
+        b.classList.toggle('rn-vg__add--off', !temEstoque(v));
+        b.innerHTML = !temEstoque(v) ? 'Esgotado' : (dentro ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>' + (ehGratis ? 'No carrinho (grátis)' : 'No carrinho') + '</span>' : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"/></svg><span>Adicionar</span>');
+      });
+    }
+    document.addEventListener('click', function (e) {
+      var b = e.target.closest('.rn-vg__add');
+      if (!b) return;
+      e.preventDefault(); e.stopPropagation();
+      var card = b.closest('.rn-vg__card');
+      var v = VARS[+card.dataset.variantIndex];
+      var tirando = v && noCarrinho(v);
+      if (v) adicionar(v);
+      // o jogo tocado também fica selecionado (borda verde e ✓), como ao tocar no card
+      if (v && !card.classList.contains('rn-opt--on')) { window.__rnAddClique = true; card.click(); window.__rnAddClique = false; }
+      // ao adicionar ao carrinho, também sobe para mostrar o vídeo/banner do jogo (ao tirar, fica onde está)
+      if (v && !tirando && noCarrinho(v)) subirTopo();
+    }, true);
+    // a grade vem depois deste bloco na página: pinta quando ela existir
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', pintar); else setTimeout(pintar, 0);
+    setTimeout(pintar, 600);
+
+    // escolha do brinde (só depois de 2 jogos no carrinho)
+    function marcar() {
+      var nomes = nomesBrindes(), d = window.RNB ? RNB.direito() : (qtdPagos() >= 2 ? 1 : 0), lv = window.RNB ? RNB.livres() : 0;
+      cards.forEach(function (o) { o.classList.toggle('rn-free__card--on', nomes.indexOf(o.dataset.nome) !== -1); });
+      if (d >= 1 && nomes.length) {
+        msg.innerHTML = (nomes.length > 1 ? 'Seus jogos grátis: ' : 'Seu jogo grátis: ') + '<b></b> (já no carrinho). Use o cupom <b>' + CUP() + '</b> no checkout.' + (lv > 0 ? ' Você ainda pode escolher mais ' + lv + '.' : '');
+        msg.querySelector('b').textContent = nomes.join(', '); btn.hidden = false;
+        if (!btn.classList.contains('rn-copied')) btn.textContent = 'Copiar cupom ' + CUP();
+      } else if (d >= 1) {
+        msg.textContent = (d > 1 ? d + ' jogos grátis liberados!' : 'Jogo grátis liberado!') + ' Toque em um dos jogos acima para escolher.'; btn.hidden = true;
+      } else {
+        msg.textContent = 'Use o botão "+ Carrinho" nos jogos de "Escolha sua opção". Com 2 no carrinho, o jogo grátis é liberado. A cada 2 jogos, mais 1 brinde.'; btn.hidden = true;
+      }
+    }
+    cards.forEach(function (c) {
+      c.addEventListener('click', function () {
+        var n = qtdPagos();
+        if (n < 2) {
+          c.classList.remove('rn-free__card--no'); void c.offsetWidth; c.classList.add('rn-free__card--no');
+          toast('Adicione ' + (2 - n) + ' jogo' + (2 - n > 1 ? 's' : '') + ' ao carrinho para liberar o grátis.');
+          return;
+        }
+        var vc = gratis.filter(function (x) { return x.name === c.dataset.nome; })[0];
+        if (vc && window.RNB && RNB.ehBrinde(vc.id)) { RNB.remover(vc.id); toast(vc.name + ' tirado dos brindes.'); atualizar(); return; }
+        window.rnFreeChoose(c.dataset.nome);
+      });
+    });
+
+    // bloco "Escolha o seu grátis" dentro do carrinho (só nesta página)
+    var CART_ICO = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 0 0 2 1.6h8.6a2 2 0 0 0 2-1.6L22 7H6"/></svg>';
+    var GIFT_ICO = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg>';
+    var trocando = false;
+    // a aba do jogo grátis dentro do carrinho fica no núcleo (assets/rn-brindes.js)
+    window.rnFreeAfterPick = function (nome, doCarrinho) {
+      trocando = false; marcar(); bannerGratis(nome); toast(nome + ' adicionado como jogo grátis! Use o cupom ' + CUP() + '.');
+      // com todos os brindes escolhidos, abre o carrinho sozinho (se a escolha foi na página)
+      var falta = window.RNB ? RNB.livres() : 0;
+      if (!doCarrinho && !falta && qtdPagos() >= 2 && window.EreembyCart && !document.documentElement.classList.contains('rn-cart-open')) setTimeout(function () { EreembyCart.openDropdown(); setTimeout(function () { var w = document.getElementById('cart-items-wrapper'), c = w && w.querySelector('.rn-ci--free'); if (w && c) w.scrollTo({ top: c.offsetTop - w.offsetTop - 120, behavior: 'smooth' }); }, 350); }, 700);
+    };
+    window.rnFreeCopy = copiarCupom;
+    btn.dataset.txt = btn.textContent; btn.addEventListener('click', function () { copiarCupom(btn); });
+
+    // banner do topo mostra o jogo grátis escolhido
+    function bannerGratis(nome) {
+      var main = document.getElementById('main-product-image'); if (!main) return;
+      var v = gratis.filter(function (x) { return x.name === nome; })[0]; if (!v) return;
+      var src = (v.images && v.images[0]) || v.icon; if (!src) return;
+      main.style.transition = 'opacity .25s'; main.style.opacity = '0';
+      setTimeout(function () { main.src = src; main.style.opacity = '1'; }, 200);
+      var wrap = main.parentElement; if (!wrap) return;
+      if (getComputedStyle(wrap).position === 'static') wrap.style.position = 'relative';
+      var tag = document.getElementById('rn-free-banner-tag');
+      if (!tag) { tag = document.createElement('span'); tag.id = 'rn-free-banner-tag'; tag.className = 'rn-free-btag'; wrap.appendChild(tag); }
+      tag.innerHTML = GIFT_ICO + '<span>Seu jogo grátis</span>';
+      tag.classList.remove('rn-free-btag--in'); void tag.offsetWidth; tag.classList.add('rn-free-btag--in');
+      if (!document.documentElement.classList.contains('rn-cart-open')) subirTopo();
+    }
+
+    // sobe até o topo do produto (funciona mesmo se a loja rolar dentro de um contêiner e não na janela)
+    function subirTopo() {
+      var alvo = document.querySelector('.rn-pp__gal') || document.getElementById('main-product-image');
+      setTimeout(function () {
+        if (alvo && alvo.scrollIntoView) alvo.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
+      }, 80);
+    }
+    window.rnSubirTopo = subirTopo;
+    // ao tocar num jogo da grade (não no botão Adicionar), sobe até o topo para mostrar o vídeo/banner do jogo escolhido
+    // ouvimos o toque logo no início (fase de captura), antes de qualquer outro script poder interromper o clique
+    var ultimoToque = 0;
+    window.addEventListener('pointerdown', function (e) {
+      if (e.target && e.target.closest && e.target.closest('.rn-vg__card') && !e.target.closest('.rn-vg__add')) ultimoToque = Date.now();
+    }, true);
+    window.addEventListener('click', function (e) {
+      if (!e.target.closest || !e.target.closest('.rn-vg__card') || e.target.closest('.rn-vg__add') || window.__rnAddClique) return;
+      ultimoToque = 0; subirTopo();
+    }, true);
+    // garantia extra: quando a seleção da grade muda logo após um toque no card, sobe também
+    (function () {
+      var grade = document.querySelector('.rn-vg'); if (!grade || !window.MutationObserver) return;
+      // só conta quando o jogo selecionado muda de verdade (o destaque do dedo também mexe nas classes)
+      function sel() { return grade.querySelector('.rn-vg__card.rn-opt--on'); }
+      var selAntes = sel();
+      new MutationObserver(function () {
+        var agora = sel(); if (agora === selAntes) return; selAntes = agora;
+        if (ultimoToque && Date.now() - ultimoToque < 1500 && !window.__rnAddClique) { ultimoToque = 0; subirTopo(); }
+      }).observe(grade, { subtree: true, attributes: true, attributeFilter: ['class'] });
+    })();
+
+    // ao tocar num jogo da grade o banner volta a ser dele: tira o selo de grátis
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.rn-vg__card') || e.target.closest('.rn-vg__add')) return;
+      var tag = document.getElementById('rn-free-banner-tag'); if (tag) tag.remove();
+    });
+
+    // animação: quando chega a 2 jogos, espera a tela subir e os cadeados dos brindes visíveis tremem, abrem e caem
+    var CADEADO = '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="rn-free__arco" d="M7.5 11V7.5a4.5 4.5 0 0 1 9 0V11" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><rect x="4.5" y="10.5" width="15" height="11" rx="2.6" fill="currentColor"/><circle cx="12" cy="15.6" r="1.6" fill="#0b0c0e"/><path d="M12 16.5v2" stroke="#0b0c0e" stroke-width="1.6" stroke-linecap="round"/></svg>';
+    function soltarCadeados() {
+      var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduz) { box.classList.add('rn-free--ok'); return; }
+      box.classList.add('rn-free--soltando');
+      setTimeout(function () {
+        var tr = document.getElementById('rn-free-track'), r = tr ? tr.getBoundingClientRect() : null;
+        var vis = cards.filter(function (c) {
+          if (!r || c.hidden || c.style.display === 'none') return false;
+          var x = c.getBoundingClientRect(); return x.width > 0 && x.right > r.left + 8 && x.left < r.right - 8;
+        }).slice(0, 6);
+        vis.forEach(function (c, i) {
+          var cov = c.querySelector('.rn-free__cover'); if (!cov) return;
+          var cad = document.createElement('span');
+          cad.className = 'rn-free__cad'; cad.style.setProperty('--d', (i * 110) + 'ms'); cad.innerHTML = CADEADO;
+          cov.appendChild(cad);
+          setTimeout(function () { if (window.rnBurst) try { window.rnBurst(cov, true); } catch (e) { } }, 820 + i * 110);
+          setTimeout(function () { cad.remove(); }, 1700 + i * 110);
+        });
+        // as capas ganham cor quando os cadeados abrem
+        setTimeout(function () { box.classList.remove('rn-free--soltando'); box.classList.toggle('rn-free--ok', qtdPagos() >= 2); }, 760);
+      }, 650);
+    }
+
+    // o contrário: ficou com menos de 2 jogos -> os cadeados caem de volta e fecham
+    function fecharCadeados() {
+      box.classList.remove('rn-free--soltando');
+      box.classList.remove('rn-free--ok');
+      var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduz) return;
+      var tr = document.getElementById('rn-free-track'), r = tr ? tr.getBoundingClientRect() : null;
+      cards.filter(function (c) {
+        if (!r || c.hidden || c.style.display === 'none') return false;
+        var x = c.getBoundingClientRect(); return x.width > 0 && x.right > r.left + 8 && x.left < r.right - 8;
+      }).slice(0, 6).forEach(function (c, i) {
+        var cov = c.querySelector('.rn-free__cover'); if (!cov) return;
+        cov.querySelectorAll('.rn-free__cad').forEach(function (x) { x.remove(); });
+        var cad = document.createElement('span');
+        cad.className = 'rn-free__cad rn-free__cad--volta'; cad.style.setProperty('--d', (i * 90) + 'ms'); cad.innerHTML = CADEADO;
+        cov.appendChild(cad);
+        setTimeout(function () { cad.remove(); }, 1500 + i * 90);
+      });
+    }
+    // garantia: se o carrinho mudou sem avisar (outra página, outra aba), acerta o estado dos brindes
+    window.rnFreeChecar = function () {
+      if (!document.body.contains(box) || box.classList.contains('rn-free--soltando')) return;
+      if (box.classList.contains('rn-free--ok') !== (qtdPagos() >= 2)) atualizar();
+    };
+    window.addEventListener('pageshow', function () { window.rnFreeChecar(); });
+    document.addEventListener('visibilitychange', function () { if (!document.hidden) window.rnFreeChecar(); });
+
+    // progresso + aviso quando chega a 2 jogos
+    var antes = null;
+    function atualizar() {
+      if (ocupado) return;
+      // brindes a mais / guardados: o núcleo acerta (assets/rn-brindes.js)
+      if (window.RNB) { ocupado = true; RNB.acertar(); ocupado = false; }
+      var n = qtdPagos(), ok = n >= 2;
+      var dir = window.RNB ? RNB.direito() : (ok ? 1 : 0), nb = window.RNB ? RNB.brindes().length : 0;
+      fill.style.width = Math.min(100, ok ? 100 : n * 50) + '%';
+      progT.textContent = ok ? (dir > 1 ? dir + ' grátis liberados! (' + n + ' jogos pagos · ' + nb + ' escolhido' + (nb === 1 ? '' : 's') + ')' : 'Grátis liberado! (' + n + ' jogos pagos)') : n + ' de 2 jogos no carrinho';
+      var liberou = ok && antes !== null && antes < 2 && !box.classList.contains('rn-free--ok');
+      var trancou = !ok && box.classList.contains('rn-free--ok');
+      if (liberou) soltarCadeados();
+      else if (trancou) fecharCadeados();
+      else if (!box.classList.contains('rn-free--soltando')) box.classList.toggle('rn-free--ok', ok);
+      if (!ok && ls('rn_free_pick')) ls('rn_free_pick', null);
+      // a janela de "liberado" aparece depois da animação dos cadeados
+      if (liberou && !document.documentElement.classList.contains('rn-cart-open')) setTimeout(function () { if (qtdPagos() >= 2) pop.hidden = false; }, 2300);
+      antes = n; marcar(); pintar();
+      var cp = document.getElementById('rn-cart-promo'); if (cp) window.rnCartPromo(cp);
+    }
+    function fechar() { pop.hidden = true; }
+    document.getElementById('rn-free-pop-go').addEventListener('click', function () {
+      fechar(); box.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    pop.addEventListener('click', function (e) { if (e.target === pop) fechar(); });
+    document.getElementById('rn-free-pop-cart').addEventListener('click', function (e) {
+      if (!window.EreembyCart) return;
+      e.preventDefault(); e.stopPropagation(); fechar(); setTimeout(function () { EreembyCart.openDropdown(); }, 50);
+    });
+    // ao sair da página de Jogos Steam (outra página da loja ou fechar a aba), os jogos saem do carrinho.
+    // ir para o carrinho/checkout NÃO limpa (senão a compra perderia os jogos).
+    if (!window.__rnSteamSaida) {
+      window.__rnSteamSaida = true;
+      var pid = PD.id, seg = (location.pathname.split('/')[2] || '');
+      var naPagina = function (path) { var p = path.split('/'); return p[1] === 'product' && (p[2] === seg || p[2] === String(pid)); };
+      // ir para a compra (ou para páginas que usam os mesmos jogos: franquias, presente) não limpa
+      var paraCompra = function (path) { return /^\/(cart|checkout|franquias|presente)(\/|$)/.test(path); };
+      var limpar = function () {
+        try {
+          var cart = JSON.parse(localStorage.getItem('cart') || '[]');
+          var resto = cart.filter(function (i) { return String(i.product) !== String(pid); });
+          if (resto.length !== cart.length) {
+            if (window.EreembyCart) cart.forEach(function (i) { if (String(i.product) === String(pid)) EreembyCart.removeItem(i.product, i.variant); });
+            else localStorage.setItem('cart', JSON.stringify(resto));
+          }
+          localStorage.removeItem('rn_free_pick'); localStorage.removeItem('rn_free_vid'); localStorage.removeItem('rn_free_wait');
+          localStorage.removeItem('rn_brindes'); localStorage.removeItem('rn_brindes_espera');
+        } catch (e) {}
+      };
+      // botões/links que levam à compra marcam que a saída é para pagar
+      var indoPagar = false;
+      document.addEventListener('click', function (e) {
+        var t = e.target && e.target.closest ? e.target : null; if (!t) return;
+        var a = t.closest('#cart-checkout-btn, #btn-buy-now, #rn-buybar-btn, a[href^="/cart"], a[href*="checkout"]');
+        if (a) { indoPagar = true; setTimeout(function () { indoPagar = false; }, 4000); }
+      }, true);
+      // troca de página sem recarregar
+      var ultimo = location.pathname;
+      setInterval(function () {
+        var agora = location.pathname;
+        if (agora === ultimo) return;
+        if (naPagina(ultimo) && !naPagina(agora) && !paraCompra(agora)) limpar();
+        ultimo = agora;
+      }, 300);
+      // fechar a aba, recarregar fora da página ou navegar com recarga
+      window.addEventListener('pagehide', function () {
+        if (indoPagar || !naPagina(location.pathname)) return;
+        // só a aba que o cliente está usando limpa: uma aba esquecida em segundo plano (que o celular fecha sozinho)
+        // não pode apagar o carrinho das outras abas
+        try { if (localStorage.getItem('rn_tab_ativa') && localStorage.getItem('rn_tab_ativa') !== window.__rnTabId) return; } catch (e) {}
+        // guarda uma cópia por alguns segundos: se for só um "recarregar", os jogos voltam
+        try {
+          var cart = JSON.parse(localStorage.getItem('cart') || '[]');
+          sessionStorage.setItem('rn_steam_bkp', JSON.stringify({ t: Date.now(), pid: String(pid), itens: cart.filter(function (i) { return String(i.product) === String(pid); }),
+            pick: localStorage.getItem('rn_free_pick'), vid: localStorage.getItem('rn_free_vid'), bs: localStorage.getItem('rn_brindes') }));
+        } catch (e) {}
+        limpar();
+      });
+    }
+    window.addEventListener('cart-sync', atualizar);
+    window.addEventListener('storage', atualizar);
+    atualizar();
+  })();
+</script>

@@ -1,0 +1,54 @@
+{% comment %}
+  Rei dos Nitros: cards "Torne-se um Afiliado", "Regras e Termos" e "Cashback" (fim da Home, antes das perguntas frequentes).
+  No celular deslizam para o lado; no computador ficam lado a lado.
+{% endcomment %}
+<section class="rn-aff" id="rn-afiliado">
+  <div class="rn-aff__track" id="rn-aff-track">
+    <article class="rn-aff__card">
+      <img class="rn-aff__img" src="https://cdn.erbycloud.com/attachments/17944924168241478imagem.png" alt="Torne-se um afiliado da Rei dos Nitros" loading="lazy">
+      <div class="rn-aff__body">
+        <h3 class="rn-aff__title">Torne-se um Afiliado</h3>
+        <p class="rn-aff__desc">Torne-se um afiliado da Rei dos Nitros e ganhe dinheiro indicando a loja para amigos e conhecidos.</p>
+        <a class="rn-aff__btn" href="/account/affiliate">Quero ser afiliado →</a>
+      </div>
+    </article>
+
+    <article class="rn-aff__card rn-aff__card--rules">
+      <img class="rn-aff__img" src="https://cdn.erbycloud.com/attachments/17945066129545785imagem.png" alt="Regras e Termos da Rei dos Nitros" loading="lazy">
+      <div class="rn-aff__body">
+        <h3 class="rn-aff__title">Regras e Termos</h3>
+        <p class="rn-aff__desc">Antes de comprar, veja como funcionam a entrega, a garantia de 7 dias, os reembolsos e o uso dos produtos.</p>
+        <a class="rn-aff__btn rn-aff__btn--rules" href="/regras">Ler as regras →</a>
+      </div>
+    </article>
+
+    <article class="rn-aff__card rn-aff__card--cash">
+      <img class="rn-aff__img" src="https://cdn.erbycloud.com/attachments/17945072347344062imagem.png" alt="Cashback da Rei dos Nitros" loading="lazy">
+      <div class="rn-aff__body">
+        <h3 class="rn-aff__title">Cashback</h3>
+        <p class="rn-aff__desc">Compre e ganhe dinheiro de volta: de 4% até 20% em saldo, além de cargos exclusivos no nosso Discord.</p>
+        <a class="rn-aff__btn rn-aff__btn--cash" href="/cashback">Ver meu nível →</a>
+      </div>
+    </article>
+  </div>
+  <div class="rn-aff__dots" id="rn-aff-dots" aria-hidden="true">
+    <span class="rn-aff__dot rn-aff__dot--on"></span><span class="rn-aff__dot"></span><span class="rn-aff__dot"></span>
+  </div>
+</section>
+
+<script>
+  (function () {
+    var track = document.getElementById('rn-aff-track');
+    var dots = document.querySelectorAll('#rn-aff-dots .rn-aff__dot');
+    if (!track || !dots.length) return;
+    track.addEventListener('scroll', function () {
+      var cards = track.querySelectorAll('.rn-aff__card');
+      var best = 0, dist = Infinity;
+      cards.forEach(function (c, i) {
+        var d = Math.abs(c.offsetLeft - track.offsetLeft - track.scrollLeft - 16);
+        if (d < dist) { dist = d; best = i; }
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('rn-aff__dot--on', i === best); });
+    }, { passive: true });
+  })();
+</script>

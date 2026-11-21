@@ -1,0 +1,188 @@
+{% comment %}
+  Rei dos Nitros: página "Raspadinha PIX" (endereço /raspadinha, definido em routes/routes.json).
+  O cliente digita um código e raspa 1 cartela. O prêmio de cada código já foi sorteado quando o código foi criado
+  (sempre o mesmo valor para o mesmo código). Os códigos NÃO ficam escritos aqui: só a impressão digital (SHA-256).
+  A lista de códigos e prêmios fica com o dono da loja. Códigos já pagos vão em RN_RASP_USADOS (não raspam mais).
+  Prêmios (ordem dos números em RN_RASP): 0=R$ 1, 1=R$ 2, 2=R$ 5, 3=R$ 10, 4=R$ 20.
+{% endcomment %}
+{% assign rn_rp_discord = 'https://discord.gg/dFr88Y8rJb' %}
+<style>
+  .rn-rp { overflow-x: clip; width: 100%; box-sizing: border-box; max-width: 560px; margin: 0 auto; padding: 22px 16px 40px; color: #fff; font-family: var(--rn-font); text-align: center; }
+  .rn-rp__kick { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .16em; color: #22f26a; }
+  .rn-rp__kick i { width: 22px; height: 3px; border-radius: 3px; background: #22f26a; }
+  .rn-rp__title { margin: 10px 0 6px; font-family: var(--rn-font-round); font-size: clamp(30px, 9vw, 44px); font-weight: 800; line-height: 1.02; }
+  .rn-rp__title span { color: #22f26a; }
+  .rn-rp__lead { margin: 0 auto; max-width: 420px; font-size: 15px; line-height: 1.5; color: #a1a2a8; }
+  .rn-rp__ticket { position: relative; max-width: 400px; margin: 26px auto 0; padding: 16px; border-radius: 26px; background: linear-gradient(145deg, #1a1b1f, #0e0f11); border: 1px solid #2a2b31; box-shadow: 0 20px 50px rgba(0,0,0,.55); }
+  .rn-rp__ticket::before, .rn-rp__ticket::after { content: ''; position: absolute; top: 50%; width: 22px; height: 22px; margin-top: -11px; border-radius: 50%; background: #000; border: 1px solid #2a2b31; }
+  .rn-rp__ticket::before { left: -12px; } .rn-rp__ticket::after { right: -12px; }
+  .rn-rp__top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; font-size: 12px; font-weight: 800; letter-spacing: .14em; color: #a1a2a8; }
+  .rn-rp__pix { display: inline-flex; align-items: center; gap: 6px; color: #22f26a; }
+  .rn-rp__area { position: relative; height: 180px; border-radius: 18px; overflow: hidden; background: radial-gradient(120% 120% at 50% 0%, rgba(34,242,106,.25), transparent 60%), #0b1a11; border: 2px dashed #1f5a37; touch-action: none; user-select: none; -webkit-user-select: none; }
+  .rn-rp__prize { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; }
+  .rn-rp__prize small { font-size: 13px; font-weight: 800; letter-spacing: .14em; color: #a1a2a8; }
+  .rn-rp__val { font-family: var(--rn-font-round); font-size: clamp(46px, 14vw, 64px); font-weight: 800; color: #22f26a; line-height: 1; text-shadow: 0 0 24px rgba(34,242,106,.45); }
+  .rn-rp__canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: grab; transition: opacity .6s ease; }
+  .rn-rp__canvas.rn-rp--fora { opacity: 0; pointer-events: none; }
+  .rn-rp__hint { margin: 10px 0 0; font-size: 13px; color: #a1a2a8; }
+  .rn-rp__lock { position: absolute; inset: 0; z-index: 2; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; border-radius: 18px; background: rgba(8,9,11,.82); backdrop-filter: blur(3px); font-size: 14px; font-weight: 700; color: #c4c5ca; }
+  .rn-rp__lock[hidden] { display: none; }
+  .rn-rp__box { margin: 18px auto 0; max-width: 400px; text-align: left; }
+  .rn-rp__label { display: block; margin-bottom: 8px; font-size: 13px; font-weight: 700; color: #c4c5ca; }
+  .rn-rp__row { display: flex; gap: 8px; }
+  .rn-rp__input { flex: 1; min-width: 0; padding: 14px; border: 1px solid #2c2d33; border-radius: 14px; background: #18191c; color: #fff; font: inherit; font-size: 17px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; outline: none; }
+  .rn-rp__input:focus { border-color: #22f26a; box-shadow: 0 0 0 3px rgba(34,242,106,.18); }
+  .rn-rp__btn { flex: none; padding: 0 18px; border: 0; border-radius: 14px; background: #22f26a; color: #04140a; font: inherit; font-size: 16px; font-weight: 800; cursor: pointer; box-shadow: 0 5px 0 #129a43; transition: transform .1s, box-shadow .1s; }
+  .rn-rp__btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #129a43; }
+  .rn-rp__btn:disabled { opacity: .6; cursor: default; }
+  .rn-rp__msg { min-height: 20px; margin: 10px 2px 0; font-size: 14px; color: #a1a2a8; }
+  .rn-rp__msg--err { color: #f87171; }
+  .rn-rp__box.rn-rp--shake { animation: rnFreeNo .35s; }
+  .rn-rp__win { display: none; margin: 18px auto 0; max-width: 400px; padding: 20px 18px; border: 1px solid #1f5a37; border-radius: 22px; background: radial-gradient(120% 90% at 50% 0%, rgba(34,242,106,.22), transparent 60%), #0f1012; }
+  .rn-rp__win.rn-rp--on { display: block; animation: rnFreePop .45s cubic-bezier(.2,1.4,.4,1); }
+  .rn-rp__win p { margin: 0 0 12px; font-size: 15px; color: #c4c5ca; line-height: 1.45; }
+  .rn-rp__win b { color: #22f26a; }
+  .rn-rp__code { display: inline-flex; margin-bottom: 14px; padding: 8px 14px; border: 2px dashed #22f26a; border-radius: 12px; font-weight: 800; letter-spacing: .08em; }
+  .rn-rp__dc { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 14px; border-radius: 14px; background: #5865f2; color: #fff !important; font-weight: 800; text-decoration: none !important; }
+  .rn-rp__how { margin: 26px auto 0; max-width: 400px; display: grid; gap: 10px; text-align: left; }
+  .rn-rp__step { display: flex; gap: 12px; align-items: flex-start; padding: 12px 14px; border: 1px solid #222328; border-radius: 16px; background: #0f1012; font-size: 14px; line-height: 1.45; color: #c4c5ca; }
+  .rn-rp__step b { color: #fff; }
+  .rn-rp__n { flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 8px; background: #22f26a; color: #04140a; font-weight: 800; font-size: 14px; }
+</style>
+
+<div class="rn-rp">
+  <div class="rn-rp__kick"><i></i>RASPADINHA PIX</div>
+  <h1 class="rn-rp__title">Raspe e ganhe <span>PIX</span></h1>
+  <p class="rn-rp__lead">Digite o seu código e raspe a cartela. <b>Todo código ganha</b> um PIX de R$ 1 até R$ 20.</p>
+
+  <div class="rn-rp__ticket">
+    <div class="rn-rp__top"><span>REI DOS NITROS</span><span class="rn-rp__pix"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.6 7.8 6.8h.9c.8 0 1.5.3 2.1.9L12 9l1.2-1.3c.6-.6 1.3-.9 2.1-.9h.9L12 2.6Zm-6.2 6.2L2.6 12l3.2 3.2h2.9c.4 0 .8-.2 1.1-.5L11 13.5c.6-.6 1.5-.6 2 0l1.2 1.2c.3.3.7.5 1.1.5h2.9l3.2-3.2-3.2-3.2h-2.9c-.4 0-.8.2-1.1.5L13 10.5c-.6.6-1.5.6-2 0L9.8 9.3c-.3-.3-.7-.5-1.1-.5H5.8Zm2 8.4 4.2 4.2 4.2-4.2h-.9c-.8 0-1.5-.3-2.1-.9L12 15l-1.2 1.3c-.6.6-1.3.9-2.1.9h-.9Z"/></svg>PIX</span></div>
+    <div class="rn-rp__area" id="rn-rp-area">
+      <div class="rn-rp__prize"><small>VOCÊ GANHOU</small><div class="rn-rp__val" id="rn-rp-val">R$ ?</div></div>
+      <canvas class="rn-rp__canvas" id="rn-rp-canvas"></canvas>
+      <div class="rn-rp__lock" id="rn-rp-lock"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2.5"/><path d="M8 11V7.5a4 4 0 0 1 8 0V11"/></svg>Digite o código abaixo para liberar</div>
+    </div>
+    <p class="rn-rp__hint" id="rn-rp-hint">Raspe com o dedo ou com o mouse</p>
+  </div>
+
+  <form class="rn-rp__box" id="rn-rp-form" autocomplete="off">
+    <label class="rn-rp__label" for="rn-rp-code">Código da raspadinha</label>
+    <div class="rn-rp__row">
+      <input class="rn-rp__input" id="rn-rp-code" placeholder="PX-XXXX-XXXX" maxlength="16" spellcheck="false" autocapitalize="characters">
+      <button class="rn-rp__btn" id="rn-rp-go" type="submit">Liberar</button>
+    </div>
+    <p class="rn-rp__msg" id="rn-rp-msg" role="status"></p>
+  </form>
+
+  <div class="rn-rp__win" id="rn-rp-win" role="status" aria-live="polite">
+    <p>Você ganhou um PIX de <b id="rn-rp-winv"></b>! Para receber, abra um ticket no nosso Discord e envie o seu código e a sua chave PIX.</p>
+    <div class="rn-rp__code" id="rn-rp-winc"></div>
+    <a class="rn-rp__dc" href="{{ rn_rp_discord }}" target="_blank" rel="noopener">Resgatar no Discord <span aria-hidden="true">→</span></a>
+  </div>
+
+  <div class="rn-rp__how">
+    <div class="rn-rp__step"><span class="rn-rp__n">1</span><span>Consiga um <b>código da raspadinha</b> com a Rei dos Nitros.</span></div>
+    <div class="rn-rp__step"><span class="rn-rp__n">2</span><span>Digite o código, toque em <b>Liberar</b> e <b>raspe a cartela</b>. Cada código vale <b>uma cartela</b>.</span></div>
+    <div class="rn-rp__step"><span class="rn-rp__n">3</span><span>Abra um <b>ticket no Discord</b> com o código e a sua chave PIX para receber.</span></div>
+  </div>
+</div>
+
+<script>
+  // códigos já pagos (impressão digital): não raspam mais
+  window.RN_RASP_USADOS = [];
+  window.RN_RASP = {"4647704016c22008db9ca93dbd376689111ea43348d833b89a467a745f731e6b": 2, "47e0ab21197a75de7dbc81246823aea29bd5c1710e3ad1896f7980685d1401bb": 3, "bcf1feeb847512b6b066ae73723453c66d4a48391efddf96a8a280479820d1fe": 0, "00f2d5687e53eece4a33129350fde458b46342cce039751b03f235893b98b77a": 0, "e68deee74fde44593699353ed14dee612637487e463ed078a87bed176c4ba153": 2, "f903fb75492e42cfa24ffd5329fab585dcbedf56c453e6ad27f2bbe1a83795b3": 1, "3aa2aad59336fbee35c58788698ee04fd3897e4cf525eae823de5238691c41c2": 1, "39f64b9924f7f14e73b9349662e30200f6cc5ac24812e4a5da2b0a8bf88d3420": 0, "31405946136b48ed8dde8af067ab4c9e959b3c9a9346fcfabb878b1b968bfc8b": 1, "2cee55c20a20693b4523ec33f3e14892ccdbde96533b558568bf5fe70b2fe5d1": 0, "b20836774c37933014ce4a8ccd356cc4b6bc15500ca86e671ae60b9023ea621a": 0, "ba494524ce264775342a5ccb50220ecb4d158dab1142d4d0fa5dd0b51281f16f": 0, "87a42c55159c0027991fadbe234c884129c7650581f3244fde459e874f728cf6": 0, "8bcf65f74755c1f1d2dadcc953943531dd1e088152e2ce69293a7d52f7fdfce9": 1, "eef308ac5d643956098abb971271b2b2518d80874f77277489445ca4b0c0e0cd": 2, "5ec385e19449ef9a5855e3f7928b95b27f0512960e2a1170cd99c95c0fc3838a": 0, "1f697f6508712d08f5a37061e65367b04cbde22fabb317cb8f519de0001f7f61": 1, "c59cdb8bcd37af023cad4b9b24d8e24d2e43857f1b1190e849c7b4ed54131fc7": 1, "f2521072dda8e35bfc6036fdccbb019f4741a671661bc05e3c26cc196959408f": 4, "9ae9be630506bb34211e24e419033a73f2a8afb20bfd9d17e3f29b7ced34e180": 0};
+  (function () {
+    var PREMIOS = [1, 2, 5, 10, 20];
+    var area = document.getElementById('rn-rp-area'), cv = document.getElementById('rn-rp-canvas');
+    if (!area || !cv) return;
+    var ctx = cv.getContext('2d'), lock = document.getElementById('rn-rp-lock');
+    var form = document.getElementById('rn-rp-form'), input = document.getElementById('rn-rp-code'), go = document.getElementById('rn-rp-go');
+    var msg = document.getElementById('rn-rp-msg'), win = document.getElementById('rn-rp-win'), hint = document.getElementById('rn-rp-hint');
+    function brl(v) { return Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' }); }
+    var ativo = false, revelado = false, codigoAtual = '', idxAtual = -1, hashAtual = '';
+
+    // camada prateada para raspar
+    function pintarCapa() {
+      var r = area.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+      cv.width = Math.round(r.width * d); cv.height = Math.round(r.height * d);
+      ctx.setTransform(d, 0, 0, d, 0, 0);
+      ctx.globalCompositeOperation = 'source-over';
+      var g = ctx.createLinearGradient(0, 0, r.width, r.height);
+      g.addColorStop(0, '#9aa0a8'); g.addColorStop(.35, '#e3e6ea'); g.addColorStop(.5, '#b9bec5'); g.addColorStop(.7, '#eef0f2'); g.addColorStop(1, '#8e949c');
+      ctx.fillStyle = g; ctx.fillRect(0, 0, r.width, r.height);
+      ctx.globalAlpha = .18; ctx.fillStyle = '#000';
+      for (var i = 0; i < 260; i++) ctx.fillRect(Math.random() * r.width, Math.random() * r.height, 1.5, 1.5);
+      ctx.globalAlpha = 1;
+      ctx.fillStyle = 'rgba(30,32,36,.75)'; ctx.font = '800 20px system-ui, sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('RASPE AQUI', r.width / 2, r.height / 2 - 8);
+      ctx.font = '700 12px system-ui, sans-serif'; ctx.fillText('★ REI DOS NITROS ★', r.width / 2, r.height / 2 + 16);
+      cv.classList.remove('rn-rp--fora');
+    }
+    pintarCapa();
+    window.addEventListener('resize', function () { if (!revelado) pintarCapa(); });
+
+    var raspando = false, ultimo = null, conta = 0;
+    function ponto(e) { var r = cv.getBoundingClientRect(); return { x: e.clientX - r.left, y: e.clientY - r.top }; }
+    function raspar(p) {
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineWidth = 38; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+      ctx.beginPath(); ctx.moveTo((ultimo || p).x, (ultimo || p).y); ctx.lineTo(p.x, p.y); ctx.stroke();
+      ultimo = p;
+      if (++conta % 8 === 0) checar();
+    }
+    function checar() {
+      var d = ctx.getImageData(0, 0, cv.width, cv.height).data, limpos = 0, total = 0;
+      for (var i = 3; i < d.length; i += 4 * 16) { total++; if (d[i] < 40) limpos++; }
+      if (limpos / total > .5) revelar();
+    }
+    cv.addEventListener('pointerdown', function (e) { if (!ativo || revelado) return; raspando = true; ultimo = null; cv.setPointerCapture(e.pointerId); raspar(ponto(e)); });
+    cv.addEventListener('pointermove', function (e) { if (raspando) raspar(ponto(e)); });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) { cv.addEventListener(ev, function () { if (raspando) { raspando = false; checar(); } }); });
+
+    function revelar() {
+      if (revelado) return;
+      revelado = true; ativo = false;
+      cv.classList.add('rn-rp--fora');
+      hint.textContent = 'Cartela raspada!';
+      var usados = {}; try { usados = JSON.parse(localStorage.getItem('rn_rasp_usados') || '{}'); } catch (x) {}
+      usados[hashAtual] = 1; try { localStorage.setItem('rn_rasp_usados', JSON.stringify(usados)); } catch (x) {}
+      if (window.rnBurst) window.rnBurst(document.getElementById('rn-rp-val'), true);
+      mostrarPremio();
+    }
+    function mostrarPremio() {
+      document.getElementById('rn-rp-winv').textContent = brl(PREMIOS[idxAtual]);
+      document.getElementById('rn-rp-winc').textContent = codigoAtual;
+      win.classList.remove('rn-rp--on'); void win.offsetWidth; win.classList.add('rn-rp--on');
+      setTimeout(function () { win.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 300);
+    }
+
+    function aviso(t, erro) { msg.textContent = t; msg.classList.toggle('rn-rp__msg--err', !!erro); if (erro) { form.classList.remove('rn-rp--shake'); void form.offsetWidth; form.classList.add('rn-rp--shake'); } }
+    function limpar(v) { return String(v || '').toUpperCase().replace(/[^A-Z0-9]/g, '').replace(/^PX/, '').replace(/^(.{4})(.{1,4}).*$/, 'PX-$1-$2'); }
+    input.addEventListener('input', function () { input.value = String(input.value).toUpperCase().replace(/[^A-Z0-9-]/g, ''); });
+    function sha(t) {
+      if (!window.crypto || !crypto.subtle) return Promise.reject();
+      return crypto.subtle.digest('SHA-256', new TextEncoder().encode(t)).then(function (b) { return Array.prototype.map.call(new Uint8Array(b), function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); });
+    }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var codigo = limpar(input.value);
+      if (!/^PX-[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(codigo)) { aviso('Digite o código completo, no formato PX-XXXX-XXXX.', true); return; }
+      go.disabled = true; aviso('Conferindo o código…');
+      sha(codigo).then(function (h) {
+        go.disabled = false;
+        var idx = window.RN_RASP[h];
+        if (idx === undefined) { aviso('Código inválido. Confira as letras e tente de novo.', true); return; }
+        if ((window.RN_RASP_USADOS || []).indexOf(h) >= 0) { aviso('Esse código já foi resgatado e não pode ser usado de novo.', true); return; }
+        codigoAtual = codigo; idxAtual = idx; hashAtual = h;
+        document.getElementById('rn-rp-val').textContent = brl(PREMIOS[idx]);
+        win.classList.remove('rn-rp--on');
+        var usados = {}; try { usados = JSON.parse(localStorage.getItem('rn_rasp_usados') || '{}'); } catch (x) {}
+        lock.hidden = true;
+        if (usados[h]) { revelado = true; ativo = false; cv.classList.add('rn-rp--fora'); hint.textContent = 'Essa cartela já foi raspada.'; aviso('Esse código já foi raspado. O prêmio dele está acima.'); mostrarPremio(); return; }
+        revelado = false; ativo = true; pintarCapa(); hint.textContent = 'Raspe com o dedo ou com o mouse';
+        aviso('Código liberado! Agora raspe a cartela.');
+        area.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, function () { go.disabled = false; aviso('Seu navegador não conseguiu conferir o código. Atualize a página e tente de novo.', true); });
+    });
+  })();
+</script>

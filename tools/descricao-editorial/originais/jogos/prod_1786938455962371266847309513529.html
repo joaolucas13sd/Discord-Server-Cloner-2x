@@ -1,0 +1,665 @@
+<div class="mc-wrapper">
+
+<style>
+.mc-wrapper{
+    --mc-accent:#6cbf3a;
+    --mc-bg:#0c0f0a;
+    --mc-card:#12170f;
+    --mc-item:#192014;
+    --mc-border:rgba(255,255,255,.08);
+    --mc-text:#f5f5f6;
+    --mc-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--mc-text);
+}
+.mc-wrapper *{box-sizing:border-box}
+
+.mc-container{
+    background:var(--mc-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.mc-card{
+    background:var(--mc-card);
+    border:1px solid var(--mc-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.mc-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.mc-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--mc-accent);
+    flex-shrink:0;
+}
+
+.mc-quote{
+    border-left:3px solid var(--mc-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.mc-quote strong{color:#fff}
+
+.mc-text{
+    color:var(--mc-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.mc-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.mc-list{display:grid;gap:10px}
+.mc-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--mc-item);
+    border:1px solid var(--mc-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.mc-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(108,191,58,.10);
+    border:1px solid rgba(108,191,58,.38);
+}
+.mc-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#a3e07a;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.mc-item-label{
+    display:block;
+    color:var(--mc-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.mc-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP ANIMADO */
+.mc-mock{
+    position:relative;
+    height:230px;
+    border-radius:12px;
+    background:#0d110b;
+    border:1px solid var(--mc-border);
+    overflow:hidden;
+    margin-bottom:16px;
+}
+.mc-mock-bar{
+    display:flex;
+    gap:16px;
+    padding:11px 16px;
+    font-size:11px;
+    color:#9aa0a6;
+    border-bottom:1px solid var(--mc-border);
+}
+.mc-mock-bar span:first-child{color:#a3e07a;font-weight:900;letter-spacing:.5px}
+
+.mc-dialog,
+.mc-success{
+    position:absolute;
+    left:50%;
+    top:52px;
+    transform:translateX(-50%);
+    width:78%;
+    border-radius:10px;
+    padding:14px;
+    background:#25272b;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+}
+.mc-dialog{animation:mcDialog 10s infinite}
+.mc-success{animation:mcSuccess 10s infinite;opacity:0;top:62px}
+
+.mc-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.mc-dlg-desc{font-size:10.5px;color:#9aa0a6;margin-bottom:10px;line-height:1.4}
+
+.mc-field{
+    background:#151517;
+    border:1px solid rgba(108,191,58,.55);
+    border-radius:6px;
+    padding:7px 9px;
+    margin-bottom:7px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:30px;
+    display:flex;
+    align-items:center;
+}
+.mc-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid var(--mc-accent);
+}
+.mc-type-1{animation:mcType1 10s steps(18,end) infinite}
+.mc-type-2{animation:mcType2 10s steps(10,end) infinite}
+
+.mc-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.mc-btn-cancel,
+.mc-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 12px;
+    border-radius:6px;
+}
+.mc-btn-cancel{background:#34363c;color:#d4d4d8}
+.mc-btn-go{
+    position:relative;
+    background:#4f9a2a;
+    color:#fff;
+    min-width:74px;
+    text-align:center;
+}
+.mc-btn-go span{display:block}
+.mc-btn-a{animation:mcBtnA 10s infinite}
+.mc-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:mcBtnB 10s infinite;
+}
+
+.mc-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.mc-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.mc-ok-name{font-size:11px;color:#a3e07a;font-weight:700;margin-bottom:3px}
+.mc-ok-desc{font-size:10.5px;color:#9aa0a6;line-height:1.4}
+
+@keyframes mcDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes mcSuccess{
+    0%,66%{opacity:0}
+    71%,94%{opacity:1}
+    98%,100%{opacity:0}
+}
+@keyframes mcType1{
+    0%,6%{width:0}
+    24%,92%{width:18ch}
+    100%{width:0}
+}
+@keyframes mcType2{
+    0%,26%{width:0}
+    38%,92%{width:10ch}
+    100%{width:0}
+}
+@keyframes mcBtnA{
+    0%,42%{opacity:1}
+    44%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes mcBtnB{
+    0%,42%{opacity:0}
+    44%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.mc-steps{display:grid;gap:10px}
+.mc-step{
+    background:var(--mc-item);
+    border:1px solid var(--mc-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.mc-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--mc-muted);
+    margin-bottom:8px;
+}
+.mc-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--mc-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.mc-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--mc-text);
+    margin:0;
+}
+.mc-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.mc-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.mc-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.mc-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.mc-info:last-child{margin-bottom:0}
+.mc-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .mc-card{padding:18px 14px}
+    .mc-dialog,.mc-success{width:88%}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .mc-dialog,.mc-success,.mc-type,.mc-btn-a,.mc-btn-b{animation:none}
+    .mc-dialog{opacity:1}
+    .mc-type-1{width:18ch}
+    .mc-type-2{width:10ch}
+}
+
+/* ===== DESTAQUE ===== */
+.mc-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.mc-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--mc-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.mc-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.mc-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mc-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.mc-hero-s strong{color:#fff}
+.mc-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--mc-border)}
+.mc-price-k{display:block;color:var(--mc-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.mc-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.mc-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.mc-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.mc-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.mc-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.mc-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mc-ben{background:var(--mc-item);border:1px solid var(--mc-border);border-radius:14px;padding:14px 12px}
+.mc-ben svg{width:26px;height:26px;fill:none;stroke:var(--mc-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.mc-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.mc-ben small{display:block;color:var(--mc-muted);font-size:12.5px;line-height:1.45}
+.mc-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.mc-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--mc-item);border:1px solid var(--mc-border);text-align:center}
+.mc-plan b{display:block;font-size:13px;color:var(--mc-muted);margin-bottom:6px}
+.mc-plan strong{display:block;font-size:22px;color:#fff}
+.mc-plan small{display:block;margin-top:4px;color:var(--mc-muted);font-size:12px}
+.mc-plan--on{border-color:var(--mc-accent);background:rgba(240,77,200,.10)}
+.mc-plan--on b{color:#ff7ad9}
+.mc-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--mc-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.mc-trust{display:grid;gap:10px}
+.mc-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.mc-trust strong{color:#fff}
+.mc-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.mc-info-title{display:flex;align-items:center;gap:8px}
+.mc-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.mc-nzgrid,.mc-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.mc-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.mc-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.mc-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.mc-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.mc-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.mc-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.mc-prof-body{padding:30px 12px 12px}
+.mc-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.mc-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.mc-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.mc-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.mc-prof-user b{color:#ff7ad9}
+.mc-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.mc-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.mc-mock:has(.mc-nzprof){height:auto !important;padding-bottom:16px}
+.mc-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.mc-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.mc-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.mc-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.mc-prof-name{white-space:nowrap}
+.mc-nzprof .mc-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.mc-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.mc-prof-av,.mc-prof-av span,.mc-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.mc-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.mc-rows{display:grid;gap:8px}
+.mc-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--mc-item);border:1px solid var(--mc-border);font-size:14px;color:#e4e4e7}
+.mc-row b{color:#fff;white-space:nowrap}
+.mc-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.mc-row--on{border-color:var(--mc-accent);background:rgba(240,77,200,.10)}
+.mc-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--mc-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.mc-cb-g{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 8px}
+.mc-cb-s{display:flex;flex-direction:column;align-items:center;gap:5px;width:62px}
+.mc-cb-s i{display:grid;place-items:center;width:46px;height:46px;border-radius:9px;background:var(--c);color:#fff;font-style:normal;font-weight:900;font-size:13px !important;line-height:1;letter-spacing:-.3px;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:none}
+.mc-cb-s small{font-size:10px !important;color:#d4d4d8;white-space:nowrap}
+.mc-cb-on i{animation:nzCbOn 10s infinite}
+@keyframes nzCbOn{0%,79%{box-shadow:0 4px 12px rgba(0,0,0,.4);transform:none}81%,96%{box-shadow:0 0 0 3px #fff;transform:scale(1.08)}}
+.mc-cb-tag{display:table !important;margin:12px auto 0 !important;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px !important;font-weight:800}
+
+.mc-yt-v{position:relative;height:118px;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#1e293b,#7f1d1d 60%,#dc2626)}
+.mc-yt-play{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:44px;height:32px;margin:-16px 0 0 -22px;border-radius:9px;background:#ff0033}
+.mc-yt-play svg{width:16px !important;height:16px !important;max-width:none !important;fill:#fff}
+.mc-yt-tag{position:absolute;left:8px;top:8px;padding:3px 7px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9.5px;font-weight:900;letter-spacing:.4px}
+.mc-yt-bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.25)}
+.mc-yt-bar i{display:block;height:100%;width:0;background:#ff0033;animation:nzMusBar 10s linear infinite}
+.mc-yt-t{display:block;margin:9px 2px 8px;font-size:13px;color:#fff}
+.mc-yt-acts{display:flex;gap:6px}
+.mc-yt-b{display:inline-flex;align-items:center;gap:5px;padding:7px 11px;border-radius:999px;background:#2e3035;color:#e4e4e7;font-size:11.5px;font-weight:700}
+.mc-yt-b svg{width:13px !important;height:13px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.mc-yt-b em{font-style:normal}
+.mc-yt-dl{position:relative}
+.mc-yt-ok{display:none}
+.mc-yt-dl{animation:nzYtDl 10s infinite}
+@keyframes nzYtDl{0%,80%{background:#2e3035;color:#e4e4e7}83%,96%{background:#22c55e;color:#04140a}}
+.mc-yt-a{animation:nzYtA 10s steps(1,end) infinite}
+@keyframes nzYtA{0%,81%{font-size:11.5px}82%,97%{font-size:0}}
+.mc-yt-dl::after{content:"Baixado";font-size:0;animation:nzYtOk 10s steps(1,end) infinite}
+@keyframes nzYtOk{0%,81%{font-size:0}82%,97%{font-size:11.5px}}
+
+.mc-mock:has(.mc-scr){height:270px !important}
+.mc-mock:has(.mc-cv-art){height:300px !important}
+.mc-success.mc-scr{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:12px 14px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important}
+.mc-scr-t{display:block;margin-bottom:10px;font-size:14px;color:#fff}
+.mc-mus-r{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;margin-bottom:4px}
+.mc-mus-on{background:rgba(255,255,255,.07)}
+.mc-mus-cap{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:6px;background:var(--c)}
+.mc-mus-cap svg{width:16px !important;height:16px !important;max-width:none !important;fill:#000}
+.mc-mus-r span{flex:1;min-width:0;display:flex;flex-direction:column}
+.mc-mus-r b{font-size:12.5px;color:#fff}.mc-mus-on b{color:var(--mc-accent)}
+.mc-mus-r small{font-size:10.5px;color:#9aa0a6}
+.mc-mus-r .mc-eq{flex:none;flex-direction:row;align-items:flex-end;gap:2px;height:14px}
+.mc-eq i{width:3px;height:100%;border-radius:2px;background:var(--mc-accent);transform-origin:bottom;animation:nzEq .9s ease-in-out infinite}
+.mc-eq i:nth-child(2){animation-delay:.2s}.mc-eq i:nth-child(3){animation-delay:.4s}.mc-eq i:nth-child(4){animation-delay:.1s}
+@keyframes nzEq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.mc-mus-bar{height:4px;margin:10px 8px 0;border-radius:4px;background:#2e3035;overflow:hidden}
+.mc-mus-bar i{display:block;height:100%;width:0;background:var(--mc-accent);animation:nzMusBar 10s linear infinite}
+@keyframes nzMusBar{0%,72%{width:0}96%,100%{width:70%}}
+.mc-cv-tools{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.mc-cv-btn,.mc-cv-btn2{display:inline-flex;align-items:center;gap:4px;padding:6px 9px;border-radius:7px;font-size:11px;font-weight:700}
+.mc-cv-btn{background:var(--mc-accent);color:#fff}.mc-cv-btn2{background:#2e3035;color:#d4d4d8}
+.mc-cv-btn svg{width:12px !important;height:12px !important;max-width:none !important;fill:#fff}
+.mc-cv-art{position:relative;height:150px;border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#3a3b42 0 25%,#2a2b31 0 50%) 0 0/16px 16px}
+.mc-cv-bg{position:absolute;inset:0;background:linear-gradient(160deg,#38bdf8,#22c55e 55%,#f59e0b);animation:nzCvBg 10s infinite}
+@keyframes nzCvBg{0%,80%{opacity:1}85%,100%{opacity:0}}
+.mc-cv-head{position:absolute;left:50%;top:26px;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:#f5d0b5}
+.mc-cv-body{position:absolute;left:50%;top:68px;width:84px;height:90px;margin-left:-42px;border-radius:42px 42px 0 0;background:#7c3aed}
+.mc-cv-ok{position:absolute;right:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:#22c55e;color:#04140a;font-size:10px;font-weight:900;opacity:0;animation:nzCvOk 10s infinite}
+@keyframes nzCvOk{0%,84%{opacity:0}87%,96%{opacity:1}100%{opacity:0}}
+
+.mc-mc-ban{position:relative;height:122px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#60a5fa,#93c5fd 70%)}
+.mc-mc-sol{position:absolute;right:18px;top:12px;width:22px;height:22px;background:#fde047;box-shadow:0 0 0 4px rgba(253,224,71,.35)}
+.mc-mc-chao{position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,#4ade80 0 10px,#16a34a 10px 14px,#92400e 14px);background-size:auto;}
+.mc-mc-chao::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px;background:repeating-linear-gradient(90deg,#4ade80 0 22px,transparent 22px 44px)}
+.mc-mc-chao::after{content:"";position:absolute;inset:16px 0 0;background:repeating-linear-gradient(90deg,rgba(0,0,0,.12) 0 8px,transparent 8px 16px),repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 8px,transparent 8px 16px)}
+.mc-mc-t{position:absolute;left:12px;top:12px;font-size:17px !important;line-height:1;color:#fff;text-shadow:2px 2px 0 #1f2937;font-weight:900;letter-spacing:.3px}
+.mc-mc-t small{display:block;margin-top:4px;font-size:10.5px !important;font-weight:800;text-shadow:1px 1px 0 #1f2937}
+.mc-mc-play{position:absolute;left:50%;bottom:9px;transform:translateX(-50%);z-index:2;padding:7px 22px;border-radius:4px;border:2px solid #14532d;background:#22c55e;color:#fff;font-size:12px !important;font-weight:900;letter-spacing:.6px;text-shadow:1px 1px 0 #14532d;animation:nzMcP 10s infinite}
+.mc-mc-play em{font-style:normal}
+.mc-mc-play::after{content:"ABRINDO...";font-size:0;animation:nzRkB 10s steps(1,end) infinite}
+@keyframes nzMcP{0%,80%{background:#22c55e}83%,96%{background:#15803d}}
+
+.mc-rk-ban{position:relative;height:122px;border-radius:10px;overflow:hidden;padding:12px;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.75)),linear-gradient(135deg,#f59e0b 0%,#ea580c 35%,#9d174d 70%,#3b0764 100%)}
+.mc-rk-tag{display:inline-block;padding:3px 7px;border-radius:5px;background:rgba(0,0,0,.45);color:#fff;font-size:9px !important;font-weight:900;letter-spacing:.4px}
+.mc-rk-t{position:absolute;left:12px;bottom:12px;max-width:55%;font-size:15px !important;line-height:1.15;color:#fff}
+.mc-rk-play{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:7px;background:#fcaf17;color:#111;font-size:12px !important;font-weight:800;animation:nzRkP 10s infinite}
+.mc-rk-play svg{width:12px !important;height:12px !important;max-width:none !important;fill:currentColor}
+.mc-rk-play em{font-style:normal}
+.mc-rk-b{display:none}
+.mc-rk-a{animation:nzRkA 10s steps(1,end) infinite}
+.mc-rk-play::after{content:"Abrindo...";font-size:0;animation:nzRkB 10s steps(1,end) infinite}
+@keyframes nzRkP{0%,80%{background:#fcaf17;color:#111}83%,96%{background:#22c55e;color:#04140a}}
+@keyframes nzRkA{0%,81%{font-size:12px}82%,97%{font-size:0}}
+@keyframes nzRkB{0%,81%{font-size:0}82%,97%{font-size:12px}}
+.mc-rk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.mc-rk-chips span{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11px !important;font-weight:800}
+.mc-rk-chips svg{width:12px !important;height:12px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+
+.mc-lib-n{font-size:12px !important;color:#a1a1aa;font-weight:600}
+.mc-lib-g{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.mc-lib-j{position:relative;aspect-ratio:3/4;border-radius:6px;background:var(--g);box-shadow:0 3px 8px rgba(0,0,0,.45);overflow:hidden}
+.mc-lib-j::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.55))}
+.mc-lib-j i{position:absolute;left:4px;right:3px;bottom:3px;z-index:1;font-style:normal;font-weight:900;font-size:8px !important;line-height:1.1;color:#fff;letter-spacing:.3px}
+.mc-lib-j[data-alvo]{animation:nzLibOn 10s infinite}
+@keyframes nzLibOn{0%,79%{outline:0 solid transparent;transform:none}81%,96%{outline:2px solid #fff;transform:scale(1.06)}}
+.mc-lib-tag{display:table !important;margin:10px auto 0 !important;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px !important;font-weight:800}
+
+.mc-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+
+.mc-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.mc-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+</style>
+
+
+<div class="mc-container">
+    <div class="mc-hero"><span class="mc-tag">JAVA & BEDROCK · PC</span><h2 class="mc-hero-t">Minecraft original por <span>R$ 43,99</span></h2><p class="mc-hero-s">Conta <strong>Full Access</strong> com Minecraft Java & Bedrock para PC: explore, construa e jogue com os amigos.</p><div class="mc-price mc-pulse"><div><span class="mc-price-k">Na Mojang</span><span class="mc-price-old">R$ 100,00</span></div><div><span class="mc-price-k">Aqui</span><span class="mc-price-new">R$ 43,99</span></div><span class="mc-price-off">-56%</span><span class="mc-price-mes">Você economiza R$ 56,01.</span></div></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="mc-card">
+
+        <h2 class="mc-h2">O que você recebe</h2>
+
+        <div class="mc-list">
+
+            <div class="mc-item">
+                <span class="mc-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 9.9-1"></path></svg></span>
+                <div>
+                    <span class="mc-item-label">Conta completa</span>
+                    <span class="mc-item-text">Modalidade FULL ACCESS. Você recebe os dados da conta e poderá alterar as informações disponíveis para alteração, assumindo o controle do acesso após a entrega.</span>
+                </div>
+            </div>
+
+            <div class="mc-item">
+                <span class="mc-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path><path d="m3.3 7 8.7 5 8.7-5"></path><path d="M12 22V12"></path></svg></span>
+                <div>
+                    <span class="mc-item-label">Construa seu próprio mundo</span>
+                    <span class="mc-item-text">Colete recursos, construa sua primeira casa e transforme seu mundo em cidades, castelos, fazendas automáticas ou qualquer outra criação que imaginar.</span>
+                </div>
+            </div>
+
+            <div class="mc-item">
+                <span class="mc-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon></svg></span>
+                <div>
+                    <span class="mc-item-label">Explore, construa e crie</span>
+                    <span class="mc-item-text">Tenha acesso ao Minecraft Java &amp; Bedrock Edition para PC e comece sua aventura em um mundo onde sua criatividade é o limite.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="mc-card">
+
+        <h2 class="mc-h2">Como utilizar</h2>
+
+        <div class="mc-mock">
+
+            <div class="mc-mock-bar">
+                <span>MINECRAFT</span>
+                <span>Jogar</span>
+                <span>Java</span>
+                <span>Bedrock</span>
+            </div>
+
+            <div class="mc-dialog">
+                <div class="mc-dlg-title">Entrar</div>
+                <div class="mc-dlg-desc">Use o e-mail e a senha que chegaram no seu pedido.</div>
+
+                <div class="mc-field"><span class="mc-type mc-type-1">seuemail@gmail.com</span></div>
+                <div class="mc-field"><span class="mc-type mc-type-2">••••••••••</span></div>
+
+                <div class="mc-dlg-actions">
+                    <span class="mc-btn-cancel">Cancelar</span>
+                    <span class="mc-btn-go">
+                        <span class="mc-btn-a">Entrar</span>
+                        <span class="mc-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="mc-cur mc-cur2" aria-hidden="true" style="--x1:36.4%;--y1:141px;--x2:36.4%;--y2:178px;--x3:74.5%;--y3:216px;--x4:53.2%;--y4:181px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="mc-success mc-scr">
+                <b class="mc-scr-t">Início</b>
+                <div class="mc-mc-ban"><i class="mc-mc-sol"></i><i class="mc-mc-chao"></i><b class="mc-mc-t">Minecraft<small>Java &amp; Bedrock</small></b><span class="mc-mc-play" data-alvo><em class="mc-rk-a">JOGAR</em></span></div>
+                <div class="mc-rk-chips"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Java Edition</span><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Bedrock Edition</span></div>
+            </div>
+        </div>
+
+        <div class="mc-steps">
+
+            <div class="mc-step">
+                <div class="mc-step-label"><span class="mc-step-num">1</span> Passo 1</div>
+                <p class="mc-step-text">
+                    Escolha sua conta Minecraft e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="mc-step">
+                <div class="mc-step-label"><span class="mc-step-num">2</span> Passo 2</div>
+                <p class="mc-step-text">
+                    Receba os <strong>dados da conta Microsoft</strong> e entre no launcher.
+                </p>
+            </div>
+
+            <div class="mc-step">
+                <div class="mc-step-label"><span class="mc-step-num">3</span> Passo 3</div>
+                <p class="mc-step-text">
+                    Pronto! Pronto! Escolha a edição <strong>Java ou Bedrock</strong> e comece sua aventura.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="mc-card"><h2 class="mc-h2">Compre com tranquilidade</h2><div class="mc-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Dados da conta</strong> na página do seu pedido.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+<!-- TERMOS E GARANTIA -->
+    <div class="mc-card">
+
+        <h2 class="mc-h2">Informações importantes</h2>
+
+        <p class="mc-text" style="margin-bottom:14px">
+            Antes de realizar a compra, confira atentamente as informações
+            sobre o produto e o acesso fornecido.
+        </p>
+
+        <div class="mc-info-box">
+
+            <h3 class="mc-info-title">LEIA ANTES DE COMPRAR</h3>
+
+            <p class="mc-info">
+                <span class="mc-highlight">1. Conta Microsoft:</span><br>
+                O produto consiste no fornecimento de uma conta Microsoft com acesso ao Minecraft Java &amp; Bedrock Edition para PC, acompanhada dos dados necessários para acesso conforme as condições apresentadas no anúncio.
+            </p>
+
+            <p class="mc-info">
+                <span class="mc-highlight">2. Versões incluídas:</span><br>
+                O produto anunciado inclui acesso às versões Minecraft Java Edition e Minecraft Bedrock Edition para PC, conforme indicado no momento da compra.
+            </p>
+
+            <p class="mc-info">
+                <span class="mc-highlight">3. Sem cobrança mensal:</span><br>
+                Após a entrega da conta com a licença indicada no anúncio, não existe cobrança mensal. O acesso é permanente, conforme as condições apresentadas no produto.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>A conta fica só comigo?</summary><p>Sim. A conta é <strong>full acesso</strong>: depois de receber, você pode assumir o controle dela.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="mc-hero rn-cta2"><span class="mc-tag">PRONTO PARA GARANTIR?</span><h2 class="mc-hero-t">Minecraft</h2><div class="mc-price mc-pulse"><div><span class="mc-price-k">Na Mojang</span><span class="mc-price-old">R$ 100,00</span></div><div><span class="mc-price-k">Aqui</span><span class="mc-price-new">R$ 43,99</span></div><span class="mc-price-off">-56%</span><span class="mc-price-mes">Você economiza R$ 56,01.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>

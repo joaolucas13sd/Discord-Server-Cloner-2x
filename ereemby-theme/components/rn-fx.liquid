@@ -1,0 +1,98 @@
+{% comment %}
+  Rei dos Nitros: mini-animações ao tocar em produtos, cards e botões
+  ("afundar" ao pressionar + onda saindo do ponto do toque).
+  Desligadas para quem usa "reduzir movimento" no aparelho.
+{% endcomment %}
+<script>
+  (function () {
+    if (window.__rnFx) return; window.__rnFx = true;
+    if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var ALVOS = [
+      '.rn-card', '.rn-deco__card', '.rn-steam__card', '.rn-com__btn', '.rn-aff__btn', '.rn-cats__btn',
+      '.rn-hbtn', '.rn-btn', '.rn-opt', '.rn-bnav__item', '.rn-bf__day', '.rn-bf__copy', '.rn-cv__copy',
+      '.rn-deco__btn', '.rn-steam__all', '.rn-rel-btn', '.rn-faq__q', '.rn-ah__btn', '.rn-terms__back',
+      '.rn-rating', '.rn-acc-cta', '.swiper-slide[href]', '#categorias-pai a', '.categories-swiper a',
+      // todos os outros botões e cartões clicáveis da loja
+      'button:not(:disabled)', '[role="button"]', '.rn-vg__card', '.rn-vg__cat', '.rn-vg__fr', '.variant-btn',
+      'a[class*="btn"]', 'a[class*="__go"]', 'a[class*="__cta"]', 'a.rn-ir', 'a.nv-ir', 'a.rn-rlf', 'a.rn-bfh__rl', 'a.rn-catnav__chip',
+      'a.rn-cart__sug', 'a.rn-steam__all', 'a.rn-sr', '.rn-cart__go', '.rn-up__add'
+    ].join(',');
+    // não reage: campos de texto, miniaturas da vitrine (trocam a imagem), trailer e o que estiver dentro das animações das descrições
+    var FORA = '.rn-steam__trailer, .rn-steam__shot, input, textarea, select, [data-liquid="description"] [class*="-mock"]';
+    function claro(el) {
+      var m = (getComputedStyle(el).backgroundColor || '').match(/\d+(\.\d+)?/g);
+      if (!m || (m[3] !== undefined && +m[3] < 0.3)) return false;
+      return (0.299 * m[0] + 0.587 * m[1] + 0.114 * m[2]) > 150;
+    }
+    document.addEventListener('pointerdown', function (e) {
+      if (e.button !== 0) return;
+      var el = e.target.closest(ALVOS);
+      if (!el || e.target.closest(FORA)) return;
+      // vibração curtinha no celular (só onde o aparelho permite)
+      if (e.pointerType === 'touch' && navigator.vibrate) { try { navigator.vibrate(8); } catch (x) {} }
+      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      var r = el.getBoundingClientRect();
+      var tam = Math.max(r.width, r.height) * 2.2;
+      var caixa = document.createElement('span');
+      caixa.className = 'rn-fx-box';
+      var onda = document.createElement('span');
+      onda.className = 'rn-fx-wave' + (claro(el) ? ' rn-fx-wave--dark' : '');
+      onda.style.width = onda.style.height = tam + 'px';
+      onda.style.left = (e.clientX - r.left - tam / 2) + 'px';
+      onda.style.top = (e.clientY - r.top - tam / 2) + 'px';
+      caixa.appendChild(onda);
+      el.appendChild(caixa);
+      el.classList.add('rn-fx-press');
+      var soltar = function () {
+        el.classList.remove('rn-fx-press');
+        onda.classList.add('rn-fx-wave--out');
+        setTimeout(function () { caixa.remove(); }, 450);
+        document.removeEventListener('pointerup', soltar, true);
+        document.removeEventListener('pointercancel', soltar, true);
+      };
+      document.addEventListener('pointerup', soltar, true);
+      document.addEventListener('pointercancel', soltar, true);
+      setTimeout(soltar, 900);
+    }, { passive: true });
+  })();
+</script>
+<script>
+  // Rei dos Nitros: botões de "Copiar" (cupom, link, mensagens...) soltam partículas e mudam de cor ao tocar
+  (function () {
+    if (window.__rnCopyFx) return;
+    window.__rnCopyFx = true;
+    var CORES = ['#22f26a', '#7dffad', '#ffffff', '#facc15', '#22f26a'];
+    function ehCopiar(el) {
+      var b = el.closest('.rn-cp__copy, button.rn-free__btn, .rn-bf__copy, .rn-cv__copy, #share-copy, [data-rn-copy]');
+      if (b) return b;
+      b = el.closest('button, a');
+      return b && /^\s*copiar/i.test(b.textContent || '') ? b : null;
+    }
+    window.rnBurst = function (b, semCor) {
+      var r = b.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+      var reduz = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var n = reduz ? 0 : 18;
+      for (var i = 0; i < n; i++) {
+        var p = document.createElement('span');
+        var tam = 4 + Math.random() * 5, ang = Math.random() * Math.PI * 2, dist = 34 + Math.random() * 46;
+        p.style.cssText = 'position:fixed;z-index:10000;pointer-events:none;left:' + (cx - tam / 2) + 'px;top:' + (cy - tam / 2) + 'px;width:' + tam + 'px;height:' + tam + 'px;border-radius:' + (Math.random() < .5 ? '50%' : '2px') + ';background:' + CORES[i % CORES.length] + ';box-shadow:0 0 8px rgba(34,242,106,.6)';
+        document.body.appendChild(p);
+        var dx = Math.cos(ang) * dist, dy = Math.sin(ang) * dist - 10;
+        var anim = p.animate([
+          { transform: 'translate(0,0) scale(1) rotate(0deg)', opacity: 1 },
+          { transform: 'translate(' + dx + 'px,' + dy + 'px) scale(.9) rotate(' + (Math.random() * 180) + 'deg)', opacity: 1, offset: .6 },
+          { transform: 'translate(' + dx * 1.15 + 'px,' + (dy + 24) + 'px) scale(.3)', opacity: 0 }
+        ], { duration: 650 + Math.random() * 300, easing: 'cubic-bezier(.2,.8,.3,1)' });
+        anim.onfinish = (function (el) { return function () { el.remove(); }; })(p);
+      }
+      if (semCor) return;
+      b.classList.remove('rn-fx-copied'); void b.offsetWidth; b.classList.add('rn-fx-copied');
+      clearTimeout(b._rnFx); b._rnFx = setTimeout(function () { b.classList.remove('rn-fx-copied'); }, 1800);
+    };
+    // na janela (antes dos outros cliques), para funcionar também dentro do carrinho
+    window.addEventListener('click', function (e) {
+      var t = e.target; if (!t || !t.closest) return;
+      var b = ehCopiar(t); if (b && !b.disabled) window.rnBurst(b);
+    }, true);
+  })();
+</script>
