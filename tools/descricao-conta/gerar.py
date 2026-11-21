@@ -88,27 +88,32 @@ def _intro(t):
     return t
 
 VEST_CSS = """<style>
-.rv{--rv-gap:8px}
-.rv-sub{margin:-6px 0 14px;color:var(--rk-muted);font-size:13px}
-.rv-tabs{display:flex;gap:8px;margin:0 0 12px;overflow-x:auto;scrollbar-width:none}
-.rv-tab{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1 0 auto;min-width:76px;padding:9px 10px;border-radius:12px;background:var(--rk-item);border:1px solid var(--rk-border);color:#e4e4e7;font-size:12px;font-weight:800}
-.rv-tab.on{border-color:var(--rk-accent);background:rgba(46,232,107,.10);color:#fff}
-.rv-tab em{font-style:normal;color:var(--rk-muted);font-weight:700;font-size:11px}
-.rv-count{margin:0 0 10px;color:var(--rk-muted);font-size:12px;font-weight:700}
-.rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--rv-gap)}
-@media(min-width:420px){.rv-grid{grid-template-columns:repeat(4,1fr)}}
-.rv-t{position:relative;display:block;width:100%;aspect-ratio:3/4;padding:0;border:0;border-radius:10px;overflow:hidden;cursor:pointer;
-  background:radial-gradient(120% 90% at 50% 25%,var(--c1),var(--c2));box-shadow:inset 0 0 0 2px rgba(255,255,255,.10)}
-.rv-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .25s}
-.rv-t:hover img{transform:scale(1.06)}
-.rv-t::after{content:"";position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(transparent,rgba(0,0,0,.82))}
-.rv-t b{position:absolute;z-index:1;left:4px;right:4px;bottom:6px;color:#fff;font-size:10.5px;line-height:1.05;font-weight:900;font-style:italic;text-transform:uppercase;text-align:center;letter-spacing:-.01em;text-shadow:0 1px 2px #000}
-.rv-t[hidden]{display:none}
-.rv-empty{grid-column:1/-1;padding:20px;text-align:center;color:var(--rk-muted);font-size:13px}
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap');
+.rv-k{display:block;color:var(--rk-accent);font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
+.rv-h{margin:4px 0 14px;color:#fff;font-size:22px;font-weight:900;line-height:1.15}
+.rv-grid{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -18px 14px 0;padding:0 18px 4px 0;scrollbar-width:none}
+.rv-grid::-webkit-scrollbar{display:none}
+.rv-t{position:relative;flex:0 0 42%;max-width:170px;aspect-ratio:4/5.3;padding:0;border:0;border-radius:12px;overflow:hidden;cursor:pointer;scroll-snap-align:start;
+  background:radial-gradient(120% 90% at 50% 25%,var(--c1),var(--c2));box-shadow:inset 0 -4px 0 var(--c2),inset 0 0 0 1px rgba(255,255,255,.10)}
+.rv-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+.rv-t::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.78))}
+.rv-t b{position:absolute;z-index:1;left:6px;right:6px;bottom:10px;color:#fff;font-family:Oswald,'Arial Narrow',sans-serif;font-size:17px;line-height:1.05;font-weight:700;text-transform:uppercase;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.rv-st{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 12px}
+.rv-st span{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 8px;border-radius:12px;background:var(--rk-item);border:1px solid var(--rk-border);color:var(--rk-muted);font-size:14px}
+.rv-st svg{width:19px;height:19px;flex:0 0 auto;fill:none;stroke:var(--rk-accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.rv-st b{color:#fff;font-weight:800}
+.rv-open{display:none}
 </style>"""
 
+ICONES = {
+    'trajes': '<svg viewBox="0 0 24 24"><path d="M8 3 3 6l2 5 2-1v11h10V10l2 1 2-5-5-3a4 4 0 0 1-8 0z"/></svg>',
+    'picaretas': '<svg viewBox="0 0 24 24"><path d="M14 4c3 0 5.5 1 7 3-2-.6-4.3-.6-6.5.3M10 4C7 4 4.5 5 3 7c2-.6 4.3-.6 6.5.3M12 6l-1.5 1.5M10.5 7.5 3 15l2 2 7.5-7.5"/><path d="M12 6l6 6"/></svg>',
+    'gestos': '<svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
+    'asas-delta': '<svg viewBox="0 0 24 24"><path d="M2 12a10 10 0 0 1 20 0z"/><path d="M12 12v8a2 2 0 0 0 4 0"/></svg>',
+}
+
 def vestiario_html(skins, extras=None):
-    """skins: lista do vestiario.mjs. extras: dict opcional {'Picaretas': n, 'Gestos': n, 'Asas-delta': n} (só contagem)."""
+    """skins: lista do vestiario.mjs. extras: contagens {'Trajes': 90, 'Picaretas': 135, 'Gestos': 81, 'Asas-delta': 96}."""
     tiles, cores = [], {}
     for sk in skins:
         c1, c2 = _cores(sk)
@@ -124,14 +129,14 @@ def vestiario_html(skins, extras=None):
             + (f' data-i="{_e(_intro(sk.get("intro")))}"' if sk.get('intro') else '')
             + f'{extra}><img loading="lazy" src="{_e(small)}" alt=""><b>{_e(sk["name"])}</b></button>')
     cores_css = '<style>' + ''.join(f'.{c}{{--c1:{a};--c2:{b}}}' for (a, b), c in cores.items()) + '</style>'
-    abas = [f'<span class="rv-tab on" data-aba="trajes">Trajes<em>{len(skins)}</em></span>']
-    for k, v in (extras or {}).items():
-        abas.append(f'<span class="rv-tab" data-aba="{_e(k.lower())}">{_e(k)}<em>{_e(str(v))}</em></span>')
-    return (VEST_CSS + cores_css + '\n    <!-- VESTIÁRIO -->\n    <div class="rk-card rv" data-rv>\n        <h2 class="rk-h2">Vestiário da conta</h2>\n'
-            '        <p class="rv-sub">Toque em uma skin para ver os detalhes.</p>\n'
-            f'        <div class="rv-tabs">{"".join(abas)}</div>\n'
-            f'        <p class="rv-count" data-rv-count>{len(skins)} trajes</p>\n'
-            f'        <div class="rv-grid" data-rv-grid>{"".join(tiles)}</div>\n    </div>\n\n')
+    cont = {'Trajes': len(skins)}
+    cont.update(extras or {})
+    chips = ''.join(f'<span data-aba="{_e(k.lower())}">{ICONES.get(k.lower(), ICONES["trajes"])}<b>{_e(str(v))}</b> {_e(k)}</span>' for k, v in cont.items())
+    return (VEST_CSS + cores_css + '\n    <!-- VESTIÁRIO -->\n    <div class="rk-card rv" data-rv>\n'
+            '        <span class="rv-k">Inventário real desta conta</span>\n        <h2 class="rv-h">Vestiário da conta</h2>\n'
+            f'        <div class="rv-grid" data-rv-grid>{"".join(tiles)}</div>\n'
+            f'        <div class="rv-st">{chips}</div>\n'
+            '        <button type="button" class="rv-open" data-rv-open>Abrir vestiário</button>\n    </div>\n\n')
 
 def podar_css(html):
     """Remove do CSS as regras cujas classes não aparecem no HTML (o modelo traz estilos de outros produtos)."""

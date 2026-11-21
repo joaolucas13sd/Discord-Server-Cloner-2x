@@ -6,18 +6,50 @@
   Sem a grade na descrição, não faz nada.
 {% endcomment %}
 <style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&display=swap');
+  .rv.rv-on .rv-open{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:54px;border:0;border-radius:14px;background:#2ee86b;color:#04140a;font-size:16px;font-weight:800;cursor:pointer}
+  .rv.rv-on .rv-open::after{content:"";width:8px;height:8px;border:solid currentColor;border-width:2.5px 2.5px 0 0;transform:rotate(45deg);margin-left:2px}
+  .rv-st span{cursor:pointer}
+
+  /* Vestiário em tela cheia */
+  .rvv{position:fixed;inset:0;z-index:9998;display:flex;flex-direction:column;background:#0b0c0d;color:#fff;font-family:Inter,system-ui,sans-serif;transform:translateY(16px);opacity:0;transition:opacity .2s,transform .2s}
+  .rvv.on{opacity:1;transform:none}
+  .rvv[hidden]{display:none}
+  .rvv__head{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#111315;border-bottom:1px solid rgba(255,255,255,.06)}
+  .rvv__back{flex:0 0 auto;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:transparent;border:1px solid rgba(255,255,255,.18);color:#fff;cursor:pointer}
+  .rvv__tt{flex:1;min-width:0}
+  .rvv__tt b{display:block;font-size:19px;font-weight:900}
+  .rvv__tt span{display:block;color:#9aa0a6;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rvv__buy{flex:0 0 auto;padding:12px 16px;border-radius:12px;background:#2ee86b;color:#04140a;font-size:14px;font-weight:800;text-decoration:none}
+  .rvv__tabs{display:flex;gap:6px;padding:10px;background:#111315}
+  .rvv__tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border-radius:14px;color:#cfd3d6;font-size:13px;font-weight:700;border:0;background:transparent}
+  .rvv__tab.on{background:#1b1e21;color:#fff}
+  .rvv__tab svg{width:34px;height:34px;padding:6px;border-radius:9px;background:linear-gradient(160deg,#7c3aed,#4c1d95);fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+  .rvv__tab:first-child svg{background:linear-gradient(160deg,#38bdf8,#1e3a8a)}
+  .rvv__ti{width:40px;height:40px;border-radius:9px;object-fit:cover;object-position:center top;background:linear-gradient(160deg,#38bdf8,#1e3a8a);border:2px solid rgba(255,255,255,.85)}
+  .rvv__tab em{font-style:normal;color:#8b8f94;font-size:11px;font-weight:700}
+  .rvv__body{flex:1;overflow:auto;padding:14px}
   .rv-tools{display:flex;flex-direction:column;gap:8px;margin:0 0 12px}
   .rv-search{position:relative}
-  .rv-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#8b8b93;pointer-events:none}
-  .rv-search input{width:100%;height:42px;padding:0 12px 0 38px;border-radius:12px;background:#0f1411;border:1px solid rgba(255,255,255,.10);color:#fff;font-size:14px;outline:none}
+  .rv-search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#8b8b93;pointer-events:none}
+  .rv-search input{width:100%;height:48px;padding:0 12px 0 42px;border-radius:12px;background:#15181a;border:1px solid rgba(255,255,255,.12);color:#fff;font-size:15px;outline:none}
   .rv-search input:focus{border-color:#2ee86b}
   .rv-sel{display:flex;gap:8px}
-  .rv-sel select{flex:1;min-width:0;height:40px;padding:0 10px;border-radius:12px;background:#0f1411;border:1px solid rgba(255,255,255,.10);color:#fff;font-size:13px;font-weight:600}
-
-  .rv-more{display:block;width:100%;margin-top:10px;padding:12px;border-radius:12px;background:rgba(46,232,107,.10);border:1px solid rgba(46,232,107,.45);color:#2ee86b;font-size:14px;font-weight:800;cursor:pointer}
-  .rv-more[hidden]{display:none}
-  .rv-grid .rv-t.rv-x{display:none}
-  .rvm{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;color:#fff;font-family:Inter,system-ui,sans-serif;
+  .rv-sel select{flex:1;min-width:0;height:46px;padding:0 12px;border-radius:12px;background:#15181a;border:1px solid rgba(255,255,255,.12);color:#fff;font-size:15px}
+  .rvv__count{margin:2px 0 10px;color:#9aa0a6;font-size:13px;font-weight:700}
+  .rvv__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  @media (min-width:520px){.rvv__grid{grid-template-columns:repeat(4,1fr)}}
+  @media (min-width:760px){.rvv__grid{grid-template-columns:repeat(6,1fr)}}
+  @media (min-width:1100px){.rvv__grid{grid-template-columns:repeat(9,1fr)}}
+  .rvv__grid .rv-t{position:relative;display:block;width:100%;max-width:none;aspect-ratio:4/5;padding:0;border:0;border-radius:10px;overflow:hidden;cursor:pointer;
+    background:radial-gradient(120% 90% at 50% 25%,var(--c1),var(--c2));box-shadow:inset 0 -4px 0 var(--c2),inset 0 0 0 1px rgba(255,255,255,.10)}
+  .rvv__grid .rv-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+  .rvv__grid .rv-t::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(transparent,rgba(0,0,0,.8))}
+  .rvv__grid .rv-t b{position:absolute;z-index:1;left:4px;right:4px;bottom:8px;color:#fff;font-family:Oswald,'Arial Narrow',sans-serif;font-size:12.5px;line-height:1.05;font-weight:700;text-transform:uppercase;text-align:center;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+  .rvv__grid .rv-t[hidden]{display:none}
+  .rvv__vazio{padding:30px 10px;text-align:center;color:#9aa0a6;font-size:14px}
+  .rvv__vazio[hidden]{display:none}
+  .rvm{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;color:#fff;font-family:Inter,system-ui,sans-serif;
     background:radial-gradient(90% 60% at 50% 22%,var(--c1,#2a2a2a),transparent 75%),linear-gradient(180deg,var(--c2,#111) 0%,#0b0b0d 70%);opacity:0;transition:opacity .2s}
   .rvm.on{opacity:1}
   .rvm[hidden]{display:none}
@@ -32,7 +64,7 @@
   .rvm__info{flex:1;overflow:auto;padding:16px 18px 28px;max-width:640px;width:100%;margin:0 auto}
   .rvm__k{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75)}
   .rvm__k i{display:inline-block;width:6px;height:6px;margin:0 6px 2px;border-radius:50%;background:#2ee86b;vertical-align:middle}
-  .rvm__t{margin:6px 0 4px;font-size:30px;line-height:1;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.01em}
+  .rvm__t{margin:6px 0 4px;font-family:Oswald,'Arial Narrow',sans-serif;font-size:34px;line-height:1;font-weight:700;text-transform:uppercase}
   .rvm__d{margin:0 0 14px;color:rgba(255,255,255,.75);font-size:14px;line-height:1.5}
   .rvm__rows{border-radius:12px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);overflow:hidden}
   .rvm__row{display:flex;gap:14px;padding:11px 14px;font-size:13px}
@@ -42,6 +74,24 @@
   .rvm__row[hidden]{display:none}
   @media (min-width:900px){.rvm__stage{height:58vh}.rvm__t{font-size:38px}}
 </style>
+
+<div class="rvv" id="rvv" hidden role="dialog" aria-modal="true" aria-label="Vestiário">
+  <div class="rvv__head">
+    <button type="button" class="rvv__back" data-rvv-x aria-label="Voltar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+    <div class="rvv__tt"><b>Vestiário</b><span id="rvv-sub"></span></div>
+    <a href="#comprar" class="rvv__buy" data-rn-buy data-rvv-x>Quero esta conta</a>
+  </div>
+  <div class="rvv__tabs" id="rvv-tabs"></div>
+  <div class="rvv__body">
+    <div class="rv-tools">
+      <label class="rv-search"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" id="rvv-q" placeholder="Buscar no vestiário..." aria-label="Buscar skin"></label>
+      <div class="rv-sel"><select id="rvv-r" aria-label="Raridade"><option value="">Raridades</option></select><select id="rvv-o" aria-label="Ordenar"><option value="o">Destaques</option><option value="r">Raridade</option><option value="a">A–Z</option></select></div>
+    </div>
+    <p class="rvv__count" id="rvv-count"></p>
+    <div class="rvv__grid" id="rvv-grid"></div>
+    <p class="rvv__vazio" id="rvv-vazio" hidden></p>
+  </div>
+</div>
 
 <div class="rvm" id="rvm" hidden role="dialog" aria-modal="true" aria-label="Detalhes da skin">
   <div class="rvm__top">
@@ -74,57 +124,94 @@
     function el(t, a, h) { var e = document.createElement(t); for (var k in a) e.setAttribute(k, a[k]); if (h) e.innerHTML = h; return e; }
     function txt(e, s) { e.textContent = s || ''; }
 
+    var vv = document.getElementById('rvv'), vvGrid = document.getElementById('rvv-grid'), vvQ = document.getElementById('rvv-q'),
+        vvR = document.getElementById('rvv-r'), vvO = document.getElementById('rvv-o'), vvCount = document.getElementById('rvv-count'),
+        vvVazio = document.getElementById('rvv-vazio'), vvTabs = document.getElementById('rvv-tabs'), atual = null, aba = 'trajes', antVV = '';
+    var ICO = {
+      trajes: '<path d="M8 3 3 6l2 5 2-1v11h10V10l2 1 2-5-5-3a4 4 0 0 1-8 0z"/>',
+      picaretas: '<path d="M14 4c3 0 5.5 1 7 3-2-.6-4.3-.6-6.5.3M10 4C7 4 4.5 5 3 7c2-.6 4.3-.6 6.5.3M10.5 7.5 3 15l2 2 7.5-7.5M12 6l6 6"/>',
+      gestos: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+      'asas-delta': '<path d="M2 12a10 10 0 0 1 20 0z"/><path d="M12 12v8a2 2 0 0 0 4 0"/>'
+    };
+    function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+
     function montar(box) {
       if (box.__rv) return; box.__rv = true;
-      var grid = box.querySelector('[data-rv-grid]'), count = box.querySelector('[data-rv-count]');
-      var tiles = [].slice.call(grid.querySelectorAll('.rv-t'));
-      tiles.forEach(function (t, i) { t.dataset.o = i; });
-
-      // busca + filtros
-      var tools = el('div', { class: 'rv-tools' });
-      tools.innerHTML = '<label class="rv-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" placeholder="Buscar no vestiário..." aria-label="Buscar skin"></label>'
-        + '<div class="rv-sel"><select aria-label="Raridade"><option value="">Raridades</option></select><select aria-label="Ordenar"><option value="o">Destaques</option><option value="r">Raridade</option><option value="a">A–Z</option></select></div>';
-      count.parentNode.insertBefore(tools, count);
-      var busca = tools.querySelector('input'), selR = tools.querySelectorAll('select')[0], selO = tools.querySelectorAll('select')[1];
-      var grupos = {};
-      tiles.forEach(function (t) { var g = t.dataset.rt || NOME_R[t.dataset.r] || 'Outros'; t.dataset.g = g; grupos[g] = (grupos[g] || 0) + 1; });
-      Object.keys(grupos).sort().forEach(function (g) { selR.appendChild(el('option', { value: g }, g + ' (' + grupos[g] + ')')); });
-      var vazio = el('div', { class: 'rv-empty', hidden: '' }, 'Nenhuma skin encontrada.');
-      grid.appendChild(vazio);
-      // Mostra só as primeiras; o botão abre o resto (busca e filtro sempre procuram em todas).
-      var LIMITE = 12, aberto = tiles.length <= LIMITE + 3;
-      var mais = el('button', { type: 'button', class: 'rv-more' }, 'Ver todos os ' + tiles.length + ' trajes');
-      grid.parentNode.insertBefore(mais, grid.nextSibling);
-      mais.addEventListener('click', function () { aberto = true; aplicar(); });
-
-      function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
-      function aplicar() {
-        var q = norm(busca.value.trim()), g = selR.value, o = selO.value, vis = 0;
-        tiles.slice().sort(function (a, b) {
-          if (o === 'a') return a.dataset.n.localeCompare(b.dataset.n, 'pt-BR');
-          if (o === 'r') return (ORDEM_R[a.dataset.r] ?? 9) - (ORDEM_R[b.dataset.r] ?? 9) || a.dataset.o - b.dataset.o;
-          return a.dataset.o - b.dataset.o;
-        }).forEach(function (t) {
-          var ok = (!q || norm(t.dataset.n).indexOf(q) !== -1) && (!g || t.dataset.g === g);
-          t.hidden = !ok; if (ok) vis++;
-          if (grid.children[vis + (ok ? -1 : 0)] !== t) grid.insertBefore(t, vazio);
-        });
-        var filtrando = q || g, n = 0;
-        tiles.forEach(function (t) { if (!t.hidden) n++; });
-        grid.querySelectorAll('.rv-t:not([hidden])').forEach(function (t, i) { t.classList.toggle('rv-x', !aberto && !filtrando && i >= LIMITE); });
-        mais.hidden = aberto || filtrando || n <= LIMITE;
-        vazio.hidden = vis > 0;
-        count.textContent = vis + (vis === 1 ? ' traje' : ' trajes');
-      }
-      busca.addEventListener('input', aplicar); selR.addEventListener('change', aplicar); selO.addEventListener('change', aplicar);
-      aplicar();
-
-      grid.addEventListener('click', function (ev) {
-        var t = ev.target.closest('.rv-t'); if (!t) return;
-        lista = [].slice.call(grid.querySelectorAll('.rv-t:not([hidden])'));  // as setas passam por todas, mesmo as recolhidas
-        abrir(lista.indexOf(t));
+      box.classList.add('rv-on');
+      var tiles = [].slice.call(box.querySelectorAll('[data-rv-grid] .rv-t'));
+      tiles.forEach(function (t, i) { t.dataset.o = i; t.dataset.g = t.dataset.rt || NOME_R[t.dataset.r] || 'Outros'; });
+      box.__tiles = tiles;
+      // faixa: toque abre o detalhe direto
+      box.querySelector('[data-rv-grid]').addEventListener('click', function (ev) {
+        var t = ev.target.closest('.rv-t'); if (!t) return; lista = tiles; abrir(tiles.indexOf(t));
+      });
+      box.addEventListener('click', function (ev) {
+        var chip = ev.target.closest('[data-aba]');
+        if (ev.target.closest('[data-rv-open]') || chip) abrirVV(box, chip ? chip.dataset.aba : 'trajes');
       });
     }
+
+    function abrirVV(box, qualAba) {
+      if (atual !== box) {
+        atual = box; vvGrid.innerHTML = '';
+        box.__tiles.forEach(function (t) { var c = t.cloneNode(true); c.removeAttribute('hidden'); vvGrid.appendChild(c); });
+        // abas com as contagens do cartão
+        vvTabs.innerHTML = '';
+        [].forEach.call(box.querySelectorAll('.rv-st [data-aba]'), function (ch) {
+          var k = ch.dataset.aba, b = document.createElement('button');
+          b.type = 'button'; b.className = 'rvv__tab'; b.dataset.aba = k;
+          var capa = k === 'trajes' && box.__tiles[0] ? box.__tiles[0].querySelector('img').src : '';
+          b.innerHTML = capa ? '<img class="rvv__ti" alt="" src="' + capa.replace(/"/g, '%22') + '">' : '<svg viewBox="0 0 24 24">' + (ICO[k] || ICO.trajes) + '</svg>';
+          b.appendChild(document.createTextNode(ch.textContent.replace(/^\s*[\d.]+\s*/, '')));
+          var em = document.createElement('em'); em.textContent = ch.querySelector('b').textContent; b.appendChild(em);
+          vvTabs.appendChild(b);
+        });
+        var grupos = {};
+        box.__tiles.forEach(function (t) { grupos[t.dataset.g] = (grupos[t.dataset.g] || 0) + 1; });
+        vvR.length = 1;
+        Object.keys(grupos).sort().forEach(function (g) { var o = document.createElement('option'); o.value = g; o.textContent = g + ' (' + grupos[g] + ')'; vvR.appendChild(o); });
+        vvQ.value = ''; vvR.value = ''; vvO.value = 'o';
+        var tit = document.querySelector('h1'); document.getElementById('rvv-sub').textContent = tit ? tit.textContent.trim() : '';
+      }
+      trocarAba(qualAba);
+      antVV = document.body.style.overflow; document.body.style.overflow = 'hidden';
+      vv.hidden = false; requestAnimationFrame(function () { vv.classList.add('on'); });
+    }
+    function fecharVV() { vv.classList.remove('on'); document.body.style.overflow = antVV; setTimeout(function () { vv.hidden = true; }, 200); }
+
+    function trocarAba(k) {
+      aba = k;
+      [].forEach.call(vvTabs.children, function (b) { b.classList.toggle('on', b.dataset.aba === k); });
+      var trajes = k === 'trajes';
+      document.querySelector('.rvv .rv-tools').hidden = !trajes;
+      if (trajes) { filtrar(); return; }
+      [].forEach.call(vvGrid.children, function (t) { t.hidden = true; });
+      var b = vvTabs.querySelector('[data-aba="' + k + '"]'), n = b ? b.querySelector('em').textContent : '';
+      vvCount.textContent = '';
+      vvVazio.hidden = false;
+      vvVazio.textContent = (n ? n + ' ' : '') + (b ? b.childNodes[1].textContent.trim().toLowerCase() : k) + ' nesta conta. A lista detalhada desta categoria não está disponível no anúncio.';
+    }
+
+    function filtrar() {
+      var q = norm(vvQ.value.trim()), g = vvR.value, o = vvO.value, vis = 0;
+      [].slice.call(vvGrid.children).sort(function (a, b) {
+        if (o === 'a') return a.dataset.n.localeCompare(b.dataset.n, 'pt-BR');
+        if (o === 'r') return (ORDEM_R[a.dataset.r] ?? 9) - (ORDEM_R[b.dataset.r] ?? 9) || a.dataset.o - b.dataset.o;
+        return a.dataset.o - b.dataset.o;
+      }).forEach(function (t) {
+        var ok = (!q || norm(t.dataset.n).indexOf(q) !== -1) && (!g || t.dataset.g === g);
+        t.hidden = !ok; if (ok) vis++; vvGrid.appendChild(t);
+      });
+      vvCount.textContent = vis + (vis === 1 ? ' traje' : ' trajes');
+      vvVazio.hidden = vis > 0; vvVazio.textContent = 'Nenhuma skin encontrada.';
+    }
+    vvQ.addEventListener('input', filtrar); vvR.addEventListener('change', filtrar); vvO.addEventListener('change', filtrar);
+    vvTabs.addEventListener('click', function (ev) { var b = ev.target.closest('.rvv__tab'); if (b) trocarAba(b.dataset.aba); });
+    vvGrid.addEventListener('click', function (ev) {
+      var t = ev.target.closest('.rv-t'); if (!t) return;
+      lista = [].slice.call(vvGrid.querySelectorAll('.rv-t:not([hidden])')); abrir(lista.indexOf(t));
+    });
+    vv.addEventListener('click', function (ev) { if (ev.target.closest('[data-rvv-x]')) fecharVV(); });
 
     // A imagem grande (featured) vem em data-f ou sai do link da imagem pequena.
     function grande(t) { return t.dataset.f || t.querySelector('img').src.replace(/smallicon\.png$/, 'featured.png'); }
@@ -149,11 +236,11 @@
     }
     function abrir(i) {
       if (i < 0) return;
-      anterior = document.body.style.overflow; document.body.style.overflow = 'hidden';
+      if (vv.hidden) { anterior = document.body.style.overflow; document.body.style.overflow = 'hidden'; }
       modal.hidden = false; requestAnimationFrame(function () { modal.classList.add('on'); });
       mostrar(i);
     }
-    function fechar() { modal.classList.remove('on'); document.body.style.overflow = anterior; setTimeout(function () { modal.hidden = true; }, 200); }
+    function fechar() { modal.classList.remove('on'); if (vv.hidden) document.body.style.overflow = anterior; setTimeout(function () { modal.hidden = true; }, 200); }
 
     modal.addEventListener('click', function (ev) {
       if (ev.target.closest('[data-rvm-x]')) fechar();
@@ -161,7 +248,7 @@
       else if (ev.target.closest('[data-rvm-n]')) mostrar(pos + 1);
     });
     document.addEventListener('keydown', function (ev) {
-      if (modal.hidden) return;
+      if (modal.hidden) { if (!vv.hidden && ev.key === 'Escape') fecharVV(); return; }
       if (ev.key === 'Escape') fechar(); else if (ev.key === 'ArrowLeft') mostrar(pos - 1); else if (ev.key === 'ArrowRight') mostrar(pos + 1);
     });
     var x0 = null, stage = document.getElementById('rvm-stage');

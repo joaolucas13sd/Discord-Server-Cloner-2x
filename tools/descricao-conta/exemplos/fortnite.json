@@ -46,7 +46,9 @@
   "tipo": "fortnite",
   "vestiario": "fortnite-90-vestiario.json",
   "vestiario_extras": {
+    "Trajes": 90,
     "Picaretas": 135,
-    "Gestos": 81
+    "Gestos": 81,
+    "Asas-delta": 96
   }
 }
