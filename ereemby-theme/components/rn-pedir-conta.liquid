@@ -3,10 +3,9 @@
   Aparece abaixo da categoria "Contas Full Acesso" (Home e página da categoria).
   O cliente preenche o formulário e o pedido vai para um canal do Discord pela webhook abaixo.
 
-  WEBHOOK: cole a URL da webhook do Discord entre as aspas.
-  Atenção: a URL fica visível no código da página (qualquer pessoa pode ver e usar para mandar mensagens
-  naquele canal). Use um canal só para pedidos. Para esconder a URL, dá para passar por um Cloudflare Worker
-  e colocar aqui a URL do Worker no lugar (o formato do envio é o mesmo).
+  ENVIO: cole entre as aspas a URL do Cloudflare Worker (tools/worker-pedidos/worker.js), que guarda a webhook
+  do Discord em segredo. Também aceita a URL direta de uma webhook do Discord, mas aí ela fica visível no
+  código da página (qualquer pessoa pode usar para mandar mensagens naquele canal).
 {% endcomment %}
 {% assign rn_pedido_webhook = '' %}
 {% assign rn_pedido_loja = 'Rei dos Nitros' %}
@@ -226,15 +225,19 @@
           timestamp: new Date().toISOString()
         }]
       };
+      // Worker (recomendado): manda só os campos; o Worker monta a mensagem e guarda a webhook em segredo.
+      var direto = /discord(app)?\.com\/api\/webhooks\//.test(url);
+      var corpo = direto ? payload : { jogo: jogo, descricao: texto, orcamento: orc, nome: nome, whatsapp: num, pagina: location.pathname, site: '' };
       send.disabled = true; send.textContent = 'Enviando...';
-      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) })
         .then(function (r) {
+          if (r.status === 429) { falha('Muitos pedidos seguidos. Espere um minuto e tente de novo.'); return Promise.reject('limite'); }
           if (!r.ok) throw new Error('HTTP ' + r.status);
           ultimoMem = Date.now(); try { localStorage.setItem('rpc_ultimo', String(ultimoMem)); } catch (e) {}
           document.getElementById('rpm-ok-zap').textContent = fone;
           form.reset(); form.hidden = true; ok.hidden = false;
         })
-        .catch(function () { falha('Não foi possível enviar agora. Tente de novo em instantes ou fale com a gente pelo WhatsApp.'); })
+        .catch(function (e) { if (e !== 'limite') falha('Não foi possível enviar agora. Tente de novo em instantes ou fale com a gente pelo WhatsApp.'); })
         .then(function () { send.disabled = false; send.textContent = 'Enviar pedido'; });
     });
   })();
