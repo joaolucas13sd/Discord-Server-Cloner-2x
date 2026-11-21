@@ -1,0 +1,195 @@
+# Troca o card "Como utilizar" (tela de login) de uma descrição de streaming por uma animação
+# "Passo a passo · Como começar a assistir": pedido -> login no streaming -> escolha do perfil -> play,
+# com os 4 passos acendendo junto. Só CSS (descrições não rodam JavaScript próprio).
+#
+# Uso: python3 tools/como-assistir/gerar.py original.html saida.html <prefixo> "<Nome no pedido>" "<marca>" "<#cor>"
+#   prefixo: o das classes da descrição (ex.: cb para cb-card), marca: texto do logo no site do streaming.
+import sys, re
+
+src, dst, P, PEDIDO, MARCA, COR = sys.argv[1:7]
+LOJA = 'Rei dos Nitros'
+
+def esc(t):
+    return t.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
+
+CARD = f'''<!-- COMO UTILIZAR -->
+    <div class="{P}-card sv-card" style="--sv:{COR}">
+      <div class="sv-head"><span class="sv-hico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></span><div><span class="sv-k">PASSO A PASSO</span><h2 class="sv-t">Como começar a assistir</h2></div></div>
+      <div class="sv-win" role="img" aria-label="Animação: ver os dados no pedido, entrar no streaming, escolher o perfil e dar o play">
+        <div class="sv-bar"><i></i><i></i><i></i><span class="sv-url"><b class="sv-u1">Seu pedido · {LOJA}</b><b class="sv-u2">Site do streaming · Entrar</b><b class="sv-u3">Site do streaming · Perfis</b><b class="sv-u4">Site do streaming · Início</b></span></div>
+        <div class="sv-scr">
+          <div class="sv-sc sv-sc1"><div class="sv-ord"><span class="sv-ok">✓ Pagamento aprovado</span><b>{esc(PEDIDO)}</b>
+            <div class="sv-row sv-r1"><span>E-mail</span><code>email_do_pedido</code></div>
+            <div class="sv-row sv-r2"><span>Senha</span><code>••••••••••</code></div>
+            <div class="sv-row sv-r3"><span>Perfil</span><code>Perfil 3</code></div></div></div>
+          <div class="sv-sc sv-sc2"><div class="sv-wall"></div><div class="sv-log"><span class="sv-brand">▶ {esc(MARCA)}</span><b>Entrar</b>
+            <div class="sv-in"><span class="sv-ty sv-ty1">email_do_pedido</span></div>
+            <div class="sv-in"><span class="sv-ty sv-ty2">••••••••••</span></div>
+            <div class="sv-btn"><span class="sv-b1">Entrar</span><span class="sv-b2">Entrando...</span></div></div></div>
+          <div class="sv-sc sv-sc3"><b class="sv-who">Quem está assistindo?</b><div class="sv-pfs">
+            <span class="sv-pf" style="--c:#e5484d"><i></i>Perfil 1</span><span class="sv-pf" style="--c:#3e63dd"><i></i>Perfil 2</span><span class="sv-pf sv-pf3" style="--c:#30a46c"><i></i>Perfil 3</span><span class="sv-pf" style="--c:#f5a524"><i></i>Perfil 4</span></div>
+            <div class="sv-pin"><small>PIN do perfil</small><span><i class="sv-d1"></i><i class="sv-d2"></i><i class="sv-d3"></i><i class="sv-d4"></i></span></div></div>
+          <div class="sv-sc sv-sc4"><div class="sv-hero"><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht"><b>Filme em destaque</b><small>Aventura · Ficção</small><span class="sv-hb"><em class="sv-as">▶ Assistir</em><em>+ Minha lista</em></span></div></div>
+            <div class="sv-thumbs"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="sv-play"><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn">▶</span><div class="sv-prog"><i></i></div></div></div>
+          <span class="sv-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>
+        </div>
+      </div>
+      <div class="sv-steps">
+        <div class="sv-st sv-st1"><span class="sv-n">1</span><div><b>Veja os dados no pedido</b><p>Na página do seu pedido aparecem o e-mail, a senha e o perfil da conta.</p></div></div>
+        <div class="sv-st sv-st2"><span class="sv-n">2</span><div><b>Entre no streaming</b><p>Abra o site ou o app do streaming e entre com esse e-mail e essa senha.</p></div></div>
+        <div class="sv-st sv-st3"><span class="sv-n">3</span><div><b>Escolha o perfil</b><p>Entre no perfil indicado no pedido e digite o PIN, se tiver.</p></div></div>
+        <div class="sv-st sv-st4"><span class="sv-n">4</span><div><b>Dê o play</b><p>Escolha um filme, uma série ou um anime e aproveite.</p></div></div>
+      </div>
+      <div class="sv-warn"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M12 8v5M12 16h.01"/></svg><p>Não altere o e-mail, a senha, os perfis nem o PIN da conta: isso pode fazer você perder o acesso. As instruções completas vêm no seu pedido.</p></div>
+    </div>
+
+'''
+
+CSS = '''
+/* ===== Passo a passo animado "Como começar a assistir" (20s em loop) ===== */
+.sv-card{--sv-t:20s}
+.sv-card *{box-sizing:border-box}
+.sv-head{display:flex;align-items:center;gap:12px;padding-bottom:14px;margin-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07)}
+.sv-hico{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.sv-hico svg{width:22px;height:22px;fill:none;stroke:#8fb3ff;stroke-width:1.8;stroke-linejoin:round}
+.sv-k{display:block;color:#9aa0a6;font-size:11px;font-weight:800;letter-spacing:.12em}
+.sv-t{margin:2px 0 0 !important;padding:0 !important;font-size:18px !important;font-weight:800;color:#fff !important;border:0 !important}
+.sv-t::before{display:none !important}
+.sv-win{border-radius:12px;overflow:hidden;background:#0d0e11;border:1px solid rgba(255,255,255,.08)}
+.sv-bar{position:relative;display:flex;align-items:center;gap:5px;height:28px;padding:0 10px;background:#15161a;border-bottom:1px solid rgba(255,255,255,.06)}
+.sv-bar>i{width:7px;height:7px;border-radius:50%;background:#3a3c42}
+.sv-url{position:absolute;left:50%;top:5px;transform:translateX(-50%);width:62%;height:18px;border-radius:9px;background:#0d0e11}
+.sv-url b{position:absolute;inset:0;display:grid;place-items:center;font-size:9.5px;font-weight:600;color:#8b8f94;white-space:nowrap;opacity:0}
+.sv-scr{position:relative;height:210px;overflow:hidden}
+.sv-sc{position:absolute;inset:0;opacity:0}
+.sv-sc1,.sv-u1{animation:svA var(--sv-t) infinite}
+.sv-sc2,.sv-u2{animation:svB var(--sv-t) infinite}
+.sv-sc3,.sv-u3{animation:svC var(--sv-t) infinite}
+.sv-sc4,.sv-u4{animation:svD var(--sv-t) infinite}
+@keyframes svA{0%,23%{opacity:1}25%,98%{opacity:0}100%{opacity:1}}
+@keyframes svB{0%,24%{opacity:0}26%,48%{opacity:1}50%,100%{opacity:0}}
+@keyframes svC{0%,49%{opacity:0}51%,68%{opacity:1}70%,100%{opacity:0}}
+@keyframes svD{0%,69%{opacity:0}71%,97%{opacity:1}99%,100%{opacity:0}}
+/* 1: pedido */
+.sv-sc1{display:grid;place-items:center}
+.sv-ord{width:74%;padding:12px;border-radius:10px;background:#1b1c21;border:1px solid rgba(255,255,255,.08);box-shadow:0 10px 30px rgba(0,0,0,.4)}
+.sv-ok{display:block;color:#22c55e;font-size:9.5px;font-weight:700}
+.sv-ord>b{display:block;margin:2px 0 8px;color:#fff;font-size:12.5px}
+.sv-row{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-radius:6px;background:#141519;margin-top:4px;opacity:0}
+.sv-row span{color:#8b8f94;font-size:9.5px}
+.sv-row code{color:#fff;font:600 10.5px ui-monospace,Menlo,Consolas,monospace}
+.sv-r1{animation:svR1 var(--sv-t) infinite}.sv-r2{animation:svR2 var(--sv-t) infinite}.sv-r3{animation:svR3 var(--sv-t) infinite}
+@keyframes svR1{0%,4%{opacity:0;transform:translateY(4px)}7%,100%{opacity:1;transform:none}}
+@keyframes svR2{0%,8%{opacity:0;transform:translateY(4px)}11%,100%{opacity:1;transform:none}}
+@keyframes svR3{0%,12%{opacity:0;transform:translateY(4px)}15%,100%{opacity:1;transform:none}}
+/* 2: login */
+.sv-wall{position:absolute;inset:-60% -40%;transform:rotate(-14deg);opacity:.42;animation:svWall 14s linear infinite;
+  background:linear-gradient(90deg,#0d0e11 0 6px,transparent 6px) 0 0/46px 66px,linear-gradient(0deg,#0d0e11 0 6px,transparent 6px) 0 0/46px 66px,
+  linear-gradient(90deg,#e64980 0 46px,#7048e8 46px 92px,#f76707 92px 138px,#1c7ed6 138px 184px,#37b24d 184px 230px,#ae3ec9 230px 276px,#f59f00 276px 322px) 0 0/322px 66px,
+  linear-gradient(90deg,#1098ad 0 46px,#d6336c 46px 92px,#5c7cfa 92px 138px,#e8590c 138px 184px,#9775fa 184px 230px,#2f9e44 230px 276px,#c2255c 276px 322px) 23px 33px/322px 132px}
+@keyframes svWall{to{background-position:46px 0,46px 0,322px 0,345px 33px}}
+.sv-log{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:62%;padding:12px;border-radius:10px;background:rgba(12,12,14,.92);border:1px solid rgba(255,255,255,.08)}
+.sv-brand{display:block;color:#fff;font-size:10px;font-weight:800}
+.sv-brand{text-shadow:0 0 1px var(--sv)}
+.sv-log>b{display:block;margin:4px 0 8px;color:#fff;font-size:14px}
+.sv-in{height:24px;margin-bottom:6px;padding:0 8px;border-radius:5px;background:#26272c;display:flex;align-items:center}
+.sv-ty{display:inline-block;overflow:hidden;white-space:nowrap;width:0;color:#fff;font:600 10px ui-monospace,Menlo,Consolas,monospace;border-right:1px solid var(--sv)}
+.sv-ty1{animation:svTy1 var(--sv-t) steps(15,end) infinite}
+.sv-ty2{animation:svTy2 var(--sv-t) steps(10,end) infinite}
+@keyframes svTy1{0%,29%{width:0}36%,100%{width:15ch}}
+@keyframes svTy2{0%,37%{width:0}42%,100%{width:10ch}}
+.sv-btn{position:relative;height:26px;border-radius:5px;background:linear-gradient(90deg,var(--sv),#8b5cf6);color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;animation:svBtn var(--sv-t) infinite}
+.sv-btn span{grid-area:1/1}
+.sv-b2{opacity:0;animation:svOn2 var(--sv-t) infinite}.sv-b1{animation:svOff2 var(--sv-t) infinite}
+@keyframes svBtn{0%,44%{filter:none;transform:none}45%,47%{filter:brightness(1.25);transform:scale(.97)}48%,100%{filter:none;transform:none}}
+@keyframes svOn2{0%,45%{opacity:0}46%,100%{opacity:1}}
+@keyframes svOff2{0%,45%{opacity:1}46%,100%{opacity:0}}
+/* 3: perfis */
+.sv-sc3{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.sv-who{color:#d4d6d9;font-size:13px}
+.sv-pfs{display:flex;gap:9px}
+.sv-pf{display:flex;flex-direction:column;align-items:center;gap:4px;color:#8b8f94;font-size:8.5px}
+.sv-pf i{position:relative;width:42px;height:42px;border-radius:7px;background:var(--c);border:2px solid transparent}
+.sv-pf i::before{content:"";position:absolute;left:11px;top:14px;width:5px;height:5px;border-radius:50%;background:#1a1a1a;box-shadow:15px 0 0 #1a1a1a}
+.sv-pf i::after{content:"";position:absolute;left:14px;bottom:10px;width:13px;height:3px;border-radius:2px;background:#1a1a1a}
+.sv-pf3 i{animation:svPf var(--sv-t) infinite}
+@keyframes svPf{0%,55%{border-color:transparent;transform:none}57%,100%{border-color:#fff;transform:scale(1.1);box-shadow:0 0 14px rgba(255,255,255,.25)}}
+.sv-pin{display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0;animation:svPin var(--sv-t) infinite}
+@keyframes svPin{0%,57%{opacity:0}59%,100%{opacity:1}}
+.sv-pin small{color:#8b8f94;font-size:8.5px}
+.sv-pin span{display:flex;gap:6px}
+.sv-pin i{width:14px;height:14px;border-radius:3px;background:#26272c;position:relative}
+.sv-pin i::after{content:"";position:absolute;left:4px;top:4px;width:6px;height:6px;border-radius:50%;background:#fff;opacity:0}
+.sv-d1::after{animation:svD1 var(--sv-t) infinite}.sv-d2::after{animation:svD2 var(--sv-t) infinite}.sv-d3::after{animation:svD3 var(--sv-t) infinite}.sv-d4::after{animation:svD4 var(--sv-t) infinite}
+@keyframes svD1{0%,60%{opacity:0}61%,100%{opacity:1}}
+@keyframes svD2{0%,62%{opacity:0}63%,100%{opacity:1}}
+@keyframes svD3{0%,64%{opacity:0}65%,100%{opacity:1}}
+@keyframes svD4{0%,66%{opacity:0}67%,100%{opacity:1}}
+/* 4: início e play */
+.sv-hero{position:relative;height:128px;margin:10px 10px 0;border-radius:8px;overflow:hidden;background:linear-gradient(180deg,#ff8a5b,#d6336c 55%,#5f3dc4)}
+.sv-sun{position:absolute;right:22%;top:24%;width:30px;height:30px;border-radius:50%;background:#ffe066;box-shadow:0 0 22px #ffd43b}
+.sv-mt{position:absolute;inset:auto 0 0 0;height:55%;background:linear-gradient(160deg,transparent 40%,#3b1c6e 40.5%),linear-gradient(200deg,transparent 45%,#2b145a 45.5%)}
+.sv-ht{position:absolute;left:12px;bottom:12px;color:#fff}
+.sv-ht b{display:block;font-size:14px}
+.sv-ht small{display:block;font-size:8.5px;opacity:.8}
+.sv-hb{display:flex;gap:5px;margin-top:6px}
+.sv-hb em{font-style:normal;padding:3px 7px;border-radius:4px;background:rgba(0,0,0,.45);font-size:8.5px;font-weight:700}
+.sv-hb .sv-as{background:#fff;color:#111;animation:svAs var(--sv-t) infinite}
+@keyframes svAs{0%,80%{transform:none}81%,83%{transform:scale(.92)}84%,100%{transform:none}}
+.sv-thumbs{display:flex;gap:6px;margin:8px 10px 0}
+.sv-thumbs i{flex:1;height:36px;border-radius:5px;background:linear-gradient(135deg,#f06595,#845ef7)}
+.sv-thumbs i:nth-child(2){background:linear-gradient(135deg,#ffa94d,#e8590c)}
+.sv-thumbs i:nth-child(3){background:linear-gradient(135deg,#69db7c,#2b8a3e)}
+.sv-thumbs i:nth-child(4){background:linear-gradient(135deg,#4dabf7,#1c3d8a)}
+.sv-thumbs i:nth-child(5){background:linear-gradient(135deg,#e599f7,#5f3dc4)}
+.sv-play{position:absolute;inset:0;background:linear-gradient(180deg,#ff8a5b,#d6336c 55%,#5f3dc4);opacity:0;animation:svPlay var(--sv-t) infinite}
+@keyframes svPlay{0%,84%{opacity:0}86%,100%{opacity:1}}
+.sv-pbtn{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:rgba(0,0,0,.45);color:#fff;font-size:12px;animation:svPb var(--sv-t) infinite}
+@keyframes svPb{0%,88%{opacity:1}91%,100%{opacity:0}}
+.sv-prog{position:absolute;left:10px;right:10px;bottom:10px;height:3px;border-radius:2px;background:rgba(255,255,255,.3)}
+.sv-prog i{display:block;height:100%;width:0;border-radius:2px;background:var(--sv);animation:svProg var(--sv-t) linear infinite}
+@keyframes svProg{0%,86%{width:0}100%{width:38%}}
+/* cursor */
+.sv-cur{position:absolute;z-index:5;width:16px;height:16px;left:70%;top:80%;animation:svCur var(--sv-t) infinite}
+.sv-cur svg{width:16px;height:16px;fill:#fff;stroke:#111;stroke-width:1.5;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+@keyframes svCur{0%{left:70%;top:82%}6%{left:62%;top:70%}20%{left:66%;top:78%}
+  27%{left:50%;top:44%}36%{left:52%;top:46%}37%{left:50%;top:58%}42%{left:52%;top:59%}44%{left:52%;top:76%}48%{left:60%;top:84%}
+  52%{left:66%;top:78%}55%{left:59%;top:44%}68%{left:62%;top:74%}
+  74%{left:46%;top:84%}79%{left:16%;top:63%}84%{left:16%;top:63%}90%{left:58%;top:84%}100%{left:70%;top:82%}}
+/* passos que acendem junto */
+.sv-steps{display:flex;flex-direction:column;gap:6px;margin-top:12px}
+.sv-st{display:flex;gap:11px;padding:10px 12px;border-radius:12px;border:1px solid transparent}
+.sv-n{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:#222327;color:#9aa0a6;font-size:11px;font-weight:800}
+.sv-st b{display:block;color:#fff;font-size:13.5px;font-weight:700}
+.sv-st p{margin:2px 0 0 !important;color:#9aa0a6 !important;font-size:12px !important;line-height:1.45 !important}
+.sv-st1,.sv-st1 .sv-n{animation:svS1 var(--sv-t) infinite}
+.sv-st2,.sv-st2 .sv-n{animation:svS2 var(--sv-t) infinite}
+.sv-st3,.sv-st3 .sv-n{animation:svS3 var(--sv-t) infinite}
+.sv-st4,.sv-st4 .sv-n{animation:svS4 var(--sv-t) infinite}
+@keyframes svS1{0%,23%{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.45)}25%,98%{background:transparent;border-color:transparent}}
+@keyframes svS2{0%,24%,50%,100%{background:transparent;border-color:transparent}26%,48%{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.45)}}
+@keyframes svS3{0%,49%,70%,100%{background:transparent;border-color:transparent}51%,68%{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.45)}}
+@keyframes svS4{0%,69%,99%,100%{background:transparent;border-color:transparent}71%,97%{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.45)}}
+.sv-st .sv-n{animation-name:svN1}.sv-st2 .sv-n{animation-name:svN2}.sv-st3 .sv-n{animation-name:svN3}.sv-st4 .sv-n{animation-name:svN4}
+@keyframes svN1{0%,23%{background:#22c55e;color:#04140a}25%,98%{background:#222327;color:#9aa0a6}}
+@keyframes svN2{0%,24%,50%,100%{background:#222327;color:#9aa0a6}26%,48%{background:#22c55e;color:#04140a}}
+@keyframes svN3{0%,49%,70%,100%{background:#222327;color:#9aa0a6}51%,68%{background:#22c55e;color:#04140a}}
+@keyframes svN4{0%,69%,99%,100%{background:#222327;color:#9aa0a6}71%,97%{background:#22c55e;color:#04140a}}
+.sv-warn{display:flex;gap:10px;margin-top:12px;padding:11px 12px;border-radius:12px;background:rgba(139,92,246,.10);border:1px solid rgba(139,92,246,.4)}
+.sv-warn svg{flex:none;width:18px;height:18px;margin-top:1px;fill:none;stroke:#c4b5fd;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sv-warn p{margin:0 !important;color:#d4d6d9 !important;font-size:12px !important;line-height:1.5 !important}
+@media (prefers-reduced-motion:reduce){.sv-card *{animation-duration:0s !important;animation-iteration-count:1 !important}}
+'''
+
+s = open(src).read()
+a = s.find('<!-- COMO UTILIZAR -->')
+b = s.find(f'<div class="{P}-card">', a + 30)
+assert a > 0 and b > a and 'Como utilizar' in s[a:b], 'card Como utilizar não encontrado'
+s = s[:a] + CARD + '        ' + s[b:]
+assert s.count('</style>') == 1
+s = s.replace('</style>', CSS + '</style>')
+tam = len(s.encode())
+assert tam <= 65535, f'{tam} bytes passa do limite da API'
+open(dst, 'w').write(s)
+print(dst, tam, 'bytes')
