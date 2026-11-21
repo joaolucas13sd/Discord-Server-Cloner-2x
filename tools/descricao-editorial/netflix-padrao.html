@@ -1,0 +1,120 @@
+<div class="ed">
+<style>
+.ed{--ed-ac:#e50914;--ed-tx:#c4c7cc;--ed-mut:#8b8f96;--ed-card:#131418;--ed-bd:#24262b;max-width:560px;margin:0 auto;color:var(--ed-tx);font-family:Inter,system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.7}
+.ed *{box-sizing:border-box}
+.ed p{margin:0 0 14px !important;color:var(--ed-tx) !important;font-size:14px !important;line-height:1.7 !important}
+.ed strong{color:#fff;font-weight:700}
+.ed-box{margin:0 0 18px;padding:16px 18px;border-radius:14px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-box p{margin:0 !important}
+.ed-h{margin:26px 0 12px !important;padding:0 !important;border:0 !important;color:#fff !important;font-size:16px !important;font-weight:800 !important;line-height:1.3 !important}
+.ed-h::before{display:none !important}
+.ed-img{display:block;width:100%;height:auto;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd)}
+/* ilustração: quem está assistindo */
+.ed-art{position:relative;overflow:hidden;margin:4px 0 18px;border-radius:14px;border:1px solid var(--ed-bd);background:radial-gradient(120% 90% at 50% 0%,#2a1012,#0c0c0e 70%)}
+.ed-who{padding:26px 14px 22px;text-align:center}
+.ed-who b{display:block;color:#fff;font-size:17px;font-weight:700;margin-bottom:16px}
+.ed-pfs{display:flex;justify-content:center;gap:12px}
+.ed-pf{display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--ed-mut);font-size:11px}
+.ed-pf i{position:relative;width:54px;height:54px;border-radius:8px;background:var(--c)}
+.ed-pf i::before{content:"";position:absolute;left:14px;top:18px;width:6px;height:6px;border-radius:50%;background:#141414;box-shadow:20px 0 0 #141414}
+.ed-pf i::after{content:"";position:absolute;left:15px;bottom:13px;width:24px;height:9px;border:3px solid #141414;border-top:0;border-radius:0 0 14px 14px}
+.ed-pf--eu{color:#fff;font-weight:700}
+.ed-pf--eu i{outline:3px solid #fff;outline-offset:2px;animation:edEu 2.4s ease-in-out infinite}
+@keyframes edEu{50%{transform:scale(1.07)}}
+.ed-lock{display:inline-flex;align-items:center;gap:6px;margin-top:16px;padding:5px 12px;border-radius:999px;background:rgba(229,9,20,.14);border:1px solid rgba(229,9,20,.45);color:#ffb3b6;font-size:11.5px;font-weight:700}
+/* ilustração: aparelhos */
+.ed-dev{display:flex;align-items:flex-end;justify-content:center;gap:16px;padding:26px 14px 18px;background:radial-gradient(100% 120% at 50% 100%,#1d0b0d,#0c0c0e 70%)}
+.ed-dev span{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-dev svg{fill:none;stroke:#e6e7e9;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ed-dev .ed-scr{fill:url(#edG)}
+/* ficha do plano */
+.ed-spec{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 18px}
+.ed-spec div{padding:11px 12px;border-radius:12px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-spec small{display:block;color:var(--ed-mut);font-size:11px;font-weight:600}
+.ed-spec b{display:block;color:#fff;font-size:13.5px;font-weight:700;margin-top:2px}
+/* planos */
+.ed-plans{display:flex;flex-direction:column;gap:6px;margin:4px 0 8px}
+.ed-plan{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:12px;background:var(--ed-card);border:1px solid var(--ed-bd);font-size:13px;color:var(--ed-tx)}
+.ed-plan--on{border-color:rgba(229,9,20,.6);background:rgba(229,9,20,.08);color:#fff}
+.ed-plan em{font-style:normal;margin-left:6px;padding:2px 7px;border-radius:999px;background:var(--ed-ac);color:#fff;font-size:10px;font-weight:800}
+.ed-plan s{color:var(--ed-mut);font-size:11.5px;margin-right:6px}
+.ed-plan b{color:#fff;white-space:nowrap}
+.ed-note{color:var(--ed-mut) !important;font-size:12.5px !important}
+/* como utilizar: 4 passos em grade */
+.ed-steps{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 6px}
+.ed-step{padding:12px 13px;border-radius:12px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-step small{display:flex;align-items:center;gap:7px;color:var(--ed-mut);font-size:10.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.ed-step small i{font-style:normal;color:#fff;letter-spacing:0;font-size:12px}
+.ed-step p{margin:0 !important;font-size:13px !important;line-height:1.6 !important}
+/* termos */
+.ed-terms{display:flex;flex-direction:column;gap:8px;margin:4px 0 6px}
+.ed-terms div{padding:12px 13px;border-radius:12px;background:var(--ed-card);border:1px solid var(--ed-bd)}
+.ed-terms b{display:block;color:#fff;font-size:13px;margin-bottom:3px}
+.ed-terms p{margin:0 !important;font-size:13px !important;line-height:1.6 !important}
+/* fechamento */
+.ed-cta{margin-top:4px;padding:18px;border-radius:16px;background:radial-gradient(120% 120% at 100% 0%,rgba(229,9,20,.18),transparent 60%),var(--ed-card);border:1px solid rgba(229,9,20,.35);text-align:center}
+.ed-cta b{display:block;color:#fff;font-size:17px;font-weight:800}
+.ed-cta .ed-pr{display:flex;align-items:baseline;justify-content:center;gap:8px;margin:6px 0 12px}
+.ed-cta .ed-pr s{color:var(--ed-mut);font-size:13px}
+.ed-cta .ed-pr strong{font-size:26px;font-weight:900}
+@media (min-width:520px){.ed-dev{gap:26px}}
+</style>
+
+<div class="ed-box"><p>Tenha a <strong>Netflix Padrão</strong> com um <strong>perfil só seu</strong> e assista séries, filmes e lançamentos em <strong>Full HD</strong>, sem anúncios, na TV, no computador, no celular e no tablet.</p></div>
+
+<p>Na <strong>Rei dos Nitros</strong>, você recebe um <strong>perfil privado</strong> em uma conta Netflix compartilhada com poucos usuários. Sua lista, suas recomendações e seu histórico ficam <strong>separados dos outros</strong>.</p>
+<p>O acesso chega na <strong>página do seu pedido</strong> assim que o Pix é aprovado, a qualquer hora do dia.</p>
+
+<img class="ed-img" src="https://blast.erbystores.com/cdn/s/7hcQA9dT0g8LsnaZCH_jL0/attachments/17853792965019995imagem.png" alt="Netflix" loading="lazy">
+
+<p><strong>Séries e filmes do momento.</strong> Catálogo completo da Netflix, com as séries mais comentadas, filmes, documentários, animes e produções originais que chegam toda semana.</p>
+<p>Na hora de assistir, é só entrar no <strong>seu perfil</strong>: ninguém mexe na sua lista e você continua de onde parou.</p>
+
+<div class="ed-art" role="img" aria-label="Tela Quem está assistindo com o seu perfil em destaque"><div class="ed-who"><b>Quem está assistindo?</b>
+<div class="ed-pfs"><span class="ed-pf" style="--c:#5b8def"><i></i>Perfil 1</span><span class="ed-pf" style="--c:#f2b33d"><i></i>Perfil 2</span><span class="ed-pf" style="--c:#56b870"><i></i>Perfil 3</span><span class="ed-pf ed-pf--eu" style="--c:#e8475b"><i></i>Você</span></div>
+<span class="ed-lock">🔒 Perfil privado ativo</span></div></div>
+
+<h3 class="ed-h">O que o plano oferece</h3>
+<div class="ed-spec">
+<div><small>Resolução</small><b>1080p (Full HD)</b></div>
+<div><small>Qualidade de vídeo e áudio</small><b>Boa</b></div>
+<div><small>Aparelhos simultâneos</small><b>2 na sua residência</b></div>
+<div><small>Aparelhos de download</small><b>2</b></div>
+<div><small>Anúncios</small><b>Sem anúncios</b></div>
+<div><small>Onde assistir</small><b>TV, PC, celular e tablet</b></div>
+</div>
+
+<div class="ed-art" role="img" aria-label="Aparelhos compatíveis: TV, computador, tablet e celular"><svg width="0" height="0" style="position:absolute"><defs><linearGradient id="edG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e50914" stop-opacity=".55"/><stop offset="1" stop-color="#5f0a10" stop-opacity=".25"/></linearGradient></defs></svg>
+<div class="ed-dev">
+<span><svg width="78" height="56" viewBox="0 0 78 56"><rect class="ed-scr" x="2" y="2" width="74" height="44" rx="4"/><path d="M28 54h22M39 46v8"/></svg>TV</span>
+<span><svg width="66" height="46" viewBox="0 0 66 46"><rect class="ed-scr" x="9" y="2" width="48" height="32" rx="3"/><path d="M2 42h62l-5-8H7z"/></svg>Computador</span>
+<span><svg width="36" height="48" viewBox="0 0 36 48"><rect class="ed-scr" x="2" y="2" width="32" height="44" rx="4"/><path d="M15 41h6"/></svg>Tablet</span>
+<span><svg width="24" height="40" viewBox="0 0 24 40"><rect class="ed-scr" x="2" y="2" width="20" height="36" rx="4"/><path d="M10 33h4"/></svg>Celular</span>
+</div></div>
+
+<h3 class="ed-h">Outros planos</h3>
+<div class="ed-plans">
+<div class="ed-plan"><span>Netflix Plano Premium</span><b><s>R$ 71,90</s>R$ 12,99</b></div>
+<div class="ed-plan"><span>Netflix Plano Padrão (com anúncios)</span><b><s>R$ 25,90</s>R$ 1,99</b></div>
+<div class="ed-plan ed-plan--on"><span>Netflix Plano Padrão<em>VOCÊ ESTÁ AQUI</em></span><b><s>R$ 51,90</s>R$ 7,99</b></div>
+</div>
+<p class="ed-note">Para trocar de plano, toque na opção na lista acima do botão de comprar. Os valores riscados são os preços no site oficial da Netflix.</p>
+
+<h3 class="ed-h">Como utilizar</h3>
+<div class="ed-steps">
+<div class="ed-step"><small><i>1</i>Passo 1</small><p>Escolha o <strong>Netflix Plano Padrão</strong> e finalize a compra de forma rápida e segura pelo <strong>Pix</strong>.</p></div>
+<div class="ed-step"><small><i>2</i>Passo 2</small><p>Após a aprovação, você recebe os <strong>dados de acesso</strong> na página do seu pedido.</p></div>
+<div class="ed-step"><small><i>3</i>Passo 3</small><p>Abra a <strong>Netflix</strong> na TV, no computador ou no celular e entre com o <strong>e-mail e a senha</strong> recebidos.</p></div>
+<div class="ed-step"><small><i>4</i>Passo 4</small><p>Pronto! Entre no <strong>seu perfil</strong>, escolha um filme ou uma série e <strong>comece a assistir</strong>.</p></div>
+</div>
+
+<h3 class="ed-h">Termos e garantia</h3>
+<div class="ed-terms">
+<div><b>Prazo para resgate</b><p>Após o primeiro resgate do produto, você tem até 7 dias para solicitar o envio ou a garantia de suporte.</p></div>
+<div><b>Tentativas de fraude</b><p>Qualquer abuso ou tentativa de burlar o sistema resulta na perda do item e no bloqueio do suporte.</p></div>
+<div><b>Suporte humano</b><p>Precisa de ajuda? Fale com a gente no WhatsApp ou no Discord.</p></div>
+</div>
+
+<!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Outras pessoas vão ver o que eu assisto?</summary><p>Não. Você recebe um <strong>perfil só seu</strong>, com a sua lista e o seu histórico separados.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div>
+<div class="ed-cta"><b>Netflix Plano Padrão</b><div class="ed-pr"><s>R$ 51,90</s><strong>R$ 7,99</strong></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
