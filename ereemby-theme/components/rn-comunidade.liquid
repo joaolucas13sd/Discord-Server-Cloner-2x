@@ -12,7 +12,7 @@
   Se ficar vazio, usa o WhatsApp das redes sociais do painel (se houver).
   Se nenhum dos dois existir, o botão aparece como "Em breve".
 {% endcomment %}
-{% assign rn_whatsapp_number = '' %}
+{% assign rn_whatsapp_number = '5521986513171' %}
 {% assign rn_whatsapp_msg = 'Olá! Preciso de ajuda.' %}
 {% assign rn_whatsapp_img = 'https://cdn.erbycloud.com/attachments/17944490739667744imagem.png' %}
 
@@ -22,7 +22,7 @@
 
 {% assign rn_whats_link = '' %}
 {% if rn_whatsapp_number != '' %}
-  {% assign rn_msg = rn_whatsapp_msg | url_encode %}
+  {% assign rn_msg = rn_whatsapp_msg | url_encode | replace: '+', '%20' %}
   {% assign rn_whats_link = 'https://wa.me/' | append: rn_whatsapp_number | append: '?text=' | append: rn_msg %}
 {% elsif social.whatsapp %}
   {% if social.whatsapp contains 'http' %}
