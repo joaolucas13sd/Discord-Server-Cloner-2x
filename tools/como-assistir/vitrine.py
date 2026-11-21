@@ -1,3 +1,4 @@
+import re
 # Animações de "vitrine" (sem login) para produtos que não são acesso a app:
 # raspadinha, roleta, otimização, engajamento, sensi e loja no Discord.
 # Cada função devolve (html, css). O cartão tem a classe "ed-card": o tema só começa a animar quando ele aparece na tela.
@@ -683,7 +684,7 @@ def steam_offline(nome, hero, passos):
 .vt--so .so-b1{margin-top:9px;animation:soPress1 var(--vt) infinite}
 @keyframes soPress1{0%,13.6%{transform:none}14%{transform:scale(.95);filter:brightness(.85)}14.6%,100%{transform:none}}
 .vt--so .so-guard{text-align:center;padding-top:30px}
-.vt--so .so-shield{width:24px;height:28px;margin:0 auto 6px;background:#a78bfa;clip-path:polygon(50% 0,100% 18%,100% 55%,50% 100%,0 55%,0 18%)}
+.vt--so .so-shield{width:24px;height:28px;margin:0 auto 6px;background:#21e065;clip-path:polygon(50% 0,100% 18%,100% 55%,50% 100%,0 55%,0 18%)}
 .vt--so .so-guard b{color:#fff;font-size:12px;font-weight:800}.vt--so .so-guard small{margin-top:3px;color:#8f98a0;font-size:8.5px}
 .vt--so .so-code{display:flex;gap:6px;justify-content:center;margin-top:12px}
 .vt--so .so-code u{width:26px;height:30px;border-radius:4px;background:#2a2f38;border:1px solid #3a404b;display:grid !important;place-items:center}
@@ -705,10 +706,10 @@ def steam_offline(nome, hero, passos):
 .vt--so .so-act{position:absolute;left:82px;right:8px;top:156px;height:24px}
 .vt--so .so-act>*{position:absolute;left:0;top:0}
 .vt--so .so-act .so-btn{width:78px}
-.vt--so .so-inst{background:#7c3aed;color:#fff;animation:soInst var(--vt) infinite}
+.vt--so .so-inst{background:#21e065;color:#06150b;animation:soInst var(--vt) infinite}
 @keyframes soInst{0%,37.6%{opacity:1;transform:none}38%{transform:scale(.94)}38.6%,100%{opacity:0}}
 .vt--so .so-bar{left:0 !important;top:9px !important;width:78px;height:6px;border-radius:3px;background:#2a2f38;overflow:hidden;opacity:0;animation:soBarW var(--vt) infinite}
-.vt--so .so-bar i{height:100%;width:0;background:#7c3aed;animation:soBar var(--vt) infinite}
+.vt--so .so-bar i{height:100%;width:0;background:#21e065;animation:soBar var(--vt) infinite}
 @keyframes soBarW{0%,38.4%{opacity:0}38.6%,50%{opacity:1}50.5%,100%{opacity:0}}@keyframes soBar{0%,39%{width:0}50%,100%{width:100%}}
 .vt--so .so-dl{left:88px !important;top:6px !important;color:#8f98a0;font-size:8.5px;opacity:0;animation:soBarW var(--vt) infinite}
 .vt--so .so-play{opacity:0;animation:soPlay var(--vt) infinite}
@@ -719,7 +720,7 @@ def steam_offline(nome, hero, passos):
 .vt--so .so-menu{position:absolute;left:6px;top:0;width:118px;padding:4px;border-radius:4px;background:#23262d;border:1px solid #3a404b;box-shadow:0 8px 20px rgba(0,0,0,.5);z-index:5;opacity:0;animation:soMenu var(--vt) infinite}
 @keyframes soMenu{0%,59%{opacity:0}59.6%,65.4%{opacity:1}66%,100%{opacity:0}}
 .vt--so .so-menu span{padding:4px 6px;border-radius:3px;color:#c7d5e0;font-size:8.5px}
-.vt--so .so-mo{animation:soMo var(--vt) infinite}@keyframes soMo{0%,62%{background:none}62.5%,100%{background:#7c3aed;color:#fff}}
+.vt--so .so-mo{animation:soMo var(--vt) infinite}@keyframes soMo{0%,62%{background:none}62.5%,100%{background:#21e065;color:#06150b}}
 .vt--so .so-dlg{position:absolute;left:50%;top:52px;width:210px;margin-left:-105px;padding:12px;border-radius:6px;background:#23262d;border:1px solid #3a404b;box-shadow:0 0 0 400px rgba(0,0,0,.45);z-index:5;opacity:0;animation:soDlg var(--vt) infinite}
 @keyframes soDlg{0%,65.6%{opacity:0}66.2%,70.4%{opacity:1}71%,100%{opacity:0}}
 .vt--so .so-dlg b{color:#fff;font-size:11px;font-weight:800}.vt--so .so-dlg small{margin-top:4px;color:#8f98a0;font-size:8.5px}
@@ -745,7 +746,7 @@ def steam_offline(nome, hero, passos):
     for k, (a, b) in enumerate([(0, 16), (16, 34), (34, 56), (56, 74), (74, 97)]):
         css += (f'@keyframes soS{k}{{0%,{a}%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}{a + .5}%,{b}%{{border-color:rgba(33,224,101,.5);background:rgba(33,224,101,.07)}}{b + .5}%,100%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}}}\n'
                 f'@keyframes soI{k}{{0%,{a}%{{background:#2a2f38;color:#c7d5e0}}{a + .5}%,100%{{background:#21e065;color:#06150b}}}}\n')
-    return html, BASE + css
+    return _novo_cursor(html, BASE + css, 'so', [2.5, 11, 14, 38, 59.6, 63, 69.8, 80], [(0, 15.8), (35, 39.5), (56.6, 71), (77, 81.5)])
 
 
 # ---------------------------------------------------------------- Steam Key: copiar a key → login (+Steam Guard) → Ativar um produto → biblioteca → instalar → jogar (sem modo offline)
@@ -884,7 +885,7 @@ def steam_key(nome, cor, passos):
         css += (f'.vt--sk .sk-s{k}{{animation:skS{k} var(--vt) infinite}}.vt--sk .sk-s{k} i{{animation:skI{k} var(--vt) infinite}}\n'
                 f'@keyframes skS{k}{{0%,{a}%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}{a + .5}%,{b}%{{border-color:rgba(33,224,101,.5);background:rgba(33,224,101,.07)}}{b + .5}%,100%{{border-color:rgba(255,255,255,.06);background:rgba(255,255,255,.03)}}}}\n'
                 f'@keyframes skI{k}{{0%,{a}%{{background:#2a2f38;color:#c7d5e0}}{a + .5}%,100%{{background:#21e065;color:#06150b}}}}\n')
-    return html, BASE + css
+    return _novo_cursor(html, BASE + css, 'sk', [10.5, 14.4, 18.5, 22.8, 26, 40.5, 48.4, 51, 64, 83], [(0, 16), (17, 28), (39, 53.5), (61, 65.5), (80.5, 84.5)])
 
 
 # ---------------------------------------------------------------- base comum dos fluxos feitos à mão (cursor, janela, caixas, campos, botões, passos)
@@ -1028,7 +1029,7 @@ def xbox_pass(plano, hero, capas, passos):
                        (39.5, 'calc(50% + 70px)', '200px'), (43, 'calc(50% + 0px)', '172px'), (47, 'calc(50% + 0px)', '172px'), (52, 'calc(50% + 70px)', '210px'),
                        (58, '55px', '158px'), (61.5, '55px', '158px'), (68, '170px', '210px'), (79, '170px', '210px'), (84, '55px', '158px'), (86, '55px', '158px'),
                        (92, '170px', '215px'), (100, '75%', '90%')])
-    return html, BASE + css
+    return _novo_cursor(html, BASE + css, 'xg', [7, 10, 13.4, 17.6, 24.2, 27, 35.6, 45.6, 62, 85.8], [(0, 15.5), (16.4, 37.5), (42, 49), (57, 63.5), (83, 87)])
 
 
 # ---------------------------------------------------------------- Combo: pedido com 5 acessos → 5 logins → streamings ativos → assistir
@@ -1124,13 +1125,16 @@ def combo_streaming(imagem, passos):
     pt = fim + 10.2
     css += (f'@keyframes cbPlay{{0%,{fim + 8}%{{opacity:1;transform:none}}{pt}%{{opacity:1;transform:scale(.94)}}{pt + .8}%,100%{{opacity:1;transform:none}}}}\n'
             f'@keyframes cbPbW{{0%,{pt + .6}%{{opacity:0}}{pt + 1.2}%,96%{{opacity:1}}98%,100%{{opacity:0}}}}@keyframes cbPb{{0%,{pt + 1.2}%{{width:0}}96%,100%{{width:100%}}}}\n')
-    return html, BASE + css
+    cl = [12.6] + [t for k in range(N) for t in (ini + slot * k + slot * .1, ini + slot * k + slot * .42, ini + slot * k + slot * .8)] + [pt]
+    return _novo_cursor(html, BASE + css, 'cb', cl, [(0, 14.8), (ini - .2, fim - .4), (fim + 7, fim + 11.5)])
 
 
 # ---------------------------------------------------------------- Fatal Fans (conta NFA): pedido → confirmação de maioridade → login → assinatura premium ativa
 def fatal_fans(passos):
     P = 'fn'
-    tiles = ''.join(f'<span class="fn-tl fn-tt{k}"><i class="fn-art" style="--h:{h}"></i><u class="fn-lk"></u><b class="fn-ul">Liberado</b></span>' for k, h in enumerate([340, 280, 20, 310, 250, 10]))
+    FOTOS = [('Mc Mirella', '17944307198429905'), ('Ester Muniz', '17944307218999288'), ('Bia Miranda', '17944307235296518'),
+             ('Letycia Soares', '17944307210587055'), ('Camila Becker', '17944307268589385'), ('Leticia Disher', '1794431417157493')]
+    tiles = ''.join(f'<span class="fn-tl fn-tt{k}"><img class="fn-art" src="https://cdn.erbycloud.com/attachments/{ar}imagem.jpeg" alt="{n}" loading="lazy"><u class="fn-lk"></u><b class="fn-ul">Liberado</b><b class="fn-nm">{n}</b></span>' for k, (n, ar) in enumerate(FOTOS))
     jan = (
         '<div class="fn-top fn-t1"><b>Rei dos Nitros</b><span>Seu pedido</span></div><div class="fn-top fn-t2"><b>Fatal Fans</b><span>Acesso</span></div><div class="fn-top fn-t3"><b>Fatal Fans</b><span class="on">Início</span><span>Criadores</span><span>Minha conta</span></div>'
         '<div class="fn-sc fn-a"><div class="fn-box"><small class="fn-ok">✓ Pagamento aprovado</small><b class="fn-pn">Fatal Fans · Conta NFA</b>'
@@ -1173,13 +1177,13 @@ def fatal_fans(passos):
 .vt--fn .fn-sub{position:absolute;left:8px;right:8px;top:8px;height:46px;display:flex !important;align-items:center;gap:10px;padding:0 10px;border-radius:10px;background:linear-gradient(90deg,#4c0519,#1d2128);border:1px solid #9f1239}
 .vt--fn .fn-crown{flex:none;width:26px;height:20px;background:linear-gradient(180deg,#fcd34d,#f59e0b);clip-path:polygon(0 100%,0 25%,25% 55%,50% 0,75% 55%,100% 25%,100% 100%)}
 .vt--fn .fn-sub b{color:#fff;font-size:11.5px;font-weight:900}.vt--fn .fn-sub small{color:#fda4af;font-size:8.5px;margin-top:1px}
-.vt--fn .fn-on{margin-left:auto;padding:3px 8px;border-radius:999px;background:#16a34a;color:#fff;font-size:8px;font-weight:900;opacity:0;animation:fnOn var(--vt) infinite}
+.vt--fn .fn-on{white-space:nowrap;margin-left:auto;padding:3px 8px;border-radius:999px;background:#16a34a;color:#fff;font-size:8px;font-weight:900;opacity:0;animation:fnOn var(--vt) infinite}
 .vt--fn .fn-grid{position:absolute;left:8px;right:8px;top:62px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .vt--fn .fn-tl{position:relative;height:72px;border-radius:9px;overflow:hidden;background:#23262d;opacity:0;transform:translateY(8px)}
-.vt--fn .fn-art{position:absolute;inset:0;background:linear-gradient(135deg,hsl(var(--h),70%,45%),hsl(calc(var(--h) + 50),70%,25%));filter:blur(6px);transform:scale(1.2);animation:none}
-.vt--fn .fn-art::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(255,255,255,.25),transparent 55%)}
+.vt--fn .vt-win img.fn-art{position:absolute;left:0;top:0;width:100% !important;height:100% !important;max-width:none !important;margin:0 !important;border-radius:0 !important;object-fit:cover;object-position:center 12%;filter:blur(9px);transform:scale(1.15)}
+.vt--fn .fn-nm{position:absolute;left:0;right:0;bottom:0;padding:12px 6px 4px;background:linear-gradient(transparent,rgba(0,0,0,.8));color:#fff;font-size:8px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0}
 .vt--fn .fn-lk{position:absolute;left:50%;top:50%;width:18px;height:14px;margin:-4px 0 0 -9px;border-radius:3px;background:#fff;box-shadow:0 -7px 0 -3px #fff}
-.vt--fn .fn-ul{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:2px 8px;border-radius:999px;background:rgba(0,0,0,.55);color:#86efac;font-size:8.5px;font-weight:900;opacity:0}
+.vt--fn .fn-ul{position:absolute;right:5px;top:5px;padding:2px 6px;border-radius:999px;background:rgba(0,0,0,.6);color:#86efac;font-size:7.5px;font-weight:900;opacity:0}
 """
     css += ('@keyframes fnT1{0%,15.4%{opacity:1}16%,100%{opacity:0}}@keyframes fnT2{0%,15.6%{opacity:0}16.2%,31.6%{opacity:1}32.2%,100%{opacity:0}}@keyframes fnT3{0%,31.8%{opacity:0}32.4%,100%{opacity:1}}\n'
             '@keyframes fnA{0%,15.4%{opacity:1}16.4%,100%{opacity:0}}@keyframes fnB{0%,15.8%{opacity:0}17.2%,31%{opacity:1}32.4%,100%{opacity:0}}@keyframes fnC{0%,31.8%{opacity:0}33.4%,54.4%{opacity:1}56%,100%{opacity:0}}@keyframes fnD{0%,55.4%{opacity:0}57%,96%{opacity:1}98%,100%{opacity:0}}\n'
@@ -1189,14 +1193,36 @@ def fatal_fans(passos):
             '@keyframes fnOn{0%,58%{opacity:0;transform:scale(.7)}59.4%,100%{opacity:1;transform:none}}\n')
     for k in range(6):
         a = 60 + k * 3.2
-        css += (f'.vt--fn .fn-tt{k}{{animation:fnTt{k} var(--vt) infinite}}.vt--fn .fn-tt{k} .fn-lk{{animation:fnLk{k} var(--vt) infinite}}.vt--fn .fn-tt{k} .fn-ul{{animation:fnUl{k} var(--vt) infinite}}.vt--fn .fn-tt{k} .fn-art{{animation:fnAr{k} var(--vt) infinite}}\n'
+        css += (f'.vt--fn .fn-tt{k}{{animation:fnTt{k} var(--vt) infinite}}.vt--fn .fn-tt{k} .fn-lk{{animation:fnLk{k} var(--vt) infinite}}.vt--fn .fn-tt{k} .fn-ul,.vt--fn .fn-tt{k} .fn-nm{{animation:fnUl{k} var(--vt) infinite}}.vt--fn .fn-tt{k} .fn-art{{animation:fnAr{k} var(--vt) infinite}}\n'
                 f'@keyframes fnTt{k}{{0%,{a - 3}%{{opacity:0;transform:translateY(8px)}}{a - 1.4}%,97%{{opacity:1;transform:none}}98.6%,100%{{opacity:0}}}}\n'
-                f'@keyframes fnLk{k}{{0%,{a + 3}%{{opacity:1}}{a + 4}%,100%{{opacity:0}}}}\n@keyframes fnUl{k}{{0%,{a + 3.2}%{{opacity:0;transform:translate(-50%,-50%) scale(.6)}}{a + 4.4}%,96%{{opacity:1;transform:translate(-50%,-50%) scale(1)}}98%,100%{{opacity:0}}}}\n'
-                f'@keyframes fnAr{k}{{0%,{a + 3}%{{filter:blur(8px)}}{a + 4.6}%,100%{{filter:blur(0)}}}}\n')
+                f'@keyframes fnLk{k}{{0%,{a + 3}%{{opacity:1}}{a + 4}%,100%{{opacity:0}}}}\n@keyframes fnUl{k}{{0%,{a + 3.2}%{{opacity:0}}{a + 4.4}%,96%{{opacity:1}}98%,100%{{opacity:0}}}}\n'
+                f'@keyframes fnAr{k}{{0%,{a + 3}%{{filter:blur(9px);transform:scale(1.15)}}{a + 4.6}%,100%{{filter:blur(0);transform:scale(1)}}}}\n')
     css += _fl_cur(P, [(0, '75%', '90%'), (5.5, 'calc(50% - 20px)', '104px'), (8, 'calc(50% - 20px)', '104px'), (9.4, 'calc(50% - 20px)', '132px'), (12, 'calc(50% - 20px)', '132px'),
                        (13.6, 'calc(50% + 0px)', '172px'), (16, 'calc(50% + 0px)', '172px'),
                        (22, 'calc(50% - 63px)', '178px'), (25, 'calc(50% + 33px)', '178px'), (29, 'calc(50% + 33px)', '178px'), (32, 'calc(50% + 33px)', '178px'),
                        (34, 'calc(50% - 50px)', '107px'), (40.5, 'calc(50% - 50px)', '107px'), (41.6, 'calc(50% - 50px)', '137px'), (45.5, 'calc(50% - 50px)', '137px'),
                        (47.4, 'calc(50% + 0px)', '169px'), (50.4, 'calc(50% + 0px)', '169px'), (54, 'calc(50% + 70px)', '210px'),
                        (82, 'calc(50% + 70px)', '210px'), (88, 'calc(50% + 0px)', '165px'), (94, 'calc(50% + 0px)', '165px'), (100, '75%', '90%')])
-    return html, BASE + css
+    return _novo_cursor(html, BASE + css, 'fn', [7, 11, 14.6, 29.2, 34.5, 42, 48.2, 91], [(0, 16.4), (20.5, 32), (33.5, 50.5), (86, 95)])
+
+
+# ---------------------------------------------------------------- cursor padrão das descrições (seta com contorno + círculo de clique), só aparece perto dos cliques
+def _novo_cursor(html, css, p, cliques, janelas, fade=.8):
+    """Troca o cursor do fluxo por o mesmo das outras animações. cliques = [t%], janelas = [(ini%, fim%)] em que ele fica visível."""
+    seta = '<span class="%s-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>' % p
+    html = html.replace('<span class="%s-cur"></span>' % p, seta)
+    css = re.sub(r'\.vt--%s \.%s-cur\{[^}]*\}' % (p, p), '', css)
+    c = (f'.vt--{p} .{p}-cur{{position:absolute;z-index:9;width:18px;height:18px;margin:-2px 0 0 -3px;pointer-events:none;animation:{p}Cur var(--vt) infinite,{p}CurV var(--vt) infinite}}\n'
+         f'.vt--{p} .{p}-cur svg{{display:block;width:18px !important;height:18px !important;max-width:none !important;fill:#fff;stroke:#111;stroke-width:1.4;stroke-linejoin:round;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));transform-origin:20% 15%;animation:{p}Press var(--vt) infinite}}\n'
+         f'.vt--{p} .{p}-cur::before{{content:"";position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.55);opacity:0;transform:scale(.3);animation:{p}Click var(--vt) infinite}}\n')
+    vis = '0%{opacity:0}'
+    for a, b in janelas:
+        vis += f'{max(a - .01, 0):.2f}%{{opacity:0}}{a + fade:.2f}%,{b:.2f}%{{opacity:1}}{b + fade:.2f}%{{opacity:0}}'
+    c += f'@keyframes {p}CurV{{{vis}100%{{opacity:0}}}}\n'
+    ck = '0%{opacity:0;transform:scale(.3)}'
+    pr = '0%{transform:none}'
+    for t in sorted(cliques):
+        ck += f'{t - .1:.2f}%{{opacity:0;transform:scale(.3)}}{t:.2f}%{{opacity:.8;transform:scale(.5)}}{t + 1.1:.2f}%{{opacity:0;transform:scale(1.4)}}'
+        pr += f'{t - .1:.2f}%{{transform:none}}{t:.2f}%{{transform:scale(.8)}}{t + .7:.2f}%{{transform:none}}'
+    c += f'@keyframes {p}Click{{{ck}100%{{opacity:0}}}}\n@keyframes {p}Press{{{pr}100%{{transform:none}}}}\n'
+    return html, css + c
