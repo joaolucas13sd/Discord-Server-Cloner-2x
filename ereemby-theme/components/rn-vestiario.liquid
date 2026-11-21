@@ -1,0 +1,176 @@
+{% comment %}
+  Rei dos Nitros: "Vestiário" das contas Fortnite.
+  A descrição do produto traz a grade de skins (.rv-grid com botões .rv-t e os dados em data-*),
+  gerada por tools/descricao-conta/gerar.py. Este componente acrescenta busca, filtro de raridade,
+  ordenação e a tela de detalhe (setas, deslizar, contador), no estilo do vestiário do jogo.
+  Sem a grade na descrição, não faz nada.
+{% endcomment %}
+<style>
+  .rv-tools{display:flex;flex-direction:column;gap:8px;margin:0 0 12px}
+  .rv-search{position:relative}
+  .rv-search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:#8b8b93;pointer-events:none}
+  .rv-search input{width:100%;height:42px;padding:0 12px 0 38px;border-radius:12px;background:#0f1411;border:1px solid rgba(255,255,255,.10);color:#fff;font-size:14px;outline:none}
+  .rv-search input:focus{border-color:#2ee86b}
+  .rv-sel{display:flex;gap:8px}
+  .rv-sel select{flex:1;min-width:0;height:40px;padding:0 10px;border-radius:12px;background:#0f1411;border:1px solid rgba(255,255,255,.10);color:#fff;font-size:13px;font-weight:600}
+
+  .rv-more{display:block;width:100%;margin-top:10px;padding:12px;border-radius:12px;background:rgba(46,232,107,.10);border:1px solid rgba(46,232,107,.45);color:#2ee86b;font-size:14px;font-weight:800;cursor:pointer}
+  .rv-more[hidden]{display:none}
+  .rv-grid .rv-t.rv-x{display:none}
+  .rvm{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;color:#fff;font-family:Inter,system-ui,sans-serif;
+    background:radial-gradient(90% 60% at 50% 22%,var(--c1,#2a2a2a),transparent 75%),linear-gradient(180deg,var(--c2,#111) 0%,#0b0b0d 70%);opacity:0;transition:opacity .2s}
+  .rvm.on{opacity:1}
+  .rvm[hidden]{display:none}
+  .rvm__top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 16px}
+  .rvm__x{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.15);color:#fff;font-size:13px;font-weight:700;cursor:pointer}
+  .rvm__n{padding:5px 10px;border-radius:999px;background:rgba(0,0,0,.35);font-size:12px;font-weight:800}
+  .rvm__stage{position:relative;flex:0 0 auto;height:min(52vh,460px);display:flex;align-items:flex-end;justify-content:center;overflow:hidden;touch-action:pan-y}
+  .rvm__img{max-height:100%;max-width:92%;object-fit:contain;filter:drop-shadow(0 18px 30px rgba(0,0,0,.45));transition:transform .25s,opacity .25s}
+  .rvm__nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+    background:rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.18);color:#fff;cursor:pointer}
+  .rvm__nav--p{left:10px}.rvm__nav--n{right:10px}
+  .rvm__info{flex:1;overflow:auto;padding:16px 18px 28px;max-width:640px;width:100%;margin:0 auto}
+  .rvm__k{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+  .rvm__k i{display:inline-block;width:6px;height:6px;margin:0 6px 2px;border-radius:50%;background:#2ee86b;vertical-align:middle}
+  .rvm__t{margin:6px 0 4px;font-size:30px;line-height:1;font-weight:900;font-style:italic;text-transform:uppercase;letter-spacing:-.01em}
+  .rvm__d{margin:0 0 14px;color:rgba(255,255,255,.75);font-size:14px;line-height:1.5}
+  .rvm__rows{border-radius:12px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);overflow:hidden}
+  .rvm__row{display:flex;gap:14px;padding:11px 14px;font-size:13px}
+  .rvm__row+.rvm__row{border-top:1px solid rgba(255,255,255,.07)}
+  .rvm__row span{flex:0 0 96px;color:rgba(255,255,255,.55);font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;padding-top:1px}
+  .rvm__row b{font-weight:700}
+  .rvm__row[hidden]{display:none}
+  @media (min-width:900px){.rvm__stage{height:58vh}.rvm__t{font-size:38px}}
+</style>
+
+<div class="rvm" id="rvm" hidden role="dialog" aria-modal="true" aria-label="Detalhes da skin">
+  <div class="rvm__top">
+    <button type="button" class="rvm__x" data-rvm-x><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>Vestiário</button>
+    <span class="rvm__n" id="rvm-n">1/1</span>
+  </div>
+  <div class="rvm__stage" id="rvm-stage">
+    <img class="rvm__img" id="rvm-img" alt="">
+    <button type="button" class="rvm__nav rvm__nav--p" data-rvm-p aria-label="Anterior"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <button type="button" class="rvm__nav rvm__nav--n" data-rvm-n aria-label="Próxima"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+  </div>
+  <div class="rvm__info">
+    <div class="rvm__k" id="rvm-k"></div>
+    <h3 class="rvm__t" id="rvm-t"></h3>
+    <p class="rvm__d" id="rvm-d"></p>
+    <div class="rvm__rows">
+      <div class="rvm__row" id="rvm-s"><span>Conjunto</span><b></b></div>
+      <div class="rvm__row" id="rvm-i"><span>Lançamento</span><b></b></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    if (window.__rvOn) return; window.__rvOn = true;
+    var ORDEM_R = { mythic: 0, legendary: 1, epic: 2, rare: 3, uncommon: 4, common: 5 };
+    var NOME_R = { legendary: 'Lendário', epic: 'Épico', rare: 'Raro', uncommon: 'Incomum', common: 'Comum', mythic: 'Mítico' };
+    var modal = document.getElementById('rvm'), lista = [], pos = 0, anterior = '';
+
+    function el(t, a, h) { var e = document.createElement(t); for (var k in a) e.setAttribute(k, a[k]); if (h) e.innerHTML = h; return e; }
+    function txt(e, s) { e.textContent = s || ''; }
+
+    function montar(box) {
+      if (box.__rv) return; box.__rv = true;
+      var grid = box.querySelector('[data-rv-grid]'), count = box.querySelector('[data-rv-count]');
+      var tiles = [].slice.call(grid.querySelectorAll('.rv-t'));
+      tiles.forEach(function (t, i) { t.dataset.o = i; });
+
+      // busca + filtros
+      var tools = el('div', { class: 'rv-tools' });
+      tools.innerHTML = '<label class="rv-search"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input type="search" placeholder="Buscar no vestiário..." aria-label="Buscar skin"></label>'
+        + '<div class="rv-sel"><select aria-label="Raridade"><option value="">Raridades</option></select><select aria-label="Ordenar"><option value="o">Destaques</option><option value="r">Raridade</option><option value="a">A–Z</option></select></div>';
+      count.parentNode.insertBefore(tools, count);
+      var busca = tools.querySelector('input'), selR = tools.querySelectorAll('select')[0], selO = tools.querySelectorAll('select')[1];
+      var grupos = {};
+      tiles.forEach(function (t) { var g = t.dataset.rt || NOME_R[t.dataset.r] || 'Outros'; t.dataset.g = g; grupos[g] = (grupos[g] || 0) + 1; });
+      Object.keys(grupos).sort().forEach(function (g) { selR.appendChild(el('option', { value: g }, g + ' (' + grupos[g] + ')')); });
+      var vazio = el('div', { class: 'rv-empty', hidden: '' }, 'Nenhuma skin encontrada.');
+      grid.appendChild(vazio);
+      // Mostra só as primeiras; o botão abre o resto (busca e filtro sempre procuram em todas).
+      var LIMITE = 12, aberto = tiles.length <= LIMITE + 3;
+      var mais = el('button', { type: 'button', class: 'rv-more' }, 'Ver todos os ' + tiles.length + ' trajes');
+      grid.parentNode.insertBefore(mais, grid.nextSibling);
+      mais.addEventListener('click', function () { aberto = true; aplicar(); });
+
+      function norm(s) { return (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+      function aplicar() {
+        var q = norm(busca.value.trim()), g = selR.value, o = selO.value, vis = 0;
+        tiles.slice().sort(function (a, b) {
+          if (o === 'a') return a.dataset.n.localeCompare(b.dataset.n, 'pt-BR');
+          if (o === 'r') return (ORDEM_R[a.dataset.r] ?? 9) - (ORDEM_R[b.dataset.r] ?? 9) || a.dataset.o - b.dataset.o;
+          return a.dataset.o - b.dataset.o;
+        }).forEach(function (t) {
+          var ok = (!q || norm(t.dataset.n).indexOf(q) !== -1) && (!g || t.dataset.g === g);
+          t.hidden = !ok; if (ok) vis++;
+          if (grid.children[vis + (ok ? -1 : 0)] !== t) grid.insertBefore(t, vazio);
+        });
+        var filtrando = q || g, n = 0;
+        tiles.forEach(function (t) { if (!t.hidden) n++; });
+        grid.querySelectorAll('.rv-t:not([hidden])').forEach(function (t, i) { t.classList.toggle('rv-x', !aberto && !filtrando && i >= LIMITE); });
+        mais.hidden = aberto || filtrando || n <= LIMITE;
+        vazio.hidden = vis > 0;
+        count.textContent = vis + (vis === 1 ? ' traje' : ' trajes');
+      }
+      busca.addEventListener('input', aplicar); selR.addEventListener('change', aplicar); selO.addEventListener('change', aplicar);
+      aplicar();
+
+      grid.addEventListener('click', function (ev) {
+        var t = ev.target.closest('.rv-t'); if (!t) return;
+        lista = [].slice.call(grid.querySelectorAll('.rv-t:not([hidden])'));  // as setas passam por todas, mesmo as recolhidas
+        abrir(lista.indexOf(t));
+      });
+    }
+
+    function mostrar(i) {
+      pos = (i + lista.length) % lista.length;
+      var t = lista[pos], d = t.dataset, img = document.getElementById('rvm-img');
+      modal.style.setProperty('--c1', t.style.getPropertyValue('--c1'));
+      modal.style.setProperty('--c2', t.style.getPropertyValue('--c2'));
+      img.style.opacity = '0';
+      img.onload = function () { img.style.opacity = '1'; };
+      img.src = d.f || t.querySelector('img').src; img.alt = d.n;
+      txt(document.getElementById('rvm-n'), (pos + 1) + '/' + lista.length);
+      document.getElementById('rvm-k').innerHTML = '';
+      document.getElementById('rvm-k').append(d.g || '', el('i'), 'Traje');
+      txt(document.getElementById('rvm-t'), d.n);
+      txt(document.getElementById('rvm-d'), d.d);
+      [['rvm-s', d.s], ['rvm-i', d.i]].forEach(function (r) { var row = document.getElementById(r[0]); row.hidden = !r[1]; txt(row.querySelector('b'), r[1]); });
+      [1, -1].forEach(function (k) { var n = lista[(pos + k + lista.length) % lista.length]; if (n && n.dataset.f) (new Image()).src = n.dataset.f; });
+    }
+    function abrir(i) {
+      if (i < 0) return;
+      anterior = document.body.style.overflow; document.body.style.overflow = 'hidden';
+      modal.hidden = false; requestAnimationFrame(function () { modal.classList.add('on'); });
+      mostrar(i);
+    }
+    function fechar() { modal.classList.remove('on'); document.body.style.overflow = anterior; setTimeout(function () { modal.hidden = true; }, 200); }
+
+    modal.addEventListener('click', function (ev) {
+      if (ev.target.closest('[data-rvm-x]')) fechar();
+      else if (ev.target.closest('[data-rvm-p]')) mostrar(pos - 1);
+      else if (ev.target.closest('[data-rvm-n]')) mostrar(pos + 1);
+    });
+    document.addEventListener('keydown', function (ev) {
+      if (modal.hidden) return;
+      if (ev.key === 'Escape') fechar(); else if (ev.key === 'ArrowLeft') mostrar(pos - 1); else if (ev.key === 'ArrowRight') mostrar(pos + 1);
+    });
+    var x0 = null, stage = document.getElementById('rvm-stage');
+    stage.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    stage.addEventListener('touchend', function (e) {
+      if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null;
+      if (Math.abs(dx) > 40) mostrar(pos + (dx < 0 ? 1 : -1));
+    });
+
+    function procurar() { [].forEach.call(document.querySelectorAll('[data-rv]'), montar); }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', procurar); else procurar();
+    // A descrição pode ser trocada (variantes): monta de novo quando aparecer outra grade.
+    var agendado = false;
+    new MutationObserver(function () { if (agendado) return; agendado = true; requestAnimationFrame(function () { agendado = false; procurar(); }); })
+      .observe(document.documentElement, { childList: true, subtree: true });
+  })();
+</script>

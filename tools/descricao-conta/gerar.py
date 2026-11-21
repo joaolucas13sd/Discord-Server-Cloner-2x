@@ -68,6 +68,65 @@ def build(c):
     assert 'Rockstar' not in s and 'FiveM' not in s and 'GTA' not in s, [m for m in ('Rockstar', 'FiveM', 'GTA') if m in s]
     return s
 
+
+# ---------- Vestiário (Fortnite) ----------
+# Cores de raridade no estilo do jogo. Séries (Ícones, Marvel...) usam as cores da própria série.
+RARIDADE = {
+    'common': ('#bebebe', '#646464'), 'uncommon': ('#69bb1e', '#175117'), 'rare': ('#2cc1ff', '#143977'),
+    'epic': ('#c359ff', '#4b2483'), 'legendary': ('#ea8d23', '#78371d'), 'mythic': ('#ffd84a', '#9e6b00'),
+}
+from html import escape as _e
+
+def _cores(sk):
+    cs = sk.get('seriesColors') or []
+    if len(cs) >= 2:
+        return '#' + cs[0][:6], '#' + cs[-1][:6] if cs[-1][:6] != cs[0][:6] else '#' + cs[1][:6]
+    return RARIDADE.get(sk.get('rarity') or 'common', RARIDADE['common'])
+
+def _intro(t):
+    t = (t or '').replace('No Jogo desde — ', '').replace('Introduzido no ', '').rstrip('.')
+    return t
+
+VEST_CSS = """<style>
+.rv{--rv-gap:8px}
+.rv-sub{margin:-6px 0 14px;color:var(--rk-muted);font-size:13px}
+.rv-tabs{display:flex;gap:8px;margin:0 0 12px;overflow-x:auto;scrollbar-width:none}
+.rv-tab{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1 0 auto;min-width:76px;padding:9px 10px;border-radius:12px;background:var(--rk-item);border:1px solid var(--rk-border);color:#e4e4e7;font-size:12px;font-weight:800}
+.rv-tab.on{border-color:var(--rk-accent);background:rgba(46,232,107,.10);color:#fff}
+.rv-tab em{font-style:normal;color:var(--rk-muted);font-weight:700;font-size:11px}
+.rv-count{margin:0 0 10px;color:var(--rk-muted);font-size:12px;font-weight:700}
+.rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--rv-gap)}
+@media(min-width:420px){.rv-grid{grid-template-columns:repeat(4,1fr)}}
+.rv-t{position:relative;display:block;width:100%;aspect-ratio:3/4;padding:0;border:0;border-radius:10px;overflow:hidden;cursor:pointer;
+  background:radial-gradient(120% 90% at 50% 25%,var(--c1),var(--c2));box-shadow:inset 0 0 0 2px rgba(255,255,255,.10)}
+.rv-t img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .25s}
+.rv-t:hover img{transform:scale(1.06)}
+.rv-t::after{content:"";position:absolute;inset:auto 0 0 0;height:46%;background:linear-gradient(transparent,rgba(0,0,0,.82))}
+.rv-t b{position:absolute;z-index:1;left:4px;right:4px;bottom:6px;color:#fff;font-size:10.5px;line-height:1.05;font-weight:900;font-style:italic;text-transform:uppercase;text-align:center;letter-spacing:-.01em;text-shadow:0 1px 2px #000}
+.rv-t[hidden]{display:none}
+.rv-empty{grid-column:1/-1;padding:20px;text-align:center;color:var(--rk-muted);font-size:13px}
+</style>"""
+
+def vestiario_html(skins, extras=None):
+    """skins: lista do vestiario.mjs. extras: dict opcional {'Picaretas': n, 'Gestos': n, 'Asas-delta': n} (só contagem)."""
+    tiles = []
+    for sk in skins:
+        c1, c2 = _cores(sk)
+        rot = (sk.get('series') or sk.get('rarityTxt') or '').strip()
+        tiles.append(
+            f'<button type="button" class="rv-t" style="--c1:{c1};--c2:{c2}" data-r="{_e(sk.get("rarity") or "")}" '
+            f'data-rt="{_e(rot)}" data-n="{_e(sk["name"])}" data-d="{_e(sk.get("desc") or "")}" '
+            f'data-s="{_e(sk.get("set") or "")}" data-i="{_e(_intro(sk.get("intro")))}" data-f="{_e(sk.get("featured") or sk.get("icon") or "")}">'
+            f'<img loading="lazy" src="{_e(sk.get("small") or sk.get("icon"))}" alt="{_e(sk["name"])}"><b>{_e(sk["name"])}</b></button>')
+    abas = [f'<span class="rv-tab on" data-aba="trajes">Trajes<em>{len(skins)}</em></span>']
+    for k, v in (extras or {}).items():
+        abas.append(f'<span class="rv-tab" data-aba="{_e(k.lower())}">{_e(k)}<em>{_e(str(v))}</em></span>')
+    return (VEST_CSS + '\n    <!-- VESTIÁRIO -->\n    <div class="rk-card rv" data-rv>\n        <h2 class="rk-h2">Vestiário da conta</h2>\n'
+            '        <p class="rv-sub">Toque em uma skin para ver os detalhes.</p>\n'
+            f'        <div class="rv-tabs">{"".join(abas)}</div>\n'
+            f'        <p class="rv-count" data-rv-count>{len(skins)} trajes</p>\n'
+            f'        <div class="rv-grid" data-rv-grid>{"".join(tiles)}</div>\n    </div>\n\n')
+
 BANS = {
     'fortnite': 'linear-gradient(135deg,#1d4ed8 0%,#6d28d9 45%,#9333ea 75%,#0ea5e9 100%)',
     'steam': 'linear-gradient(135deg,#1b2838 0%,#2a475e 50%,#1a9fff 100%)',
@@ -75,5 +134,11 @@ BANS = {
 c = json.load(open(sys.argv[1]))
 c.setdefault('ban', BANS.get(c.get('tipo', 'fortnite'), BANS['fortnite']))
 c['itens'] = [tuple(x) for x in c['itens']]; c['info'] = [tuple(x) for x in c['info']]
-open(sys.argv[2], 'w').write(build(c))
+html = build(c)
+if c.get('vestiario'):
+    vj = c['vestiario'] if os.path.isabs(c['vestiario']) else os.path.join(os.path.dirname(os.path.abspath(sys.argv[1])), c['vestiario'])
+    bloco = vestiario_html(json.load(open(vj)), c.get('vestiario_extras'))
+    assert html.count('<!-- COMO UTILIZAR -->') == 1
+    html = html.replace('    <!-- COMO UTILIZAR -->', bloco + '    <!-- COMO UTILIZAR -->')
+open(sys.argv[2], 'w').write(html)
 print('Descrição salva em', sys.argv[2])

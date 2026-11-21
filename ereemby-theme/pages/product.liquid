@@ -743,6 +743,8 @@
     </div>
 
     {% include 'rn-buybar' %}
+    {% comment %} Rei dos Nitros: vestiário das contas Fortnite (só age se a descrição tiver a grade de skins) {% endcomment %}
+    {% include 'rn-vestiario' %}
     <script>
       (function () {
         // Rei dos Nitros (computador): "Sobre este produto" vai para a coluna da esquerda, embaixo das imagens
@@ -769,7 +771,7 @@
         window.addEventListener('load', recolher); setTimeout(recolher, 400);
         var dsc = document.querySelector('#tab-content-desc [data-liquid="description"]');
         // só fecha quando a descrição troca de verdade (outra opção); efeitos de toque (onda) e animações não contam
-        function soEfeito(ms) { return ms.every(function (m) { var ns = [].slice.call(m.addedNodes).concat([].slice.call(m.removedNodes)); return m.type === 'childList' && ns.length && ns.every(function (n) { return n.nodeType === 1 && (n.classList.contains('rn-fx-box') || n.classList.contains('rn-fx-wave')); }); }); }
+        function soEfeito(ms) { return ms.every(function (m) { if (m.target && m.target.closest && m.target.closest('[data-rv]')) return true; var ns = [].slice.call(m.addedNodes).concat([].slice.call(m.removedNodes)); return m.type === 'childList' && ns.length && ns.every(function (n) { return n.nodeType === 1 && (n.classList.contains('rn-fx-box') || n.classList.contains('rn-fx-wave')); }); }); }
         if (dsc) new MutationObserver(function (ms) { if (soEfeito(ms)) return; dsc.classList.remove('rn-desc--open'); setTimeout(recolher, 50); }).observe(dsc, { childList: true, characterData: true, subtree: true });
       })();
     </script>

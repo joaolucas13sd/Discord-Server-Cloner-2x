@@ -43,5 +43,10 @@
       "Qualquer dúvida ou problema no login, basta abrir um ticket e consultar a staff."
     ]
   ],
-  "tipo": "fortnite"
+  "tipo": "fortnite",
+  "vestiario": "fortnite-90-vestiario.json",
+  "vestiario_extras": {
+    "Picaretas": 135,
+    "Gestos": 81
+  }
 }
