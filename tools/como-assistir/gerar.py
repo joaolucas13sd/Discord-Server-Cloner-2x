@@ -14,7 +14,7 @@ def esc(t):
 def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6', TEMA='', WORD='', HERO='', THUMBS=(), TITULO='Filme em destaque', SUB='Aventura · Ficção', BADGE='', AS='Assistir', TILES=(),
           ROWS=None, LOGIN_T='Entrar', BTN='Entrar', BTN2='Entrando...', TY1='email_do_pedido', PAG=('Entrar', 'Perfis', 'Início'),
           WHO='Quem está assistindo?', PFS=None, PIN=True, SC3=None, STEPS=None, WARN=None, TITULO_CARD='Como começar a assistir',
-          NAV=None, GERENCIAR=None, TOAST='Pix aprovado · pedido entregue'):
+          NAV=None, GERENCIAR=None, TOAST='Pix aprovado · pedido entregue', SC4=None, LOGIN_SUB=''):
   # TEMA: netflix | hbo | disney | prime | crunchy (visual da abertura, do login, dos perfis e do início de cada serviço)
   BRAND = f'<span class="sv-word">{WORD}</span>' if WORD else '<svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>' + esc(MARCA)
   SPLASH = f'<div class="sv-splash"><span class="sv-word">{WORD}</span></div>' if WORD else ''
@@ -48,6 +48,10 @@ def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6', TEMA=
            + ''.join(f'<em{" class=\"on\"" if i == 0 else ""}>{esc(n)}</em>' for i, n in enumerate(NAV)) + '<i class="sv-nav-av"></i></div>') if NAV else ''
   GER = (GERENCIAR if GERENCIAR is not None else (not SC3))
   GER_H = '<span class="sv-ger">Gerenciar perfis</span>' if GER else ''
+  SUB_H = f'<small class="sv-lsub">{esc(LOGIN_SUB)}</small>' if LOGIN_SUB else ''
+  SC4_H = SC4 or f'''{NAV_H}<div class="sv-hero{" sv-hero--img" if HERO else ""}"{HSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht">{BADGE_H}<b>{esc(TITULO)}</b><small>{esc(SUB)}</small><span class="sv-hb"><em class="sv-as"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>{esc(AS)}</em><em>+ Minha lista</em></span></div></div>
+            {ROW}
+            <div class="sv-play{" sv-play--img" if HERO else ""}"{PSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-pctl"><span class="sv-pt">‹ {esc(TITULO)}</span><span class="sv-pi"><i class="sv-i-pause"></i><i class="sv-i-10"></i><i class="sv-i-vol"></i></span></div><div class="sv-prog"><i></i></div></div>'''
   CARD = f'''<!-- COMO UTILIZAR -->
     <div class="{P}-card sv-card{" sv--" + TEMA if TEMA else ""}" style="--sv:{COR};--sv2:{COR2}">
       <div class="sv-head"><span class="sv-hico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg></span><div><span class="sv-k">PASSO A PASSO</span><h2 class="sv-t">{esc(TITULO_CARD)}</h2></div></div>
@@ -56,14 +60,12 @@ def bloco(P, PEDIDO, MARCA, COR, SITE='Site do streaming', COR2='#8b5cf6', TEMA=
         <div class="sv-scr">
           <div class="sv-sc sv-sc1"><div class="sv-toast"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>{esc(TOAST)}</div><div class="sv-ord"><span class="sv-ok"><svg class="sv-chk" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Pagamento aprovado</span><b>{esc(PEDIDO)}</b>
             {ROWS_H}</div></div>
-          <div class="sv-sc sv-sc2"><div class="sv-wall"></div><div class="sv-log"><span class="sv-brand">{BRAND}</span><b>{esc(LOGIN_T)}</b>
+          <div class="sv-sc sv-sc2"><div class="sv-wall"></div><div class="sv-log"><span class="sv-brand">{BRAND}</span><b>{esc(LOGIN_T)}</b>{SUB_H}
             <div class="sv-in"><span class="sv-ty sv-ty1">{esc(TY1)}</span></div>
             <div class="sv-in"><span class="sv-ty sv-ty2">••••••••••</span></div>
             <div class="sv-btn"><span class="sv-b1">{esc(BTN)}</span><span class="sv-b2">{esc(BTN2)}</span></div></div><div class="sv-load"><i></i></div>{SPLASH}</div>
           <div class="sv-sc sv-sc3">{SC3_H}{GER_H}</div>
-          <div class="sv-sc sv-sc4">{NAV_H}<div class="sv-hero{" sv-hero--img" if HERO else ""}"{HSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><div class="sv-ht">{BADGE_H}<b>{esc(TITULO)}</b><small>{esc(SUB)}</small><span class="sv-hb"><em class="sv-as"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg>{esc(AS)}</em><em>+ Minha lista</em></span></div></div>
-            {ROW}
-            <div class="sv-play{" sv-play--img" if HERO else ""}"{PSTYLE}><span class="sv-sun"></span><span class="sv-mt"></span><span class="sv-pbtn"><svg class="sv-tri" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span><div class="sv-pctl"><span class="sv-pt">‹ {esc(TITULO)}</span><span class="sv-pi"><i class="sv-i-pause"></i><i class="sv-i-10"></i><i class="sv-i-vol"></i></span></div><div class="sv-prog"><i></i></div></div></div>
+          <div class="sv-sc sv-sc4">{SC4_H}</div>
           <span class="sv-cur"><svg viewBox="0 0 24 24"><path d="M5 3l14 8-6 1.5L10 19z"/></svg></span>
         </div>
       </div>
