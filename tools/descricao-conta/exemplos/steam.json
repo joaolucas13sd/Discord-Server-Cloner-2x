@@ -44,5 +44,10 @@
       "Qualquer dúvida ou problema no login, basta abrir um ticket e consultar a staff."
     ]
   ],
-  "tipo": "steam"
+  "tipo": "steam",
+  "vestiario": "steam-53-biblioteca.json",
+  "vestiario_extras": {
+    "Jogos": 53,
+    "Nível": 11
+  }
 }

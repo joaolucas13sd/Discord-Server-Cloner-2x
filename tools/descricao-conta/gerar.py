@@ -74,6 +74,7 @@ def build(c):
 RARIDADE = {
     'common': ('#bebebe', '#646464'), 'uncommon': ('#69bb1e', '#175117'), 'rare': ('#2cc1ff', '#143977'),
     'epic': ('#c359ff', '#4b2483'), 'legendary': ('#ea8d23', '#78371d'), 'mythic': ('#ffd84a', '#9e6b00'),
+    'steam': ('#2a475e', '#171d25'),
 }
 from html import escape as _e
 
@@ -103,6 +104,8 @@ VEST_CSS = """<style>
 .rv-st svg{width:19px;height:19px;flex:0 0 auto;fill:none;stroke:var(--rk-accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .rv-st b{color:#fff;font-weight:800}
 .rv-open{display:none}
+.rv[data-rv-tipo=steam] .rv-t{flex-basis:38%;aspect-ratio:2/3;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.rv[data-rv-tipo=steam] .rv-t::after,.rv[data-rv-tipo=steam] .rv-t b{display:none}
 </style>"""
 
 ICONES = {
@@ -110,9 +113,15 @@ ICONES = {
     'picaretas': '<svg viewBox="0 0 24 24"><path d="M14 4c3 0 5.5 1 7 3-2-.6-4.3-.6-6.5.3M10 4C7 4 4.5 5 3 7c2-.6 4.3-.6 6.5.3M12 6l-1.5 1.5M10.5 7.5 3 15l2 2 7.5-7.5"/><path d="M12 6l6 6"/></svg>',
     'gestos': '<svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>',
     'asas-delta': '<svg viewBox="0 0 24 24"><path d="M2 12a10 10 0 0 1 20 0z"/><path d="M12 12v8a2 2 0 0 0 4 0"/></svg>',
+    'jogos': '<svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/></svg>',
+    'nível': '<svg viewBox="0 0 24 24"><path d="M12 2l3 6.5 7 .8-5.2 4.8 1.4 7L12 17.6 5.8 21l1.4-7L2 9.3l7-.8z"/></svg>',
+}
+TEXTOS = {
+    'fortnite': dict(kicker='Inventário real desta conta', titulo='Vestiário da conta', botao='Abrir vestiário', principal='Trajes'),
+    'steam': dict(kicker='Biblioteca real desta conta', titulo='Biblioteca da conta', botao='Abrir biblioteca', principal='Jogos'),
 }
 
-def vestiario_html(skins, extras=None):
+def vestiario_html(skins, extras=None, tipo='fortnite'):
     """skins: lista do vestiario.mjs. extras: contagens {'Trajes': 90, 'Picaretas': 135, 'Gestos': 81, 'Asas-delta': 96}."""
     tiles, cores = [], {}
     for sk in skins:
@@ -129,14 +138,20 @@ def vestiario_html(skins, extras=None):
             + (f' data-i="{_e(_intro(sk.get("intro")))}"' if sk.get('intro') else '')
             + f'{extra}><img loading="lazy" src="{_e(small)}" alt=""><b>{_e(sk["name"])}</b></button>')
     cores_css = '<style>' + ''.join(f'.{c}{{--c1:{a};--c2:{b}}}' for (a, b), c in cores.items()) + '</style>'
-    cont = {'Trajes': len(skins)}
+    tx = TEXTOS.get(tipo, TEXTOS['fortnite'])
+    cont = {tx['principal']: len(skins)}
     cont.update(extras or {})
-    chips = ''.join(f'<span data-aba="{_e(k.lower())}">{ICONES.get(k.lower(), ICONES["trajes"])}<b>{_e(str(v))}</b> {_e(k)}</span>' for k, v in cont.items())
-    return (VEST_CSS + cores_css + '\n    <!-- VESTIÁRIO -->\n    <div class="rk-card rv" data-rv>\n'
-            '        <span class="rv-k">Inventário real desta conta</span>\n        <h2 class="rv-h">Vestiário da conta</h2>\n'
+    # Fortnite: cada contador vira uma aba no vestiário. Steam: só "Jogos" é aba (Nível etc. são só informação).
+    def chip(k, v):
+        aba = tipo != 'steam' or k == tx['principal']
+        return (f'<span{" data-aba=" + chr(34) + _e(k.lower()) + chr(34) if aba else ""}>'
+                f'{ICONES.get(k.lower(), ICONES["trajes"])}<b>{_e(str(v))}</b> {_e(k)}</span>')
+    chips = ''.join(chip(k, v) for k, v in cont.items())
+    return (VEST_CSS + cores_css + f'\n    <!-- VESTIÁRIO -->\n    <div class="rk-card rv" data-rv data-rv-tipo="{_e(tipo)}">\n'
+            f'        <span class="rv-k">{tx["kicker"]}</span>\n        <h2 class="rv-h">{tx["titulo"]}</h2>\n'
             f'        <div class="rv-grid" data-rv-grid>{"".join(tiles)}</div>\n'
             f'        <div class="rv-st">{chips}</div>\n'
-            '        <button type="button" class="rv-open" data-rv-open>Abrir vestiário</button>\n    </div>\n\n')
+            f'        <button type="button" class="rv-open" data-rv-open>{tx["botao"]}</button>\n    </div>\n\n')
 
 def podar_css(html):
     """Remove do CSS as regras cujas classes não aparecem no HTML (o modelo traz estilos de outros produtos)."""
@@ -187,7 +202,7 @@ c['itens'] = [tuple(x) for x in c['itens']]; c['info'] = [tuple(x) for x in c['i
 html = build(c)
 if c.get('vestiario'):
     vj = c['vestiario'] if os.path.isabs(c['vestiario']) else os.path.join(os.path.dirname(os.path.abspath(sys.argv[1])), c['vestiario'])
-    bloco = vestiario_html(json.load(open(vj)), c.get('vestiario_extras'))
+    bloco = vestiario_html(json.load(open(vj)), c.get('vestiario_extras'), c.get('tipo', 'fortnite'))
     assert html.count('<!-- COMO UTILIZAR -->') == 1
     html = html.replace('    <!-- COMO UTILIZAR -->', bloco + '    <!-- COMO UTILIZAR -->')
 html = podar_css(html)
