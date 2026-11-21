@@ -69,34 +69,80 @@
 .vt-conf i{position:absolute;top:-10px;width:6px;height:10px;border-radius:2px;opacity:0}
 @media (prefers-reduced-motion:reduce){.vt *{animation-duration:0s !important;animation-iteration-count:1 !important}}
 
-.vt--ss .ss-bg{position:absolute;inset:0;background:linear-gradient(180deg,#7dd3fc 0 45%,#a3e635 45% 47%,#4d7c0f 47%)}
-.vt--ss .ss-bg::after{content:"";position:absolute;left:8%;top:30%;width:22%;height:22%;background:#57534e;box-shadow:190px 6px 0 -4px #78716c}
-.vt--ss .ss-en{position:absolute;left:58%;top:34%;width:30px;height:70px}
-.vt--ss .ss-head{position:absolute;left:8px;top:0;width:14px;height:14px;border-radius:50%;background:#fcd34d;border:2px solid #92400e}
-.vt--ss .ss-body{position:absolute;left:3px;top:15px;width:24px;height:52px;border-radius:8px 8px 4px 4px;background:#b91c1c}
-.vt--ss .ss-cross{position:absolute;width:34px;height:34px;margin:-17px 0 0 -17px;animation:ssAim var(--vt) infinite}
-.vt--ss .ss-cross::before,.vt--ss .ss-cross::after{content:"";position:absolute;background:#fff;box-shadow:0 0 3px #000}
-.vt--ss .ss-cross::before{left:16px;top:0;width:2px;height:34px}
-.vt--ss .ss-cross::after{left:0;top:16px;width:34px;height:2px}
-.vt--ss .ss-cross i{position:absolute;inset:11px;border-radius:50%;border:2px solid #ef4444}
-@keyframes ssAim{0%{left:30%;top:60%}8%{left:70%;top:44%}14%{left:52%;top:30%}20%{left:68%;top:66%}26%{left:44%;top:40%}32%{left:72%;top:52%}38%{left:50%;top:62%}44%{left:64%;top:28%}
-  50%{left:40%;top:50%}56%{left:46%;top:60%}62%,66%{left:calc(58% + 15px);top:calc(34% + 7px)}70%{left:calc(58% + 13px);top:calc(34% + 8px)}74%,92%{left:calc(58% + 15px);top:calc(34% + 7px)}100%{left:30%;top:60%}}
-.vt--ss .ss-hit{position:absolute;left:58%;top:20%;color:#ef4444;font-size:20px;font-weight:900;font-style:italic;text-shadow:0 2px 0 #fff,0 0 12px rgba(239,68,68,.8);opacity:0;animation:ssHit var(--vt) infinite}
-@keyframes ssHit{0%,63%{opacity:0;transform:scale(.5)}66%{opacity:1;transform:scale(1.3)}70%,80%{opacity:1;transform:scale(1)}84%,100%{opacity:0}}
-.vt--ss .ss-miss{position:absolute;left:24%;top:24%;color:#fff;font-size:12px;font-weight:900;background:rgba(0,0,0,.5);padding:3px 7px;border-radius:4px;opacity:0;animation:ssMiss var(--vt) infinite}
-@keyframes ssMiss{0%,20%{opacity:0}22%,30%{opacity:1}32%,44%{opacity:0}46%,52%{opacity:1}54%,100%{opacity:0}}
-.vt--ss .ss-feed{position:absolute;right:8px;top:36px;display:flex;flex-direction:column;gap:3px;align-items:flex-end}
-.vt--ss .ss-k{padding:3px 7px;border-radius:4px;background:rgba(0,0,0,.65);color:#fff;font-size:9px;font-weight:800;opacity:0}
-.vt--ss .ss-k i{font-style:normal}
-.vt--ss .ss-k1{animation:ssK var(--vt) infinite}.vt--ss .ss-k2{animation:ssK2 var(--vt) infinite}.vt--ss .ss-k3{animation:ssK3 var(--vt) infinite}
-@keyframes ssK{0%,66%{opacity:0;transform:translateX(20px)}69%,94%{opacity:1;transform:none}97%,100%{opacity:0}}
-@keyframes ssK2{0%,74%{opacity:0;transform:translateX(20px)}77%,94%{opacity:1;transform:none}97%,100%{opacity:0}}
-@keyframes ssK3{0%,82%{opacity:0;transform:translateX(20px)}85%,94%{opacity:1;transform:none}97%,100%{opacity:0}}
-.vt--ss .ss-tag{position:absolute;left:10px;top:10px;padding:5px 10px;border-radius:999px;font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:.04em}
-.vt--ss .ss-tag1{background:rgba(0,0,0,.6);color:#fca5a5;animation:ssT1 var(--vt) infinite}
-.vt--ss .ss-tag2{background:#f59e0b;color:#111;opacity:0;animation:ssT2 var(--vt) infinite}
-@keyframes ssT1{0%,56%{opacity:1}58%,100%{opacity:0}}
-@keyframes ssT2{0%,56%{opacity:0}58%,96%{opacity:1}100%{opacity:0}}
+.vt--s2{--vt:12s}
+.vt--s2 .vt-win{background:#0b0d12}
+.vt--s2 .s2-sky{position:absolute;inset:0 0 40% 0;background:linear-gradient(180deg,#f59e0b,#fb7185 55%,#7c3aed)}
+.vt--s2 .s2-city{position:absolute;left:0;right:0;bottom:40%;height:70px}
+.vt--s2 .s2-city i{position:absolute;bottom:0;background:#1e1b4b;opacity:.85}
+.vt--s2 .s2-city i:nth-child(1){left:4%;width:16%;height:60px}.vt--s2 .s2-city i:nth-child(2){left:24%;width:10%;height:38px}
+.vt--s2 .s2-city i:nth-child(3){left:66%;width:14%;height:70px}.vt--s2 .s2-city i:nth-child(4){left:84%;width:12%;height:44px}
+.vt--s2 .s2-ground{position:absolute;inset:60% 0 0 0;background:linear-gradient(180deg,#a16207,#713f12)}
+.vt--s2 .s2-en{position:absolute;left:58%;top:30%;width:34px;height:76px;animation:s2Walk 1.6s ease-in-out infinite alternate}
+@keyframes s2Walk{to{transform:translateX(10px)}}
+.vt--s2 .s2-sold{width:34px !important;height:76px !important;max-width:none !important;fill:#111827;filter:drop-shadow(0 0 4px rgba(239,68,68,.9))}
+.vt--s2 .s2-sold .s2-cap{fill:#ef4444}
+.vt--s2 .s2-cross{position:absolute;width:36px;height:36px;margin:-18px 0 0 -18px;z-index:3;animation:s2Aim var(--vt) infinite}
+.vt--s2 .s2-cross::before,.vt--s2 .s2-cross::after{content:"";position:absolute;background:#fff;box-shadow:0 0 3px #000}
+.vt--s2 .s2-cross::before{left:17px;top:0;width:2px;height:36px;clip-path:polygon(0 0,100% 0,100% 38%,0 38%,0 62%,100% 62%,100% 100%,0 100%)}
+.vt--s2 .s2-cross::after{left:0;top:17px;width:36px;height:2px;clip-path:polygon(0 0,38% 0,38% 100%,0 100%,0 0,62% 0,100% 0,100% 100%,62% 100%)}
+.vt--s2 .s2-cross i{position:absolute;left:16px;top:16px;width:4px;height:4px;border-radius:50%;background:#ef4444}
+@keyframes s2Aim{0%{left:30%;top:62%}5%{left:72%;top:46%}10%{left:50%;top:34%}15%{left:70%;top:64%}20%{left:46%;top:44%}25%{left:74%;top:56%}30%,48%{left:40%;top:58%}
+  53%{left:calc(58% + 22px);top:calc(30% + 6px)}55%{left:calc(58% + 20px);top:calc(30% + 8px)}63%,65%{left:calc(58% + 25px);top:calc(30% + 6px)}66%{left:calc(58% + 23px);top:calc(30% + 9px)}
+  74%,76%{left:calc(58% + 27px);top:calc(30% + 6px)}77%{left:calc(58% + 25px);top:calc(30% + 9px)}85%,96%{left:calc(58% + 22px);top:calc(30% + 6px)}100%{left:30%;top:62%}}
+.vt--s2 .s2-miss{position:absolute;color:#fff;font-size:10px;font-weight:900;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:4px;opacity:0;z-index:3}
+.vt--s2 .s2-m1{left:20%;top:26%;animation:s2M1 var(--vt) infinite}.vt--s2 .s2-m2{left:62%;top:58%;animation:s2M2 var(--vt) infinite}
+@keyframes s2M1{0%,9%{opacity:0}10%,15%{opacity:1}17%,100%{opacity:0}}
+@keyframes s2M2{0%,20%{opacity:0}21%,26%{opacity:1}28%,100%{opacity:0}}
+.vt--s2 .s2-dmg{position:absolute;left:calc(58% + 34px);top:22%;color:#facc15;font-size:13px;font-weight:900;text-shadow:0 1px 2px #000;opacity:0;z-index:3}
+.vt--s2 .s2-d0{animation:s2D var(--vt) infinite;--s:54%}.vt--s2 .s2-d1{animation:s2D1 var(--vt) infinite}.vt--s2 .s2-d2{animation:s2D2 var(--vt) infinite}
+@keyframes s2D{0%,54%{opacity:0;transform:none}55%{opacity:1}62%,100%{opacity:0;transform:translateY(-22px)}}
+@keyframes s2D1{0%,65%{opacity:0;transform:none}66%{opacity:1}73%,100%{opacity:0;transform:translateY(-22px)}}
+@keyframes s2D2{0%,76%{opacity:0;transform:none}77%{opacity:1}84%,100%{opacity:0;transform:translateY(-22px)}}
+.vt--s2 .s2-capa{position:absolute;left:38%;top:62%;transform:translateX(-50%);color:#ef4444;font-size:26px;font-weight:900;font-style:italic;letter-spacing:.02em;text-shadow:0 2px 0 #fff,0 0 16px rgba(239,68,68,.9);opacity:0;z-index:4;animation:s2Capa var(--vt) infinite}
+@keyframes s2Capa{0%,55%{opacity:0;transform:translateX(-50%) scale(.5)}57%{opacity:1;transform:translateX(-50%) scale(1.3)}60%,62%{opacity:1;transform:translateX(-50%) scale(1)}64%,66%{opacity:0}67%{opacity:1;transform:translateX(-50%) scale(1.3)}70%,73%{opacity:1;transform:translateX(-50%) scale(1)}75%,77%{opacity:0}78%{opacity:1;transform:translateX(-50%) scale(1.4)}81%,94%{opacity:1;transform:translateX(-50%) scale(1)}97%,100%{opacity:0}}
+.vt--s2 .s2-hud span{position:absolute;z-index:3}
+.vt--s2 .s2-map{left:8px;top:34px;width:44px;height:44px;border-radius:8px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.3)}
+.vt--s2 .s2-map i{position:absolute;left:19px;top:19px;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:8px solid #22c55e}
+.vt--s2 .s2-hp{left:50%;bottom:10px;width:90px;height:6px;margin-left:-45px;border-radius:3px;background:rgba(0,0,0,.5);overflow:hidden}
+.vt--s2 .s2-hp b{display:block;width:82%;height:100%;background:#22c55e}
+.vt--s2 .s2-ammo{right:56px;bottom:8px;color:#fff;font-size:10px;font-weight:800;text-shadow:0 1px 2px #000}
+.vt--s2 .s2-joy{left:14px;bottom:12px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.35)}
+.vt--s2 .s2-joy i{position:absolute;left:12px;top:12px;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.6)}
+.vt--s2 .s2-fire{right:12px;bottom:22px;width:40px;height:40px;border-radius:50%;background:rgba(239,68,68,.55);border:2px solid rgba(255,255,255,.5);animation:s2Fire var(--vt) infinite}
+@keyframes s2Fire{0%,53%,56%,64%,67%,75%,78%,100%{transform:none}54%,65%,76%{transform:scale(.85)}10%,21%{transform:scale(.85)}}
+.vt--s2 .s2-score{right:8px;top:34px;display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;background:rgba(0,0,0,.55);color:#fff;font-size:9px;font-weight:900}
+.vt--s2 .s2-score b{display:none;color:#facc15;font-size:12px}
+.vt--s2 .s2-c0{display:inline !important;animation:s2C0 var(--vt) infinite}
+.vt--s2 .s2-c1,.vt--s2 .s2-c2,.vt--s2 .s2-c3{display:inline !important;position:absolute;right:8px;opacity:0}
+.vt--s2 .s2-c1{animation:s2C1 var(--vt) infinite}.vt--s2 .s2-c2{animation:s2C2 var(--vt) infinite}.vt--s2 .s2-c3{animation:s2C3 var(--vt) infinite}
+@keyframes s2C0{0%,54%{opacity:1}55%,100%{opacity:0}}
+@keyframes s2C1{0%,54%{opacity:0}55%,65%{opacity:1}66%,100%{opacity:0}}
+@keyframes s2C2{0%,65%{opacity:0}66%,76%{opacity:1}77%,100%{opacity:0}}
+@keyframes s2C3{0%,76%{opacity:0}77%,96%{opacity:1}100%{opacity:0}}
+.vt--s2 .s2-feed{position:absolute;right:8px;top:60px;display:flex;flex-direction:column;align-items:flex-end;gap:3px;z-index:3}
+.vt--s2 .s2-k{padding:3px 7px;border-radius:4px;background:rgba(0,0,0,.65);color:#fff;font-size:8.5px;font-weight:800;opacity:0}
+.vt--s2 .s2-k i{font-style:normal;color:#ef4444}
+.vt--s2 .s2-k0{animation:s2K0 var(--vt) infinite}.vt--s2 .s2-k1{animation:s2K1 var(--vt) infinite}.vt--s2 .s2-k2{animation:s2K2 var(--vt) infinite}
+@keyframes s2K0{0%,55%{opacity:0;transform:translateX(16px)}57%,95%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes s2K1{0%,66%{opacity:0;transform:translateX(16px)}68%,95%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes s2K2{0%,77%{opacity:0;transform:translateX(16px)}79%,95%{opacity:1;transform:none}98%,100%{opacity:0}}
+.vt--s2 .s2-cfg{position:absolute;left:50%;top:50%;width:78%;max-width:260px;padding:10px 12px;border-radius:12px;background:rgba(17,24,39,.95);border:1px solid #f59e0b;z-index:5;
+  transform:translate(-50%,-40%);opacity:0;animation:s2Cfg var(--vt) infinite}
+@keyframes s2Cfg{0%,30%{opacity:0;transform:translate(-50%,-40%)}32%,46%{opacity:1;transform:translate(-50%,-50%)}49%,100%{opacity:0;transform:translate(-50%,-60%)}}
+.vt--s2 .s2-cfg>b{display:block;color:#fbbf24;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.vt--s2 .s2-r{display:flex;align-items:center;gap:8px;margin-top:5px}
+.vt--s2 .s2-r span{flex:0 0 74px;color:#d1d5db;font-size:9px}
+.vt--s2 .s2-r i{flex:1;height:5px;border-radius:3px;background:#374151;overflow:hidden}
+.vt--s2 .s2-r i b{display:block;height:100%;width:30%;background:linear-gradient(90deg,#f59e0b,#ef4444);animation:s2Sl var(--vt) infinite}
+@keyframes s2Sl{0%,33%{width:30%}42%,100%{width:var(--v)}}
+.vt--s2 .s2-r em{flex:0 0 22px;color:#fff;font-style:normal;font-size:9px;font-weight:800;text-align:right}
+.vt--s2 .s2-ok{display:block;margin-top:8px;color:#4ade80;font-size:10px;font-weight:800;opacity:0;animation:s2Ok var(--vt) infinite}
+@keyframes s2Ok{0%,42%{opacity:0}43%,100%{opacity:1}}
+.vt--s2 .s2-tag{position:absolute;left:8px;top:8px;padding:4px 9px;border-radius:999px;font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;z-index:4}
+.vt--s2 .s2-t1{background:rgba(0,0,0,.6);color:#fca5a5;animation:s2T1 var(--vt) infinite}
+.vt--s2 .s2-t2{background:#f59e0b;color:#111;opacity:0;animation:s2T2 var(--vt) infinite}
+@keyframes s2T1{0%,30%{opacity:1}32%,100%{opacity:0}}
+@keyframes s2T2{0%,49%{opacity:0}51%,96%{opacity:1}100%{opacity:0}}
 </style>
 
 <div class="ed-box"><p>Sensibilidade ajustada para o seu <strong>iPhone</strong> no <strong>Free Fire</strong>: mira mais precisa e muito mais capas.</p></div>
@@ -117,7 +163,7 @@
 <div><small>Segurança</small><b>Sem programas externos</b></div>
 </div>
 
-<div class="ed-card vt vt--ss" style="--vc:#f59e0b"><span class="vt-k">Veja a diferença na mira</span><h2 class="vt-t">Mira que gruda na cabeça</h2><div class="vt-win" role="img" aria-label="Mira que gruda na cabeça"><div class="ss-bg"></div><div class="ss-en"><i class="ss-head"></i><i class="ss-body"></i></div><div class="ss-cross"><i></i></div><span class="ss-hit">CAPA!</span><span class="ss-miss">ERROU</span><div class="ss-feed"><span class="ss-k ss-k1">Você <i>🎯</i> Inimigo · CAPA</span><span class="ss-k ss-k2">Você <i>🎯</i> Inimigo · CAPA</span><span class="ss-k ss-k3">Você <i>🎯</i> Inimigo · CAPA</span></div><span class="ss-tag ss-tag1">Sem Sensi</span><span class="ss-tag ss-tag2">Com Sensi Premium · iPhone</span></div><p class="vt-note">Animação ilustrativa. O resultado depende da sua prática e do seu aparelho.</p><div class="vt-steps"><div class="vt-st"><i>1</i><div><b>Compre pelo Pix</b><span>Acesso imediato.</span></div></div><div class="vt-st"><i>2</i><div><b>Aplique a Sensi</b><span>Sensi, mira e HUD no seu iPhone.</span></div></div><div class="vt-st"><i>3</i><div><b>Jogue</b><span>Mira mais precisa e muito mais capas.</span></div></div></div></div>
+<div class="ed-card vt vt--s2" style="--vc:#f59e0b"><span class="vt-k">Veja a diferença na mira</span><h2 class="vt-t">Antes errando, depois só capa</h2><div class="vt-win" role="img" aria-label="Antes errando, depois só capa"><div class="s2-sky"></div><div class="s2-city"><i></i><i></i><i></i><i></i></div><div class="s2-ground"></div><div class="s2-en"><svg class="s2-sold" viewBox="0 0 40 90" aria-hidden="true"><path d="M20 2c5 0 8 3 8 8 0 2-1 4-2 5l3 1c4 2 6 6 6 11l1 18-5 1-1-12-1 20 2 32h-7l-3-27-3 27h-7l2-32-1-20-1 12-5-1 1-18c0-5 2-9 6-11l3-1c-1-1-2-3-2-5 0-5 3-8 8-8z"/><path class="s2-cap" d="M11 9c0-6 4-9 9-9s9 3 9 9H11z"/></svg></div><div class="s2-cross"><i></i></div><span class="s2-miss s2-m1">ERROU</span><span class="s2-miss s2-m2">ERROU</span><span class="s2-dmg s2-d0">-98</span><span class="s2-dmg s2-d1">-112</span><span class="s2-dmg s2-d2">-104</span><span class="s2-capa">CAPA!</span><div class="s2-hud"><span class="s2-map"><i></i></span><span class="s2-hp"><b></b></span><span class="s2-ammo">30/120</span><span class="s2-joy"><i></i></span><span class="s2-fire"></span><span class="s2-score">CAPAS <b class="s2-c0">0</b><b class="s2-c1">1</b><b class="s2-c2">2</b><b class="s2-c3">3</b></span></div><div class="s2-feed"><span class="s2-k s2-k0">Você <i>☠</i> Inimigo · CAPA</span><span class="s2-k s2-k1">Você <i>☠</i> Inimigo · CAPA</span><span class="s2-k s2-k2">Você <i>☠</i> Inimigo · CAPA</span></div><div class="s2-cfg"><b>Sensibilidade</b><div class="s2-r"><span>Geral</span><i><b style="--v:100%"></b></i><em>100</em></div><div class="s2-r"><span>Ponto vermelho</span><i><b style="--v:95%"></b></i><em>95</em></div><div class="s2-r"><span>Mira 2x</span><i><b style="--v:90%"></b></i><em>90</em></div><div class="s2-r"><span>Mira 4x</span><i><b style="--v:88%"></b></i><em>88</em></div><span class="s2-ok">✓ Sensi Premium aplicada</span></div><span class="s2-tag s2-t1">Sem Sensi</span><span class="s2-tag s2-t2">Com Sensi Premium · iPhone</span></div><p class="vt-note">Animação ilustrativa. O resultado depende da sua prática e do seu aparelho.</p><div class="vt-steps"><div class="vt-st"><i>1</i><div><b>Compre pelo Pix</b><span>Acesso imediato.</span></div></div><div class="vt-st"><i>2</i><div><b>Aplique a Sensi</b><span>Sensi, mira e HUD no seu iPhone.</span></div></div><div class="vt-st"><i>3</i><div><b>Jogue</b><span>Mira mais precisa e muito mais capas.</span></div></div></div></div>
 
 <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div></div><!--/RN-CONV-->
 </div>

@@ -266,3 +266,113 @@ def loja(passos):
 """
     return card('lj', '#5865f2', 'Imagine a sua loja vendendo', 'Notificação de venda o dia todo', jan, css,
                 'Animação ilustrativa. Os resultados variam e não são garantidos: dependem da sua dedicação e do investimento.', passos)
+
+
+# ---------------------------------------------------------------- Otimização (animação antiga, reaproveitada)
+def otimizacao_antiga(original_html, podar):
+    """Recoloca o card "Como utilizar" da descrição antiga (classes ot-*, mouse posicionado pelo script do tema)."""
+    s = original_html
+    a = s.index('<!-- COMO UTILIZAR -->'); b = s.index('<p class="ot-disclaimer">', a); b = s.index('</div>', s.index('</p>', b)) + len('</div>')
+    bloco = '<div class="ot-wrapper ed-ot">' + s[a:b] + '</div>'
+    css = s[s.index('<style>') + 7: s.index('</style>')]
+    html = podar('<style>' + css + '</style>' + bloco)
+    css2 = html[html.index('<style>') + 7: html.index('</style>')]
+    corpo = html[html.index('</style>') + 8:]
+    return corpo, css2 + '\n.ed-ot{max-width:none !important;margin:22px 0 6px !important}\n.ed-ot .ot-card{margin:0}\n'
+
+
+# ---------------------------------------------------------------- Sensi v2 (HUD de jogo mobile)
+SOLDADO = ('<svg class="s2-sold" viewBox="0 0 40 90" aria-hidden="true"><path d="M20 2c5 0 8 3 8 8 0 2-1 4-2 5l3 1c4 2 6 6 6 11l1 18-5 1-1-12-1 20 2 32h-7l-3-27-3 27h-7l2-32-1-20-1 12-5-1 1-18c0-5 2-9 6-11l3-1c-1-1-2-3-2-5 0-5 3-8 8-8z"/>'
+           '<path class="s2-cap" d="M11 9c0-6 4-9 9-9s9 3 9 9H11z"/></svg>')
+
+def sensi(plat, passos):
+    sl = ''.join(f'<div class="s2-r"><span>{n}</span><i><b style="--v:{v}%"></b></i><em>{v}</em></div>' for n, v in [('Geral', 100), ('Ponto vermelho', 95), ('Mira 2x', 90), ('Mira 4x', 88)])
+    dano = ''.join(f'<span class="s2-dmg s2-d{k}">-{d}</span>' for k, d in enumerate([98, 112, 104]))
+    feed = ''.join(f'<span class="s2-k s2-k{k}">Você <i>☠</i> Inimigo · CAPA</span>' for k in range(3))
+    jan = (f'<div class="s2-sky"></div><div class="s2-city"><i></i><i></i><i></i><i></i></div><div class="s2-ground"></div>'
+           f'<div class="s2-en">{SOLDADO}</div>'
+           '<div class="s2-cross"><i></i></div>'
+           f'<span class="s2-miss s2-m1">ERROU</span><span class="s2-miss s2-m2">ERROU</span>{dano}<span class="s2-capa">CAPA!</span>'
+           '<div class="s2-hud"><span class="s2-map"><i></i></span><span class="s2-hp"><b></b></span><span class="s2-ammo">30/120</span>'
+           '<span class="s2-joy"><i></i></span><span class="s2-fire"></span><span class="s2-score">CAPAS <b class="s2-c0">0</b><b class="s2-c1">1</b><b class="s2-c2">2</b><b class="s2-c3">3</b></span></div>'
+           f'<div class="s2-feed">{feed}</div>'
+           f'<div class="s2-cfg"><b>Sensibilidade</b>{sl}<span class="s2-ok">✓ Sensi Premium aplicada</span></div>'
+           f'<span class="s2-tag s2-t1">Sem Sensi</span><span class="s2-tag s2-t2">Com Sensi Premium · {esc(plat)}</span>')
+    css = """
+.vt--s2{--vt:12s}
+.vt--s2 .vt-win{background:#0b0d12}
+.vt--s2 .s2-sky{position:absolute;inset:0 0 40% 0;background:linear-gradient(180deg,#f59e0b,#fb7185 55%,#7c3aed)}
+.vt--s2 .s2-city{position:absolute;left:0;right:0;bottom:40%;height:70px}
+.vt--s2 .s2-city i{position:absolute;bottom:0;background:#1e1b4b;opacity:.85}
+.vt--s2 .s2-city i:nth-child(1){left:4%;width:16%;height:60px}.vt--s2 .s2-city i:nth-child(2){left:24%;width:10%;height:38px}
+.vt--s2 .s2-city i:nth-child(3){left:66%;width:14%;height:70px}.vt--s2 .s2-city i:nth-child(4){left:84%;width:12%;height:44px}
+.vt--s2 .s2-ground{position:absolute;inset:60% 0 0 0;background:linear-gradient(180deg,#a16207,#713f12)}
+.vt--s2 .s2-en{position:absolute;left:58%;top:30%;width:34px;height:76px;animation:s2Walk 1.6s ease-in-out infinite alternate}
+@keyframes s2Walk{to{transform:translateX(10px)}}
+.vt--s2 .s2-sold{width:34px !important;height:76px !important;max-width:none !important;fill:#111827;filter:drop-shadow(0 0 4px rgba(239,68,68,.9))}
+.vt--s2 .s2-sold .s2-cap{fill:#ef4444}
+.vt--s2 .s2-cross{position:absolute;width:36px;height:36px;margin:-18px 0 0 -18px;z-index:3;animation:s2Aim var(--vt) infinite}
+.vt--s2 .s2-cross::before,.vt--s2 .s2-cross::after{content:"";position:absolute;background:#fff;box-shadow:0 0 3px #000}
+.vt--s2 .s2-cross::before{left:17px;top:0;width:2px;height:36px;clip-path:polygon(0 0,100% 0,100% 38%,0 38%,0 62%,100% 62%,100% 100%,0 100%)}
+.vt--s2 .s2-cross::after{left:0;top:17px;width:36px;height:2px;clip-path:polygon(0 0,38% 0,38% 100%,0 100%,0 0,62% 0,100% 0,100% 100%,62% 100%)}
+.vt--s2 .s2-cross i{position:absolute;left:16px;top:16px;width:4px;height:4px;border-radius:50%;background:#ef4444}
+@keyframes s2Aim{0%{left:30%;top:62%}5%{left:72%;top:46%}10%{left:50%;top:34%}15%{left:70%;top:64%}20%{left:46%;top:44%}25%{left:74%;top:56%}30%,48%{left:40%;top:58%}
+  53%{left:calc(58% + 22px);top:calc(30% + 6px)}55%{left:calc(58% + 20px);top:calc(30% + 8px)}63%,65%{left:calc(58% + 25px);top:calc(30% + 6px)}66%{left:calc(58% + 23px);top:calc(30% + 9px)}
+  74%,76%{left:calc(58% + 27px);top:calc(30% + 6px)}77%{left:calc(58% + 25px);top:calc(30% + 9px)}85%,96%{left:calc(58% + 22px);top:calc(30% + 6px)}100%{left:30%;top:62%}}
+.vt--s2 .s2-miss{position:absolute;color:#fff;font-size:10px;font-weight:900;background:rgba(0,0,0,.55);padding:2px 6px;border-radius:4px;opacity:0;z-index:3}
+.vt--s2 .s2-m1{left:20%;top:26%;animation:s2M1 var(--vt) infinite}.vt--s2 .s2-m2{left:62%;top:58%;animation:s2M2 var(--vt) infinite}
+@keyframes s2M1{0%,9%{opacity:0}10%,15%{opacity:1}17%,100%{opacity:0}}
+@keyframes s2M2{0%,20%{opacity:0}21%,26%{opacity:1}28%,100%{opacity:0}}
+.vt--s2 .s2-dmg{position:absolute;left:calc(58% + 34px);top:22%;color:#facc15;font-size:13px;font-weight:900;text-shadow:0 1px 2px #000;opacity:0;z-index:3}
+.vt--s2 .s2-d0{animation:s2D var(--vt) infinite;--s:54%}.vt--s2 .s2-d1{animation:s2D1 var(--vt) infinite}.vt--s2 .s2-d2{animation:s2D2 var(--vt) infinite}
+@keyframes s2D{0%,54%{opacity:0;transform:none}55%{opacity:1}62%,100%{opacity:0;transform:translateY(-22px)}}
+@keyframes s2D1{0%,65%{opacity:0;transform:none}66%{opacity:1}73%,100%{opacity:0;transform:translateY(-22px)}}
+@keyframes s2D2{0%,76%{opacity:0;transform:none}77%{opacity:1}84%,100%{opacity:0;transform:translateY(-22px)}}
+.vt--s2 .s2-capa{position:absolute;left:38%;top:62%;transform:translateX(-50%);color:#ef4444;font-size:26px;font-weight:900;font-style:italic;letter-spacing:.02em;text-shadow:0 2px 0 #fff,0 0 16px rgba(239,68,68,.9);opacity:0;z-index:4;animation:s2Capa var(--vt) infinite}
+@keyframes s2Capa{0%,55%{opacity:0;transform:translateX(-50%) scale(.5)}57%{opacity:1;transform:translateX(-50%) scale(1.3)}60%,62%{opacity:1;transform:translateX(-50%) scale(1)}64%,66%{opacity:0}67%{opacity:1;transform:translateX(-50%) scale(1.3)}70%,73%{opacity:1;transform:translateX(-50%) scale(1)}75%,77%{opacity:0}78%{opacity:1;transform:translateX(-50%) scale(1.4)}81%,94%{opacity:1;transform:translateX(-50%) scale(1)}97%,100%{opacity:0}}
+.vt--s2 .s2-hud span{position:absolute;z-index:3}
+.vt--s2 .s2-map{left:8px;top:34px;width:44px;height:44px;border-radius:8px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.3)}
+.vt--s2 .s2-map i{position:absolute;left:19px;top:19px;border-left:4px solid transparent;border-right:4px solid transparent;border-bottom:8px solid #22c55e}
+.vt--s2 .s2-hp{left:50%;bottom:10px;width:90px;height:6px;margin-left:-45px;border-radius:3px;background:rgba(0,0,0,.5);overflow:hidden}
+.vt--s2 .s2-hp b{display:block;width:82%;height:100%;background:#22c55e}
+.vt--s2 .s2-ammo{right:56px;bottom:8px;color:#fff;font-size:10px;font-weight:800;text-shadow:0 1px 2px #000}
+.vt--s2 .s2-joy{left:14px;bottom:12px;width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.35)}
+.vt--s2 .s2-joy i{position:absolute;left:12px;top:12px;width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,.6)}
+.vt--s2 .s2-fire{right:12px;bottom:22px;width:40px;height:40px;border-radius:50%;background:rgba(239,68,68,.55);border:2px solid rgba(255,255,255,.5);animation:s2Fire var(--vt) infinite}
+@keyframes s2Fire{0%,53%,56%,64%,67%,75%,78%,100%{transform:none}54%,65%,76%{transform:scale(.85)}10%,21%{transform:scale(.85)}}
+.vt--s2 .s2-score{right:8px;top:34px;display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;background:rgba(0,0,0,.55);color:#fff;font-size:9px;font-weight:900}
+.vt--s2 .s2-score b{display:none;color:#facc15;font-size:12px}
+.vt--s2 .s2-c0{display:inline !important;animation:s2C0 var(--vt) infinite}
+.vt--s2 .s2-c1,.vt--s2 .s2-c2,.vt--s2 .s2-c3{display:inline !important;position:absolute;right:8px;opacity:0}
+.vt--s2 .s2-c1{animation:s2C1 var(--vt) infinite}.vt--s2 .s2-c2{animation:s2C2 var(--vt) infinite}.vt--s2 .s2-c3{animation:s2C3 var(--vt) infinite}
+@keyframes s2C0{0%,54%{opacity:1}55%,100%{opacity:0}}
+@keyframes s2C1{0%,54%{opacity:0}55%,65%{opacity:1}66%,100%{opacity:0}}
+@keyframes s2C2{0%,65%{opacity:0}66%,76%{opacity:1}77%,100%{opacity:0}}
+@keyframes s2C3{0%,76%{opacity:0}77%,96%{opacity:1}100%{opacity:0}}
+.vt--s2 .s2-feed{position:absolute;right:8px;top:60px;display:flex;flex-direction:column;align-items:flex-end;gap:3px;z-index:3}
+.vt--s2 .s2-k{padding:3px 7px;border-radius:4px;background:rgba(0,0,0,.65);color:#fff;font-size:8.5px;font-weight:800;opacity:0}
+.vt--s2 .s2-k i{font-style:normal;color:#ef4444}
+.vt--s2 .s2-k0{animation:s2K0 var(--vt) infinite}.vt--s2 .s2-k1{animation:s2K1 var(--vt) infinite}.vt--s2 .s2-k2{animation:s2K2 var(--vt) infinite}
+@keyframes s2K0{0%,55%{opacity:0;transform:translateX(16px)}57%,95%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes s2K1{0%,66%{opacity:0;transform:translateX(16px)}68%,95%{opacity:1;transform:none}98%,100%{opacity:0}}
+@keyframes s2K2{0%,77%{opacity:0;transform:translateX(16px)}79%,95%{opacity:1;transform:none}98%,100%{opacity:0}}
+.vt--s2 .s2-cfg{position:absolute;left:50%;top:50%;width:78%;max-width:260px;padding:10px 12px;border-radius:12px;background:rgba(17,24,39,.95);border:1px solid #f59e0b;z-index:5;
+  transform:translate(-50%,-40%);opacity:0;animation:s2Cfg var(--vt) infinite}
+@keyframes s2Cfg{0%,30%{opacity:0;transform:translate(-50%,-40%)}32%,46%{opacity:1;transform:translate(-50%,-50%)}49%,100%{opacity:0;transform:translate(-50%,-60%)}}
+.vt--s2 .s2-cfg>b{display:block;color:#fbbf24;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.vt--s2 .s2-r{display:flex;align-items:center;gap:8px;margin-top:5px}
+.vt--s2 .s2-r span{flex:0 0 74px;color:#d1d5db;font-size:9px}
+.vt--s2 .s2-r i{flex:1;height:5px;border-radius:3px;background:#374151;overflow:hidden}
+.vt--s2 .s2-r i b{display:block;height:100%;width:30%;background:linear-gradient(90deg,#f59e0b,#ef4444);animation:s2Sl var(--vt) infinite}
+@keyframes s2Sl{0%,33%{width:30%}42%,100%{width:var(--v)}}
+.vt--s2 .s2-r em{flex:0 0 22px;color:#fff;font-style:normal;font-size:9px;font-weight:800;text-align:right}
+.vt--s2 .s2-ok{display:block;margin-top:8px;color:#4ade80;font-size:10px;font-weight:800;opacity:0;animation:s2Ok var(--vt) infinite}
+@keyframes s2Ok{0%,42%{opacity:0}43%,100%{opacity:1}}
+.vt--s2 .s2-tag{position:absolute;left:8px;top:8px;padding:4px 9px;border-radius:999px;font-size:9.5px;font-weight:900;text-transform:uppercase;letter-spacing:.04em;z-index:4}
+.vt--s2 .s2-t1{background:rgba(0,0,0,.6);color:#fca5a5;animation:s2T1 var(--vt) infinite}
+.vt--s2 .s2-t2{background:#f59e0b;color:#111;opacity:0;animation:s2T2 var(--vt) infinite}
+@keyframes s2T1{0%,30%{opacity:1}32%,100%{opacity:0}}
+@keyframes s2T2{0%,49%{opacity:0}51%,96%{opacity:1}100%{opacity:0}}
+"""
+    return card('s2', '#f59e0b', 'Veja a diferença na mira', 'Antes errando, depois só capa', jan, css,
+                'Animação ilustrativa. O resultado depende da sua prática e do seu aparelho.', passos)

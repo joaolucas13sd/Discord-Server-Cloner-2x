@@ -67,6 +67,9 @@ def montar(id, ac, ac2, img, intro, paras, spec_list, anim, titulo_specs='O que 
 IMG = lambda p: 'https://blast.erbystores.com/cdn/s/' + p
 
 # Produtos que não são acesso a app: animação de vitrine (sem login), focada em mostrar o resultado.
+import re as _re
+_src = open(os.path.join(AQUI, '..', 'descricao-conta', 'gerar.py')).read()
+_ns = {'re': _re}; exec(_src[_src.index('def podar_css'):_src.index('\nBANS = {')], _ns); PODAR = _ns['podar_css']
 spv = importlib.util.spec_from_file_location('vt', os.path.join(AQUI, '..', 'como-assistir', 'vitrine.py'))
 vt = importlib.util.module_from_spec(spv); spv.loader.exec_module(vt)
 P_SORTE = lambda acao: [('Compre pelo Pix', 'Aprovação na hora, a qualquer hora do dia.'), (acao, 'O resultado aparece na hora.'), ('Resgate com o suporte', 'Fale com a gente em até 5 dias para receber.')]
@@ -74,7 +77,7 @@ ENG_P = lambda alvo: [('Informe o link', f'No pedido, coloque o link do seu {alv
 VITRINE = {
     'prod_17869388132751565144210621030489': lambda: vt.raspadinha(P_SORTE('Raspe a sua cartela')),
     'prod_17869388375804631394758709421330': lambda: vt.roleta(P_SORTE('Gire a roleta')),
-    'prod_1794496121754734900288573': lambda: vt.otimizacao([('Compre pelo Pix', 'O arquivo chega na página do pedido.'), ('Execute o arquivo', 'Crie um ponto de restauração e rode a otimização.'), ('Reinicie e jogue', 'Menos travadas e mais FPS.')]),
+    'prod_1794496121754734900288573': lambda: vt.otimizacao_antiga(open(os.path.join(AQUI, 'originais', 'outros', 'prod_1794496121754734900288573.html')).read(), PODAR),
     'var_Bi4PcjavJAV': lambda: vt.engajamento('instagram', 'seguidores', '1.000 seguidores', 1050, ENG_P('perfil')),
     'var_1O1NaFf01NF': lambda: vt.engajamento('instagram', 'curtidas', '1.000 curtidas', 42, ENG_P('publicação')),
     'var_4onwVLK6XqM': lambda: vt.engajamento('tiktok', 'seguidores', '1.000 seguidores', 310, ENG_P('perfil')),
