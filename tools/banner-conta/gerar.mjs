@@ -1,7 +1,12 @@
 #!/usr/bin/env node
-// Gera o banner 1920x1080 de uma conta Fortnite Full Acesso (estilo verde).
+// Gera o banner 1920x1080 de uma conta Full Acesso (Fortnite ou Steam, estilo verde).
 //
-// Uso:  node tools/fortnite-banner/gerar.mjs conta.json
+// Uso:  node tools/banner-conta/gerar.mjs conta.json
+//
+// Steam: { "tipo": "steam", "jogos": 53, "destaques": ["God of War", "Apex Legends"],
+//          "capas": [3 jogos com capa grande], "icones": [4 jogos], "stats": ["Nível 11", ...] }
+//
+// Fortnite ("tipo" pode ser omitido):
 //
 // conta.json:
 // {
@@ -30,7 +35,7 @@ const { chromium } = require('playwright');
 const AQUI = dirname(fileURLToPath(import.meta.url));
 
 const arq = process.argv[2];
-if (!arq) { console.error('Uso: node tools/fortnite-banner/gerar.mjs conta.json'); process.exit(1); }
+if (!arq) { console.error('Uso: node tools/banner-conta/gerar.mjs conta.json'); process.exit(1); }
 const conta = JSON.parse(readFileSync(arq, 'utf-8'));
 
 const cache = new Map();
@@ -73,41 +78,79 @@ async function fontesEmbutidas(cssUrl) {
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const lista = v => (Array.isArray(v) ? v : v ? [v] : []).filter(Boolean);
 
-const destaques = lista(conta.destaques).slice(0, 3);
-const renders = lista(conta.renders).length ? lista(conta.renders).slice(0, 3) : destaques.slice(0, 3);
-const icones = lista(conta.icones).slice(0, 4);
-if (!conta.skins || !renders.length) { console.error('Faltou "skins" ou "renders"/"destaques" no JSON.'); process.exit(1); }
+const TIPO = (conta.tipo || 'fortnite').toLowerCase();
+if (!['fortnite', 'steam'].includes(TIPO)) { console.error('"tipo" precisa ser "fortnite" ou "steam".'); process.exit(1); }
+const TOTAL = Number(conta.skins ?? conta.jogos);
+const UNIDADE = TIPO === 'steam' ? 'JOGOS' : 'SKINS';
 
-const dRenders = await Promise.all(renders.map(buscar));
-const dIcones = await Promise.all(icones.map(buscar));
-const dDest = await Promise.all(destaques.map(buscar));
+// ---------- Steam ----------
+const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[™®©:'’.,!-]/g, '').replace(/\s+/g, ' ').trim();
+async function buscarSteam(nome) {
+  if (cache.has('s:' + nome)) return cache.get('s:' + nome);
+  const u = new URL('https://store.steampowered.com/api/storesearch/');
+  u.search = new URLSearchParams({ term: nome, l: 'english', cc: 'BR' }).toString();
+  const r = await fetch(u);
+  const itens = r.ok ? (await r.json()).items || [] : [];
+  if (!itens.length) throw new Error(`Jogo não encontrado na Steam: "${nome}"`);
+  const jogo = itens.find(i => norm(i.name) === norm(nome)) || itens[0];
+  const base = `https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/${jogo.id}/`;
+  let capa = null;
+  for (const f of ['library_600x900_2x.jpg', 'library_600x900.jpg', 'header.jpg']) {
+    const h = await fetch(base + f, { method: 'HEAD' });
+    if (h.ok) { capa = base + f; break; }
+  }
+  if (!capa) throw new Error(`Capa não encontrada para "${jogo.name}" (app ${jogo.id})`);
+  const d = { id: jogo.id, name: jogo.name.replace(/[™®©]/g, '').trim(), capa, retrato: !capa.endsWith('header.jpg') };
+  cache.set('s:' + nome, d);
+  return d;
+}
+
+const buscarItem = TIPO === 'steam' ? buscarSteam : buscar;
+const destaques = lista(conta.destaques).slice(0, 3);
+const renders = lista(conta.renders ?? conta.capas).length ? lista(conta.renders ?? conta.capas).slice(0, 3) : destaques.slice(0, 3);
+const icones = lista(conta.icones).slice(0, 4);
+if (!TOTAL || !renders.length) { console.error('Faltou "skins"/"jogos" ou "renders"/"capas"/"destaques" no JSON.'); process.exit(1); }
+
+const dRenders = await Promise.all(renders.map(buscarItem));
+const dIcones = await Promise.all(icones.map(buscarItem));
+const dDest = await Promise.all(destaques.map(buscarItem));
 
 const mostradas = new Set([...dRenders, ...dIcones].map(d => d.id)).size;
-const resto = Math.max(0, Number(conta.skins) - mostradas);
+const resto = Math.max(0, TOTAL - mostradas);
 
-const stats = [
-  conta.picaretas != null && `${conta.picaretas} picaretas`,
-  conta.emotes != null && `${conta.emotes} emotes`,
-  conta.vbucks != null && `${Number(conta.vbucks).toLocaleString('pt-BR')} V-Bucks`,
-].filter(Boolean);
+const stats = TIPO === 'steam'
+  ? lista(conta.stats)
+  : [
+      conta.picaretas != null && `${conta.picaretas} picaretas`,
+      conta.emotes != null && `${conta.emotes} emotes`,
+      conta.vbucks != null && `${Number(conta.vbucks).toLocaleString('pt-BR')} V-Bucks`,
+      ...lista(conta.stats),
+    ].filter(Boolean);
 
-// Ordem na tela: o 1º render fica no meio e na frente, o 2º à direita, o 3º à esquerda.
-const pos = [
-  { cls: 'r-meio' }, { cls: 'r-dir' }, { cls: 'r-esq' },
-];
+// Ordem na tela: o 1º fica no meio e na frente, o 2º à direita, o 3º à esquerda.
+const pos = ['r-meio', 'r-dir', 'r-esq'];
 const rendersHtml = (await Promise.all(dRenders.map(async (d, i) => {
+  if (TIPO === 'steam') {
+    const img = await dataUri(d.capa, 'image/jpeg');
+    return `<div class="capa ${pos[i]}${d.retrato ? '' : ' capa-larga'}"><img src="${img}" alt=""></div>`;
+  }
   const img = await dataUri(d.images.featured || d.images.icon, 'image/png');
-  return `<img class="render ${pos[i].cls}${d.images.featured ? '' : ' r-icone'}" src="${img}" alt="">`;
+  return `<img class="render ${pos[i]}${d.images.featured ? '' : ' r-icone'}" src="${img}" alt="">`;
 }))).join('');
 
-const tilesHtml = (await Promise.all(dIcones.map(async d => `<div class="tile"><img src="${await dataUri(d.images.icon || d.images.smallIcon, 'image/png')}" alt=""></div>`))).join('')
-  + (resto > 0 ? `<div class="tile tile-mais"><b>+${resto}</b><span>SKINS</span></div>` : '');
+const tilesHtml = (await Promise.all(dIcones.map(async d => TIPO === 'steam'
+  ? `<div class="tile tile-jogo"><img src="${await dataUri(d.capa, 'image/jpeg')}" alt=""></div>`
+  : `<div class="tile"><img src="${await dataUri(d.images.icon || d.images.smallIcon, 'image/png')}" alt=""></div>`))).join('')
+  + (resto > 0 ? `<div class="tile tile-mais"><b>+${resto}</b><span>${UNIDADE}</span></div>` : '');
 
 const tpl = readFileSync(join(AQUI, 'template.html'), 'utf-8');
 const FONTES = 'https://fonts.googleapis.com/css2?family=Baloo+2:wght@800&family=Nunito+Sans:opsz,wght@6..12,600;6..12,700;6..12,800&display=swap';
 const html = tpl
   .replace('{{FONTES}}', await fontesEmbutidas(FONTES))
-  .replace('{{SKINS}}', esc(conta.skins))
+  .replace('{{TIPO}}', TIPO)
+  .replace('{{JOGO}}', TIPO === 'steam' ? 'STEAM' : 'FORTNITE')
+  .replace('{{SKINS}}', esc(TOTAL))
+  .replace('{{UNIDADE}}', UNIDADE)
   .replace('{{DESTAQUES}}', dDest.map(d => esc(d.name)).join('<i>·</i>'))
   .replace('{{STATS}}', stats.map(esc).join('<i></i>'))
   .replace('{{TILES}}', tilesHtml)
@@ -115,7 +158,7 @@ const html = tpl
   .replace('{{MARCA1}}', esc(conta.marca1 || 'REI DOS'))
   .replace('{{MARCA2}}', esc(conta.marca2 || 'NITROS'));
 
-const saida = resolve(conta.saida || `banners/fortnite-${conta.skins}-skins.png`);
+const saida = resolve(conta.saida || `banners/${TIPO}-${TOTAL}-${UNIDADE.toLowerCase()}.png`);
 mkdirSync(dirname(saida), { recursive: true });
 const htmlPath = saida.replace(/\.png$/i, '.html');
 writeFileSync(htmlPath, html);
@@ -129,4 +172,4 @@ await page.evaluate(() => window.ajustar && window.ajustar());
 await page.screenshot({ path: saida, type: 'png' });
 await browser.close();
 console.log('Banner salvo em', saida);
-console.log('Renders:', dRenders.map(d => d.name).join(', '), '| Ícones:', dIcones.map(d => d.name).join(', '), '| +', resto);
+console.log('Destaque:', dRenders.map(d => d.name).join(', '), '| Ícones:', dIcones.map(d => d.name).join(', '), '| +', resto, UNIDADE);

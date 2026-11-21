@@ -29,6 +29,17 @@
   .r-esq  { left: 1115px; height: 1030px; z-index: 1; bottom: -40px; }
   .r-icone { bottom: 160px; height: 640px; }
 
+  /* Steam: capas dos jogos em leque */
+  .capa { position: absolute; top: 50%; border-radius: 26px; overflow: hidden; border: 4px solid rgba(255,255,255,.9);
+    box-shadow: 0 40px 70px rgba(0,0,0,.55), 0 0 0 1px rgba(0,0,0,.4); background: #111; }
+  .capa img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .capa.r-meio { left: 1445px; width: 410px; height: 615px; transform: translate(-50%, -50%); z-index: 3; }
+  .capa.r-esq  { left: 1090px; width: 360px; height: 540px; transform: translate(-50%, -45%) rotate(-9deg); z-index: 1; }
+  .capa.r-dir  { left: 1785px; width: 360px; height: 540px; transform: translate(-50%, -45%) rotate(9deg); z-index: 2; }
+  .capa.capa-larga img { object-position: center; }
+  .steam .tile-jogo { background: #111; }
+  .steam .tile-jogo img { object-position: center; }
+
   /* Texto */
   .txt { position: absolute; left: 112px; top: 222px; z-index: 5; }
   .pill { display: inline-flex; align-items: center; gap: 18px; height: 60px; padding: 0 28px; border-radius: 999px;
@@ -59,13 +70,13 @@
   .marca span { display: block; margin-top: 4px; font-weight: 800; font-size: 17px; letter-spacing: .42em; color: var(--verde); }
 </style>
 </head>
-<body>
+<body class="{{TIPO}}">
   <div class="grade"></div>
   <div class="renders">{{RENDERS}}</div>
 
   <div class="txt" id="txt">
-    <div class="pill"><span class="dot"></span>FORTNITE <span class="sep">·</span> <span class="sub">FULL ACESSO</span></div>
-    <div class="num" id="num"><b>{{SKINS}}</b><span>SKINS</span></div>
+    <div class="pill"><span class="dot"></span>{{JOGO}} <span class="sep">·</span> <span class="sub">FULL ACESSO</span></div>
+    <div class="num" id="num"><b>{{SKINS}}</b><span>{{UNIDADE}}</span></div>
     <div class="barra"></div>
     <div class="dest" id="dest">{{DESTAQUES}}</div>
     <div class="stats">{{STATS}}</div>
@@ -81,7 +92,7 @@
       var d = document.getElementById('dest'), t = 44;
       while (d.getBoundingClientRect().width > 800 && t > 26) { t -= 2; d.style.fontSize = t + 'px'; }
       var n = document.getElementById('num'), b = n.querySelector('b'), sp = n.querySelector('span'), f = 330;
-      while (n.scrollWidth > 820 && f > 200) { f -= 10; b.style.fontSize = f + 'px'; sp.style.fontSize = Math.round(f * 0.41) + 'px'; }
+      while (n.scrollWidth > 770 && f > 200) { f -= 10; b.style.fontSize = f + 'px'; sp.style.fontSize = Math.round(f * 0.41) + 'px'; }
     };
   </script>
 </body>

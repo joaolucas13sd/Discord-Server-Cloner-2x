@@ -2,7 +2,7 @@
 
 ## Banner automático de conta Fortnite
 
-Quando o usuário mandar uma **conta de Fortnite** (lista de skins, quantidade de skins, picaretas, emotes, V-Bucks, print ou texto do anúncio), gere o banner **sem precisar que ele peça**, com `tools/fortnite-banner/gerar.mjs`.
+Quando o usuário mandar uma **conta de Fortnite** (lista de skins, quantidade de skins, picaretas, emotes, V-Bucks, print ou texto do anúncio), gere o banner **sem precisar que ele peça**, com `tools/banner-conta/gerar.mjs`.
 
 O estilo segue o banner "FORTNITE · FULL ACESSO" que o usuário aprovou, **com verde no lugar do roxo**. A marca no canto é "REI DOS NITROS".
 
@@ -17,7 +17,7 @@ O estilo segue o banner "FORTNITE · FULL ACESSO" que o usuário aprovou, **com 
    - `picaretas`, `emotes`, `vbucks`: só se o usuário informar. O que faltar some do banner.
    - `saida`: `banners/fortnite-<skins>-skins-<destaque-1>.png` (minúsculas, hífens).
    - O "+N SKINS" é calculado sozinho: total menos as skins que aparecem no banner.
-2. Rode: `node tools/fortnite-banner/gerar.mjs <arquivo.json>`
+2. Rode: `node tools/banner-conta/gerar.mjs <arquivo.json>`
    - As imagens vêm de `fortnite-api.com` (precisa estar liberado na rede do ambiente).
    - Se uma skin não for encontrada, o script para e diz o nome: corrija a grafia (nome em inglês do jogo) ou troque por outra skin.
 3. **Abra o PNG e confira** (personagens certos, nomes cabendo, nada cortado de forma estranha). Ajuste e gere de novo se precisar.
