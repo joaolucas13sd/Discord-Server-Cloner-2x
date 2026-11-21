@@ -1,0 +1,1442 @@
+[
+ {
+  "id": "var_Dy7tmdzYLJI",
+  "name": "Resident Evil 4",
+  "unit_amount": 1599,
+  "compare_at_amount": 8900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/254700/header.jpg"
+ },
+ {
+  "id": "var_8LR2v3434Yo",
+  "name": "Resident Evil 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 16900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/883710/header.jpg"
+ },
+ {
+  "id": "var_2mSfuBK1zB3",
+  "name": "Resident Evil 3",
+  "unit_amount": 1599,
+  "compare_at_amount": 16900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/952060/header.jpg"
+ },
+ {
+  "id": "var_L2jCcIModQM",
+  "name": "Resident Evil 5",
+  "unit_amount": 1599,
+  "compare_at_amount": 8900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/21690/header.jpg"
+ },
+ {
+  "id": "var_F6ilAMTgIuh",
+  "name": "Sons of the Forest",
+  "unit_amount": 1599,
+  "compare_at_amount": 8899,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1326470/header.jpg"
+ },
+ {
+  "id": "var_4QByUYmb5OH",
+  "name": "Resident Evil Revelations",
+  "unit_amount": 1599,
+  "compare_at_amount": 8900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/222480/header.jpg"
+ },
+ {
+  "id": "var_1Qu6gbSujt6",
+  "name": "7 Days to Die",
+  "unit_amount": 1599,
+  "compare_at_amount": 12199,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/251570/header.jpg"
+ },
+ {
+  "id": "var_EztIczRl6MQ",
+  "name": "Manhunt",
+  "unit_amount": 1599,
+  "compare_at_amount": null,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/12130/header.jpg"
+ },
+ {
+  "id": "var_I4DkiC9JzWP",
+  "name": "Resident Evil 0",
+  "unit_amount": 1599,
+  "compare_at_amount": 8900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/339340/header.jpg"
+ },
+ {
+  "id": "var_A7jeSBeOMbF",
+  "name": "Inscryption",
+  "unit_amount": 1599,
+  "compare_at_amount": 4999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1092790/header.jpg"
+ },
+ {
+  "id": "var_IsB92JP16W3",
+  "name": "Outlast 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/414700/header.jpg"
+ },
+ {
+  "id": "var_IQlk6NpSK2H",
+  "name": "The Binding of Isaac",
+  "unit_amount": 1599,
+  "compare_at_amount": null,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/113200/header.jpg"
+ },
+ {
+  "id": "var_3g5aDIoEzOI",
+  "name": "Buckshot Roulette",
+  "unit_amount": 1599,
+  "compare_at_amount": null,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2835570/header.jpg"
+ },
+ {
+  "id": "var_L1I7DeTfsYC",
+  "name": "MiSide",
+  "unit_amount": 1599,
+  "compare_at_amount": 4699,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2527500/header.jpg"
+ },
+ {
+  "id": "var_0AvfrUklKFO",
+  "name": "Milk inside a bag of milk inside a bag of milk",
+  "unit_amount": 1599,
+  "compare_at_amount": null,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1392820/header.jpg"
+ },
+ {
+  "id": "var_8tiMXRP1NPZ",
+  "name": "Resident Evil 4 Remake",
+  "unit_amount": 1599,
+  "compare_at_amount": 16900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2050650/header.jpg"
+ },
+ {
+  "id": "var_32x6vlQ1nZd",
+  "name": "Sid Meier's Civilization VI",
+  "unit_amount": 1599,
+  "compare_at_amount": 12900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/289070/header.jpg"
+ },
+ {
+  "id": "var_8LnMx9MJjIp",
+  "name": "SnowRunner",
+  "unit_amount": 1599,
+  "compare_at_amount": 9990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1465360/header.jpg"
+ },
+ {
+  "id": "var_1ug1hjcazXX",
+  "name": "Cities: Skylines",
+  "unit_amount": 1599,
+  "compare_at_amount": 11599,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/255710/header.jpg"
+ },
+ {
+  "id": "var_KfNHtWOf7bp",
+  "name": "Jurassic World Evolution 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 10999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1244460/header.jpg"
+ },
+ {
+  "id": "var_0NLlm8eJE2h",
+  "name": "Planet Zoo",
+  "unit_amount": 1599,
+  "compare_at_amount": 10000,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/703080/header.jpg"
+ },
+ {
+  "id": "var_Dnk8CohWEm9",
+  "name": "RimWorld",
+  "unit_amount": 1599,
+  "compare_at_amount": 10199,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/294100/76e0613b8197327299d5dbabb0a7fd7828a689a2/header.jpg"
+ },
+ {
+  "id": "var_3OFZgS5rvKh",
+  "name": "Dave The Diver",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1868140/81bdb3bce15d27ca1b4554a642d91096e89be229/header.jpg"
+ },
+ {
+  "id": "var_1OpF3iH6tlO",
+  "name": "Kerbal Space Program",
+  "unit_amount": 1599,
+  "compare_at_amount": 11999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/220200/header.jpg"
+ },
+ {
+  "id": "var_7rqB87iUVcm",
+  "name": "Car Mechanic Simulator 2021",
+  "unit_amount": 1599,
+  "compare_at_amount": 7399,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1190000/header.jpg"
+ },
+ {
+  "id": "var_IgTLcEUWkE0",
+  "name": "House Flipper",
+  "unit_amount": 1599,
+  "compare_at_amount": 7399,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/613100/6cee40fe293f0bab47534e78bcda64487902efc1/header.jpg"
+ },
+ {
+  "id": "var_1DNuGgs1TH7",
+  "name": "Stardew Valley",
+  "unit_amount": 1599,
+  "compare_at_amount": 2499,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/header.jpg"
+ },
+ {
+  "id": "var_9M7rYTUaIAo",
+  "name": "Streamer Life Simulator",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1261040/header.jpg"
+ },
+ {
+  "id": "var_4qD1Gz79YD1",
+  "name": "Ultimate Fishing Simulator",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/468920/d72f26c27340b6283c3fe2965af44c4b35a4da55/header.jpg"
+ },
+ {
+  "id": "var_J0JC6oZ08Eg",
+  "name": "ASTRONEER",
+  "unit_amount": 1599,
+  "compare_at_amount": 8899,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/361420/1c44099d86c824a6fd1098a4215097878d68664e/header.jpg"
+ },
+ {
+  "id": "var_FqPUdLRJU2m",
+  "name": "Potion Craft: Alchemist Simulator",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1210320/header.jpg"
+ },
+ {
+  "id": "var_0F7yiWThA9m",
+  "name": "Scribblenauts Unmasked - A DC Comics Adventure + Scribblenauts Unlimited",
+  "unit_amount": 1599,
+  "compare_at_amount": 8999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/249870/header.jpg"
+ },
+ {
+  "id": "var_IRwXQ7o9FDx",
+  "name": "theHunter: Call of the Wild",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/518790/00f0df3558439a6a2cc4fbd7a658b00fb71353ea/header.jpg"
+ },
+ {
+  "id": "var_L5FHJuoPYZR",
+  "name": "Planet Coaster",
+  "unit_amount": 1599,
+  "compare_at_amount": 8199,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/493340/header.jpg"
+ },
+ {
+  "id": "var_1TpsniAoUkf",
+  "name": "Ranch Simulator: Build, Hunt, Farm",
+  "unit_amount": 1599,
+  "compare_at_amount": 4749,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1119730/edbc791f576913bd2b7d3aeeed8bc5dd73614872/header.jpg"
+ },
+ {
+  "id": "var_61z70ZI4eKb",
+  "name": "Session: Skate Sim",
+  "unit_amount": 1599,
+  "compare_at_amount": 7549,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/861650/1aba9b8411422a2d34a00e2daa2f9647caf4980c/header_alt_assets_9.jpg"
+ },
+ {
+  "id": "var_HCxW97UWigM",
+  "name": "Oxygen Not Included",
+  "unit_amount": 1599,
+  "compare_at_amount": 4599,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/457140/header.jpg"
+ },
+ {
+  "id": "var_8MMGbSfIpBR",
+  "name": "The Witcher 3",
+  "unit_amount": 1599,
+  "compare_at_amount": 15999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/292030/4b5b1ba5061b8a992cc69ac58b4245434edb4296/header.jpg"
+ },
+ {
+  "id": "var_8ZBizTH59Jt",
+  "name": "DARK SOULS II: Deluxe Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 15490,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/335300/header.jpg"
+ },
+ {
+  "id": "var_A04QciDcjln",
+  "name": "DARK SOULS: REMASTERED",
+  "unit_amount": 1599,
+  "compare_at_amount": 15490,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/570940/header.jpg"
+ },
+ {
+  "id": "var_Ft0zkuQyHQu",
+  "name": "Wuchang: Fallen Feathers Deluxe Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 19900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2277560/7dbbe47ac51463eb1627581f5c048b94ef856d5c/header.jpg"
+ },
+ {
+  "id": "var_JUpksYm7okw",
+  "name": "Kingdom Come: Deliverance",
+  "unit_amount": 1599,
+  "compare_at_amount": 14900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/379430/43b72106345687f4a2bf94d5f98335e52c1cd598/header.jpg"
+ },
+ {
+  "id": "var_CESLEzK9Qz3",
+  "name": "The Elder Scrolls V: Skyrim Special Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 14900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/489830/header.jpg"
+ },
+ {
+  "id": "var_65KvwpPhJFU",
+  "name": "Hades",
+  "unit_amount": 1599,
+  "compare_at_amount": 7399,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1145360/header.jpg"
+ },
+ {
+  "id": "var_65wZoDuOEhE",
+  "name": "Fallout 4",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/header.jpg"
+ },
+ {
+  "id": "var_6Os7Wc6C7IK",
+  "name": "9 Kings",
+  "unit_amount": 1599,
+  "compare_at_amount": 3999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2784470/640a138fbc6918daa276a4653360eca9e4488b65/header.jpg"
+ },
+ {
+  "id": "var_0ud3lYybnRC",
+  "name": "Riders Republic Skate Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 19999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2290180/c384df0cbfeba26c167fab3d30961f3850b17b3d/header.jpg"
+ },
+ {
+  "id": "var_52ymwtNfdGi",
+  "name": "Forza Horizon 6",
+  "unit_amount": 1599,
+  "compare_at_amount": 29900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2483190/c53fe3362cc3267a5d34aca3e796b90963e0e23f/header_alt_assets_6.jpg"
+ },
+ {
+  "id": "var_InvObLLAepb",
+  "name": "Forza Horizon 5",
+  "unit_amount": 1599,
+  "compare_at_amount": 24900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1551360/header.jpg"
+ },
+ {
+  "id": "var_9OrQyiAA5Kq",
+  "name": "Automobilista 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 11999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1066890/4ec180b6bc16ce430f12bfbc88f420c93cb48313/header.jpg"
+ },
+ {
+  "id": "var_Dg3Xso8uMoX",
+  "name": "MX vs ATV Legends",
+  "unit_amount": 1599,
+  "compare_at_amount": 7500,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1205970/95c60ae07c38d7b7a9d8f81fde86e030c7964e14/header.jpg"
+ },
+ {
+  "id": "var_9XLX4GVFs56",
+  "name": "V-Rally 4",
+  "unit_amount": 1599,
+  "compare_at_amount": 6999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/658700/header.jpg"
+ },
+ {
+  "id": "var_0EfiJch56LY",
+  "name": "Descenders",
+  "unit_amount": 1599,
+  "compare_at_amount": 4749,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/681280/header.jpg"
+ },
+ {
+  "id": "var_1KmYPXGunFR",
+  "name": "Assetto Corsa",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/244210/header.jpg"
+ },
+ {
+  "id": "var_73D0urIpDRv",
+  "name": "COMBO: Crash Bandicoot N. Sane Trilogy",
+  "unit_amount": 2099,
+  "compare_at_amount": 21990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/731490/header.jpg"
+ },
+ {
+  "id": "var_7luSNPsN07g",
+  "name": "Mafia: Definitive Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 19990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1030840/header.jpg"
+ },
+ {
+  "id": "var_2WqG7VTUWAl",
+  "name": "The Elder Scrolls IV: Oblivion Remastered Deluxe Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 26490,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2623190/a7cee9165bb1bfc092c390c5cff215ce0e381dfc/header.jpg"
+ },
+ {
+  "id": "var_8VLpS6iRFuO",
+  "name": "Sekiro: Shadows Die Twice - GOTY Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 27400,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/814380/header.jpg"
+ },
+ {
+  "id": "var_7s548Dy2LLE",
+  "name": "ELDEN RING",
+  "unit_amount": 1599,
+  "compare_at_amount": 27450,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1245620/header.jpg"
+ },
+ {
+  "id": "var_CfzVeHHeiFu",
+  "name": "Grand Theft Auto V",
+  "unit_amount": 1599,
+  "compare_at_amount": 14990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3240220/header.jpg"
+ },
+ {
+  "id": "var_KlFYm7gkz36",
+  "name": "COMBO: Grand Theft Auto: The Trilogy – The Definitive Edition",
+  "unit_amount": 2099,
+  "compare_at_amount": 89970,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1547000/header.jpg"
+ },
+ {
+  "id": "var_BwTtMFIYEJm",
+  "name": "God of War",
+  "unit_amount": 1599,
+  "compare_at_amount": 19990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1593500/header.jpg"
+ },
+ {
+  "id": "var_JlgeDnSVQDX",
+  "name": "RoboCop: Rogue City",
+  "unit_amount": 1599,
+  "compare_at_amount": 13999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1681430/header.jpg"
+ },
+ {
+  "id": "var_7arYbsqKhIu",
+  "name": "DEVIL MAY CRY 5 DELUXE + VERGIL",
+  "unit_amount": 1599,
+  "compare_at_amount": 12900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/601150/header.jpg"
+ },
+ {
+  "id": "var_Jrpg1i45oBh",
+  "name": "Marvel's Guardians of the Galaxy",
+  "unit_amount": 1599,
+  "compare_at_amount": 24999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1088850/bdbf8be37e665ba0e6f44111e3665d280f13ed16/header.jpg"
+ },
+ {
+  "id": "var_FVAl6q05Wq3",
+  "name": "Evil West",
+  "unit_amount": 1599,
+  "compare_at_amount": 17990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1065310/header.jpg"
+ },
+ {
+  "id": "var_KWVvvNc8Y4g",
+  "name": "The Evil Within 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 15500,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/601430/header.jpg"
+ },
+ {
+  "id": "var_JMjhosr6ePC",
+  "name": "Blasphemous",
+  "unit_amount": 1599,
+  "compare_at_amount": 13390,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/774361/header.jpg"
+ },
+ {
+  "id": "var_CScHdOVFUEH",
+  "name": "ONE PIECE: PIRATE WARRIORS 4",
+  "unit_amount": 1599,
+  "compare_at_amount": 16950,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1089090/header.jpg"
+ },
+ {
+  "id": "var_6qvwnVbsbOe",
+  "name": "Borderlands 3",
+  "unit_amount": 1599,
+  "compare_at_amount": 11990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/397540/header.jpg"
+ },
+ {
+  "id": "var_BqRWYwblZLa",
+  "name": "Blasphemous 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 16499,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2114740/f159b10bb670fabbe0a4a1837b16547f9f9f6a78/header.jpg"
+ },
+ {
+  "id": "var_DTphKgbBqd5",
+  "name": "Hollow Knight",
+  "unit_amount": 1599,
+  "compare_at_amount": 4699,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/367520/3c3489495136b26b34f8a9543c7f5645b99d388c/header.jpg"
+ },
+ {
+  "id": "var_GcG2er2p6rE",
+  "name": "Katana ZERO",
+  "unit_amount": 1599,
+  "compare_at_amount": 4699,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/460950/header.jpg"
+ },
+ {
+  "id": "var_4NW7T17xC6n",
+  "name": "Vampire Survivors",
+  "unit_amount": 1599,
+  "compare_at_amount": null,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1794680/2ca07b690dde645771125ed9d9206c4c5fde4dd4/header.jpg"
+ },
+ {
+  "id": "var_5R7yiIEp3jG",
+  "name": "Cult of the Lamb",
+  "unit_amount": 1599,
+  "compare_at_amount": 6495,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1313140/19f32bb477a6e9d058e05193b4e282149bd70644/header.jpg"
+ },
+ {
+  "id": "var_GIQpCeRxcSe",
+  "name": "The Evil Within",
+  "unit_amount": 1599,
+  "compare_at_amount": 4999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/268050/header.jpg"
+ },
+ {
+  "id": "var_LC6fr51tCQ9",
+  "name": "Dead Cells",
+  "unit_amount": 1599,
+  "compare_at_amount": 4749,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/588650/header.jpg"
+ },
+ {
+  "id": "var_9DYsMSRN78x",
+  "name": "DOOM",
+  "unit_amount": 1599,
+  "compare_at_amount": 6150,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/379720/header.jpg"
+ },
+ {
+  "id": "var_GGb9ymeAbvI",
+  "name": "One Piece Pirate Warriors 3 - Gold Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 7999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/331600/header.jpg"
+ },
+ {
+  "id": "var_BJ3SALnUjfa",
+  "name": "Castle Crashers",
+  "unit_amount": 1599,
+  "compare_at_amount": 2499,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/204360/header.jpg"
+ },
+ {
+  "id": "var_Bt3IEF7hdxd",
+  "name": "Just Cause 3",
+  "unit_amount": 1599,
+  "compare_at_amount": 4299,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/225540/header.jpg"
+ },
+ {
+  "id": "var_EU6nDouAySz",
+  "name": "Hotline Miami",
+  "unit_amount": 1599,
+  "compare_at_amount": 3299,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/219150/header.jpg"
+ },
+ {
+  "id": "var_HqKrHKSsyLr",
+  "name": "Beyond: Two Souls",
+  "unit_amount": 1599,
+  "compare_at_amount": 8999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/960990/header.jpg"
+ },
+ {
+  "id": "var_LvrejTTfxzP",
+  "name": "Enter x Exit the Gungeon",
+  "unit_amount": 1599,
+  "compare_at_amount": 4699,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/311690/471d245bd8a37011c16852694342e5ad2d8a4667/header.jpg"
+ },
+ {
+  "id": "var_0Mgtw4L5CDw",
+  "name": "Schedule I",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3164500/header.jpg"
+ },
+ {
+  "id": "var_2sDw2prwFSW",
+  "name": "Half-Life 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 3399,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/220/header.jpg"
+ },
+ {
+  "id": "var_E7Yl1DilYO7",
+  "name": "NARUTO SHIPPUDEN: Ultimate Ninja STORM 4",
+  "unit_amount": 1599,
+  "compare_at_amount": 7750,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/349040/header.jpg"
+ },
+ {
+  "id": "var_A0aMw4A3Jd0",
+  "name": "Disney's Hercules",
+  "unit_amount": 1599,
+  "compare_at_amount": 2049,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/987400/header.jpg"
+ },
+ {
+  "id": "var_Kp42tYf4tpu",
+  "name": "Marvel's Spider-Man 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 24990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2651280/header.jpg"
+ },
+ {
+  "id": "var_3uN3DwEUHd5",
+  "name": "Black Myth: Wukong",
+  "unit_amount": 1599,
+  "compare_at_amount": 22999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2358720/header.jpg"
+ },
+ {
+  "id": "var_8i9cM72hPxz",
+  "name": "UNCHARTED: Coleção Legado dos Ladrões",
+  "unit_amount": 1599,
+  "compare_at_amount": 19990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1659420/header_portuguese.jpg"
+ },
+ {
+  "id": "var_H92mKGj9iL9",
+  "name": "Stray",
+  "unit_amount": 1599,
+  "compare_at_amount": 8999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1332010/71daca1910d664d31240b9623a495e0c0828807f/header.jpg"
+ },
+ {
+  "id": "var_2GoIz8RL60N",
+  "name": "Split Fiction",
+  "unit_amount": 1599,
+  "compare_at_amount": 19900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2001120/header.jpg"
+ },
+ {
+  "id": "var_BHRcCObegYn",
+  "name": "Slime Rancher 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 8999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1657630/e0ebd5982e69895132d4ffdf80a1a6048ab53d25/header.jpg"
+ },
+ {
+  "id": "var_4KAw1JERcb5",
+  "name": "Rise of the Tomb Raider",
+  "unit_amount": 1599,
+  "compare_at_amount": 12499,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/391220/29279804029df9b7540caef5c086c9f0393e2e2d/header_alt_assets_0.jpg"
+ },
+ {
+  "id": "var_LRheliBCzP5",
+  "name": "REANIMAL",
+  "unit_amount": 1599,
+  "compare_at_amount": 10799,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2129530/4cdda917a0155258a2e7909d7869f35d8f980f96/header.jpg"
+ },
+ {
+  "id": "var_EXNjY9zjyDW",
+  "name": "Planet of Lana",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1608230/afc987687f2f80c5c4a93293f2f0f53a62032212/header.jpg"
+ },
+ {
+  "id": "var_3au2yf2nMiO",
+  "name": "Outer Wilds",
+  "unit_amount": 1599,
+  "compare_at_amount": 6799,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/753640/079ae4a7ff4b5875adc5c63c4c0b84e5a3e6966b/header.jpg"
+ },
+ {
+  "id": "var_6g6IwGDiSKG",
+  "name": "Ori and the Will of the Wisps",
+  "unit_amount": 1599,
+  "compare_at_amount": 12900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1057090/header.jpg"
+ },
+ {
+  "id": "var_CFC6LDTC5s5",
+  "name": "LIMBO",
+  "unit_amount": 1599,
+  "compare_at_amount": 3649,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/48000/header.jpg"
+ },
+ {
+  "id": "var_DST5e0Vk4nd",
+  "name": "Lies of P",
+  "unit_amount": 1599,
+  "compare_at_amount": 24990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1627720/header.jpg"
+ },
+ {
+  "id": "var_KW2PV2DiKqZ",
+  "name": "INSIDE",
+  "unit_amount": 1599,
+  "compare_at_amount": 7299,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/304430/header.jpg"
+ },
+ {
+  "id": "var_5TENbRrsXqr",
+  "name": "Indiana Jones and the Great Circle",
+  "unit_amount": 1599,
+  "compare_at_amount": 34900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2677660/151ae5a881f05ef630defef85d99b38146b7055c/header.jpg"
+ },
+ {
+  "id": "var_4MbLN86Hxq6",
+  "name": "Horizon Forbidden West Edição Completa",
+  "unit_amount": 1599,
+  "compare_at_amount": 24990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2420110/header.jpg"
+ },
+ {
+  "id": "var_9A33POdwJc1",
+  "name": "Hellblade: Senua's Sacrifice",
+  "unit_amount": 1599,
+  "compare_at_amount": 9900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/414340/header.jpg"
+ },
+ {
+  "id": "var_HxPJRdMkdFS",
+  "name": "GRIS",
+  "unit_amount": 1599,
+  "compare_at_amount": 4699,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/683320/header.jpg"
+ },
+ {
+  "id": "var_KlY1JXLqEox",
+  "name": "Dying Light: The Beast",
+  "unit_amount": 1599,
+  "compare_at_amount": 24900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3008130/474a86847984d68aa1485734e450c0a86ada03b3/header.jpg"
+ },
+ {
+  "id": "var_3sA0OStxAXT",
+  "name": "Dying Light 2 Stay Human: Reloaded Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 24900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/534380/header.jpg"
+ },
+ {
+  "id": "var_656FS15ByfD",
+  "name": "Dead Space",
+  "unit_amount": 1599,
+  "compare_at_amount": 24900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1693980/header.jpg"
+ },
+ {
+  "id": "var_JoTpdNBioV5",
+  "name": "Days Gone",
+  "unit_amount": 1599,
+  "compare_at_amount": 19950,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1259420/header.jpg"
+ },
+ {
+  "id": "var_FXY8nXLRHS3",
+  "name": "Celeste",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/504230/header.jpg"
+ },
+ {
+  "id": "var_6tzv31KLOui",
+  "name": "Castlevania: Lords of Shadow 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 7299,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/239250/header.jpg"
+ },
+ {
+  "id": "var_DgbKotJGx20",
+  "name": "Castlevania: Lords of Shadow – Ultimate Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 4999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/234080/header.jpg"
+ },
+ {
+  "id": "var_LmetuUgC4wi",
+  "name": "Bully Scholarship Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 3999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/12200/header.jpg"
+ },
+ {
+  "id": "var_Jw1atruMb11",
+  "name": "Black Mesa",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/362890/674b9a0e7b31996efd5032dc15e695dbf457d71d/header.jpg"
+ },
+ {
+  "id": "var_67Rr3hEg5LO",
+  "name": "Assassin's Creed Origins",
+  "unit_amount": 1599,
+  "compare_at_amount": 17999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/582160/header.jpg"
+ },
+ {
+  "id": "var_BVLzkP8mDwv",
+  "name": "Subnautica 2",
+  "unit_amount": 1000,
+  "compare_at_amount": 11999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1962700/header.jpg"
+ },
+ {
+  "id": "var_HCd0e78bE5V",
+  "name": "The Callisto Protocol",
+  "unit_amount": 1599,
+  "compare_at_amount": 16200,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1544020/header.jpg"
+ },
+ {
+  "id": "var_KZ6ECfFR7yG",
+  "name": "The Planet Crafter",
+  "unit_amount": 1599,
+  "compare_at_amount": 7399,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1284190/header.jpg"
+ },
+ {
+  "id": "var_BxrnQwV0Inm",
+  "name": "Titan Souls",
+  "unit_amount": 1599,
+  "compare_at_amount": 4699,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/297130/header.jpg"
+ },
+ {
+  "id": "var_KfLL92Vc8Ea",
+  "name": "COMBO: Todos os Poppy Playtime",
+  "unit_amount": 2099,
+  "compare_at_amount": 17876,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1721470/00ca34a0c863a8d86c6582904249216d6aa263bd/header.jpg"
+ },
+ {
+  "id": "var_EnJ40L1GDVn",
+  "name": "The Last of Us 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 19990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2531310/header.jpg"
+ },
+ {
+  "id": "var_AxpBIwL3qFo",
+  "name": "The Last of Us",
+  "unit_amount": 1599,
+  "compare_at_amount": 24990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1888930/header.jpg"
+ },
+ {
+  "id": "var_LHfhzo1iM3R",
+  "name": "The Forest",
+  "unit_amount": 1599,
+  "compare_at_amount": 3799,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/242760/header.jpg"
+ },
+ {
+  "id": "var_E4AZ498wOTq",
+  "name": "Project Zomboid",
+  "unit_amount": 1599,
+  "compare_at_amount": 8399,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/header.jpg"
+ },
+ {
+  "id": "var_CS91mMQuu6e",
+  "name": "Phasmophobia",
+  "unit_amount": 1000,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/739630/c227a2855aba60f3657bc0c3a46515b8c41fb2b6/header.jpg"
+ },
+ {
+  "id": "var_JWC43h1UKU0",
+  "name": "PAYDAY 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 2999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/218620/c44949287e8ffa2518f01b5033b8431dd0f984e4/header.jpg"
+ },
+ {
+  "id": "var_5HYma3BBprs",
+  "name": "Palworld",
+  "unit_amount": 1599,
+  "compare_at_amount": 8899,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1623730/6912f19c43a95ff5fe514eedd35e68bf12335459/header.jpg"
+ },
+ {
+  "id": "var_1zVsjfZxEKH",
+  "name": "Resident Evil 7: Biohazard",
+  "unit_amount": 1599,
+  "compare_at_amount": 8900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/418370/header.jpg"
+ },
+ {
+  "id": "var_4FystSZ0ljm",
+  "name": "Red Dead Redemption 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 29990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1174180/header.jpg"
+ },
+ {
+  "id": "var_GZ8B0biXTOl",
+  "name": "R.E.P.O.",
+  "unit_amount": 1599,
+  "compare_at_amount": 2999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3241660/62177765c05399116f0453fe1177b00ceed698c4/header_alt_assets_3.jpg"
+ },
+ {
+  "id": "var_FzMrlA6XMIM",
+  "name": "Microsoft Flight Simulator 40th Anniversary Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 24995,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1250410/header.jpg"
+ },
+ {
+  "id": "var_L1KXXz7fVAq",
+  "name": "No, I'm not a Human",
+  "unit_amount": 1599,
+  "compare_at_amount": 4699,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/3180070/fadebc14211b17b5a6603926612ead9294cad9ce/header.jpg"
+ },
+ {
+  "id": "var_IsVDLvdhYl1",
+  "name": "Mortal Kombat 11",
+  "unit_amount": 1599,
+  "compare_at_amount": 22999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/976310/header.jpg"
+ },
+ {
+  "id": "var_6wdpXwWa7Ss",
+  "name": "Mortal Kombat X",
+  "unit_amount": 1599,
+  "compare_at_amount": 8999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/307780/header.jpg"
+ },
+ {
+  "id": "var_0dzOw5uu530",
+  "name": "No Man's Sky",
+  "unit_amount": 1599,
+  "compare_at_amount": 16200,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/275850/9f1ca9e3b7d1dccb7b5af404a6739ddc1118ef32/header_alt_assets_26.jpg"
+ },
+ {
+  "id": "var_CC8QHSOWB9x",
+  "name": "Left 4 Dead 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 3399,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/550/header.jpg"
+ },
+ {
+  "id": "var_6tPGdqbEz6t",
+  "name": "It Takes Two",
+  "unit_amount": 1599,
+  "compare_at_amount": 19900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1426210/header.jpg"
+ },
+ {
+  "id": "var_HFnLfGLbPFz",
+  "name": "Grand Theft Auto: Vice City",
+  "unit_amount": 1599,
+  "compare_at_amount": 29990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1546990/header.jpg"
+ },
+ {
+  "id": "var_2BZp0bnY4Ik",
+  "name": "Garry's Mod",
+  "unit_amount": 1599,
+  "compare_at_amount": 2599,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/4000/header.jpg"
+ },
+ {
+  "id": "var_4Ct1kzoMmrY",
+  "name": "Forza Horizon 4",
+  "unit_amount": 1599,
+  "compare_at_amount": 24900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1293830/header.jpg"
+ },
+ {
+  "id": "var_2Pi2gMdhGUz",
+  "name": "Five Nights at Freddy's: Security Breach",
+  "unit_amount": 1599,
+  "compare_at_amount": 7549,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/747660/header.jpg"
+ },
+ {
+  "id": "var_1VR5OMgmXDj",
+  "name": "Euro Truck Simulator 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 6699,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/227300/9a81dc3126c56637297b654f9dcac057cfd79b77/header.jpg"
+ },
+ {
+  "id": "var_LGhpOW2py31",
+  "name": "Dead Island Definitive Edition",
+  "unit_amount": 1599,
+  "compare_at_amount": 9900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/383150/header.jpg"
+ },
+ {
+  "id": "var_JYsMZjQjtK5",
+  "name": "Detroit: Become Human",
+  "unit_amount": 1599,
+  "compare_at_amount": 19999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1222140/header.jpg"
+ },
+ {
+  "id": "var_F9XlE73mWO4",
+  "name": "DRAGON BALL FighterZ",
+  "unit_amount": 1599,
+  "compare_at_amount": 23250,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/678950/header.jpg"
+ },
+ {
+  "id": "var_4jO1BsLtHlA",
+  "name": "DARK SOULS III",
+  "unit_amount": 1599,
+  "compare_at_amount": 22990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/374320/header.jpg"
+ },
+ {
+  "id": "var_8WnEQ7KUerR",
+  "name": "F1 24",
+  "unit_amount": 1599,
+  "compare_at_amount": 35900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2488620/header.jpg"
+ },
+ {
+  "id": "var_GSvsZQXnQ1n",
+  "name": "The Alters",
+  "unit_amount": 1599,
+  "compare_at_amount": 10199,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1601570/05e3c5b872152c1ba70f6a0def8cf49ae2123a4b/header.jpg"
+ },
+ {
+  "id": "var_HUrDQ8hNMFv",
+  "name": "Silent Hill 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 34990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2124490/header.jpg"
+ },
+ {
+  "id": "var_0xxBx3rLMgD",
+  "name": "Resident Evil 6",
+  "unit_amount": 1599,
+  "compare_at_amount": 8900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/221040/header.jpg"
+ },
+ {
+  "id": "var_EmqKE25Ouug",
+  "name": "Assassin's Creed IV Black Flag",
+  "unit_amount": 1599,
+  "compare_at_amount": 11999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/242050/header.jpg"
+ },
+ {
+  "id": "var_I42xM4c8y8C",
+  "name": "COMBO: Todos os Farcry",
+  "unit_amount": 2099,
+  "compare_at_amount": 51997,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2369390/64af0c6b70ef233bbdff1e5ffe0e397481efb3c9/header.jpg"
+ },
+ {
+  "id": "var_EXoNtggn4OT",
+  "name": "Watch Dogs: Legion",
+  "unit_amount": 1599,
+  "compare_at_amount": 24999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2239550/header.jpg"
+ },
+ {
+  "id": "var_Hq1dkFazRUq",
+  "name": "Watch Dogs",
+  "unit_amount": 1599,
+  "compare_at_amount": 9499,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/243470/header.jpg"
+ },
+ {
+  "id": "var_JTOHcLTy5j3",
+  "name": "Spiderman Miles Morales",
+  "unit_amount": 1599,
+  "compare_at_amount": 19990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1817190/header.jpg"
+ },
+ {
+  "id": "var_JRMePjFeVCo",
+  "name": "Terraria",
+  "unit_amount": 1599,
+  "compare_at_amount": 3299,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/header.jpg"
+ },
+ {
+  "id": "var_9CQy8E3oGID",
+  "name": "Streamer Life Simulator 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2890830/header.jpg"
+ },
+ {
+  "id": "var_LZmejrafvdb",
+  "name": "Subnautica Bellow Zero",
+  "unit_amount": 1599,
+  "compare_at_amount": 12450,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/848450/header.jpg"
+ },
+ {
+  "id": "var_6zJ11IIOkxM",
+  "name": "Subnautica",
+  "unit_amount": 1599,
+  "compare_at_amount": 12450,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/264710/header.jpg"
+ },
+ {
+  "id": "var_40kUJgd5I5Q",
+  "name": "Resident Evil Village",
+  "unit_amount": 1599,
+  "compare_at_amount": 16900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1196590/header.jpg"
+ },
+ {
+  "id": "var_3Bv4k9BODGX",
+  "name": "Little Nightmares 3",
+  "unit_amount": 1599,
+  "compare_at_amount": 18290,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1392860/7aba96b32736990ec8a131bfdf395d2dc35b282b/header.jpg"
+ },
+ {
+  "id": "var_4e1FJTkykrA",
+  "name": "Little Nightmares 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 12745,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/860510/header.jpg"
+ },
+ {
+  "id": "var_G76WgMONzGr",
+  "name": "Little Nightmares",
+  "unit_amount": 1599,
+  "compare_at_amount": 8490,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/424840/facf9a7a675c6d7f210d96d6b111caffe0386cd5/header.jpg"
+ },
+ {
+  "id": "var_8xDLzXGwHTQ",
+  "name": "Hogwarts Legacy",
+  "unit_amount": 1599,
+  "compare_at_amount": 24999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/990080/be2971b1023bccb04f993887d70ef4d2060262cf/header.jpg"
+ },
+ {
+  "id": "var_7WEWnSRN1d6",
+  "name": "Ghost of Tsushima",
+  "unit_amount": 1599,
+  "compare_at_amount": 24990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2215430/header.jpg"
+ },
+ {
+  "id": "var_I21slSUebPP",
+  "name": "Ghostrunner 2",
+  "unit_amount": 1599,
+  "compare_at_amount": 16199,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2144740/header.jpg"
+ },
+ {
+  "id": "var_JRQh0n7WYOP",
+  "name": "Ghostrunner",
+  "unit_amount": 1599,
+  "compare_at_amount": 9900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1139900/header.jpg"
+ },
+ {
+  "id": "var_49rb6jTzEaw",
+  "name": "God of War Ragnarok",
+  "unit_amount": 1599,
+  "compare_at_amount": 24990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2322010/header.jpg"
+ },
+ {
+  "id": "var_BvwTVhOpX9a",
+  "name": "Gorilla Tag",
+  "unit_amount": 1000,
+  "compare_at_amount": 5999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1533390/fdd97735dfb6643a898070be587c4a057f2b978f/header.jpg"
+ },
+ {
+  "id": "var_2WRxJZKlXHk",
+  "name": "Fear Therapy",
+  "unit_amount": 1599,
+  "compare_at_amount": null,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1695840/header.jpg"
+ },
+ {
+  "id": "var_KZxDeqmo1ys",
+  "name": "Elden Ring: Nightreign",
+  "unit_amount": 1599,
+  "compare_at_amount": 19790,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2622380/header.jpg"
+ },
+ {
+  "id": "var_Lqa5ohC1eUz",
+  "name": "Dead by Daylight",
+  "unit_amount": 1599,
+  "compare_at_amount": 6999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/381210/header.jpg"
+ },
+ {
+  "id": "var_1lE4bsZsgIl",
+  "name": "Death Stranding",
+  "unit_amount": 1599,
+  "compare_at_amount": 15900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1850570/header.jpg"
+ },
+ {
+  "id": "var_HxcXq8aAf2K",
+  "name": "Dying Light",
+  "unit_amount": 1599,
+  "compare_at_amount": 9900,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/239140/9d1b810b85ae46a0acbdfddf583ccbb81271183e/header.jpg"
+ },
+ {
+  "id": "var_DoUiavhBJkS",
+  "name": "Cyberpunk 2077",
+  "unit_amount": 1599,
+  "compare_at_amount": 19990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/48a93d6445a67520ea49833c93dae8f2e68fc540/header_alt_assets_9.jpg"
+ },
+ {
+  "id": "var_3t8dnPFCNHU",
+  "name": "Cuphead",
+  "unit_amount": 1599,
+  "compare_at_amount": 3699,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/268910/header.jpg"
+ },
+ {
+  "id": "var_LxNAv0Uy18e",
+  "name": "Assassin's Creed Syndicate",
+  "unit_amount": 1599,
+  "compare_at_amount": 8999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/368500/header.jpg"
+ },
+ {
+  "id": "var_JX48NaS74ad",
+  "name": "Assassin's Creed Unity",
+  "unit_amount": 1599,
+  "compare_at_amount": 8999,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/289650/header.jpg"
+ },
+ {
+  "id": "var_KMUXCkPq9aa",
+  "name": "Silent Hill F",
+  "unit_amount": 1599,
+  "compare_at_amount": 34990,
+  "active": true,
+  "image": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/2947440/7e5d923ac622bd1775ebc9b5d4b5b0a24bf5ed40/header.jpg"
+ }
+]

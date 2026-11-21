@@ -1,0 +1,834 @@
+<div class="sf-wrapper">
+
+<style>
+.sf-wrapper{
+    --sf-accent:#1a9fff;
+    --sf-bg:#0a0e14;
+    --sf-card:#101720;
+    --sf-item:#16202b;
+    --sf-border:rgba(255,255,255,.08);
+    --sf-text:#f5f5f6;
+    --sf-muted:#b4b8bf;
+    width:100%;
+    max-width:500px;
+    margin:0 auto;
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    color:var(--sf-text);
+}
+.sf-wrapper *{box-sizing:border-box}
+
+.sf-container{
+    background:var(--sf-bg);
+    padding:14px 12px 10px;
+    border-radius:16px;
+}
+
+.sf-card{
+    background:var(--sf-card);
+    border:1px solid var(--sf-border);
+    border-radius:18px;
+    padding:22px 18px;
+    margin-bottom:14px;
+}
+
+/* TÍTULOS */
+.sf-h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:19px;
+    font-weight:800;
+    line-height:1.3;
+    margin:0 0 16px;
+}
+.sf-h2::before{
+    content:"";
+    width:4px;
+    height:22px;
+    border-radius:3px;
+    background:var(--sf-accent);
+    flex-shrink:0;
+}
+
+.sf-quote{
+    border-left:3px solid var(--sf-accent);
+    padding-left:14px;
+    margin:0 0 16px;
+    font-size:15px;
+    line-height:1.65;
+    color:#e4e4e7;
+}
+.sf-quote strong{color:#fff}
+
+.sf-text{
+    color:var(--sf-muted);
+    font-size:13.5px;
+    line-height:1.7;
+    margin:0;
+}
+
+/* BANNER / IMAGEM (OPCIONAL) */
+.sf-img{
+    display:block;
+    width:100%;
+    height:auto;
+    border-radius:14px;
+    margin:18px 0 0;
+}
+
+/* ITENS COM ÍCONE */
+.sf-list{display:grid;gap:10px}
+.sf-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:var(--sf-item);
+    border:1px solid var(--sf-border);
+    border-radius:12px;
+    padding:13px 15px;
+}
+.sf-item-icon{
+    width:50px;
+    height:50px;
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:14px;
+    background:rgba(26,159,255,.10);
+    border:1px solid rgba(26,159,255,.38);
+}
+.sf-item-icon svg{
+    width:26px;
+    height:26px;
+    fill:none;
+    stroke:#66c0f4;
+    stroke-width:1.8;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+}
+.sf-item-label{
+    display:block;
+    color:var(--sf-accent);
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:3px;
+}
+.sf-item-text{
+    color:#e4e4e7;
+    font-size:14px;
+    line-height:1.45;
+}
+
+/* MOCKUP STEAM */
+.sf-mock{
+    position:relative;
+    height:250px;
+    border-radius:12px;
+    background:#121821;
+    border:1px solid var(--sf-border);
+    overflow:hidden;
+    text-align:left;
+    margin-bottom:18px;
+}
+.sf-mock-bar{
+    display:flex;
+    gap:14px;
+    padding:11px 14px 11px 78px;
+    font-size:11px;
+    color:#9aa7b5;
+    border-bottom:1px solid var(--sf-border);
+}
+.sf-mock-bar span:first-child{color:#66c0f4;font-weight:700}
+
+.sf-grid{
+    position:absolute;
+    left:78px;
+    right:12px;
+    top:50px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+.sf-tile{
+    height:56px;
+    border-radius:6px;
+    background:rgba(102,192,244,.08);
+    border:1px solid rgba(102,192,244,.10);
+}
+
+.sf-add{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:34px;
+    display:flex;
+    align-items:center;
+    padding:0 14px 0 78px;
+    border-top:1px solid var(--sf-border);
+    font-size:10.5px;
+    color:#9aa7b5;
+}
+
+/* CAPA DO JOGO (flutuando) */
+.sf-cover{
+    position:absolute;
+    left:10px;
+    top:50px;
+    width:60px;
+    height:84px;
+    object-fit:cover;
+    border-radius:8px;
+    transform:rotate(-7deg);
+    border:2px solid rgba(255,255,255,.18);
+    box-shadow:0 8px 20px rgba(0,0,0,.55);
+    z-index:2;
+    background:#1c2733;
+    animation:sfFloat 4s ease-in-out infinite;
+}
+@keyframes sfFloat{
+    0%,100%{transform:rotate(-7deg) translateY(0)}
+    50%{transform:rotate(-7deg) translateY(-4px)}
+}
+
+/* JOGO APARECE NA BIBLIOTECA */
+.sf-tile{position:relative;overflow:hidden}
+.sf-tile-game{
+    border:1px solid rgba(102,192,244,.35);
+    background:#1c2733;
+    animation:sfGame 10s infinite;
+    opacity:0;
+}
+.sf-tile-game img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+.sf-new{
+    position:absolute;
+    left:4px;
+    bottom:4px;
+    background:#4c9b1a;
+    color:#fff;
+    font-size:8.5px;
+    font-weight:800;
+    padding:2px 5px;
+    border-radius:3px;
+}
+@keyframes sfGame{
+    0%,67%{opacity:0}
+    71%,96%{opacity:1}
+    100%{opacity:0}
+}
+
+.sf-dialog,
+.sf-success{
+    position:absolute;
+    right:12px;
+    top:46px;
+    width:62%;
+    border-radius:10px;
+    padding:13px;
+    background:#25303d;
+    border:1px solid rgba(255,255,255,.10);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+    z-index:3;
+}
+.sf-dialog{animation:sfDialog 10s infinite}
+.sf-success{animation:sfSuccess 10s infinite;opacity:0}
+
+.sf-dlg-title{font-size:12px;font-weight:700;margin-bottom:4px}
+.sf-dlg-desc{font-size:10.5px;color:#9aa7b5;line-height:1.4;margin-bottom:9px}
+
+.sf-field{
+    background:#111821;
+    border:1px solid #2c3a4a;
+    border-radius:6px;
+    padding:7px 9px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;
+    color:#fff;
+    height:28px;
+    display:flex;
+    align-items:center;
+    margin-bottom:7px;
+}
+.sf-type{
+    display:inline-block;
+    overflow:hidden;
+    white-space:nowrap;
+    width:0;
+    border-right:1px solid #66c0f4;
+}
+.sf-type-1{animation:sfLogin 10s steps(15,end) infinite}
+.sf-type-2{animation:sfPass 10s steps(8,end) infinite}
+
+.sf-dlg-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:10px;
+}
+.sf-btn-cancel,
+.sf-btn-go{
+    font-size:10.5px;
+    font-weight:700;
+    padding:6px 10px;
+    border-radius:6px;
+}
+.sf-btn-cancel{background:#3a4553;color:#d4d8de}
+.sf-btn-go{
+    position:relative;
+    background:#1a9fff;
+    color:#fff;
+    min-width:70px;
+    text-align:center;
+}
+.sf-btn-go span{display:block}
+.sf-btn-a{animation:sfBtnA 10s infinite}
+.sf-btn-b{
+    position:absolute;
+    inset:6px 0 0 0;
+    opacity:0;
+    animation:sfBtnB 10s infinite;
+}
+
+.sf-check{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#22c55e;
+    color:#fff;
+    font-weight:900;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:8px;
+    font-size:15px;
+}
+.sf-ok-title{font-size:12px;font-weight:700;margin-bottom:3px}
+.sf-ok-name{font-size:11px;color:#66c0f4;font-weight:700;margin-bottom:3px}
+.sf-ok-desc{font-size:10.5px;color:#9aa7b5;line-height:1.4}
+
+@keyframes sfDialog{
+    0%,66%{opacity:1}
+    70%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes sfSuccess{
+    0%,66%{opacity:0}
+    70%,79%{opacity:1}
+    83%,100%{opacity:0}
+}
+@keyframes sfLogin{
+    0%,6%{width:0}
+    26%,92%{width:15ch}
+    100%{width:0}
+}
+@keyframes sfPass{
+    0%,28%{width:0}
+    40%,92%{width:8ch}
+    100%{width:0}
+}
+@keyframes sfBtnA{
+    0%,46%{opacity:1}
+    48%,96%{opacity:0}
+    100%{opacity:1}
+}
+@keyframes sfBtnB{
+    0%,46%{opacity:0}
+    48%,66%{opacity:1}
+    68%,100%{opacity:0}
+}
+
+@media(prefers-reduced-motion:reduce){
+    .sf-cover,.sf-dialog,.sf-success,.sf-type,.sf-btn-a,.sf-btn-b,.sf-tile-game{animation:none}
+    .sf-dialog{opacity:0}
+    .sf-success{opacity:1}
+    .sf-tile-game{opacity:1}
+    .sf-type-1{width:15ch}
+    .sf-type-2{width:8ch}
+}
+
+/* PASSOS (COMO UTILIZAR) */
+.sf-steps{display:grid;gap:10px}
+.sf-step{
+    background:var(--sf-item);
+    border:1px solid var(--sf-border);
+    border-radius:14px;
+    padding:14px 16px;
+}
+.sf-step-label{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:800;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    color:var(--sf-muted);
+    margin-bottom:8px;
+}
+.sf-step-num{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:21px;
+    height:21px;
+    border-radius:50%;
+    background:var(--sf-accent);
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:0;
+}
+.sf-step-text{
+    font-size:14px;
+    line-height:1.6;
+    color:var(--sf-text);
+    margin:0;
+}
+.sf-step-text strong{color:#fff;font-weight:800}
+
+/* TERMOS E GARANTIA */
+.sf-info-box{
+    background:rgba(115,45,50,.28);
+    border:1px solid rgba(239,68,68,.38);
+    border-radius:12px;
+    padding:16px;
+}
+.sf-info-title{
+    color:#ef6b6b;
+    font-size:13px;
+    font-weight:800;
+    margin:0 0 12px;
+}
+.sf-info{
+    color:#c9c3c3;
+    font-size:13px;
+    line-height:1.65;
+    margin:0 0 12px;
+}
+.sf-info:last-child{margin-bottom:0}
+.sf-highlight{color:#ef6b6b;font-weight:800}
+
+@media(max-width:380px){
+    .sf-card{padding:18px 14px}
+}
+
+/* ===== DESTAQUE ===== */
+.sf-hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 100% 0%,rgba(240,77,200,.35),transparent 60%),radial-gradient(90% 80% at 0% 100%,rgba(88,101,242,.30),transparent 60%),#160c15;border:1px solid rgba(240,77,200,.45);border-radius:20px;padding:22px 18px 20px;margin-bottom:14px}
+.sf-tag{display:inline-flex;padding:5px 11px;border-radius:999px;background:var(--sf-accent);color:#fff;font-size:11px;font-weight:900;letter-spacing:.8px}
+.sf-hero-t{margin:12px 0 6px;font-size:25px;font-weight:900;line-height:1.15;color:#fff}
+.sf-hero-t span{white-space:nowrap;background:linear-gradient(90deg,#ff7ad9,#8f9bff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sf-hero-s{margin:0 0 16px;color:#d4d4d8;font-size:14.5px;line-height:1.6}
+.sf-hero-s strong{color:#fff}
+.sf-price{position:relative;display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;padding:14px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--sf-border)}
+.sf-price-k{display:block;color:var(--sf-muted);font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;margin-bottom:2px}
+.sf-price-old{color:#8b8b93;font-size:15px;text-decoration:line-through}
+.sf-price-new{color:#fff;font-size:30px;font-weight:900;line-height:1}
+.sf-price-off{position:absolute;top:-12px;right:12px;padding:7px 11px;border-radius:10px;background:#22c55e;color:#04140a;font-size:13px;font-weight:900}
+.sf-price-mes{flex-basis:100%;color:#ff7ad9;font-size:13px;font-weight:800}
+.sf-pulse{animation:nzPulse 2.4s ease-in-out infinite}
+@keyframes nzPulse{50%{box-shadow:0 0 0 6px rgba(240,77,200,.18)}}
+.sf-nzgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sf-ben{background:var(--sf-item);border:1px solid var(--sf-border);border-radius:14px;padding:14px 12px}
+.sf-ben svg{width:26px;height:26px;fill:none;stroke:var(--sf-accent);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:8px}
+.sf-ben b{display:block;color:#fff;font-size:14px;line-height:1.25;margin-bottom:3px}
+.sf-ben small{display:block;color:var(--sf-muted);font-size:12.5px;line-height:1.45}
+.sf-cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding-top:8px}
+.sf-plan{position:relative;border-radius:14px;padding:16px 12px 14px;background:var(--sf-item);border:1px solid var(--sf-border);text-align:center}
+.sf-plan b{display:block;font-size:13px;color:var(--sf-muted);margin-bottom:6px}
+.sf-plan strong{display:block;font-size:22px;color:#fff}
+.sf-plan small{display:block;margin-top:4px;color:var(--sf-muted);font-size:12px}
+.sf-plan--on{border-color:var(--sf-accent);background:rgba(240,77,200,.10)}
+.sf-plan--on b{color:#ff7ad9}
+.sf-plan-tag{position:absolute;top:-10px;left:50%;transform:translateX(-50%);padding:3px 9px;border-radius:999px;background:var(--sf-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+.sf-trust{display:grid;gap:10px}
+.sf-trust div{display:flex;gap:10px;align-items:flex-start;color:#e4e4e7;font-size:13.5px;line-height:1.5}
+.sf-trust strong{color:#fff}
+.sf-trust svg{flex:none;width:20px;height:20px;fill:none;stroke:#22c55e;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;margin-top:1px}
+.sf-info-title{display:flex;align-items:center;gap:8px}
+.sf-info-title svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:360px){.sf-nzgrid,.sf-cmp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.sf-pulse{animation:none}}
+
+/* perfil do Discord com Nitro (aparece depois de "Ativar") */
+.sf-nzprof{padding:0 !important;overflow:hidden;width:72% !important;top:44px !important;background:#232428 !important}
+.sf-prof-ban{height:46px;background:linear-gradient(120deg,#f04dc8,#8f5bff 55%,#5865f2);background-size:200% 100%;animation:nzBan 4s linear infinite}
+@keyframes nzBan{to{background-position:200% 0}}
+.sf-prof-av{position:absolute;left:12px;top:20px;width:52px;height:52px;border-radius:50%;padding:3px;background:conic-gradient(#ff7ad9,#8f9bff,#ff7ad9);animation:nzGira 3s linear infinite}
+.sf-prof-av span{display:grid;place-items:center;width:100%;height:100%;border-radius:50%;background:#2b1530;border:3px solid #232428;color:#fff;font-weight:900;font-size:20px;animation:nzGira 3s linear infinite reverse}
+@keyframes nzGira{to{transform:rotate(360deg)}}
+.sf-prof-on{position:absolute;left:50px;top:57px;width:14px;height:14px;border-radius:50%;background:#23a55a;border:3px solid #232428}
+.sf-prof-body{padding:30px 12px 12px}
+.sf-prof-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#fff}
+.sf-prof-badge{display:grid;place-items:center;width:20px;height:20px;border-radius:6px;background:linear-gradient(135deg,#ff7ad9,#8f5bff);box-shadow:0 0 10px rgba(240,77,200,.6)}
+.sf-prof-badge svg{width:13px;height:13px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round}
+.sf-prof-user{margin-top:2px;font-size:11px;color:#9aa0a6}
+.sf-prof-user b{color:#ff7ad9}
+.sf-prof-tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.sf-prof-tags span{padding:3px 7px;border-radius:6px;background:#2e3035;color:#d4d4d8;font-size:10px;font-weight:700}
+
+/* perfil fixo (sem a janela de ativação) */
+.sf-mock:has(.sf-nzprof){height:auto !important;padding-bottom:16px}
+.sf-nzprof{position:relative !important;left:auto !important;top:auto !important;transform:none !important;opacity:1 !important;animation:none !important;width:86% !important;margin:16px auto 0}
+.sf-prof-ban{background-size:100% 100%;animation:nzBanBrilho 3s ease-in-out infinite}
+@keyframes nzBanBrilho{50%{filter:brightness(1.25) saturate(1.2)}}
+.sf-prof-nitro{height:20px;width:auto;vertical-align:middle;filter:drop-shadow(0 0 6px rgba(240,77,200,.6))}
+.sf-prof-icons{display:block;height:24px;width:auto;max-width:100%;margin-top:8px;padding:4px 6px;border-radius:8px;background:#1e1f22}
+
+/* a página da loja força img{height:auto;max-width:100%}: aqui os tamanhos são fixos */
+.sf-prof-name{white-space:nowrap}
+.sf-nzprof .sf-prof-nitro{width:22px !important;height:22px !important;max-width:none !important;object-fit:contain;flex:none}
+.sf-prof-av img{display:block;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover;border-radius:50%;border:3px solid #232428;animation:nzGira 3s linear infinite reverse}
+
+/* avatar parado (sem girar) */
+.sf-prof-av,.sf-prof-av span,.sf-prof-av img{animation:none !important;transform:none !important}
+
+/* avatar como fundo do círculo: fica sempre centralizado, sem depender das regras de imagem da loja */
+.sf-prof-av2{padding:0 !important;width:56px;height:56px;left:10px;top:18px;border-radius:50%;
+  background:url("https://cdn.erbycloud.com/attachments/17577404739915966imagem.png") center/cover no-repeat,#5865f2 !important;
+  border:3px solid #232428;box-shadow:0 0 0 3px #ff7ad9,0 0 14px rgba(240,77,200,.45)}
+
+.sf-rows{display:grid;gap:8px}
+.sf-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 14px;border-radius:12px;background:var(--sf-item);border:1px solid var(--sf-border);font-size:14px;color:#e4e4e7}
+.sf-row b{color:#fff;white-space:nowrap}
+.sf-row s{color:#8b8b93;font-size:12px;margin-right:6px}
+.sf-row--on{border-color:var(--sf-accent);background:rgba(240,77,200,.10)}
+.sf-row-tag{margin-left:8px;padding:2px 7px;border-radius:999px;background:var(--sf-accent);color:#fff;font-size:10px;font-weight:900;white-space:nowrap}
+
+.sf-cb-g{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 8px}
+.sf-cb-s{display:flex;flex-direction:column;align-items:center;gap:5px;width:62px}
+.sf-cb-s i{display:grid;place-items:center;width:46px;height:46px;border-radius:9px;background:var(--c);color:#fff;font-style:normal;font-weight:900;font-size:13px !important;line-height:1;letter-spacing:-.3px;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:none}
+.sf-cb-s small{font-size:10px !important;color:#d4d4d8;white-space:nowrap}
+.sf-cb-on i{animation:nzCbOn 10s infinite}
+@keyframes nzCbOn{0%,79%{box-shadow:0 4px 12px rgba(0,0,0,.4);transform:none}81%,96%{box-shadow:0 0 0 3px #fff;transform:scale(1.08)}}
+.sf-cb-tag{display:table !important;margin:12px auto 0 !important;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px !important;font-weight:800}
+
+.sf-yt-v{position:relative;height:118px;border-radius:10px;overflow:hidden;background:linear-gradient(135deg,#1e293b,#7f1d1d 60%,#dc2626)}
+.sf-yt-play{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:44px;height:32px;margin:-16px 0 0 -22px;border-radius:9px;background:#ff0033}
+.sf-yt-play svg{width:16px !important;height:16px !important;max-width:none !important;fill:#fff}
+.sf-yt-tag{position:absolute;left:8px;top:8px;padding:3px 7px;border-radius:6px;background:rgba(0,0,0,.6);color:#fff;font-size:9.5px;font-weight:900;letter-spacing:.4px}
+.sf-yt-bar{position:absolute;left:0;right:0;bottom:0;height:4px;background:rgba(255,255,255,.25)}
+.sf-yt-bar i{display:block;height:100%;width:0;background:#ff0033;animation:nzMusBar 10s linear infinite}
+.sf-yt-t{display:block;margin:9px 2px 8px;font-size:13px;color:#fff}
+.sf-yt-acts{display:flex;gap:6px}
+.sf-yt-b{display:inline-flex;align-items:center;gap:5px;padding:7px 11px;border-radius:999px;background:#2e3035;color:#e4e4e7;font-size:11.5px;font-weight:700}
+.sf-yt-b svg{width:13px !important;height:13px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.sf-yt-b em{font-style:normal}
+.sf-yt-dl{position:relative}
+.sf-yt-ok{display:none}
+.sf-yt-dl{animation:nzYtDl 10s infinite}
+@keyframes nzYtDl{0%,80%{background:#2e3035;color:#e4e4e7}83%,96%{background:#22c55e;color:#04140a}}
+.sf-yt-a{animation:nzYtA 10s steps(1,end) infinite}
+@keyframes nzYtA{0%,81%{font-size:11.5px}82%,97%{font-size:0}}
+.sf-yt-dl::after{content:"Baixado";font-size:0;animation:nzYtOk 10s steps(1,end) infinite}
+@keyframes nzYtOk{0%,81%{font-size:0}82%,97%{font-size:11.5px}}
+
+.sf-mock:has(.sf-scr){height:270px !important}
+.sf-mock:has(.sf-cv-art){height:300px !important}
+.sf-success.sf-scr{left:0 !important;right:0;top:44px !important;width:100% !important;transform:none !important;padding:12px 14px 4px !important;background:transparent !important;border:0 !important;box-shadow:none !important}
+.sf-scr-t{display:block;margin-bottom:10px;font-size:14px;color:#fff}
+.sf-mus-r{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;margin-bottom:4px}
+.sf-mus-on{background:rgba(255,255,255,.07)}
+.sf-mus-cap{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:6px;background:var(--c)}
+.sf-mus-cap svg{width:16px !important;height:16px !important;max-width:none !important;fill:#000}
+.sf-mus-r span{flex:1;min-width:0;display:flex;flex-direction:column}
+.sf-mus-r b{font-size:12.5px;color:#fff}.sf-mus-on b{color:var(--sf-accent)}
+.sf-mus-r small{font-size:10.5px;color:#9aa0a6}
+.sf-mus-r .sf-eq{flex:none;flex-direction:row;align-items:flex-end;gap:2px;height:14px}
+.sf-eq i{width:3px;height:100%;border-radius:2px;background:var(--sf-accent);transform-origin:bottom;animation:nzEq .9s ease-in-out infinite}
+.sf-eq i:nth-child(2){animation-delay:.2s}.sf-eq i:nth-child(3){animation-delay:.4s}.sf-eq i:nth-child(4){animation-delay:.1s}
+@keyframes nzEq{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.sf-mus-bar{height:4px;margin:10px 8px 0;border-radius:4px;background:#2e3035;overflow:hidden}
+.sf-mus-bar i{display:block;height:100%;width:0;background:var(--sf-accent);animation:nzMusBar 10s linear infinite}
+@keyframes nzMusBar{0%,72%{width:0}96%,100%{width:70%}}
+.sf-cv-tools{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.sf-cv-btn,.sf-cv-btn2{display:inline-flex;align-items:center;gap:4px;padding:6px 9px;border-radius:7px;font-size:11px;font-weight:700}
+.sf-cv-btn{background:var(--sf-accent);color:#fff}.sf-cv-btn2{background:#2e3035;color:#d4d4d8}
+.sf-cv-btn svg{width:12px !important;height:12px !important;max-width:none !important;fill:#fff}
+.sf-cv-art{position:relative;height:150px;border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#3a3b42 0 25%,#2a2b31 0 50%) 0 0/16px 16px}
+.sf-cv-bg{position:absolute;inset:0;background:linear-gradient(160deg,#38bdf8,#22c55e 55%,#f59e0b);animation:nzCvBg 10s infinite}
+@keyframes nzCvBg{0%,80%{opacity:1}85%,100%{opacity:0}}
+.sf-cv-head{position:absolute;left:50%;top:26px;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:#f5d0b5}
+.sf-cv-body{position:absolute;left:50%;top:68px;width:84px;height:90px;margin-left:-42px;border-radius:42px 42px 0 0;background:#7c3aed}
+.sf-cv-ok{position:absolute;right:8px;bottom:8px;padding:3px 8px;border-radius:999px;background:#22c55e;color:#04140a;font-size:10px;font-weight:900;opacity:0;animation:nzCvOk 10s infinite}
+@keyframes nzCvOk{0%,84%{opacity:0}87%,96%{opacity:1}100%{opacity:0}}
+
+.sf-ia-h{display:flex !important;align-items:center;gap:7px}
+.sf-ia-av{display:grid;place-items:center;flex:0 0 24px;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#4285f4,#9b72cb 55%,#d96570)}
+.sf-ia-av svg{width:13px !important;height:13px !important;max-width:none !important;fill:#fff}
+.sf-ia-u{margin-left:auto;width:fit-content;max-width:80%;padding:8px 11px;border-radius:14px 14px 4px 14px;background:#2f3341;color:#fff;font-size:12px !important;line-height:1.35;animation:nzIaU 10s infinite}
+.sf-ia-r{display:flex;gap:8px;margin-top:9px;color:#e4e4e7;font-size:12px !important;line-height:1.4;animation:nzIaR 10s infinite}
+.sf-ia-r>div{flex:1;min-width:0}
+.sf-ia-vid{position:relative;display:block;height:64px;margin-top:6px;border-radius:8px;background:linear-gradient(180deg,#38bdf8,#fde68a 62%,#f59e0b 63%,#d97706)}
+.sf-ia-vid b{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:28px;height:28px;margin:-14px 0 0 -14px;border-radius:50%;background:rgba(0,0,0,.55)}
+.sf-ia-vid b svg{width:12px !important;height:12px !important;max-width:none !important;fill:#fff}
+.sf-ia-vid small{position:absolute;right:6px;bottom:4px;font-size:9px !important;font-weight:800;color:#fff;text-shadow:0 1px 2px #000}
+.sf-ia-gpt{background:#10a37f !important}
+.sf-ia-pl{display:block;margin-top:5px;padding:5px 8px;border-radius:7px;background:#26282e;font-size:11.5px !important;color:#e4e4e7}
+.sf-ia-pl b{display:inline-block;min-width:30px;color:#10a37f;font-weight:800}
+.sf-ia-li{display:block;height:7px;margin-top:6px;border-radius:4px;background:#3f3f46}
+@keyframes nzIaU{0%,70%{opacity:0;transform:translateY(6px)}72%,100%{opacity:1;transform:none}}
+@keyframes nzIaR{0%,73%{opacity:0;transform:translateY(6px)}75.5%,100%{opacity:1;transform:none}}
+
+.sf-mc-ban{position:relative;height:122px;border-radius:10px;overflow:hidden;background:linear-gradient(180deg,#60a5fa,#93c5fd 70%)}
+.sf-mc-sol{position:absolute;right:18px;top:12px;width:22px;height:22px;background:#fde047;box-shadow:0 0 0 4px rgba(253,224,71,.35)}
+.sf-mc-chao{position:absolute;left:0;right:0;bottom:0;height:44px;background:linear-gradient(180deg,#4ade80 0 10px,#16a34a 10px 14px,#92400e 14px);background-size:auto;}
+.sf-mc-chao::before{content:"";position:absolute;left:0;right:0;top:-12px;height:12px;background:repeating-linear-gradient(90deg,#4ade80 0 22px,transparent 22px 44px)}
+.sf-mc-chao::after{content:"";position:absolute;inset:16px 0 0;background:repeating-linear-gradient(90deg,rgba(0,0,0,.12) 0 8px,transparent 8px 16px),repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 8px,transparent 8px 16px)}
+.sf-mc-t{position:absolute;left:12px;top:12px;font-size:17px !important;line-height:1;color:#fff;text-shadow:2px 2px 0 #1f2937;font-weight:900;letter-spacing:.3px}
+.sf-mc-t small{display:block;margin-top:4px;font-size:10.5px !important;font-weight:800;text-shadow:1px 1px 0 #1f2937}
+.sf-mc-play{position:absolute;left:50%;bottom:9px;transform:translateX(-50%);z-index:2;padding:7px 22px;border-radius:4px;border:2px solid #14532d;background:#22c55e;color:#fff;font-size:12px !important;font-weight:900;letter-spacing:.6px;text-shadow:1px 1px 0 #14532d;animation:nzMcP 10s infinite}
+.sf-mc-play em{font-style:normal}
+.sf-mc-play::after{content:"ABRINDO...";font-size:0;animation:nzRkB 10s steps(1,end) infinite}
+@keyframes nzMcP{0%,80%{background:#22c55e}83%,96%{background:#15803d}}
+
+.sf-rk-ban{position:relative;height:122px;border-radius:10px;overflow:hidden;padding:12px;background:linear-gradient(180deg,rgba(0,0,0,0) 30%,rgba(0,0,0,.75)),linear-gradient(135deg,#f59e0b 0%,#ea580c 35%,#9d174d 70%,#3b0764 100%)}
+.sf-rk-tag{display:inline-block;padding:3px 7px;border-radius:5px;background:rgba(0,0,0,.45);color:#fff;font-size:9px !important;font-weight:900;letter-spacing:.4px}
+.sf-rk-t{position:absolute;left:12px;bottom:12px;max-width:55%;font-size:15px !important;line-height:1.15;color:#fff}
+.sf-rk-play{position:absolute;right:12px;bottom:12px;display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:7px;background:#fcaf17;color:#111;font-size:12px !important;font-weight:800;animation:nzRkP 10s infinite}
+.sf-rk-play svg{width:12px !important;height:12px !important;max-width:none !important;fill:currentColor}
+.sf-rk-play em{font-style:normal}
+.sf-rk-b{display:none}
+.sf-rk-a{animation:nzRkA 10s steps(1,end) infinite}
+.sf-rk-play::after{content:"Abrindo...";font-size:0;animation:nzRkB 10s steps(1,end) infinite}
+@keyframes nzRkP{0%,80%{background:#fcaf17;color:#111}83%,96%{background:#22c55e;color:#04140a}}
+@keyframes nzRkA{0%,81%{font-size:12px}82%,97%{font-size:0}}
+@keyframes nzRkB{0%,81%{font-size:0}82%,97%{font-size:12px}}
+.sf-rk-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+.sf-rk-chips span{display:inline-flex;align-items:center;gap:4px;padding:5px 9px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11px !important;font-weight:800}
+.sf-rk-chips svg{width:12px !important;height:12px !important;max-width:none !important;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+
+.sf-lib-n{font-size:12px !important;color:#a1a1aa;font-weight:600}
+.sf-lib-g{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.sf-lib-j{position:relative;aspect-ratio:3/4;border-radius:6px;background:var(--g);box-shadow:0 3px 8px rgba(0,0,0,.45);overflow:hidden}
+.sf-lib-j::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.55))}
+.sf-lib-j i{position:absolute;left:4px;right:3px;bottom:3px;z-index:1;font-style:normal;font-weight:900;font-size:8px !important;line-height:1.1;color:#fff;letter-spacing:.3px}
+.sf-lib-j[data-alvo]{animation:nzLibOn 10s infinite}
+@keyframes nzLibOn{0%,79%{outline:0 solid transparent;transform:none}81%,96%{outline:2px solid #fff;transform:scale(1.06)}}
+.sf-lib-tag{display:table !important;margin:10px auto 0 !important;padding:5px 11px;border-radius:999px;background:rgba(34,197,94,.14);color:#22c55e;font-size:11.5px !important;font-weight:800}
+
+.sf-jg-col{display:flex;flex-wrap:wrap;gap:5px;padding:8px 10px 0}
+.sf-jg-col span{padding:3px 8px;border-radius:999px;background:rgba(102,192,244,.14);color:#9fd6ff;font-size:10px !important;font-weight:700}
+.sf-jg-g{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;padding:8px 8px 0}
+.sf-jg-g.sf-jg-g3{grid-template-columns:repeat(3,1fr);padding:8px 26px 0}
+.sf-jg-g.sf-jg-gw{grid-template-columns:repeat(2,1fr)}
+.sf-jg-g.sf-jg-gw i{aspect-ratio:460/215}
+.sf-jg-g.sf-jg-g2{grid-template-columns:repeat(2,1fr);padding:8px 60px 0}
+.sf-jg-g i b{position:absolute;left:0;right:0;bottom:0;padding:10px 4px 4px;background:linear-gradient(transparent,rgba(0,0,0,.85));color:#fff;font-size:8.5px !important;line-height:1.15 !important;font-weight:800;text-align:center;border-radius:0 0 5px 5px}
+.sf-jg-g i{position:relative;display:block;aspect-ratio:2/3;border-radius:5px;background-color:#2a3f5a;background-size:cover;background-position:center;box-shadow:0 3px 8px rgba(0,0,0,.4)}
+@keyframes sfBtnA{0%,44%{opacity:1}45%,96%{opacity:0}100%{opacity:1}}
+@keyframes sfBtnB{0%,44%{opacity:0}45%,66%{opacity:1}68%,100%{opacity:0}}
+.sf-success.sf-scr:has(.sf-jg){top:42px !important;bottom:0;padding-top:12px !important;background:#171d25 !important;z-index:8 !important;border-radius:0 !important;animation:nzJgOn 10s infinite !important}
+@keyframes nzJgOn{0%,67%{opacity:0}71%,95%{opacity:1}99%,100%{opacity:0}}
+.sf-jg{border-radius:10px;overflow:hidden;background:#1b2838;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+.sf-jg-cap{display:block;aspect-ratio:460/215;background-color:#2a3f5a;background-size:cover;background-position:center}
+.sf-jg-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px}
+.sf-jg-n{font-size:12.5px !important;color:#fff;line-height:1.2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.sf-jg-play{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:4px;background:linear-gradient(90deg,#47bfff,#1a44c2);color:#fff;font-size:11px !important;font-weight:800;animation:nzJgP 10s infinite}
+.sf-jg-play svg{width:11px !important;height:11px !important;max-width:none !important;fill:currentColor}
+.sf-jg-play em{font-style:normal}
+.sf-jg-b{font-style:normal;font-size:0;animation:nzRkB 10s steps(1,end) infinite}
+@keyframes nzJgP{0%,80%{filter:none}83%,96%{filter:hue-rotate(-100deg) saturate(1.3)}}
+
+.sf-cur2{animation-name:nzCur2 !important}
+@keyframes nzCur2{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:var(--x1);top:var(--y1);opacity:1}27%,40%{left:var(--x2);top:var(--y2)}43%,68%{left:var(--x3);top:var(--y3)}76%,93%{left:var(--x4);top:var(--y4);opacity:1}97%,100%{left:var(--x4);top:var(--y4);opacity:0}}
+
+.sf-cur{position:absolute;z-index:9;left:60%;top:250px;width:20px;height:20px;opacity:0;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6));animation:nzCur 10s infinite}
+.sf-cur svg{display:block;width:20px !important;height:20px !important;max-width:none !important;transform-origin:20% 10%;animation:nzClk 10s infinite}
+@keyframes nzCur{0%{left:60%;top:250px;opacity:0}3%{opacity:1}5%,24%{left:30%;top:141px;opacity:1}27%,40%{left:30%;top:180px}43%,68%{left:72%;top:214px}76%,93%{left:86%;top:125px;opacity:1}97%,100%{left:86%;top:125px;opacity:0}}
+@keyframes nzClk{0%,5.5%,7.5%,27.5%,29.5%,43.5%,45.5%,78.5%,80.5%,100%{transform:scale(1)}6.5%,28.5%,44.5%,79.5%{transform:scale(.8)}}
+
+.sf-sobre-t{margin:0;color:#d4d4d8;font-size:15px;line-height:1.6}
+.sf-sobre-g{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.sf-sobre-g span{padding:5px 10px;border-radius:999px;background:rgba(102,192,244,.12);border:1px solid rgba(102,192,244,.25);color:#9fd6ff;font-size:12.5px;font-weight:700}
+</style>
+
+
+<div class="sf-container">
+    <div class="sf-hero"><span class="sf-tag">STEAM · CONTA COMPARTILHADA</span><h2 class="sf-hero-t">SnowRunner por <span>R$ 15,99</span></h2><p class="sf-hero-s">Jogue <strong>SnowRunner</strong> no PC pagando bem menos: receba uma conta Steam compartilhada com o jogo e jogue no <strong>modo offline</strong>.</p><div class="sf-price sf-pulse"><div><span class="sf-price-k">Na Steam</span><span class="sf-price-old">R$ 99,90</span></div><div><span class="sf-price-k">Aqui</span><span class="sf-price-new">R$ 15,99</span></div><span class="sf-price-off">-84%</span><span class="sf-price-mes">Você economiza R$ 83,91.</span></div></div>
+    <!-- O QUE O PLANO OFERECE -->
+    <div class="sf-card sf-sobre"><h2 class="sf-h2">Sobre o jogo</h2><p class="sf-sobre-t">Prepare-se para a próxima geração da experiência off-road! Dirija veículos possantes e encare ambientes abertos extremos para completar dezenas de missões desafiadoras, sozinho ou com até 3 amigos!</p><div class="sf-sobre-g"><span>Aventura</span><span>Simulação</span><span>2021</span><span>Por Saber Interactive</span><span>Steam: 88% muito positivas</span></div></div>
+    <div class="sf-card">
+
+        <h2 class="sf-h2">O que você recebe</h2>
+
+        <div class="sf-list">
+
+            <div class="sf-item">
+                <span class="sf-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"></path></svg></span>
+                <div>
+                    <span class="sf-item-label">Entrega imediata</span>
+                    <span class="sf-item-text">Dados liberados automaticamente após o pagamento.</span>
+                </div>
+            </div>
+
+            <div class="sf-item">
+                <span class="sf-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><line x1="6" x2="10" y1="12" y2="12"></line><line x1="8" x2="8" y1="10" y2="14"></line><line x1="15" x2="15.01" y1="13" y2="13"></line><line x1="18" x2="18.01" y1="11" y2="11"></line><rect width="20" height="12" x="2" y="6" rx="2"></rect></svg></span>
+                <div>
+                    <span class="sf-item-label">Conta pronta para uso</span>
+                    <span class="sf-item-text">Basta logar e jogar.</span>
+                </div>
+            </div>
+
+            <div class="sf-item">
+                <span class="sf-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></span>
+                <div>
+                    <span class="sf-item-label">Jogos testados</span>
+                    <span class="sf-item-text">Funcionamento verificado antes da entrega.</span>
+                </div>
+            </div>
+
+            <div class="sf-item">
+                <span class="sf-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20h.01"></path><path d="M8.5 16.429a5 5 0 0 1 7 0"></path><path d="M5 12.859a10 10 0 0 1 5.17-2.69"></path><path d="M19 12.859a10 10 0 0 0-2.007-1.523"></path><path d="M2 8.82a15 15 0 0 1 4.177-2.643"></path><path d="M22 8.82a15 15 0 0 0-11.288-3.764"></path><path d="m2 2 20 20"></path></svg></span>
+                <div>
+                    <span class="sf-item-label">Uso offline</span>
+                    <span class="sf-item-text">Jogos exclusivos para modo offline.</span>
+                </div>
+            </div>
+
+            <div class="sf-item">
+                <span class="sf-item-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z"></path><path d="M21 16v2a4 4 0 0 1-4 4h-5"></path></svg></span>
+                <div>
+                    <span class="sf-item-label">Suporte por 7 dias</span>
+                    <span class="sf-item-text">Assistência para qualquer problema relacionado à conta.</span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMO UTILIZAR -->
+    <div class="sf-card">
+
+        <h2 class="sf-h2">Como utilizar</h2>
+
+        <div class="sf-mock">
+
+            <div class="sf-mock-bar">
+                <span>Steam</span>
+                <span>Exibir</span>
+                <span>Amigos</span>
+                <span>Jogos</span>
+            </div>
+
+            <img class="sf-cover" src="https://cdn.akamai.steamstatic.com/steam/apps/1465360/library_600x900.jpg" alt="SnowRunner">
+
+            <div class="sf-grid">
+                <div class="sf-tile sf-tile-game">
+                    <img src="https://cdn.akamai.steamstatic.com/steam/apps/1465360/library_600x900.jpg" alt="SnowRunner">
+                    <span class="sf-new">Novo</span>
+                </div>
+                <div class="sf-tile"></div>
+                <div class="sf-tile"></div>
+                <div class="sf-tile"></div>
+                <div class="sf-tile"></div>
+                <div class="sf-tile"></div>
+            </div>
+
+            <div class="sf-add">+ Adicionar um jogo...</div>
+
+            <div class="sf-dialog">
+                <div class="sf-dlg-title">Entrar</div>
+                <div class="sf-dlg-desc">Use o login e a senha que chegaram no seu pedido.</div>
+                <div class="sf-field"><span class="sf-type sf-type-1">minhaconta_sh01</span></div>
+                <div class="sf-field"><span class="sf-type sf-type-2">••••••••</span></div>
+                <div class="sf-dlg-actions">
+                    <span class="sf-btn-cancel">Cancelar</span>
+                    <span class="sf-btn-go">
+                        <span class="sf-btn-a">Entrar</span>
+                        <span class="sf-btn-b">Aguarde...</span>
+                    </span>
+                </div>
+            </div>
+
+            <span class="sf-cur sf-cur2" aria-hidden="true" style="--x1:30%;--y1:140px;--x2:30%;--y2:180px;--x3:72%;--y3:215px;--x4:50%;--y4:120px"><svg viewBox="0 0 24 24"><path d="M5 2.5v17.2l4.6-4.4 3 6.9 3.1-1.3-3-6.8h6.4z" fill="#fff" stroke="#0b0c0e" stroke-width="1.6" stroke-linejoin="round"/></svg></span><div class="sf-success sf-scr">
+                <b class="sf-scr-t">Biblioteca <small class="sf-lib-n">· modo offline</small></b>
+                <div class="sf-jg"><span class="sf-jg-cap" style="background-image:url(https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1465360/header.jpg)"></span>
+                <div class="sf-jg-row"><b class="sf-jg-n">SnowRunner</b><span class="sf-jg-play" data-alvo><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg><em class="sf-rk-a">JOGAR</em><em class="sf-jg-b">ABRINDO...</em></span></div></div>
+                <span class="sf-lib-tag">Jogo pronto na biblioteca</span>
+            </div>
+        </div>
+
+        <div class="sf-steps">
+
+            <div class="sf-step">
+                <div class="sf-step-label"><span class="sf-step-num">1</span> Passo 1</div>
+                <p class="sf-step-text">
+                    Escolha sua conta Steam compartilhada e finalize a compra de forma <strong>rápida e segura</strong>.
+                </p>
+            </div>
+
+            <div class="sf-step">
+                <div class="sf-step-label"><span class="sf-step-num">2</span> Passo 2</div>
+                <p class="sf-step-text">
+                    Receba os <strong>dados da conta</strong> automaticamente após a confirmação do pagamento.
+                </p>
+            </div>
+
+            <div class="sf-step">
+                <div class="sf-step-label"><span class="sf-step-num">3</span> Passo 3</div>
+                <p class="sf-step-text">
+                    Pronto! Entre na conta, ative o <strong>modo offline</strong> e aproveite seus jogos.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+
+        <div class="sf-card"><h2 class="sf-h2">Compre com tranquilidade</h2><div class="sf-trust"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Dados da conta</strong> liberados automaticamente após o pagamento.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Pagamento por Pix</strong> com aprovação rápida.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte por 7 dias</strong> para qualquer problema com a conta.</span></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Suporte humano</strong> no WhatsApp e no Discord se precisar de ajuda.</span></div></div></div>
+<!-- TERMOS E GARANTIA -->
+    <div class="sf-card">
+
+        <h2 class="sf-h2">Informações importantes</h2>
+
+        <div class="sf-info-box">
+
+            <h3 class="sf-info-title">LEIA ANTES DE COMPRAR</h3>
+
+            <p class="sf-info">
+                <span class="sf-highlight">Modo de uso:</span><br>
+                Apenas offline (não funciona online).
+            </p>
+
+            <p class="sf-info">
+                <span class="sf-highlight">Não compatível:</span><br>
+                GeForce Now, Boosteroid ou serviços similares.
+            </p>
+
+            <p class="sf-info">
+                <span class="sf-highlight">Dados bloqueados:</span><br>
+                Não é permitido alterar e-mail ou senha.
+            </p>
+
+            <p class="sf-info">
+                <span class="sf-highlight">Conta compartilhada:</span><br>
+                Podem ocorrer pequenas instabilidades em horários de pico.
+            </p>
+
+            <p class="sf-info">
+                <span class="sf-highlight">Atenção:</span><br>
+                Este produto é uma conta compartilhada. O uso é exclusivamente
+                offline e os dados não podem ser alterados. Ao efetuar a
+                compra, você concorda com essas condições.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!--RN-CONV--><div class="rn-dx"><div class="rn-faq"><p class="rn-faq__t">Perguntas frequentes</p><details><summary>Como e quando eu recebo?</summary><p>A entrega é <strong>automática</strong>: assim que o Pix é aprovado, tudo aparece na <strong>página do seu pedido</strong>, a qualquer hora do dia.</p></details><details><summary>Preciso de cartão de crédito?</summary><p>Não. O pagamento é por <strong>Pix</strong>, com aprovação rápida.</p></details><details><summary>Funciona online?</summary><p>Não. É uma conta Steam compartilhada para jogar no <strong>modo offline</strong>. Não funciona no GeForce Now e serviços parecidos.</p></details><details><summary>E se der algum problema?</summary><p>Fale com o nosso <strong>suporte humano</strong> no WhatsApp ou no Discord. As regras e os prazos deste produto estão descritos acima.</p></details></div><div class="sf-hero rn-cta2"><span class="sf-tag">PRONTO PARA GARANTIR?</span><h2 class="sf-hero-t">SnowRunner</h2><div class="sf-price sf-pulse"><div><span class="sf-price-k">Na Steam</span><span class="sf-price-old">R$ 99,90</span></div><div><span class="sf-price-k">Aqui</span><span class="sf-price-new">R$ 15,99</span></div><span class="sf-price-off">-84%</span><span class="sf-price-mes">Você economiza R$ 83,91.</span></div><a href="#comprar" class="rn-cta__btn" data-rn-buy>Comprar agora <span aria-hidden="true">→</span></a><p class="rn-cta__tr">Pix com aprovação rápida · Entrega automática · Suporte humano</p></div></div><!--/RN-CONV-->
+</div>
+
+</div>
