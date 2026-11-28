@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Rei Dos Nitros: prévia do site novo</title>
+<meta name="viewport" content="width=1080, height=1920">
+<link rel="stylesheet" href="./runtime/fonts.css">
+<style>
+@font-face { font-family: "Baloo 2"; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-display: block; }
+/* ACCENT = o que ainda está por vir. Só "em breve" fica verde. */
+:root { --ground: #070711; --accent: #21F167; --head: "Baloo 2", system-ui, sans-serif; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#main { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); color: #fff; }
+.scene { position: absolute; inset: 0; overflow: hidden; background: var(--ground); }
+.cam { position: absolute; inset: 0; transform-origin: 540px 960px; }
+/* a gravação real do site, sem barras do Android e do navegador: 1080 x 1831, centrada */
+.rec { position: absolute; left: 0; top: 44px; width: 1080px; height: 1831px; object-fit: cover; }
+.soft { position: absolute; inset: 0; filter: blur(var(--b, 0px)); }
+.dark { position: absolute; inset: 0; background: #05060c; opacity: 0; }
+.vig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 80% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+.head { position: absolute; left: 0; width: 1080px; text-align: center; font-family: var(--head); font-weight: 800; white-space: pre; letter-spacing: -1px; }
+</style>
+</head>
+<body>
+<div id="main">
+
+  <!-- 1 GANCHO + 2 BLACK FRIDAY (0-180): a gravação já rola; o foco abre no cupom dourado -->
+  <section id="s1" class="scene">
+    <div id="cam1" class="cam"><div id="soft1" class="soft"><video id="v1" class="rec" src="clips/c1.webm" data-start="0" muted playsinline preload="auto"></video></div></div>
+    <div id="dark1" class="dark"></div>
+    <div class="vig"></div>
+    <div id="h1a" class="head" style="top:800px;font-size:112px;line-height:124px">Olha como tá</div>
+    <div id="h1b" class="head" style="top:928px;font-size:112px;line-height:124px">ficando o site novo</div>
+  </section>
+
+  <!-- 3 COMUNIDADE, SUPORTE, CATEGORIAS (180-300) -->
+  <section id="s2" class="scene">
+    <div id="cam2" class="cam"><video id="v2" class="rec" src="clips/c2.webm" data-start="6" muted playsinline preload="auto"></video></div>
+    <div class="vig"></div>
+  </section>
+
+  <!-- 4 PRODUTOS E STREAMING (300-420) -->
+  <section id="s3" class="scene">
+    <div id="cam3" class="cam"><video id="v3" class="rec" src="clips/c3.webm" data-start="10" muted playsinline preload="auto"></video></div>
+    <div class="vig"></div>
+  </section>
+
+  <!-- 5 EM DESTAQUE HOJE (420-525) -->
+  <section id="s4" class="scene">
+    <div id="cam4" class="cam"><video id="v4" class="rec" src="clips/c4.webm" data-start="14" muted playsinline preload="auto"></video></div>
+    <div class="vig"></div>
+  </section>
+
+  <!-- 6 CASHBACK + FAQ (525-600) e 7 FECHAMENTO (600-705) -->
+  <section id="s5" class="scene">
+    <div id="cam5" class="cam"><video id="v5" class="rec" src="clips/c5.webm" data-start="17.5" muted playsinline preload="auto"></video></div>
+    <div class="vig"></div>
+  </section>
+
+  <section id="s6" class="scene">
+    <div id="cam6" class="cam"><div id="soft6" class="soft"><video id="v6" class="rec" src="clips/c5.webm" data-start="17.5" muted playsinline preload="auto"></video></div></div>
+    <div id="dark6" class="dark"></div>
+    <div class="vig"></div>
+    <div id="t7a" class="head" style="top:880px;font-size:108px;line-height:122px">Isso é só uma prévia.</div>
+    <div id="lock" style="position:absolute;inset:0">
+      <img id="logo" src="assets/logo.jpg" style="position:absolute;left:330px;top:560px;width:420px;height:420px;border-radius:56px;box-shadow:0 40px 120px rgba(0,0,0,.7),0 0 90px rgba(33,241,103,.18)">
+      <div id="t7b" class="head" style="top:1040px;font-size:96px;line-height:110px">Mais prévias</div>
+      <div id="t7c" class="head" style="top:1150px;font-size:96px;line-height:110px;color:var(--accent)">em breve</div>
+    </div>
+  </section>
+
+</div>
+
+<script src="./runtime/vendor/gsap.min.js"></script>
+<script src="./runtime/motion.js"></script>
+<script>
+const M = Motion.film({ fps: 30, duration: 23.5, width: 1080, height: 1920, clock: 'smooth' });
+const px = v => v + 'px';
+const cam = (sel, keys) => {
+  M.kf(sel, 'scale', keys.map(k => [k[0], k[1], k[4]]));
+  M.kf(sel, 'x', keys.map(k => [k[0], k[2], k[4]]));
+  M.kf(sel, 'y', keys.map(k => [k[0], k[3], k[4]]));
+};
+
+function build() {
+  /* 1 GANCHO (0-60): a gravação real rola desfocada atrás da frase */
+  cam('#cam1', [[0, 1.2, 0, 120], [60, 1.24, 0, 260, 'softInOut'], [120, 1.18, 0, 200, 'softInOut'], [180, 1.1, 0, 0, 'softInOut']]);
+  M.kf('#soft1', '--b', [[0, 26], [56, 26], [72, 0, 'softLand']], { fmt: px });
+  M.kf('#dark1', 'opacity', [[0, .6], [56, .6], [72, 0, 'softLand']]);
+  const o = M.words('#h1a', { at: 3, mech: 'rise', dist: 80, frames: 13, gaps: [4, 5], smear: true });
+  M.words('#h1b', { at: o[o.length - 1] + 6, mech: 'rise', dist: 80, frames: 13, gaps: [4, 4, 5], smear: true });
+  M.exit('#h1a', { at: 52, frames: 9, ease: 'accelExit', to: { y: -120, blur: 8 }, hide: true });
+  M.exit('#h1b', { at: 54, frames: 9, ease: 'accelExit', to: { y: -120, blur: 8 }, hide: true });
+  /* 2 BLACK FRIDAY (60-180): foco abre no título, desce até a contagem do cupom, recua para o card inteiro */
+
+  /* 3 COMUNIDADE, SUPORTE, CATEGORIAS (180-300): corte no meio da rolagem */
+  M.cut(180, { hide: ['#s1'], show: ['#s2'] });
+  cam('#cam2', [[180, 1.3, 0, 40], [300, 1.12, 0, -40, 'glide']]);
+  M.kf('#cam2', 'rotation', [[180, -2.2], [300, 0]], { ease: 'glide' });
+
+  /* 4 PRODUTOS E STREAMING (300-420) */
+  M.cut(300, { hide: ['#s2'], show: ['#s3'] });
+  cam('#cam3', [[300, 1.34, 60, 60], [420, 1.14, -20, -30, 'glide']]);
+  M.kf('#cam3', 'rotation', [[300, 1.8], [420, 0]], { ease: 'glide' });
+
+  /* 5 EM DESTAQUE HOJE (420-525): macro nos trailers */
+  M.cut(420, { hide: ['#s3'], show: ['#s4'] });
+  cam('#cam4', [[420, 1.62, 0, -150], [470, 1.45, 0, -119, 'softLand'], [525, 1.38, 0, -110, 'glide']]);
+
+  /* 6 CASHBACK + FAQ (525-600) */
+  M.cut(525, { hide: ['#s4'], show: ['#s5'] });
+  cam('#cam5', [[525, 1.14, 0, 40], [600, 1.26, 0, -60, 'glide']]);
+  M.cut(600, { hide: ['#s5'], show: ['#s6'] });
+  cam('#cam6', [[600, 1.42, 0, -90], [705, 1.5, 0, -100, 'glide']]);
+
+  /* 7 FECHAMENTO (600-705): o site desfoca, a frase, o rei, "mais prévias em breve" */
+  M.kf('#soft6', '--b', [[0, 10], [600, 10], [612, 24, 'softLand']], { fmt: px });
+  M.kf('#dark6', 'opacity', [[0, .3], [600, .3], [612, .62, 'softLand']]);
+  const o7 = M.words('#t7a', { at: 606, mech: 'rise', dist: 80, frames: 13, gaps: [4, 4, 5], smear: true });
+  M.exit('#t7a', { at: 640, frames: 9, ease: 'accelExit', to: { y: -140, blur: 8 }, hide: true });
+  M.enter('#logo', { at: 644, frames: 20, ease: 'snapSettle', from: { scale: 3.5, blur: 14 } });
+  const o8 = M.words('#t7b', { at: 656, mech: 'rise', dist: 70, frames: 13, gaps: [5], smear: true });
+  M.words('#t7c', { at: o8[o8.length - 1] + 7, mech: 'rise', dist: 70, frames: 13, gaps: [5], smear: true });
+  M.kf('#lock', 'scale', [[0, 1], [668, 1], [680, .965, 'softInOut']]);
+}
+
+window.__ready = Motion.loaded().then(() => { build(); window.__seek(M.f(1)); window.__seek(0); if (/selftest/.test(location.search)) return Motion.selfTest(M, { samples: 24 }); });
+</script>
+</body>
+</html>
