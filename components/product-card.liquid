@@ -11,7 +11,7 @@
   {% endif %}
   class="pc-tile group select-none{% if esgotado %} is-out{% endif %}"
 >
-  <span class="pc-media">
+  <span class="pc-photo">
     <!-- Badge tipo de entrega -->
     {% if product.type != 'variante' %}
       <div class="absolute top-2 left-2 z-10 flex items-center px-1.5 py-1 rounded-full bg-white shadow-md shadow-black/30 transition-all duration-300">
@@ -55,14 +55,11 @@
     {% endif %}
   </span>
 
-  <!-- Faixa: nome, preço e seta -->
-  <span class="pc-band">
-    {% if product.images[0] %}
-      <img src="{{ product.images[0] }}" alt="" aria-hidden="true" class="pc-band-bg" loading="lazy" decoding="async">
-    {% endif %}
-    <span class="pc-text">
-      <span class="pc-name">{{ product.name }}</span>
-      <span class="pc-sub">
+  <!-- Painel: nome, preço e seta -->
+  <span class="pc-panel">
+    <span class="pc-name">{{ product.name }}</span>
+    <span class="pc-row">
+      <span class="pc-price-wrap">
         {% if product.type == 'variante' and product.variants_values.min %}
           <span class="pc-from">a partir de</span>
           <b class="pc-price">{{ product.variants_values.min.price | priceFormatter }}</b>
@@ -78,7 +75,7 @@
         {% endif %}
         {% if esgotado %}<span class="pc-out">Esgotado</span>{% endif %}
       </span>
+      <span class="pc-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
     </span>
-    <span class="pc-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
   </span>
 </a>
