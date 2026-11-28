@@ -1,58 +1,68 @@
 <style>
   :root {
+    /* ── Paleta base ─────────────────────────────────────── */
+    --color-accent:        #FF422A;   /* vermelho/laranja principal */
+    --color-accent-hover:  #FF5A45;
+    --color-accent-active: #E5361F;
+    --color-accent-soft:   rgba(255,66,42,0.12);
+    --color-accent-glow:   rgba(255,66,42,0.35);
+    --gradient-accent:     linear-gradient(135deg, #FF6B3D 0%, #FF422A 55%, #E5361F 100%);
+    --gradient-accent-hover: linear-gradient(135deg, #FF7D52 0%, #FF5A45 55%, #FF422A 100%);
+
     /* ── Backgrounds ─────────────────────────────────────── */
-    --color-bg-base:       #000000;   /* bg-black  — fundo principal das páginas */
-    --color-bg-surface:    #0a0a0a;   /* bg-neutral-950 — cards, painéis */
-    --color-bg-subtle:     #171717;   /* bg-neutral-900 — inputs, preço, variantes */
-    --color-bg-muted:      #262626;   /* bg-neutral-800 — hover, badges, thumbs */
-    --color-bg-faint:      #404040;   /* bg-neutral-700 — bordas de foco, quantity */
+    --color-bg-base:       #000000;   /* fundo principal */
+    --color-bg-surface:    #0c0908;   /* cards, painéis */
+    --color-bg-subtle:     #161110;   /* inputs, preço, variantes */
+    --color-bg-muted:      #241917;   /* hover, badges, thumbs */
+    --color-bg-faint:      #3a2724;   /* quantity, foco */
 
     /* ── Borders ─────────────────────────────────────────── */
-    --color-border:        #262626;   /* border-neutral-800 — borda padrão */
-    --color-border-subtle: #404040;   /* border-neutral-700 — borda secundária */
-    --color-border-focus:  #737373;   /* border-neutral-500 — hover/focus */
+    --color-border:        #261c1a;
+    --color-border-subtle: #3a2a27;
+    --color-border-focus:  #FF422A;
 
     /* ── Text ────────────────────────────────────────────── */
-    --color-text-primary:  #ffffff;   /* text-white — título, preço, destaque */
-    --color-text-secondary:#d4d4d4;   /* text-neutral-300 — texto de suporte */
-    --color-text-muted:    #a3a3a3;   /* text-neutral-400 — descrições, labels */
-    --color-text-faint:    #737373;   /* text-neutral-500 — textos discretos */
-    --color-text-disabled: #525252;   /* text-neutral-600 — desabilitado */
+    --color-text-primary:  #ffffff;
+    --color-text-secondary:#e5e5e5;
+    --color-text-muted:    #a8a3a2;
+    --color-text-faint:    #7a7271;
+    --color-text-disabled: #544c4b;
 
     /* ── CTA / Ação principal ────────────────────────────── */
-    --color-cta-bg:        #ffffff;   /* bg-white — botão primário */
-    --color-cta-bg-hover:  #e5e5e5;   /* hover:bg-neutral-200 */
-    --color-cta-text:      #000000;   /* text-black — texto no botão primário */
+    --color-cta-bg:        #FF422A;
+    --color-cta-bg-hover:  #FF5A45;
+    --color-cta-text:      #ffffff;
 
-    /* ── Botão secundário ────────────────────────────────── */
-    --color-btn-secondary-bg:       #171717;  /* bg-neutral-900 */
-    --color-btn-secondary-bg-hover: #262626;  /* hover:bg-neutral-800 */
+    /* ── Botão secundário (vidro escuro, como "Chat With Us") ─ */
+    --color-btn-secondary-bg:       #161110;
+    --color-btn-secondary-bg-hover: #241917;
     --color-btn-secondary-text:     #ffffff;
 
     /* ── Acentos semânticos ──────────────────────────────── */
-    --color-success:  #4ade80;   /* text-green-400  — estoque, confirmações */
-    --color-warning:  #facc15;   /* text-yellow-400 — estrelas de avaliação */
-    --color-error:    #ef4444;   /* text-red-500    — erros, alertas */
-    --color-info:     #60a5fa;   /* text-blue-400   — informações */
+    --color-success:  #4ade80;
+    --color-warning:  #FF8A3D;   /* estrelas em laranja, combinando com a paleta */
+    --color-error:    #FF422A;
+    --color-info:     #60a5fa;
 
     /* ── Overlay / Glassmorphism ─────────────────────────── */
-    --color-overlay:        rgba(0,0,0,0.80);   /* bg-black/80 — modais */
-    --color-surface-alpha:  rgba(23,23,23,0.40); /* bg-neutral-900/40 — cards translúcidos */
-    --color-surface-alpha2: rgba(23,23,23,0.60); /* bg-neutral-900/60 — headers de card */
+    --color-overlay:        rgba(0,0,0,0.80);
+    --color-surface-alpha:  rgba(22,17,16,0.45);
+    --color-surface-alpha2: rgba(22,17,16,0.65);
 
     /* ── Gradientes ──────────────────────────────────────── */
     --gradient-overlay-bottom: linear-gradient(to top, rgba(0,0,0,0.90), rgba(0,0,0,0.30), transparent);
     --gradient-overlay-right:  linear-gradient(to right, #000000, rgba(0,0,0,0.80), transparent);
+    --gradient-glow-page:      radial-gradient(ellipse 90% 55% at 50% -12%, rgba(255,66,42,0.28), rgba(255,66,42,0.06) 45%, transparent 75%);
 
     /* ── Sombras ─────────────────────────────────────────── */
-    --shadow-card:   0 20px 25px -5px rgba(0,0,0,0.4), 0 8px 10px -6px rgba(0,0,0,0.4);
-    --shadow-cta:    0 10px 15px -3px rgba(255,255,255,0.05);
+    --shadow-card:   0 20px 25px -5px rgba(0,0,0,0.5), 0 8px 10px -6px rgba(0,0,0,0.5);
+    --shadow-cta:    0 10px 25px -6px rgba(255,66,42,0.55);
 
     /* ── Border Radius ───────────────────────────────────── */
-    --radius-sm:   0.5rem;    /* rounded-lg  — 8px */
-    --radius-md:   0.75rem;   /* rounded-xl  — 12px */
-    --radius-lg:   1rem;      /* rounded-2xl — 16px */
-    --radius-xl:   1.5rem;    /* rounded-3xl — 24px */
+    --radius-sm:   0.5rem;
+    --radius-md:   0.75rem;
+    --radius-lg:   1rem;
+    --radius-xl:   1.5rem;
 
     /* ── Transição padrão ────────────────────────────────── */
     --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -159,7 +169,59 @@
   .text-yellow-400 { color: var(--color-warning) !important; }
 
   /* -- Sidebar active indicator (category page) -------------------- */
-  .sidebar-link::before { background: var(--color-text-primary); }
-  .sidebar-link.active  { background: rgba(255,255,255,0.06); }
+  .sidebar-link::before { background: var(--color-accent); }
+  .sidebar-link.active  { background: var(--color-accent-soft); }
   .sidebar-link:hover   { background: rgba(255,255,255,0.04); }
+
+  /* ================================================================
+     ACCENT #FF422A — estilo da referência (glow vermelho + CTAs em gradiente)
+     ================================================================ */
+
+  /* brilho vermelho no topo da página */
+  main.bg-black {
+    background-image: var(--gradient-glow-page) !important;
+    background-repeat: no-repeat !important;
+  }
+
+  /* CTAs: gradiente vermelho com glow */
+  .bg-white {
+    background-image: var(--gradient-accent) !important;
+  }
+  .bg-white.text-black,
+  .bg-white .text-black {
+    box-shadow: var(--shadow-cta);
+  }
+  .hover\:bg-neutral-200:hover,
+  .group:hover .group-hover\:bg-neutral-200 {
+    background-color: var(--color-cta-bg-hover) !important;
+    background-image: var(--gradient-accent-hover) !important;
+  }
+  .active\:bg-neutral-300:active {
+    background-color: var(--color-accent-active) !important;
+    background-image: none !important;
+  }
+  .shadow-white\/20 { --tw-shadow-color: var(--color-accent-glow) !important; }
+  .hover\:bg-white\/20:hover { background-color: var(--color-accent-soft) !important; }
+
+  /* focos em vermelho */
+  .focus\:border-white:focus     { border-color: var(--color-accent) !important; }
+  .focus\:ring-white\/30:focus   { --tw-ring-color: var(--color-accent-glow) !important; }
+  .focus\:ring-white:focus       { --tw-ring-color: var(--color-accent) !important; }
+  input:focus, textarea:focus, select:focus { caret-color: var(--color-accent); }
+
+  /* botões secundários com efeito vidro */
+  .bg-neutral-900.border,
+  .bg-neutral-900\/50 {
+    background-color: rgba(22,17,16,0.55) !important;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+
+  /* links e hovers de texto com toque de destaque */
+  .hover\:text-white:hover { color: var(--color-accent-hover) !important; }
+
+  ::selection { background: var(--color-accent); color: #fff; }
+
+  /* scrollbar */
+  * { scrollbar-color: var(--color-bg-faint) transparent; }
 </style>
