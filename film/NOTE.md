@@ -92,7 +92,9 @@ Todos os efeitos foram gerados na ElevenLabs (eleven_text_to_sound_v3) e posicio
 
 Embaixo de tudo há uma ambiência baixa e contínua (`audio/bed.wav`, feita com o trecho estável de `audio/amb1.mp3`), para não ficar silêncio digital entre um efeito e outro. Na primeira mixagem, o look.py acusou 6 buracos de silêncio e 2,2 s mudos no final.
 
-FILMGATES
+Números do `look.py final.mp4 --expect 20 --expect-audio` (render de 28/11, com o mouse): G0 PASS (20,00 s, áudio presente), G2 PASS, G3 PASS (repouso final de 1,03 s; último plano 13%); movimento 5,7/255, dentro da faixa humana; som em 99% da duração; **-19,1 LUFS**, LRA 8,8, pico verdadeiro -3,3 dBFS; 24 ataques sonoros; 4 de 8 cortes a até ±80 ms de um ataque (50%; em filmes profissionais, cerca de 35%).
+
+O look.py marca -19,1 LUFS como longe do alvo de -14: sem música, uma faixa só de efeitos fica naturalmente mais baixa. Na primeira versão (só 19 efeitos) ficava em -20,5 LUFS. Testei normalizar para -16 LUFS, mas os golpes perdiam o ataque, então mantive a mixagem mais dinâmica.
 
 ## O que eu ainda melhoraria
 - **Música.** O filme tem só efeitos, como pedido. Uma trilha (por exemplo, o mesmo funk da prévia v2) deixaria o volume no padrão de -14 LUFS.
