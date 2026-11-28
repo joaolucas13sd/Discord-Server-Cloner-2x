@@ -1,0 +1,488 @@
+{% assign current_category_id = params.id %}
+{% assign current_category = null %}
+
+{% for category in catalog.categories_all %}
+  {% if category.id == current_category_id or category.slug == current_category_id %}
+    {% assign current_category = category %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+<!-- Sidebar Styles -->
+<style>
+  .category-sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+  .category-sidebar::-webkit-scrollbar {
+    width: 4px;
+  }
+  .category-sidebar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .category-sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+  }
+  .category-sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  .sidebar-link {
+    position: relative;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) scaleY(0);
+    width: 3px;
+    height: 60%;
+    background: #ffffff;
+    border-radius: 0 4px 4px 0;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar-link:hover::before,
+  .sidebar-link.active::before {
+    transform: translateY(-50%) scaleY(1);
+  }
+  .sidebar-link.active {
+    background: rgba(255,255,255,0.06);
+  }
+  .sidebar-link:hover {
+    background: rgba(255,255,255,0.04);
+  }
+
+  /* Mobile overlay */
+  .sidebar-overlay {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+  .sidebar-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Mobile sidebar panel */
+  .sidebar-mobile-panel {
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sidebar-mobile-panel.open {
+    transform: translateX(0);
+  }
+
+
+</style>
+
+<div class="bg-black text-white">
+  <div class="max-w-[1440px] mx-auto p-4 sm:p-6">
+
+    {% if current_category %}
+      <!-- Breadcrumb -->
+       
+      <nav class="flex items-center space-x-2 text-sm text-neutral-500 sm:mb-6 mb-4">
+        <a href="/" class="hover:text-white transition-colors">Início</a>
+        <svg class="w-4 h-4 min-w-[16px] min-h-[16px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <a href="/categories" class="hover:text-white transition-colors">Categorias</a>
+        <svg class="w-4 h-4 min-w-[16px] min-h-[16px]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span class="text-neutral-200 font-medium line-clamp-1">{{ current_category.name }}</span>
+      </nav>
+
+      <!-- Mobile Sidebar Toggle Button -->
+      <button id="sidebar-mobile-toggle" class="lg:hidden flex items-center gap-2 mb-4 px-4 py-2.5 bg-neutral-900 border border-neutral-800 rounded-xl text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 transition-all active:scale-95">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+        Categorias
+        <span class="ml-1 px-2 py-0.5 bg-neutral-800 text-neutral-400 text-xs rounded-full">{{ catalog.categories.size }}</span>
+      </button>
+
+      <!-- Mobile Sidebar Overlay -->
+      <div id="sidebar-overlay" class="sidebar-overlay fixed inset-0 bg-black/70 backdrop-blur-sm z-[100] lg:hidden"></div>
+
+      <!-- Mobile Sidebar Panel -->
+      <div id="sidebar-mobile" class="sidebar-mobile-panel fixed top-0 left-0 bottom-0 w-[300px] bg-neutral-950 border-r border-neutral-800 z-[101] lg:hidden flex flex-col">
+        <div class="flex items-center justify-between p-4 border-b border-neutral-800">
+          <h2 class="text-base font-bold text-white">Categorias</h2>
+          <button id="sidebar-mobile-close" class="p-2 rounded-lg hover:bg-neutral-800 text-neutral-400 hover:text-white transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+        <nav class="category-sidebar flex-1 overflow-y-auto p-3">
+          {% for cat in catalog.categories_all %}
+          {% if cat.parent_category %}{% continue %}{% endif %}
+            {% assign cat_is_active = false %}
+            {% assign cat_has_active_child = false %}
+            {% if cat.id == current_category_id or cat.slug == current_category_id %}
+              {% assign cat_is_active = true %}
+            {% endif %}
+            {% if cat.sub_categories %}
+              {% for sub in cat.sub_categories %}
+                {% if sub.id == current_category_id or sub.slug == current_category_id %}
+                  {% assign cat_has_active_child = true %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+
+            <a href="/category/{% if cat.slug != blank %}{{ cat.slug }}{% else %}{{ cat.id }}{% endif %}"
+              class="sidebar-link flex items-center gap-3 px-3 py-3 rounded-xl text-sm mb-0.5 group{% if cat_is_active %} active{% endif %}"
+            >
+              <div class="flex-1 min-w-0">
+                <span class="block truncate font-medium{% if cat_is_active %} text-white{% else %} text-neutral-400 group-hover:text-white{% endif %}">{{ cat.name }}</span>
+              </div>
+              {% if cat.sub_categories and cat.sub_categories.size > 0 %}
+                <svg class="w-3.5 h-3.5 flex-shrink-0 transition-transform duration-200 text-neutral-600{% if cat_is_active or cat_has_active_child %} rotate-180{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+              {% endif %}
+            </a>
+
+            {% if cat.sub_categories and cat.sub_categories.size > 0 %}
+              <div class="ml-3 pl-3 border-l border-neutral-800/60 mb-1{% unless cat_is_active or cat_has_active_child %} hidden{% endunless %}">
+                {% for sub in cat.sub_categories %}
+                  {% assign sub_is_active = false %}
+                  {% if sub.id == current_category_id or sub.slug == current_category_id %}
+                    {% assign sub_is_active = true %}
+                  {% endif %}
+                  <a href="/category/{% if sub.slug != blank %}{{ sub.slug }}{% else %}{{ sub.id }}{% endif %}"
+                    class="sidebar-link flex items-center gap-2 px-3 py-2 rounded-xl text-sm mb-0.5 group{% if sub_is_active %} active{% endif %}"
+                  >
+                    <div class="flex-1 min-w-0">
+                      <span class="block truncate text-[12px] font-medium{% if sub_is_active %} text-white{% else %} text-neutral-500 group-hover:text-neutral-200{% endif %}">{{ sub.name }}</span>
+                    </div>
+                  </a>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </nav>
+      </div>
+
+      <!-- Layout: Sidebar + Content -->
+      <div class="flex gap-8">
+
+        <!-- Desktop Sidebar -->
+        <aside class="hidden lg:block w-[260px] flex-shrink-0">
+          <div class="sticky top-[87px]">
+            <div class="bg-neutral-950/80 backdrop-blur-xl border border-neutral-800/60 rounded-2xl overflow-hidden shadow-2xl shadow-black/30">
+              <!-- Sidebar Header -->
+              <div class="px-5 pt-5 pb-3">
+                <h2 class="text-xs font-bold uppercase tracking-[0.2em] text-neutral-500">Categorias</h2>
+              </div>
+
+              <!-- Sidebar Category List -->
+              <nav class="category-sidebar max-h-[calc(100vh-200px)] overflow-y-auto px-2 pb-3">
+                {% for cat in catalog.categories_all %}
+                {% if cat.parent_category %}{% continue %}{% endif %}
+                  {% assign cat_is_active = false %}
+                  {% assign cat_has_active_child = false %}
+                  {% if cat.id == current_category_id or cat.slug == current_category_id %}
+                    {% assign cat_is_active = true %}
+                  {% endif %}
+                  {% if cat.sub_categories %}
+                    {% for sub in cat.sub_categories %}
+                      {% if sub.id == current_category_id or sub.slug == current_category_id %}
+                        {% assign cat_has_active_child = true %}
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+
+                  <a href="/category/{% if cat.slug != blank %}{{ cat.slug }}{% else %}{{ cat.id }}{% endif %}"
+                    class="sidebar-link flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm mb-0.5 group{% if cat_is_active %} active{% endif %}"
+                  >
+                    <div class="flex-1 min-w-0">
+                      <span class="block truncate font-medium text-[13px]{% if cat_is_active %} text-white{% else %} text-neutral-400 group-hover:text-neutral-200{% endif %}">{{ cat.name }}</span>
+                    </div>
+                    {% if cat.sub_categories and cat.sub_categories.size > 0 %}
+                      <svg class="w-3.5 h-3.5 flex-shrink-0 transition-transform duration-200 text-neutral-600{% if cat_is_active or cat_has_active_child %} rotate-180{% endif %}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                      </svg>
+                    {% endif %}
+                  </a>
+
+                  {% if cat.sub_categories and cat.sub_categories.size > 0 %}
+                    <div class="ml-3 pl-3 border-l border-neutral-800/60 mb-1{% unless cat_is_active or cat_has_active_child %} hidden{% endunless %}">
+                      {% for sub in cat.sub_categories %}
+                        {% assign sub_is_active = false %}
+                        {% if sub.id == current_category_id or sub.slug == current_category_id %}
+                          {% assign sub_is_active = true %}
+                        {% endif %}
+                        <a href="/category/{% if sub.slug != blank %}{{ sub.slug }}{% else %}{{ sub.id }}{% endif %}"
+                          class="sidebar-link flex items-center gap-2 px-3 py-2 rounded-xl text-sm mb-0.5 group{% if sub_is_active %} active{% endif %}"
+                        >
+                          <div class="flex-1 min-w-0">
+                            <span class="block truncate text-[12px] font-medium{% if sub_is_active %} text-white{% else %} text-neutral-500 group-hover:text-neutral-200{% endif %}">{{ sub.name }}</span>
+                          </div>
+                        </a>
+                      {% endfor %}
+                    </div>
+                  {% endif %}
+                {% endfor %}
+              </nav>
+
+              <!-- Sidebar Footer -->
+              <div class="px-5 py-3 border-t border-neutral-800/40">
+                <a href="/categories" class="flex items-center gap-2 text-xs text-neutral-600 hover:text-neutral-300 transition-colors group">
+                  <svg class="w-4 h-4 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                  </svg>
+                  Ver todas as categorias
+                </a>
+              </div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="flex-1 min-w-0">
+
+          <!-- Category Header & Banner -->
+          <div class="mb-6">
+            <div class="flex flex-col gap-4">
+
+              <div class="flex-1">
+                <p class="text-neutral-500 text-xs font-bold uppercase tracking-[0.2em] mb-2">Coleção</p>
+                <h1 class="text-[16px] sm:text-[24px] font-black text-white tracking-tight">{{ current_category.name }}</h1>
+              </div>
+
+              {% if current_category.banner != blank %}
+                <div class="relative w-full rounded-[1rem] overflow-hidden bg-neutral-900 border border-neutral-800 shadow-2xl shadow-black/50 group" style="aspect-ratio: 960 / 200;">
+                  <img src="{{ current_category.banner }}" alt="{{ current_category.name }}" class="w-full h-full object-cover transition-transform duration-700">
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                </div>
+              {% endif %}
+
+              {% unless current_category.sub_categories.size > 0 %}
+              <div class="flex sm:flex-row items-center gap-2 w-full mt-1">
+
+                <!-- Search Input -->
+                <div class="relative flex-1 group max-w-[300px]">
+                  <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
+                    <svg class="w-5 h-5 text-neutral-500 group-focus-within:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    id="search-products"
+                    placeholder="Pesquisar produto..."
+                    class="w-full bg-neutral-900/50 border border-neutral-800 rounded-xl py-2 pl-10 pr-4 text-sm text-white placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-white/30 focus:border-white/50 focus:bg-black transition-all"
+                  >
+                </div>
+
+                <!-- Sort Dropdown -->
+                <div class="relative flex-shrink-0">
+                  <button class="sort-button-trigger flex items-center gap-2 bg-neutral-900/50 border border-neutral-800 hover:border-white/30 hover:bg-black text-neutral-400 hover:text-white px-3.5 py-2 rounded-xl transition-all text-sm font-medium group focus:outline-none focus:ring-1 focus:ring-white/30">
+                    <svg class="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12"/>
+                    </svg>
+                    <span id="sort-label">Ordenar</span>
+                    <svg class="sort-chevron w-3 h-3 text-neutral-600 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+                    </svg>
+                  </button>
+
+                  <div id="sort-dropdown" class="absolute right-0 mt-1.5 w-48 bg-neutral-950 border border-neutral-800 rounded-2xl shadow-2xl shadow-black/80 z-50 p-1.5 hidden">
+                    <p class="px-3 pt-2 pb-1 text-[10px] font-bold uppercase tracking-widest text-neutral-600">Ordenar por</p>
+                    <button class="sort-option group flex items-center gap-2.5 w-full text-left px-3 py-2 text-sm text-neutral-400 hover:text-white hover:bg-neutral-800/80 rounded-xl transition-all" data-sort="default">
+                      <svg class="w-3.5 h-3.5 text-neutral-600 group-hover:text-neutral-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h10M4 18h7"/>
+                      </svg>
+                      Padrão
+                    </button>
+                    <button class="sort-option group flex items-center gap-2.5 w-full text-left px-3 py-2 text-sm text-neutral-400 hover:text-white hover:bg-neutral-800/80 rounded-xl transition-all" data-sort="price-low">
+                      <svg class="w-3.5 h-3.5 text-neutral-600 group-hover:text-neutral-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h6"/>
+                      </svg>
+                      Menor Valor
+                    </button>
+                    <button class="sort-option group flex items-center gap-2.5 w-full text-left px-3 py-2 text-sm text-neutral-400 hover:text-white hover:bg-neutral-800/80 rounded-xl transition-all" data-sort="price-high">
+                      <svg class="w-3.5 h-3.5 text-neutral-600 group-hover:text-neutral-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4h13M3 8h9m-9 4h9"/>
+                      </svg>
+                      Maior Valor
+                    </button>
+                    <button class="sort-option group flex items-center gap-2.5 w-full text-left px-3 py-2 text-sm text-neutral-400 hover:text-white hover:bg-neutral-800/80 rounded-xl transition-all" data-sort="discount">
+                      <svg class="w-3.5 h-3.5 text-neutral-600 group-hover:text-neutral-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M17 17h.01M5.5 5.5l13 13M9 5H5.5A.5.5 0 005 5.5V9M15 19h3.5a.5.5 0 00.5-.5V15"/>
+                      </svg>
+                      Maior Desconto
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+              {% endunless %}
+
+            </div>
+          </div>
+
+          <!-- Products Grid -->
+          {% if current_category.sub_categories.size > 0 %}
+
+            <!-- Subcategory Sections -->
+            <div class="flex flex-col gap-10">
+              {% for sub in current_category.sub_categories %}
+                <div>
+                  <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
+                    <div>
+                      <p class="text-neutral-500 text-xs font-bold uppercase tracking-[0.2em] mb-1">Catálogo</p>
+                      <h2 class="text-xl sm:text-2xl font-extrabold text-white">{{ sub.name | default: 'Sem nome' }}</h2>
+                      <p class="mt-1 text-neutral-400 text-sm">Confira nossa seleção especial de produtos.</p>
+                    </div>
+                    <span class="inline-flex items-center gap-1.5 text-xs sm:text-sm text-neutral-500 flex-shrink-0">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
+                      </svg>
+                      {{ sub.products | size }} produtos
+                    </span>
+                  </div>
+
+                  {% if sub.products.size > 0 %}
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+                      {% for product in sub.products %}
+                        {% render 'product-card', product: product %}
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    <div class="text-center py-16 bg-neutral-950/50 rounded-3xl border border-neutral-900">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-14 w-14 text-neutral-800 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                      </svg>
+                      <p class="text-neutral-600 text-base">Nenhum produto cadastrado ainda.</p>
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+
+          {% elsif current_category.products.size > 0 %}
+            <div id="products-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+              {% for product in current_category.products %}
+                <div class="product-card-item">
+                  {% render 'product-card', product: product %}
+                </div>
+              {% endfor %}
+            </div>
+
+            <!-- No Results Search Message -->
+            <div id="search-no-results" class="hidden flex-col items-center justify-center text-center px-4 py-16 sm:py-24 mt-4">
+              <div class="relative mb-6">
+                <div class="absolute inset-0 bg-white/5 blur-2xl rounded-full scale-125"></div>
+                <svg class="w-20 h-20 text-neutral-800 relative z-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-white mb-2 tracking-tight">Nenhum resultado encontrado</h3>
+              <p class="text-neutral-500 max-w-xs mx-auto mb-8 text-sm">
+                Tente ajustar os filtros ou pesquisar por outro termo.
+              </p>
+              <button
+                type="button"
+                id="search-clear-button"
+                class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-neutral-200 text-black text-xs font-bold rounded-xl transition-all duration-300 shadow-lg shadow-white/5"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+                Limpar busca
+              </button>
+            </div>
+          {% else %}
+            <div class="flex flex-col items-center justify-center py-16 sm:py-24 text-neutral-500 bg-neutral-950 rounded-3xl border border-neutral-900 shadow-inner">
+              <div class="w-16 sm:w-20 h-16 sm:h-20 bg-neutral-900 rounded-full flex items-center justify-center mb-4 sm:mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 256 256" class="text-neutral-700">
+                  <path d="M232,96a7.89,7.89,0,0,0-.3-2.2L217.35,43.6A16.07,16.07,0,0,0,202,32H54A16.07,16.07,0,0,0,38.65,43.6L24.31,93.8A7.89,7.89,0,0,0,24,96h0v16a40,40,0,0,0,16,32v72a8,8,0,0,0,8,8H208a8,8,0,0,0,8-8V144a40,40,0,0,0,16-32V96ZM54,48H202l11.42,40H42.61Zm50,56h48v8a24,24,0,0,1-48,0Zm-16,0v8a24,24,0,0,1-35.12,21.26,7.88,7.88,0,0,0-1.82-1.06A24,24,0,0,1,40,112v-8ZM200,208H56V151.2a40.57,40.57,0,0,0,8,.8,40,40,0,0,0,32-16,40,40,0,0,0,64,0,40,40,0,0,0,32,16,40.57,40.57,0,0,0,8-.8Zm4.93-75.8a8.08,8.08,0,0,0-1.8,1.05A24,24,0,0,1,168,112v-8h48v8A24,24,0,0,1,204.93,132.2Z"></path>
+                </svg>
+              </div>
+              <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">Nenhum produto encontrado</h2>
+              <p class="text-neutral-600 text-sm max-w-xs text-center">Nesta categoria ainda não existem produtos disponíveis para venda.</p>
+              <a href="/" class="mt-6 sm:mt-8 px-6 sm:px-8 py-3 bg-white text-black font-bold rounded-xl hover:bg-neutral-200 transition-all duration-200 shadow-lg shadow-white/10 active:scale-95">
+                Explorar Loja
+              </a>
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+
+    {% else %}
+      <div class="flex-1 bg-black flex flex-col items-center justify-center px-4 text-center py-16 sm:py-24">
+        <div class="relative mb-6">
+          <div class="absolute inset-0 bg-white/5 blur-2xl rounded-full scale-125"></div>
+          <svg
+            class="w-20 h-20 text-neutral-800 relative z-10 mx-auto"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="1"
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+          </svg>
+        </div>
+        <h1 class="text-2xl font-bold text-white mb-2 tracking-tight">Categoria não encontrada</h1>
+        <p class="text-neutral-500 max-w-xs mx-auto mb-8 text-sm">
+          A categoria que você está procurando não existe ou foi removida.
+        </p>
+        <a href="/" class="inline-flex items-center gap-2 px-6 py-3 bg-white hover:bg-neutral-200 text-black text-xs font-bold rounded-xl transition-all duration-300 shadow-lg shadow-white/5">
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"><path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+          Voltar para a Loja
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Mobile Sidebar Script -->
+<script>
+  (function() {
+    // Reset overflow on every page load (guards against SPA navigation leaving it locked)
+    document.body.style.overflow = '';
+
+    var toggle = document.getElementById('sidebar-mobile-toggle');
+    var overlay = document.getElementById('sidebar-overlay');
+    var panel = document.getElementById('sidebar-mobile');
+    var closeBtn = document.getElementById('sidebar-mobile-close');
+
+    function openSidebar() {
+      if (overlay) overlay.classList.add('open');
+      if (panel) panel.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeSidebar() {
+      if (overlay) overlay.classList.remove('open');
+      if (panel) panel.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    if (toggle) toggle.addEventListener('click', openSidebar);
+    if (overlay) overlay.addEventListener('click', closeSidebar);
+    if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+
+    // Close sidebar when clicking any nav link inside it (before navigation)
+    if (panel) {
+      panel.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href]');
+        if (link) closeSidebar();
+      });
+    }
+  })();
+</script>
+
+<script src="{{ 'category.js' | asset_url }}"></script>

@@ -1,0 +1,62 @@
+{% assign has_category_with_subs = false %}
+{% for category in catalog.categories_all %}
+  {% if category.sub_categories and category.sub_categories.size > 0 %}
+    {% assign has_category_with_subs = true %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if has_category_with_subs %}
+  <section id="categorias-pai" class="py-10 sm:py-14 bg-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-6 sm:mb-10">
+        <div>
+          <p class="text-neutral-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Explore</p>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Categorias</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        {% for category in catalog.categories_all %}
+          {% if category.sub_categories and category.sub_categories.size > 0 %}
+            <a
+              href="/category/{{ category.slug | default: category.id }}"
+              class="group relative flex items-center gap-4 p-4 bg-neutral-950 border border-neutral-800 hover:border-neutral-500 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-black/30 hover:-translate-y-1"
+            >
+              {% if category.banner %}
+                <div
+                  class="absolute inset-0 w-full h-full opacity-20 group-hover:opacity-30 group-hover:scale-105 transition-all duration-500"
+                  style="background-image: url('{{ category.banner }}'); background-size: cover; background-position: center; background-repeat: no-repeat;"
+                ></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-neutral-950 via-neutral-950/80 to-transparent"></div>
+              {% endif %}
+
+              <div class="relative shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden bg-neutral-900 border border-neutral-800">
+                <img
+                  src="{{ category.icon }}"
+                  alt="{{ category.name | default: 'Categoria' }}"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                >
+              </div>
+
+              <div class="relative flex-1 min-w-0 flex flex-col gap-2">
+                <div class="min-w-0">
+                  <h3 class="text-white font-extrabold text-base sm:text-lg leading-tight truncate group-hover:text-neutral-200 transition-colors">
+                    {{ category.name | default: 'Sem nome' }}
+                  </h3>
+                  <p class="mt-1 text-xs sm:text-sm text-neutral-400 line-clamp-2">Visualizar produtos da categoria</p>
+                </div>
+                <span class="inline-flex items-center gap-1.5 w-fit px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl bg-white text-black text-xs sm:text-sm font-semibold transition-colors group-hover:bg-neutral-200">
+                  Ver produtos
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 256 256" fill="currentColor">
+                    <path d="M221.66,133.66l-72,72a8,8,0,0,1-11.32-11.32L196.69,136H40a8,8,0,0,1,0-16H196.69L138.34,61.66a8,8,0,0,1,11.32-11.32l72,72A8,8,0,0,1,221.66,133.66Z"></path>
+                  </svg>
+                </span>
+              </div>
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}

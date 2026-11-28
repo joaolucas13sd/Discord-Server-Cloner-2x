@@ -1,0 +1,9 @@
+{
+  "/": "pages/index.liquid",
+  "/product/:id/:variant": "pages/product.liquid",
+  "/product/:id": "pages/product.liquid",
+  "/category/:id": "pages/category.liquid",
+  "/categories": "pages/categories.liquid",
+  "/terms": "pages/terms.liquid",
+  "/cashback": "pages/cashback.liquid"
+}
