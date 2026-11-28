@@ -29,7 +29,39 @@
 - **Fora do filme:** revenda de contas, Prêmios Surpresa (raspadinha e roleta), Moedas, Skins e Outros Produtos.
 
 ## Gates (números dos scripts, no `final.mp4`)
-GATES_PLACEHOLDER
+Saídas de `look.py final.mp4 --expect 21 --expect-audio` e `lint.mjs index.html` no render final (1080×1920, obturador de 180° com 8 subquadros, grão de 0,03):
+
+| Gate | Resultado | Número |
+|---|---|---|
+| G0 o render existe | PASS | 21,00 s (esperado 21,00 s), 630 quadros, áudio presente |
+| G1 provas legíveis | por olho | Os cards aparecem com 0,74 W (trailers com 0,91 W). O preço fica com cerca de 3,7% da altura e o nome com cerca de 2,6%, um pouco abaixo dos 4%: é o tamanho real do card ampliado, sem texto redesenhado. O preço do Nitro ganha um close de 1,17×. |
+| G2 nenhum quadro vazio | PASS | nenhuma sequência com mais de 3 quadros sem mudança |
+| G3 final curto | PASS | repouso final de 1,03 s; último plano de 2,53 s = 12% |
+| G4 um herói por quadro | por olho | um herói em cada quadro da folha; dois cards juntos só durante a troca (≤ 7 quadros, em movimento) |
+| G5 sem elementos de página | PASS | `lint.mjs` |
+| Movimento | 7,6/255 | dentro da faixa humana (4,4 a 9,8) |
+| Ritmo | 13 planos, média de 1,62 s | sem contar o desfile de produtos, que troca a cada 0,46 s dentro de um plano |
+| Áudio | **-13,8 LUFS**, LRA 3,6, pico verdadeiro -3,2 dBFS | som em 99% da duração; 5 de 12 cortes a até ±80 ms de um ataque sonoro (42%; em filmes profissionais, cerca de 35%) |
+
+Rascunho: o primeiro passe cortava o título "BLACK FRIDAY", as vantagens e as categorias nas laterais. O plano do WhatsApp mostrava o carrossel deslizando, o card "Conta Nitrada" aparecia nítido na pausa e o brilho dos cards era um retângulo duro. Tudo foi corrigido antes do render final.
+
+## Quadros da folha (`look-final/sheet.jpg`)
+1. 0,6 s: Black Friday desfocada, "Olha como" batendo. Herói: a frase.
+2. 2,0 s: "Olha como tá ficando o".
+3. 3,3 s: "...ficando o site **novo**", com "novo" verde e enorme na batida mais forte da introdução.
+4. 4,6 s: Black Friday em foco: título, "Pegar o cupom dourado", contagem 00h 28m 49s e linha dos dias.
+5. 5,9 s: close da contagem recuando para os dias e "Também valendo".
+6. 7,2 s: "Comunidade no Discord", com "Entrar no servidor".
+7. 8,5 s: as quatro vantagens e "O que você procura hoje?".
+8. 9,8 s: categorias (Assinaturas, Jogos Steam) e "Produtos Discord".
+9. 11,1 s: o card do Discord Nitro sozinho no centro, logo após o flash do golpe.
+10. 12,5 s: Impulsos Servidor.
+11. 13,8 s: YouTube Premium (-78%) com o brilho passando.
+12. 15,1 s: Steam Key.
+13. 16,4 s: trailer de Marvel's Spider-Man: Miles Morales (R$ 15,99, -92%).
+14. 17,7 s: "Isso", com o card do Resident Evil 3 sumindo na câmera atrás.
+15. 19,0 s: o logo com a onda de choque verde, "Mais".
+16. 20,3 s: o logo e "Mais prévias **em breve**". Fim.
 
 ## Auto-teste de seek
 `Motion.selfTest`: 24 saltos e 194 elementos, com 20 divergências nos quadros 0, 50 e 80. Todas são do tipo `transform: none` contra a matriz identidade em camadas de chicote ainda ocultas, ou seja, iguais na imagem.
