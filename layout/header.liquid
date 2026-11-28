@@ -131,8 +131,8 @@
   header.sticky.bg-black::before {
     content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
     background: linear-gradient(180deg, rgba(12,8,7,.50) 0%, rgba(12,8,7,.30) 100%);
-    -webkit-backdrop-filter: blur(18px) saturate(180%);
-            backdrop-filter: var(--lg-bf, blur(18px) saturate(180%));
+    -webkit-backdrop-filter: blur(14px) saturate(165%);
+            backdrop-filter: blur(14px) saturate(165%);
     box-shadow: inset 0 1px 0 rgba(255,255,255,.07), 0 12px 30px -18px rgba(0,0,0,.9);
   }
   header.sticky.bg-black::after {
@@ -140,26 +140,26 @@
     background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.28) 25%, rgba(255,150,110,.5) 50%, rgba(255,255,255,.28) 75%, rgba(255,255,255,0) 100%);
   }
 
-  /* ── Logo Rei Dos Nitros (coroa + raio), piscando ───── */
-  .rdn-logo { display: block; height: 38px; width: 148px; overflow: visible;
-    animation: rdnGlow 2.8s ease-in-out infinite; transition: transform .2s; }
+  /* ── Logo Rei Dos Nitros (coroa + raio), piscando ─────
+     Só opacidade anima (roda na placa de vídeo, sem redesenhar). */
+  .rdn-home { position: relative; }
+  .rdn-glow {
+    position: absolute; left: -10px; top: 50%; width: 92px; height: 70px; margin-top: -35px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(255,66,42,.55), rgba(255,66,42,0));
+    animation: rdnPulse 2.8s ease-in-out infinite; will-change: opacity;
+  }
+  .rdn-logo { position: relative; display: block; height: 38px; width: 148px; overflow: visible;
+    filter: drop-shadow(0 0 7px rgba(255,66,42,.5));
+    animation: rdnBlink 5.6s linear infinite; will-change: opacity; transition: transform .2s; }
   @media (min-width: 640px) { .rdn-logo { height: 44px; width: 171px; } }
   a:hover > .rdn-logo { transform: scale(1.03); }
-  .rdn-bolt { animation: rdnFlicker 2.8s linear infinite; }
-  @keyframes rdnGlow {
-    0%, 100% { filter: drop-shadow(0 0 6px rgba(255,66,42,.55)); }
-    40%      { filter: drop-shadow(0 0 12px rgba(255,138,61,.85)); }
-    48%      { filter: drop-shadow(0 0 0 rgba(255,66,42,0)); }
-    52%      { filter: drop-shadow(0 0 10px rgba(255,255,255,.45)); }
-    58%      { filter: drop-shadow(0 0 3px rgba(255,66,42,.3)); }
-    64%      { filter: drop-shadow(0 0 6px rgba(255,66,42,.55)); }
+  @keyframes rdnPulse { 0%, 100% { opacity: .35; } 50% { opacity: 1; } }
+  @keyframes rdnBlink {
+    0%, 44%, 47%, 50%, 100% { opacity: 1; }
+    45.5% { opacity: .4; }
+    48.5% { opacity: .7; }
   }
-  @keyframes rdnFlicker {
-    0%, 46%, 50%, 54%, 100% { opacity: 1; }
-    48% { opacity: .25; }
-    52% { opacity: .6; }
-  }
-  @media (prefers-reduced-motion: reduce) { .rdn-logo, .rdn-bolt { animation: none; } }
+  @media (prefers-reduced-motion: reduce) { .rdn-logo, .rdn-glow { animation: none; } }
 
   /* ── Botões do header (estilo pílula com borda) ───────── */
   .hdr-ico { width: 20px; height: 20px; flex-shrink: 0; transition: transform .2s; }
@@ -306,9 +306,8 @@
     }
 
     var CFG = [
-      { sel: 'header.sticky', b: 18, s: 30, blur: 8, pseudo: true },
-      { sel: '.hdr-btn.lg-glass', b: 14, s: 28, blur: 3 },
-      { sel: '.nh-btn.lg-glass', b: 16, s: 34, blur: 3 }
+      { sel: '.hdr-btn.lg-glass:not(.lg-tinted)', b: 14, s: 28, blur: 3 },
+      { sel: '.nh-btn.lg-glass:not(.lg-tinted)', b: 16, s: 34, blur: 3 }
     ];
     function apply(el) {
       var c = el.__lgc, w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
@@ -346,7 +345,8 @@
     <div class="flex justify-between h-16">
       <div class="flex">
         <div class="flex items-center">
-          <a href="/" class="flex items-center pr-4" aria-label="{{ store.name | default: 'nome da loja' }}">
+          <a href="/" class="rdn-home flex items-center pr-4" aria-label="{{ store.name | default: 'nome da loja' }}">
+            <span class="rdn-glow" aria-hidden="true"></span>
             <svg class="rdn-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 249 64" role="img" aria-label="Rei Dos Nitros">
               <title>Rei Dos Nitros</title>
               <g class="rdn-emblem">
@@ -366,14 +366,13 @@
                 <path d="M10 50.5 H54 L52 57.5 H12 Z"/>
                 <circle cx="6" cy="13.6" r="2.8"/><circle cx="58" cy="13.6" r="2.8"/>
               </g>
-              <polygon class="rdn-bolt" points="30.5,1 41.5,1 36,17.5 44.5,17.5 27,45.5 31,27 21.5,27" fill="#fff"/></g>
+              <polygon points="30.5,1 41.5,1 36,17.5 44.5,17.5 27,45.5 31,27 21.5,27" fill="#fff"/></g>
               <g class="rdn-word">
               <defs>
-                <linearGradient id="rdnh-word" x1="75" y1="0" x2="239.47" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="repeat">
-                  <stop offset="0" stop-color="#FF8A3D"/>
-                  <stop offset=".42" stop-color="#FF422A"/><stop offset=".5" stop-color="#FFE1D8"/><stop offset=".58" stop-color="#FF422A"/>
-                  <stop offset="1" stop-color="#FF8A3D"/>
-                  <animateTransform attributeName="gradientTransform" type="translate" from="0 0" to="164.47 0" dur="4.5s" repeatCount="indefinite"/>
+                <linearGradient id="rdnh-word" x1="75" y1="0" x2="239.47" y2="0" gradientUnits="userSpaceOnUse" spreadMethod="pad">
+      <stop offset="0" stop-color="#FF8A3D"/>
+      <stop offset=".6" stop-color="#FF422A"/>
+      <stop offset="1" stop-color="#E5361F"/>
                 </linearGradient>
                 <linearGradient id="rdnh-line" x1="158.52" y1="0" x2="239.47" y2="0" gradientUnits="userSpaceOnUse">
                   <stop offset="0" stop-color="#FF422A"/><stop offset="1" stop-color="#FF8A3D" stop-opacity=".15"/>

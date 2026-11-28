@@ -1,11 +1,14 @@
 <div class="min-h-screen bg-black text-white">
   <!-- ===================== DESTAQUES (HERO NATIVO): JOGOS STEAM + FILMES ===================== -->
+  <link rel="preconnect" href="https://shared.akamai.steamstatic.com">
+  <link rel="preconnect" href="https://image.tmdb.org">
   <section class="nh" id="nh" aria-roledescription="carrossel" aria-label="Destaques do momento">
     <div class="nh-slides" id="nh-slides"></div>
     <div class="nh-dots" id="nh-dots" role="tablist" aria-label="Escolher destaque"></div>
   </section>
 
   <style>
+    #produtos > div > div { content-visibility: auto; contain-intrinsic-size: auto 760px; }
     /* O destaque ocupa o topo inteiro e passa por trás do header de vidro */
     .nh {
       position: relative; margin-top: -64px; height: clamp(560px, 82vh, 780px);
@@ -23,11 +26,23 @@
     }
     .nh-bg {
       position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 68% 28%;
-      opacity: 0; transform: scale(1.07); transition: opacity .7s ease, transform 9s cubic-bezier(.2,.6,.2,1);
+      opacity: 0; transition: opacity .7s ease;
     }
     .nh-bg.is-ready { opacity: 1; }
-    .nh-slide.is-active .nh-bg { transform: scale(1); }
-    .nh-slide.is-movie .nh-bg { filter: blur(42px) saturate(1.45) brightness(.55); transform: scale(1.35); }
+    /* zoom lento só no computador (no celular pesa) */
+    @media (min-width: 1024px) and (hover: hover) {
+      .nh-slide:not(.is-movie) .nh-bg { transform: scale(1.04); transition: opacity .7s ease, transform 8s cubic-bezier(.2,.6,.2,1); }
+      .nh-slide.is-active:not(.is-movie) .nh-bg { transform: scale(1); }
+    }
+    /* filmes no mesmo formato dos jogos: arte à direita, sumindo no fundo */
+    .nh-slide.is-movie .nh-bg { filter: blur(22px) saturate(1.4) brightness(.5); transform: scale(1.2); }
+    .nh-art {
+      position: absolute; top: 0; bottom: 0; right: max(0px, calc((100vw - 80rem) / 2)); height: 100%; width: auto; aspect-ratio: 2 / 3;
+      object-fit: cover; opacity: 0; transition: opacity .7s ease;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 28%, #000 84%, transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0%, #000 28%, #000 84%, transparent 100%);
+    }
+    .nh-art.is-ready { opacity: 1; }
     .nh-shade {
       position: absolute; inset: 0; pointer-events: none;
       -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 50%, rgba(0,0,0,.5) 76%, transparent 100%);
@@ -54,11 +69,13 @@
     .nh-label .fc-brand-img { height: 20px; filter: brightness(0) invert(1); }
     .nh-label .nh-dot-sep { width: 4px; height: 4px; border-radius: 9999px; background: #FF422A; box-shadow: 0 0 10px #FF422A; }
     .nh-h { margin: 0; line-height: 0; }
-    .nh-logo {
-      display: block; max-width: min(440px, 82%); max-height: 150px; width: auto; height: auto;
-      object-fit: contain; object-position: left bottom; margin-bottom: 20px;
-      filter: drop-shadow(0 8px 28px rgba(0,0,0,.55));
+    .nh-h .nh-title { display: block; line-height: 1.02; }
+    .nh-logo-box {
+      position: relative; display: block; overflow: hidden; width: min(var(--lw, 340px), 82%); margin-bottom: 22px;
+      filter: drop-shadow(0 8px 26px rgba(0,0,0,.55));
     }
+    .nh-logo { position: absolute; display: block; max-width: none; height: auto; opacity: 0; transition: opacity .5s ease; }
+    .nh-logo.is-ready { opacity: 1; }
     .nh-title {
       margin: 0 0 16px; font-size: clamp(34px, 4.4vw, 62px); font-weight: 900; line-height: 1.02; letter-spacing: -.025em;
       text-shadow: 0 6px 34px rgba(0,0,0,.5);
@@ -83,15 +100,6 @@
     .nh-slide.is-active .nh-content > :nth-child(4) { animation-delay: .24s; }
     @keyframes nhUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
-    /* Pôster do filme em moldura de vidro */
-    .nh-poster-wrap {
-      position: absolute; z-index: 1; right: 32px; top: 50%; height: 68%; aspect-ratio: 2 / 3;
-      padding: 7px; border-radius: 24px; transform: translateY(-44%) rotate(4deg);
-    }
-    .nh-poster-wrap.lg-glass, .nh-poster-wrap.lg-glass:hover, .nh-poster-wrap.lg-glass:active { transform: translateY(-44%) rotate(4deg); }
-    .nh-poster { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 17px; box-shadow: 0 30px 60px -24px rgba(0,0,0,.85); opacity: 0; transition: opacity .7s; }
-    .nh-poster.is-ready { opacity: 1; }
-    @media (min-width: 1024px) { .nh-poster-wrap { right: 7%; } }
 
     /* Indicadores com barra de progresso */
     .nh-dots { position: absolute; left: 0; right: 0; bottom: 30px; z-index: 3; display: flex; justify-content: center; gap: 6px; }
@@ -106,14 +114,13 @@
     @media (prefers-reduced-motion: reduce) {
       .nh-dot.is-active .fill { animation: none; transform: scaleX(1); }
       .nh-slide.is-active .nh-content > * { animation: none; }
-      .nh-bg { transition: opacity .3s; transform: none !important; }
+      .nh-slide:not(.is-movie) .nh-bg { transform: none !important; }
     }
 
     @media (min-width: 640px) and (max-width: 1023px) {
       .nh { height: clamp(500px, 70vh, 620px); }
       .nh-inner { padding: 104px 24px 96px; }
-      .nh-logo { max-height: 110px; }
-      .nh-poster-wrap { height: 58%; right: 24px; }
+      .nh-logo-box { width: min(calc(var(--lw, 340px) * .82), 76%); }
     }
 
     /* Celular: banner nativo, conteúdo embaixo */
@@ -126,9 +133,10 @@
         linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 26%),
         radial-gradient(ellipse 80% 50% at 0% 100%, rgba(255,66,42,.3), rgba(255,66,42,0) 70%); }
       .nh-bg { object-position: 72% 30%; }
+      .nh-art { right: -10%; }
       .nh-label { font-size: 10px; letter-spacing: .12em; gap: 7px; margin-bottom: 10px; }
       .nh-label .fc-brand { height: 14px; } .nh-label .fc-brand-hbo { height: 10px; } .nh-label .fc-brand-img { height: 15px; }
-      .nh-logo { max-height: 70px; max-width: 64%; margin-bottom: 10px; }
+      .nh-logo-box { width: min(var(--lwm, 200px), 64%); margin-bottom: 12px; }
       .nh-title { font-size: 28px; margin-bottom: 8px; max-width: 62%; }
       .nh-desc { font-size: 13px; line-height: 1.5; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
       .nh-actions { gap: 8px; }
@@ -136,9 +144,6 @@
       .nh-btn-ghost { padding: 0 15px; }
       .nh-btn svg { width: 16px; height: 16px; }
       .nh-btn-ghost .fc-brand { height: 15px; }
-      .nh-poster-wrap { right: 16px; top: 78px; height: 39%; padding: 5px; border-radius: 16px; transform: rotate(4deg); }
-      .nh-poster-wrap.lg-glass, .nh-poster-wrap.lg-glass:hover, .nh-poster-wrap.lg-glass:active { transform: rotate(4deg); }
-      .nh-poster { border-radius: 12px; }
       .nh-dots { bottom: 18px; }
       .nh-dot { width: 22px; } .nh-dot.is-active { width: 40px; }
     }
@@ -156,13 +161,13 @@
     var STEAM = 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/';
     var TMDB = 'https://image.tmdb.org/t/p/w780/';
     var JOGOS = [
-      { id: 1174180, nome: 'Red Dead Redemption 2', tag: 'Mais vendido na Steam',
+      { id: 1174180, crop: [0.0, 0.1722, 1.0, 0.6569], nome: 'Red Dead Redemption 2', tag: 'Mais vendido na Steam',
         texto: 'Arthur Morgan e a gangue Van der Linde em fuga pelo coração da América. Um dos jogos mais vendidos da Steam agora.', link: '/categories' },
-      { id: 1091500, nome: 'Cyberpunk 2077', tag: 'Em alta na Steam',
+      { id: 1091500, crop: [0.1297, 0.3472, 0.7937, 0.375], nome: 'Cyberpunk 2077', tag: 'Em alta na Steam',
         texto: 'Um RPG de ação em mundo aberto em Night City, a megalópole obcecada por poder, glamour e modificações corporais.', link: '/categories' },
-      { id: 3240220, nome: 'Grand Theft Auto V Enhanced', tag: 'Mais vendido na Steam',
+      { id: 3240220, crop: [0.2711, 0.0542, 0.4945, 0.8917], nome: 'Grand Theft Auto V Enhanced', tag: 'Mais vendido na Steam',
         texto: 'Grand Theft Auto V e GTA Online, agora com visuais aprimorados para a nova geração.', link: '/categories' },
-      { id: 1593500, nome: 'God of War', tag: 'Em alta na Steam',
+      { id: 1593500, crop: [0.0297, 0.2694, 0.9359, 0.375], nome: 'God of War', tag: 'Em alta na Steam',
         texto: 'Kratos e Atreus em uma jornada pelos reinos nórdicos, enfrentando deuses e monstros.', link: '/categories' }
     ];
 
@@ -283,6 +288,13 @@
 
     function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
     function tmdb(u, size) { return esc(String(u).replace(/\/t\/p\/[^/]+\//, '/t/p/' + size + '/')); }
+    function logoBox(s) {
+      var c = s.crop || [0, 0, 1, 1], ar = (c[2] * 16) / (c[3] * 9);
+      function fit(area, maxW, maxH) { var w = Math.min(maxW, Math.sqrt(area * ar)); if (w / ar > maxH) w = maxH * ar; return Math.round(w); }
+      var src = STEAM + s.id + '/logo.png', src2 = STEAM + s.id + '/logo_2x.png';
+      return '<span class="nh-logo-box" style="aspect-ratio:' + ar.toFixed(4) + ';--lw:' + fit(44000, 470, 170) + 'px;--lwm:' + fit(15000, 250, 96) + 'px">' +
+        '<img class="nh-logo" data-src="' + src + '" data-srcset="' + src + ' 1x, ' + src2 + ' 2x" alt="' + esc(s.nome) + '" decoding="async" style="width:' + (100 / c[2]).toFixed(3) + '%;left:' + (-100 * c[0] / c[2]).toFixed(3) + '%;top:' + (-100 * c[1] / c[3]).toFixed(3) + '%"></span>';
+    }
     function soSimbolo(app) { return marca(app).replace(/<span>[^<]*<\/span>/g, ''); }
     var ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
     var ICON_GRID = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>';
@@ -300,27 +312,28 @@
       el.setAttribute('aria-roledescription', 'slide');
       el.setAttribute('aria-label', (i + 1) + ' de ' + SLIDES.length + ': ' + s.nome);
       var bg = movie
-        ? 'data-src="' + tmdb(s.poster, 'w342') + '"'
-        : 'data-src="' + STEAM + s.id + '/library_hero.jpg" data-srcset="' + STEAM + s.id + '/library_hero.jpg 1920w, ' + STEAM + s.id + '/library_hero_2x.jpg 3840w" sizes="(max-width: 639px) 330vw, max(100vw, 255vh)"';
+        ? 'data-src="' + tmdb(s.poster, 'w92') + '"'
+        : 'data-src="' + STEAM + s.id + '/library_hero.jpg" data-srcset="' + STEAM + s.id + '/library_hero.jpg 1920w, ' + STEAM + s.id + '/library_hero_2x.jpg 3840w" sizes="100vw"';
       var secundario = movie
         ? '<a class="nh-btn nh-btn-ghost lg-glass" href="/categories">' + ICON_GRID + 'Ver todos os planos</a>'
         : '<a class="nh-btn nh-btn-ghost lg-glass" href="https://store.steampowered.com/app/' + s.id + '/" target="_blank" rel="noopener">' + soSimbolo('Steam') + 'Ver na Steam</a>';
       el.innerHTML =
-        '<div class="nh-media"><img class="nh-bg" ' + bg + ' alt="" decoding="async"></div>' +
+        '<div class="nh-media"><img class="nh-bg" ' + bg + ' alt="" decoding="async">' +
+          (movie ? '<img class="nh-art" data-src="' + tmdb(s.poster, 'w780') + '" data-srcset="' + tmdb(s.poster, 'w342') + ' 342w, ' + tmdb(s.poster, 'w500') + ' 500w, ' + tmdb(s.poster, 'w780') + ' 780w, ' + tmdb(s.poster, 'w1280') + ' 1280w" sizes="(max-width: 639px) 60vw, 34vw" alt="Pôster de ' + esc(s.nome) + '" decoding="async">' : '') +
+        '</div>' +
         '<div class="nh-shade"></div>' +
         '<div class="nh-inner">' +
           '<div class="nh-content">' +
             '<span class="nh-label">' + soSimbolo(app) + '<i class="nh-dot-sep"></i>' + esc(s.tag) + '</span>' +
             (movie
               ? '<h2 class="nh-title">' + esc(s.nome) + '</h2>'
-              : '<h2 class="nh-h"><img class="nh-logo" data-src="' + STEAM + s.id + '/logo.png" data-srcset="' + STEAM + s.id + '/logo.png 1x, ' + STEAM + s.id + '/logo_2x.png 2x" alt="' + esc(s.nome) + '" decoding="async"></h2>') +
+              : '<h2 class="nh-h">' + logoBox(s) + '</h2>') +
             '<p class="nh-desc">' + esc(s.texto) + '</p>' +
             '<div class="nh-actions">' +
               '<a class="nh-btn nh-btn-primary lg-glass lg-tinted" href="' + esc(s.link || '/categories') + '">' + esc(s.cta || 'Ver ofertas') + ICON_ARROW + '</a>' +
               secundario +
             '</div>' +
           '</div>' +
-          (movie ? '<div class="nh-poster-wrap lg-glass"><img class="nh-poster" data-src="' + tmdb(s.poster, 'w780') + '" data-srcset="' + tmdb(s.poster, 'w500') + ' 500w, ' + tmdb(s.poster, 'w780') + ' 780w, ' + tmdb(s.poster, 'w1280') + ' 1280w" sizes="(max-width: 639px) 140px, 360px" alt="Pôster de ' + esc(s.nome) + '" decoding="async"></div>' : '') +
         '</div>';
       wrap.appendChild(el);
 
@@ -336,18 +349,31 @@
 
     var slides = wrap.children, n = slides.length, cur = -1;
 
-    function hydrate(i) {
+    function hydrate(i, then) {
       var el = slides[(i + n) % n];
-      if (!el || el.__ok) return;
+      if (!el) return;
+      if (then) { if (el.__ready) then(); else (el.__wait = el.__wait || []).push(then); }
+      if (el.__ok) return;
       el.__ok = 1;
+      var bg = el.querySelector('.nh-bg');
       el.querySelectorAll('img[data-src]').forEach(function (img) {
-        img.addEventListener('load', function () { img.classList.add('is-ready'); });
-        img.addEventListener('error', function () { if (img.classList.contains('nh-logo')) img.remove(); else img.classList.add('is-ready'); });
+        var fired = false;
+        function done() {
+          if (fired) return; fired = true;
+          img.classList.add('is-ready');
+          if (img === bg) { el.__ready = 1; var w = el.__wait || []; el.__wait = []; w.forEach(function (f) { f(); }); }
+        }
+        img.addEventListener('load', done);
+        img.addEventListener('error', function () {
+          if (img.classList.contains('nh-logo') && img.parentNode) { img.parentNode.outerHTML = '<span class="nh-title">' + esc(img.alt) + '</span>'; return; }
+          done();
+        });
         if (img.dataset.srcset) img.srcset = img.dataset.srcset;
         img.src = img.dataset.src;
-        if (img.complete && img.naturalWidth) img.classList.add('is-ready');
+        if (img.complete && img.naturalWidth) done();
       });
     }
+    var idle = window.requestIdleCallback ? function (f) { requestIdleCallback(f, { timeout: 2500 }); } : function (f) { setTimeout(f, 900); };
     function show(i) {
       i = (i + n) % n;
       if (i === cur) return;
@@ -358,7 +384,8 @@
         dots.children[cur].setAttribute('aria-selected', 'false');
       }
       cur = i;
-      hydrate(i); hydrate(i + 1); hydrate(i - 1);
+      // só o banner atual carrega; o próximo é baixado depois, com a página ociosa
+      hydrate(i, function () { idle(function () { hydrate(i + 1); }); });
       slides[i].classList.add('is-active');
       slides[i].removeAttribute('aria-hidden');
       dots.children[i].classList.add('is-active');
@@ -411,92 +438,93 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 
     <style>
-      .categories-swiper .swiper-pagination-bullet {
-        background: #444 !important;
-        opacity: 1;
+      .cat-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+      .cat-actions { display: flex; align-items: center; gap: 14px; padding-bottom: 4px; }
+      .cat-all { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: rgba(255,255,255,.72); text-decoration: none; white-space: nowrap; transition: color .2s, gap .25s; }
+      .cat-all:hover { color: #fff; gap: 10px; }
+      .cat-all svg { width: 16px; height: 16px; }
+      .cat-nav { display: none; gap: 8px; }
+      @media (min-width: 768px) { .cat-nav { display: flex; } }
+      .cat-nav-btn { position: relative; width: 40px; height: 40px; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; color: #fff; cursor: pointer; }
+      .cat-nav-btn svg { position: relative; z-index: 2; width: 18px; height: 18px; }
+      .cat-nav-btn.swiper-button-disabled { opacity: .35; pointer-events: none; }
+      .cat-nav-btn.swiper-button-lock { display: none; }
+      .categories-swiper { padding: 6px 2px 16px !important; margin: -6px -2px 0 !important; }
+
+      /* Card de categoria: imagem + faixa com nome, quantidade e seta */
+      .cat-card {
+        position: relative; display: block; aspect-ratio: 4 / 5; border-radius: 22px; overflow: hidden; isolation: isolate; text-decoration: none;
+        background: radial-gradient(120% 80% at 50% 0%, rgba(255,66,42,.25), rgba(255,66,42,0) 62%), linear-gradient(180deg, #24140f 0%, #0d0807 100%);
+        border: 1px solid rgba(255,255,255,.10);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 18px 40px -24px rgba(0,0,0,.85);
+        transition: transform .5s cubic-bezier(.34,1.56,.64,1), border-color .3s ease, box-shadow .3s ease;
       }
-      .categories-swiper .swiper-pagination-bullet-active {
-        background: #fff !important;
+      .cat-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,.22); box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 26px 50px -24px rgba(255,66,42,.55); }
+      .cat-media { position: absolute; inset: 0; display: block; }
+      .cat-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+      .cat-card:hover .cat-img { transform: scale(1.06); }
+      .cat-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,6,5,0) 42%, rgba(10,6,5,.5) 68%, rgba(10,6,5,.92) 100%); }
+      .cat-info {
+        position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 1; display: flex; align-items: center; gap: 8px;
+        padding: 10px 8px 10px 12px; border-radius: 16px;
+        background: linear-gradient(180deg, rgba(34,20,16,.88) 0%, rgba(16,10,9,.94) 100%);
+        border: 1px solid rgba(255,255,255,.09);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 8px 20px -10px rgba(0,0,0,.7);
       }
-      .categories-nav-wrapper {
-        position: relative;
+      .cat-text { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+      .cat-name { color: #fff; font-size: 14px; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .cat-count { color: rgba(255,255,255,.58); font-size: 11.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .cat-go {
+        flex-shrink: 0; width: 34px; height: 34px; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; color: #fff;
+        background: linear-gradient(135deg, #FF8A3D 0%, #FF422A 55%, #C42415 100%);
+        box-shadow: inset 0 1px 1px rgba(255,255,255,.55), 0 6px 16px -6px rgba(255,66,42,.85);
+        transition: transform .45s cubic-bezier(.34,1.56,.64,1);
       }
-      .categories-nav-prev,
-      .categories-nav-next {
-        top: 50%;
-        transform: translateY(-50%);
-        display: flex !important;
-        align-items: center;
-        justify-content: center;
-      }
-      .categories-nav-prev::after,
-      .categories-nav-next::after {
-        display: none !important;
-      }
-      .categories-nav-prev {
-        left: -20px;
-      }
-      .categories-nav-next {
-        right: -20px;
+      .cat-go svg { width: 16px; height: 16px; }
+      .cat-card:hover .cat-go { transform: rotate(-45deg) scale(1.08); }
+      @media (max-width: 639px) {
+        .cat-card { border-radius: 18px; }
+        .cat-info { left: 6px; right: 6px; bottom: 6px; padding: 8px 6px 8px 10px; border-radius: 13px; gap: 6px; }
+        .cat-name { font-size: 13.5px; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+        .cat-count { font-size: 10.5px; }
+        .cat-go { width: 28px; height: 28px; }
+        .cat-go svg { width: 14px; height: 14px; }
       }
 
-      .categories-nav-prev.swiper-button-lock,
-      .categories-nav-next.swiper-button-lock {
-        display: none !important;
-      }
-      @media (max-width: 639px) {
-        .categories-nav-prev,
-        .categories-nav-next {
-          display: none !important;
-        }
-      }
-      .categories-swiper:not(.swiper-initialized) .swiper-wrapper {
-        display: flex;
-        gap: 12px;
-        overflow: hidden;
-      }
-      .categories-swiper:not(.swiper-initialized) .swiper-slide {
-        flex-shrink: 0;
-        width: calc((100% - 12px * 1.3) / 2.3);
-      }
-      @media (min-width: 480px) {
-        .categories-swiper:not(.swiper-initialized) .swiper-slide {
-          width: calc((100% - 14px * 2.3) / 3.3);
-        }
-      }
-      @media (min-width: 640px) {
-        .categories-swiper:not(.swiper-initialized) .swiper-slide {
-          width: calc((100% - 16px * 3.3) / 4.3);
-        }
-      }
-      @media (min-width: 768px) {
-        .categories-swiper:not(.swiper-initialized) .swiper-slide {
-          width: calc((100% - 16px * 4) / 5);
-        }
-      }
-      @media (min-width: 1024px) {
-        .categories-swiper:not(.swiper-initialized) .swiper-slide {
-          width: calc((100% - 16px * 5) / 6);
-        }
-      }
-      @media (min-width: 1280px) {
-        .categories-swiper:not(.swiper-initialized) .swiper-slide {
-          width: calc((100% - 16px * 6) / 7);
-        }
-      }
+      /* Antes do Swiper carregar */
+      .categories-swiper:not(.swiper-initialized) .swiper-wrapper { display: flex; gap: 12px; overflow: hidden; }
+      .categories-swiper:not(.swiper-initialized) .swiper-slide { flex-shrink: 0; width: calc((100% - 12px * .75) / 1.75); }
+      @media (min-width: 480px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 14px * 1.4) / 2.4); } }
+      @media (min-width: 640px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 16px * 2.3) / 3.3); } }
+      @media (min-width: 768px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 16px * 2.6) / 3.6); } }
+      @media (min-width: 1024px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 18px * 3.5) / 4.5); } }
+      @media (min-width: 1280px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 18px * 4) / 5); } }
     </style>
 
     <section id="categorias" class="py-10 sm:py-14 sm:pb-0 pb-0 bg-black">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex items-center justify-between mb-6 sm:mb-10">
+        <div class="cat-head mb-6 sm:mb-9">
           <div>
             <p class="text-neutral-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Explore</p>
             <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Categorias</h2>
           </div>
+          <div class="cat-actions">
+            <a href="/categories" class="cat-all">Ver todas
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <div class="cat-nav">
+              <button type="button" class="categories-nav-prev cat-nav-btn lg-glass" aria-label="Categorias anteriores">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              </button>
+              <button type="button" class="categories-nav-next cat-nav-btn lg-glass" aria-label="Próximas categorias">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          </div>
         </div>
 
         <div class="categories-nav-wrapper">
-          <div class="swiper categories-swiper !pb-10">
+          <div class="swiper categories-swiper">
             <div class="swiper-wrapper">
               {% for category in catalog.categories %}
                 {% if category.icon != '' and category.icon != null %}
@@ -504,30 +532,6 @@
                 {% endif %}
               {% endfor %}
             </div>
-          </div>
-          <div class="categories-nav-prev swiper-button-prev !w-10 !h-10 !bg-white !rounded-full">
-            <svg
-              class="!w-5 !h-5"
-              xmlns="http://www.w3.org/2000/svg"
-              width="11"
-              height="11"
-              fill="#000000"
-              viewBox="0 0 256 256"
-            >
-              <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path>
-            </svg>
-          </div>
-          <div class="categories-nav-next swiper-button-next !w-10 !h-10 !bg-white !rounded-full">
-            <svg
-              class="!w-5 !h-5"
-              xmlns="http://www.w3.org/2000/svg"
-              width="11"
-              height="11"
-              fill="#000000"
-              viewBox="0 0 256 256"
-            >
-              <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
-            </svg>
           </div>
         </div>
       </div>
@@ -537,16 +541,16 @@
       (function initCategoriesSwiper() {
         if (typeof Swiper === 'undefined') return setTimeout(initCategoriesSwiper, 50);
         new Swiper('.categories-swiper', {
-          slidesPerView: 2.3,
+          slidesPerView: 1.75,
           spaceBetween: 12,
           grabCursor: true,
           watchOverflow: true,
           breakpoints: {
-            480: { slidesPerView: 3.3, spaceBetween: 14 },
-            640: { slidesPerView: 4.3, spaceBetween: 16 },
-            768: { slidesPerView: 5, spaceBetween: 16 },
-            1024: { slidesPerView: 6, spaceBetween: 16 },
-            1280: { slidesPerView: 7, spaceBetween: 16 },
+            480: { slidesPerView: 2.4, spaceBetween: 14 },
+            640: { slidesPerView: 3.3, spaceBetween: 16 },
+            768: { slidesPerView: 3.6, spaceBetween: 16 },
+            1024: { slidesPerView: 4.5, spaceBetween: 18 },
+            1280: { slidesPerView: 5, spaceBetween: 18 },
           },
           navigation: {
             prevEl: '.categories-nav-prev',
