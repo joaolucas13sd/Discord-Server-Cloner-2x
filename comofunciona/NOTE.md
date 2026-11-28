@@ -58,4 +58,53 @@ A dúvida de quem compra vira o roteiro: as perguntas reais do FAQ do site apare
   - Os 3 últimos cliques ficavam só 3,5 a 4,9 dB acima do chimbal do funk. Agora a música recua 8 dB nos 0,15 s antes de cada clique do drop e volta no clique, e esses cliques subiram 2 a 3 dB.
   - O "ka-ching" do cashback foi encurtado, porque a cauda dele encobria o clique seguinte.
 
-GATES_AQUI
+## Gates (números dos scripts, no `final.mp4`)
+Saídas de `look.py final.mp4 --expect 28 --expect-audio` e `lint.mjs index.html` no render final (1080×1920, obturador de 180° com 8 subquadros, grão de 0,03):
+
+| Gate | Resultado | Número |
+|---|---|---|
+| G0 o render existe | PASS | 28,00 s (esperado 28,00 s), 840 quadros, áudio presente |
+| G1 provas legíveis | por olho | As perguntas do FAQ têm 50 px (2,6% da altura, 4,6% da largura), em linhas de 93% da largura. Os títulos das respostas têm 88 px (4,6%) e os da faixa de vantagens, 66 px. Os cards de Regras e Cashback crescem para 1,25×, com o texto marcado em 42 px (2,2%). O card do WhatsApp fica em 1,0× (texto de 26 px); quem conta a história ali é o banner, o botão e o "Suporte humano" em 66 px. A régua de 4% da altura da skill parte do formato padrão dela (16:9); em 9:16 quem limita é a largura. |
+| G2 nenhum quadro vazio | PASS | nenhuma sequência com mais de 3 quadros sem mudança |
+| G3 final curto | PASS | repouso final de 0,70 s; último plano de 1,73 s = 6% |
+| G4 um herói por quadro | por olho | um herói por quadro. Card do WhatsApp + "Suporte humano": o card tem 2,9× a área do bloco. Resumo: as 4 vantagens formam uma lista só. Na vitrine, dois cards juntos só durante a troca (7 quadros). |
+| G5 sem elementos de página | PASS | `lint.mjs`, todos os itens |
+| Movimento | 4,6/255 | dentro da faixa humana (4,4 a 9,8), na parte de baixo: o fundo é escuro e as rolagens são rápidas |
+| Áudio | **-14,2 LUFS**, LRA 4,4, pico verdadeiro -2,5 dBFS | som em 100% da duração, sem silêncio no fim; 70 efeitos |
+
+Sobre a sincronia som/corte: o look.py conta 36 "cortes", mas são eventos de visibilidade (ondas de clique, cursores aparecendo e sumindo, fim de cada rolagem). Bate com um ataque de som em ±80 ms 7 deles (19%). São justamente os que importam: os dois cortes secos (o drop em 7,37 s e o logo em 26,27 s) e as 5 ondas de clique, porque o som do clique cai no quadro do clique. As rolagens começam na batida, cada uma com um whoosh.
+
+Os cliques ficam bem acima do que toca logo antes (agudos acima de 2 kHz, 40 ms depois contra 120 ms antes, medido em `audio/mix.wav`): "+" +16,3 dB; "Falar no WhatsApp" +16,7; "Ler as regras" +11,1; "Ver meu nível" +11,9; "Ver todas" +11,4.
+
+Histórico: o primeiro render final teve o alerta "silent tail 0,77 s" (a música para na batida 56 e o impacto do logo acaba em 27,2 s). Entrou uma ambiência baixa (`amb1.mp3`, a do filme de lançamento, cerca de -31 dBFS) sob o logo, e o áudio foi remontado no mesmo vídeo (`-c:v copy`).
+
+## Quadros da folha (`look-final/sheet.jpg`)
+1. 0,9 s: "Comprou e" chegando sobre o fundo escuro com luz vermelha. Herói: as palavras.
+2. 2,6 s: "Comprou e ficou / na **dúvida?**" com a pílula vermelha, já subindo para o topo.
+3. 4,4 s: o gancho no topo e as duas primeiras perguntas do FAQ.
+4. 6,1 s: as 4 perguntas e a seta estacionada no "+" de "Como eu pago?".
+5. 7,9 s: "Relaxa." na superfície verde com grade.
+6. 9,6 s: "Como eu pago?" já aberta ("−"), um instante antes da sanfona abrir.
+7. 11,4 s: "Quanto tempo leva para eu receber?" com o "+" verde, um instante antes de abrir sozinha.
+8. 13,1 s: "Deu problema. E agora?" chegando com a rolagem, com borrão de movimento.
+9. 14,9 s: o card do WhatsApp e "Suporte humano"; a mãozinha saindo depois do clique.
+10. 16,6 s: o card Regras e Termos ampliado, "a garantia de 7 dias" marcado, mãozinha em "Ler as regras".
+11. 18,4 s: "E ainda:" e o card Cashback ampliado, mãozinha em "Ver meu nível".
+12. 20,1 s: as 4 vantagens, duas com check e a terceira acendendo.
+13. 21,9 s: "Em destaque hoje" e o Combo Poppy Playtime entrando no carrossel, com borrão.
+14. 23,6 s: "O", a primeira palavra de "O que você procura hoje?", chegando.
+15. 25,4 s: "O que você procura hoje?" com a mãozinha estacionada em "Ver todas".
+16. 27,1 s: o logo e "Rei Dos Nitros". Fim.
+
+## Auto-teste de seek
+`Motion.selfTest`: PASS, 24 saltos, 285 elementos, 0 divergências. Para isso, o carregamento visita o fim do filme antes do quadro 0, e todo tween já começa inicializado.
+
+## Regras da skill quebradas de propósito
+- **Tela coberta de cor (o verde a partir do clique):** a skill trata inundação de cor entre cenas como vício. Aqui ela acontece **uma vez**, é **causada pelo clique** e cai **no drop**: é a "virada para a cor da marca" das referências estudadas, que vocês aprovaram na proposta do estudo.
+- **"E ainda:"** é uma pílula acima do card, como ligação entre respostas. O lint não acusou "kicker" (C7).
+
+## O que eu ainda melhoraria
+- **FAQ aberto de verdade.** Com uma captura do FAQ aberto, as respostas podem usar o texto exato do site em vez das partes do site que respondem cada pergunta.
+- **Vitrine mais lenta.** Cada card fica 1 batida (0,46 s): dá para ver o jogo e o desconto, mas não para ler nome e preço. Dá para dar 2 batidas para cada um e tirar um card.
+- **Resumo.** As 4 vantagens ficam 1,4 s na tela: funciona como lembrete, não como leitura.
+- **Capturas maiores.** Com capturas de 1920 px de largura, os cards ampliados ficariam mais nítidos (hoje são ampliados de 1,72× a 2,4×).

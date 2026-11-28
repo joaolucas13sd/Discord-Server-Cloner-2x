@@ -58,6 +58,7 @@ at('whoosh.mp3', B(56) - 0.4, -5, 0, 'areverse,atempo=1.7')                  # m
 at('impact_logo.mp3', B(56), 1, 0, '', 0.165)
 at('sparkle.mp3', B(56) + 4 / 30, 2, 0, '', 0.195)                           # reflexo de lente
 at('chime.mp3', F(800), -10, 0, '', 0.03)                                    # "Rei Dos Nitros"
+at('amb1.mp3', 25.9, -21, 0, 'atrim=1:3.2,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.4,afade=t=out:st=2.0:d=0.2')   # ambiência baixa sob o logo: o fim não fica mudo
 
 DUR, TARGET = 28.0, -14.0
 # a música recua 8 dB nos 0,15 s antes de cada clique do drop e volta no clique: o chimbal não mascara o clique
