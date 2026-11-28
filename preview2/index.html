@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Rei Dos Nitros: prévia do site novo (v2)</title>
+<meta name="viewport" content="width=1080, height=1920">
+<link rel="stylesheet" href="./runtime/fonts.css">
+<style>
+@font-face { font-family: "Baloo 2"; src: url("assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-display: block; }
+/* ACCENT = o que é novo / o que está chegando ("novo", "em breve"). */
+:root { --ground: #06070d; --accent: #21F167; --head: "Baloo 2", system-ui, sans-serif; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#main { position: absolute; left: 0; top: 0; width: 1080px; height: 1920px; overflow: hidden; background: var(--ground); color: #fff; }
+#shake, #punch { position: absolute; inset: 0; transform-origin: 540px 960px; }
+.scene { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(120% 70% at 50% 45%, #0d2a20 0%, #08101a 45%, #06070d 100%); }
+.cam { position: absolute; inset: 0; transform-origin: 540px 960px; }
+.rec { position: absolute; left: 0; top: 44px; width: 1080px; height: 1831px; object-fit: cover; }
+.soft { position: absolute; inset: 0; filter: blur(var(--b, 0px)); }
+.dark { position: absolute; inset: 0; background: #04050a; opacity: 0; }
+.vig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(115% 75% at 50% 50%, rgba(0,0,0,0) 52%, rgba(0,0,0,.62) 100%); }
+.head { position: absolute; left: 0; width: 1080px; text-align: center; font-family: var(--head); font-weight: 800; white-space: pre; letter-spacing: -1px; text-shadow: 0 8px 40px rgba(0,0,0,.55); }
+.green { color: var(--accent); text-shadow: 0 0 60px rgba(33,241,103,.45), 0 8px 40px rgba(0,0,0,.5); }
+/* produtos separados: um card real recortado da gravação por batida */
+#cards { position: absolute; inset: 0; pointer-events: none; }
+.cw { position: absolute; }
+.cd, .c3 { position: absolute; inset: 0; }
+.c3 img { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 54px; box-shadow: 0 60px 110px rgba(0,0,0,.7), 0 0 140px rgba(33,241,103,.22); }
+.shine { position: absolute; inset: 0; border-radius: 54px; overflow: hidden; }
+.shine i { position: absolute; top: -25%; left: 0; width: 260px; height: 150%; background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,.09) 30%, rgba(255,255,255,.3) 50%, rgba(255,255,255,.09) 70%, rgba(255,255,255,0) 100%); filter: blur(10px); rotate: 14deg; transform: translateX(-600px); }
+#bglow { position: absolute; left: -10%; top: 10%; width: 120%; height: 80%; background: radial-gradient(closest-side, rgba(33,241,103,.42), rgba(33,241,103,0)); mix-blend-mode: screen; opacity: 0; pointer-events: none; }
+#flash { position: absolute; inset: 0; background: #ffffff; opacity: 0; pointer-events: none; }
+#gflash { position: absolute; inset: 0; background: #b8ffd4; opacity: 0; mix-blend-mode: screen; pointer-events: none; }
+#ring { position: absolute; left: 290px; top: 540px; width: 500px; height: 500px; border-radius: 50%; border: 14px solid rgba(33,241,103,.9); box-shadow: 0 0 60px rgba(33,241,103,.6), inset 0 0 60px rgba(33,241,103,.4); }
+</style>
+</head>
+<body>
+<div id="main">
+ <div id="shake"><div id="punch">
+
+  <!-- GANCHO (0-111): 8 batidas de introdução; uma palavra por batida sobre a Black Friday desfocada -->
+  <section id="s1" class="scene">
+    <div id="cam1" class="cam"><div class="soft" style="--b:14px"><img class="rec" src="assets/stills/bf.jpg"></div></div>
+    <div class="dark" style="opacity:.5"></div>
+    <div class="vig"></div>
+    <div id="hookText" class="soft" style="transform-origin:540px 900px">
+      <div id="h1" class="head" style="top:600px;font-size:128px;line-height:140px">Olha como tá</div>
+      <div id="h2" class="head" style="top:745px;font-size:128px;line-height:140px">ficando o site</div>
+      <div id="h3" class="head green" style="top:880px;font-size:260px;line-height:270px">novo</div>
+    </div>
+  </section>
+
+  <!-- DROP (111): Black Friday em foco -->
+  <section id="s2" class="scene"><div id="cam2" class="cam"><video class="rec" src="clips/k1.webm" data-start="3.7" muted playsinline preload="auto"></video></div><div class="vig"></div></section>
+  <!-- contagem do próximo cupom (138-194) -->
+  <section id="s3" class="scene"><div id="cam3" class="cam"><video class="rec" src="clips/k2.webm" data-start="4.6" muted playsinline preload="auto"></video></div><div class="vig"></div></section>
+  <!-- tour de 2 em 2 batidas -->
+  <section id="s4" class="scene"><div id="wh4" class="soft"><div id="cam4" class="cam"><video class="rec" src="clips/k3.webm" data-start="6.466667" muted playsinline preload="auto"></video></div></div><div class="vig"></div></section>
+  <section id="s5" class="scene"><div id="wh5" class="soft"><div id="cam5" class="cam"><img class="rec" src="assets/stills/whats.jpg"></div></div><div class="vig"></div></section>
+  <section id="s6" class="scene"><div id="wh6" class="soft"><div id="cam6" class="cam"><video class="rec" src="clips/k5.webm" data-start="8.3" muted playsinline preload="auto"></video></div></div><div class="vig"></div></section>
+  <section id="s7" class="scene"><div id="wh7" class="soft"><div id="cam7" class="cam"><video class="rec" src="clips/k6.webm" data-start="9.233333" muted playsinline preload="auto"></video></div></div><div class="vig"></div></section>
+
+  <!-- PAUSA (305-332): a página congela e o card do Nitro se solta -->
+  <section id="s8" class="scene">
+    <div id="cam8" class="cam"><div id="soft8" class="soft"><img class="rec" src="assets/stills/grid_nitro_nb.jpg"></div></div>
+    <div id="dark8" class="dark"></div>
+    <div class="vig"></div>
+  </section>
+
+  <!-- PRODUTOS (332-526): fundo = vitrine do site desfocada -->
+  <section id="s9" class="scene">
+    <div id="cam9" class="cam"><div class="soft" style="--b:26px"><img class="rec" src="assets/stills/grid_stream.jpg"></div></div>
+    <div class="dark" style="opacity:.55"></div>
+    <div class="vig"></div>
+  </section>
+
+  <!-- PAUSA 2 + GOLPE FINAL (526-630) -->
+  <section id="s10" class="scene">
+    <div id="cam10" class="cam"><div class="soft" style="--b:24px"><img class="rec" src="assets/stills/faq.jpg"></div></div>
+    <div class="dark" style="opacity:.62"></div>
+    <div class="vig"></div>
+  </section>
+
+  <div id="bglow"></div>
+  <div id="cards"></div>
+
+  <!-- textos do fechamento (por cima de tudo) -->
+  <div id="t9a" class="head" style="top:790px;font-size:128px;line-height:140px">Isso é só</div>
+  <div id="t9b" class="head" style="top:935px;font-size:150px;line-height:160px">uma prévia.</div>
+  <div id="ring"></div>
+  <div id="lock" style="position:absolute;inset:0;transform-origin:540px 960px">
+    <img id="logo" src="assets/logo.jpg" style="position:absolute;left:310px;top:560px;width:460px;height:460px;border-radius:60px;box-shadow:0 40px 120px rgba(0,0,0,.75),0 0 120px rgba(33,241,103,.25)">
+    <div id="t10a" class="head" style="top:1085px;font-size:118px;line-height:130px">Mais prévias</div>
+    <div id="t10b" class="head green" style="top:1215px;font-size:160px;line-height:170px">em breve</div>
+  </div>
+
+ </div></div>
+ <div id="gflash"></div>
+ <div id="flash"></div>
+</div>
+
+<script src="./runtime/vendor/gsap.min.js"></script>
+<script src="./runtime/motion.js"></script>
+<script>
+const M = Motion.film({ fps: 30, duration: 21, width: 1080, height: 1920, clock: 'smooth' });
+/* grade de batidas do funk (130,0 BPM): batida i=0 é o drop (3,6926 s do filme = 7,351 s da música) */
+const PER = 0.46157, T0 = 3.6926, B = i => Math.round(30 * (T0 + PER * i));
+const px = v => v + 'px';
+// câmera: centraliza o ponto (px,py) do quadro do site na tela (cx,cy) com escala s
+const on = (s, px_, py, cx = 540, cy = 960) => ({ scale: s, x: cx - 540 - (px_ - 540) * s, y: cy - 960 - (py - 960) * s });
+const cam = (sel, keys) => {
+  ['scale', 'x', 'y'].forEach(p => M.kf(sel, p, keys.map(k => [k[0], k[1][p], k[2]])));
+};
+
+/* ---- cards (largura de exibição 800; trailers 980) ---- */
+const CARDS = {
+  nitro: 1.4335, impulsos: 1.4299, decoracoes: 1.4266, netflix: 1.4219, youtube: 1.4276, canva: 1.4242,
+  combo: 1.4252, steamkey: 1.3133, steamjogos: 1.3102, spiderman: 1.0771, re3: 1.0725 };
+document.querySelector('#cards').innerHTML = Object.entries(CARDS).map(([k, r]) => {
+  const w = (k === 'spiderman' || k === 're3') ? 980 : 800, h = Math.round(w * r);
+  return `<div class="cw" id="cw_${k}" style="left:${540 - w / 2}px;top:${Math.round(960 - h / 2)}px;width:${w}px;height:${h}px">
+    <div class="cd" id="cd_${k}"><div class="c3" id="c3_${k}" style="transform-origin:50% 78%">
+      <img src="assets/cards/${k}.png"><div class="shine"><i id="sh_${k}"></i></div></div></div></div>`;
+}).join('');
+
+function build() {
+  gsap.set('.c3', { transformPerspective: 1700 });
+
+  /* ===== GANCHO (batidas -8..-1) ===== */
+  M.kf('#cam1', 'scale', [[0, 1.25], [B(-1), 1.4], [B(0), 2.1, 'gentleIn']]);
+  M.words('#h1', { at: B(-8) + 2, mech: 'shrink', dist: 1.8, frames: 8, gaps: [B(-7) - (B(-8) + 2), B(-6) - B(-7)] });
+  M.words('#h2', { at: B(-5), mech: 'shrink', dist: 1.8, frames: 8, gaps: [B(-4) - B(-5), 7] });
+  M.words('#h3', { at: B(-3), mech: 'shrink', dist: 2.4, frames: 9 });
+  M.kf('#hookText', 'scale', [[0, 1], [B(-1), 1], [B(0), 3.4, 'gentleIn']]);
+  M.kf('#hookText', '--b', [[0, 0], [B(-1), 0], [B(0), 26, 'gentleIn']], { fmt: px });
+  M.kf('#hookText', 'opacity', [[0, 1], [B(-1) + 6, 1], [B(0), 0]]);
+
+  /* ===== DROP: Black Friday (batidas 0-1) ===== */
+  M.cut(B(0), { hide: ['#s1'], show: ['#s2'] });
+  cam('#cam2', [[B(0), on(1.42, 434, 800)], [B(0) + 12, on(1.18, 540, 900), 'softLand'], [B(2), on(1.2, 540, 900), 'cruise']]);
+
+  /* contagem do cupom dourado (batidas 2-5): close nos dígitos, depois recua para os dias */
+  M.cut(B(2), { hide: ['#s2'], show: ['#s3'] });
+  cam('#cam3', [[B(2), on(2.6, 763, 461)], [B(2) + 8, on(2.3, 763, 461), 'softLand'], [B(4), on(2.32, 763, 461), 'cruise'],
+                [B(4) + 10, on(1.45, 540, 710), 'softInOut'], [B(6), on(1.42, 540, 710), 'cruise']]);
+
+  /* tour (batidas 6-13): cada plano entra num chicote, alternando o lado */
+  const tour = [['#s4', '#cam4', B(6), on(1.35, 467, 1164), on(1.42, 467, 1164), 1, '#wh4'],
+                ['#s5', '#cam5', B(8), on(1.3, 616, 782), on(1.4, 616, 782), -1, '#wh5'],
+                ['#s6', '#cam6', B(10), on(1.1, 540, 917), on(1.16, 540, 917), 1, '#wh6'],
+                ['#s7', '#cam7', B(12), on(1.12, 500, 985), on(1.17, 500, 985), -1, '#wh7']];
+  const prevScene = ['#s3', '#s4', '#s5', '#s6'];
+  tour.forEach(([sc, cm, f, a, b, d, wh], i) => {
+    M.cut(f, { hide: [prevScene[i]], show: [sc] });
+    cam(cm, [[f, a], [f + 28, b, 'cruise']]);
+    M.whip(wh, { at: f, from: { x: d * 320 }, dx: -d * 320, frames: 7, smearPx: 70 });   // entra num chicote, alternando o lado
+  });
+
+  /* ===== PAUSA (batidas 14-15): a página congela, o card do Nitro se solta ===== */
+  M.cut(B(14), { hide: ['#s7'], show: ['#s8'] });
+  const PS = 1.06;
+  cam('#cam8', [[B(14), { scale: PS, x: 0, y: 300 }], [B(14) + 6, { scale: PS, x: 0, y: 0 }, 'softLand']]);
+  M.kf('#soft8', '--b', [[0, 0], [B(14) + 6, 0], [B(14) + 18, 14, 'softInOut']], { fmt: px });
+  M.kf('#dark8', 'opacity', [[0, 0], [B(14) + 6, 0], [B(14) + 18, .62, 'softInOut']]);
+  // pose inicial = exatamente sobre o card da página (centro 284,4 / 1076,5 no quadro do site; largura 481,25)
+  const L0 = B(14) + 6, nx = 540 + (284.4 - 540) * PS - 540, ny = 960 + (1076.5 - 960) * PS - 960, ns = 481.25 * PS / 800;
+  M.show('#cw_nitro', L0);
+  M.kf('#cw_nitro', 'x', [[0, nx], [L0, nx], [L0 + 7, nx, 'cruise'], [B(16), 0, 'softInOut']]);
+  M.kf('#cw_nitro', 'y', [[0, ny], [L0, ny], [L0 + 7, ny - 36, 'softLand'], [B(16), 0, 'softInOut']]);
+  M.kf('#cd_nitro', 'scale', [[0, ns], [L0, ns], [L0 + 7, ns * 1.1, 'softLand'], [B(16), 1, 'softInOut']]);
+  M.kf('#c3_nitro', 'rotationY', [[0, 0], [L0, 0], [L0 + 9, -26, 'softInOut'], [B(16), 0, 'softLand']]);
+
+  /* ===== PRODUTOS (batidas 16-29): um por batida ===== */
+  M.cut(B(16), { hide: ['#s8'], show: ['#s9'] });
+  M.kf('#cam9', 'scale', [[B(16), 1.15], [B(30), 1.22]], { ease: 'cruise' });
+  M.kf('#cam9', 'y', [[B(16), 0], [B(30), -300]], { ease: 'cruise' });
+  // Nitro: golpe no drop da volta, depois close no preço
+  M.kf('#c3_nitro', 'scale', [[0, 1], [B(17), 1], [B(17) + 10, 1.17, 'softLand']]);
+  M.exit('#cw_nitro', { at: B(18), frames: 7, ease: 'accelExit', to: { x: -1150, rotation: -10 }, smear: { axis: 'x', px: 70, frames: 3 } });
+  const seq = [['impulsos', 18, 1], ['decoracoes', 19, -1], ['netflix', 20, 1], ['youtube', 21, -1], ['canva', 22, 1],
+               ['combo', 23, -1], ['steamkey', 24, 1], ['steamjogos', 25, -1]];
+  seq.forEach(([k, b, d], i) => {
+    const f = B(b), nf = B(b + 1);
+    M.enter('#cw_' + k, { at: f, frames: 8, ease: 'softLand', from: { x: d * 1150, rotation: d * 9 }, smear: { axis: 'x', px: 80, frames: 3 } });
+    M.kf('#c3_' + k, 'rotationY', [[0, d * 38], [f, d * 38], [f + 9, 0, 'softLand']]);
+    M.kf('#cd_' + k, 'scale', [[0, 1], [f + 8, 1], [nf + 7, 1.04, 'cruise']]);
+    if (i < seq.length - 1) {
+      const nd = seq[i + 1][2];
+      M.exit('#cw_' + k, { at: nf, frames: 7, ease: 'accelExit', to: { x: -nd * 1150, rotation: -nd * 10 }, smear: { axis: 'x', px: 70, frames: 3 } });
+    }
+  });
+  // Jogos Steam sai recuando; Spider-Man entra girando (trailer)
+  M.exit('#cw_steamjogos', { at: B(26), frames: 8, ease: 'accelExit', to: { y: 380, scale: .55, blur: 14 } });
+  M.enter('#cw_spiderman', { at: B(26), frames: 10, ease: 'softLand', from: { scale: .82 } });
+  M.kf('#c3_spiderman', 'rotationY', [[0, 88], [B(26), 88], [B(26) + 11, 0, 'softLand']]);
+  M.kf('#cd_spiderman', 'scale', [[0, 1], [B(26) + 10, 1], [B(28) + 6, 1.05, 'cruise']]);
+  M.exit('#cw_spiderman', { at: B(28), frames: 7, ease: 'accelExit', to: { y: -1500 }, smear: { axis: 'y', px: 90, frames: 3 } });
+  // Resident Evil 3 sobe de baixo e, na pausa, mergulha na câmera
+  M.enter('#cw_re3', { at: B(28), frames: 8, ease: 'softLand', from: { y: 1500 }, smear: { axis: 'y', px: 90, frames: 3 } });
+  M.kf('#c3_re3', 'rotationY', [[0, 0], [B(28), 0], [B(29), 0], [B(30), -8, 'softInOut']]);
+  M.kf('#cd_re3', 'scale', [[0, 1], [B(28) + 8, 1], [B(30), 1.06, 'cruise'], [B(30) + 6, 2.8, 'gentleIn']]);
+  M.kf('#cd_re3', 'opacity', [[0, 1], [B(30) + 1, 1], [B(30) + 6, 0, 'cruise']]);
+  M.hide('#cw_re3', B(30) + 6);
+  // brilho passando em cada card
+  const shineAt = { nitro: [B(16) + 2, B(17) + 3], impulsos: [B(18) + 4], decoracoes: [B(19) + 4], netflix: [B(20) + 4], youtube: [B(21) + 4],
+                    canva: [B(22) + 4], combo: [B(23) + 4], steamkey: [B(24) + 4], steamjogos: [B(25) + 4], spiderman: [B(26) + 8], re3: [B(28) + 6] };
+  Object.entries(shineAt).forEach(([k, fs]) => {
+    const keys = [[0, -600]];
+    fs.forEach(f => { keys.push([f, -600], [f + 10, 1100, 'softInOut']); });
+    M.kf('#sh_' + k, 'x', keys);
+  });
+
+  /* ===== PAUSA 2 (batidas 30-31) e GOLPE FINAL (32) ===== */
+  M.cut(B(30), { hide: ['#s9'], show: ['#s10'] });
+  M.kf('#cam10', 'scale', [[B(30), 1.12], [630, 1.24]], { ease: 'cruise' });
+  M.words('#t9a', { at: B(30) + 4, mech: 'shrink', dist: 1.7, frames: 7, gaps: [5, 5] });
+  M.words('#t9b', { at: B(31), mech: 'shrink', dist: 1.7, frames: 7, gaps: [6] });
+  M.exit('#t9a', { at: B(32) - 5, frames: 5, ease: 'accelExit', to: { y: -180, blur: 12 }, hide: true });
+  M.exit('#t9b', { at: B(32) - 5, frames: 5, ease: 'accelExit', to: { y: -180, blur: 12 }, hide: true });
+  M.enter('#logo', { at: B(32), frames: 12, ease: 'snapSettle', from: { scale: 3.5, blur: 14 } });
+  M.show('#ring', B(32), B(32) + 20);
+  M.kf('#ring', 'scale', [[0, .3], [B(32), .3], [B(32) + 20, 3.4, 'softLand']]);
+  M.kf('#ring', 'opacity', [[0, 1], [B(32), 1], [B(32) + 20, 0, 'cruise']]);
+  M.words('#t10a', { at: B(33), mech: 'rise', dist: 70, frames: 10, gaps: [5], smear: true });
+  M.words('#t10b', { at: B(34), mech: 'shrink', dist: 1.8, frames: 8, gaps: [6] });
+  M.kf('#lock', 'scale', [[0, 1], [B(34) + 2, 1], [B(35) + 4, .97, 'softInOut']]);
+
+  /* ===== efeitos amarrados à batida ===== */
+  // zoom de impacto (punch) no palco inteiro
+  const punches = [[B(-8) + 2, .012], [B(-7), .012], [B(-6), .012], [B(-5), .012], [B(-4), .012], [B(-3), .03], [B(-2), .02],
+    [B(0), .05], [B(1), .02], [B(2), .04], [B(3), .025], [B(5), .02], [B(7), .02], [B(9), .02], [B(11), .02], [B(13), .02],
+    [B(16), .05], [B(26), .03], [B(27), .02], [B(28), .03], [B(29), .02], [B(32), .06], [B(33), .015]];
+  const pk = [[0, 1]];
+  punches.forEach(([f, a]) => { pk.push([f, 1], [f + 1, 1 + a, 'cruise'], [f + 8, 1, 'softLand']); });
+  M.kf('#punch', 'scale', pk);
+  // tremidas (determinísticas)
+  const shakes = [[B(-3), 9, 6], [B(0), 18, 10], [B(16), 14, 9], [B(26), 6, 5], [B(28), 6, 5], [B(32), 22, 13]];
+  const PX = [1, -.75, .55, -.95, .7, -.45, .35, -.6, .3, -.2, .15, -.1, .05], PY = [-.6, .9, -.8, .4, -.7, .55, -.35, .25, -.3, .2, -.1, .08, -.04];
+  const sx = [[0, 0]], sy = [[0, 0]];
+  shakes.forEach(([f, a, n]) => {
+    sx.push([f, 0]); sy.push([f, 0]);
+    for (let k = 1; k < n; k++) { const d = a * Math.pow(.82, k); sx.push([f + k, d * PX[k % PX.length]]); sy.push([f + k, d * PY[k % PY.length]]); }
+    sx.push([f + n, 0]); sy.push([f + n, 0]);
+  });
+  M.kf('#shake', 'x', sx); M.kf('#shake', 'y', sy);
+  // flashes (branco nos golpes, verde nos cortes de batida)
+  const fl = [[0, 0]], gf = [[0, 0]];
+  [[B(0), .85], [B(16), .6], [B(32), .95]].forEach(([f, a]) => fl.push([f, 0], [f, a], [f + 6, 0, 'softLand']));
+  [[B(-3), .28], [B(2), .3], [B(26), .3], [B(28), .25], [B(34), .2]].forEach(([f, a]) => gf.push([f, 0], [f, a], [f + 5, 0, 'softLand']));
+  M.kf('#flash', 'opacity', fl); M.kf('#gflash', 'opacity', gf);
+  // pulso de luz verde a cada batida (gancho, produtos, fechamento)
+  const gl = [[0, 0]];
+  const pulse = (f, a, base) => { gl.push([f, base], [f, a], [f + 10, base, 'softLand']); };
+  for (let i = -8; i <= -1; i++) pulse(B(i) + (i === -8 ? 2 : 0), i === -3 ? .9 : .55, .12);
+  gl.push([B(-1) + 12, .12], [B(0), 0]);
+  for (let i = 16; i <= 29; i++) pulse(B(i), i === 16 || i >= 26 ? .7 : .45, .14);
+  gl.push([B(29) + 12, .14], [B(30), .1]);
+  pulse(B(32), 1, .3); pulse(B(33), .5, .3); pulse(B(34), .55, .3);
+  M.kf('#bglow', 'opacity', gl);
+}
+
+window.__ready = Motion.loaded().then(() => { build(); window.__seek(M.f(1)); window.__seek(0); if (/selftest/.test(location.search)) return Motion.selfTest(M, { samples: 24 }); });
+</script>
+</body>
+</html>
