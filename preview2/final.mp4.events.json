@@ -90,10 +90,22 @@
   "label": "hide #s1 show #s2"
  },
  {
+  "t": 4.1667,
+  "frame": 125,
+  "type": "press",
+  "label": "clique #hit_cupom"
+ },
+ {
   "t": 4.6,
   "frame": 138,
   "type": "cut",
   "label": "hide #s2 show #s3"
+ },
+ {
+  "t": 4.6,
+  "frame": 138,
+  "type": "hide",
+  "label": "#cur"
  },
  {
   "t": 6.4667,
@@ -108,6 +120,18 @@
   "label": "#wh4"
  },
  {
+  "t": 6.5667,
+  "frame": 197,
+  "type": "show",
+  "label": "#cur"
+ },
+ {
+  "t": 6.9333,
+  "frame": 208,
+  "type": "press",
+  "label": "clique #hit_discord"
+ },
+ {
   "t": 7.4,
   "frame": 222,
   "type": "cut",
@@ -118,6 +142,24 @@
   "frame": 222,
   "type": "whip",
   "label": "#wh5"
+ },
+ {
+  "t": 7.4,
+  "frame": 222,
+  "type": "hide",
+  "label": "#cur"
+ },
+ {
+  "t": 7.5,
+  "frame": 225,
+  "type": "show",
+  "label": "#cur"
+ },
+ {
+  "t": 7.8333,
+  "frame": 235,
+  "type": "press",
+  "label": "clique #hit_whats"
  },
  {
   "t": 8.3,
@@ -132,6 +174,12 @@
   "label": "#wh6"
  },
  {
+  "t": 8.3,
+  "frame": 249,
+  "type": "hide",
+  "label": "#cur"
+ },
+ {
   "t": 9.2333,
   "frame": 277,
   "type": "cut",
@@ -144,10 +192,28 @@
   "label": "#wh7"
  },
  {
+  "t": 9.3333,
+  "frame": 280,
+  "type": "show",
+  "label": "#cur"
+ },
+ {
+  "t": 9.7,
+  "frame": 291,
+  "type": "press",
+  "label": "clique #hit_ver"
+ },
+ {
   "t": 10.1667,
   "frame": 305,
   "type": "cut",
   "label": "hide #s7 show #s8"
+ },
+ {
+  "t": 10.1667,
+  "frame": 305,
+  "type": "hide",
+  "label": "#cur"
  },
  {
   "t": 10.3667,
@@ -162,6 +228,18 @@
   "label": "hide #s8 show #s9"
  },
  {
+  "t": 11.1333,
+  "frame": 334,
+  "type": "show",
+  "label": "#cur"
+ },
+ {
+  "t": 11.5333,
+  "frame": 346,
+  "type": "press",
+  "label": "clique #hit_nitro"
+ },
+ {
   "t": 12,
   "frame": 360,
   "type": "exit",
@@ -174,6 +252,12 @@
   "label": "#cw_impulsos"
  },
  {
+  "t": 12.0667,
+  "frame": 362,
+  "type": "hide",
+  "label": "#cur"
+ },
+ {
   "t": 12.4667,
   "frame": 374,
   "type": "exit",
@@ -270,6 +354,18 @@
   "label": "#cw_spiderman"
  },
  {
+  "t": 15.8667,
+  "frame": 476,
+  "type": "show",
+  "label": "#cur"
+ },
+ {
+  "t": 16.1667,
+  "frame": 485,
+  "type": "press",
+  "label": "clique #hit_trailer"
+ },
+ {
   "t": 16.6,
   "frame": 498,
   "type": "exit",
@@ -280,6 +376,12 @@
   "frame": 498,
   "type": "enter",
   "label": "#cw_re3"
+ },
+ {
+  "t": 16.6,
+  "frame": 498,
+  "type": "hide",
+  "label": "#cur"
  },
  {
   "t": 17.5333,
