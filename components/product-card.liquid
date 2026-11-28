@@ -1,3 +1,5 @@
+{%- assign esgotado = false -%}
+{%- if product.type != 'variante' and product.type != 'texto' and product.stock_amount <= 0 -%}{%- assign esgotado = true -%}{%- endif -%}
 <a
   href="/product/{{ product.slug | default: product.id }}"
   {% if product.type == 'variante' %}
@@ -7,9 +9,9 @@
     data-price="{{ product.price | default: 0 }}"
     data-comparison="{{ product.comparison | default: 0 }}"
   {% endif %}
-  class="select-none h-full group bg-neutral-950 border border-neutral-800 hover:border-neutral-500 rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-black/30 flex flex-col"
+  class="pc-tile group select-none{% if esgotado %} is-out{% endif %}"
 >
-  <div class="relative aspect-[16/9] bg-neutral-900 overflow-hidden">
+  <span class="pc-media">
     <!-- Badge tipo de entrega -->
     {% if product.type != 'variante' %}
       <div class="absolute top-2 left-2 z-10 flex items-center px-1.5 py-1 rounded-full bg-white shadow-md shadow-black/30 transition-all duration-300">
@@ -30,15 +32,10 @@
       </div>
     {% endif %}
 
-    <!-- Imagem do produto -->
     {% if product.images[0] %}
-      <img
-        src="{{ product.images[0] }}"
-        alt="{{ product.name }}"
-        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-      >
+      <img src="{{ product.images[0] }}" alt="{{ product.name }}" class="pc-img" loading="lazy" decoding="async">
     {% else %}
-      <div class="w-full h-full flex flex-col items-center justify-center gap-2 text-neutral-700">
+      <span class="pc-noimg">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-12 w-12"
@@ -49,98 +46,39 @@
         >
           <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
-        <span class="text-xs">Sem imagem</span>
-      </div>
+        <span>Sem imagem</span>
+      </span>
     {% endif %}
-  </div>
 
-  <!-- Info do produto -->
-  <div class="flex-1 p-2.5 sm:p-3 flex flex-col justify-between">
-    <h3 class="text-white font-semibold text-xs sm:text-sm leading-snug group-hover:text-neutral-300 transition-colors line-clamp-2">
-      {{ product.name }}
-    </h3>
+    {% if product.type != 'variante' and product.discount_percentage and product.discount_percentage > 0 and product.comparison > product.price %}
+      <span class="pc-off">-{{ product.discount_percentage }}%</span>
+    {% endif %}
+  </span>
 
-    <div class="flex flex-col">
-      <div class="pt-2.5 sm:pt-4 flex items-end justify-between gap-1">
-        <!-- Preços -->
-        <div class="min-w-0 flex-1">
-          {% if product.type == 'variante' and product.variants_values.min %}
-            <p class="flex gap-1 items-center text-base sm:text-xl font-extrabold text-white truncate">
-              {{ product.variants_values.min.price | priceFormatter }}
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#ffffff" viewBox="0 0 256 256">
-                <path d="M228,128a12,12,0,0,1-12,12H140v76a12,12,0,0,1-24,0V140H40a12,12,0,0,1,0-24h76V40a12,12,0,0,1,24,0v76h76A12,12,0,0,1,228,128Z"></path>
-              </svg>
-            </p>
+  <!-- Faixa: nome, preço e seta -->
+  <span class="pc-band">
+    {% if product.images[0] %}
+      <img src="{{ product.images[0] }}" alt="" aria-hidden="true" class="pc-band-bg" loading="lazy" decoding="async">
+    {% endif %}
+    <span class="pc-text">
+      <span class="pc-name">{{ product.name }}</span>
+      <span class="pc-sub">
+        {% if product.type == 'variante' and product.variants_values.min %}
+          <span class="pc-from">a partir de</span>
+          <b class="pc-price">{{ product.variants_values.min.price | priceFormatter }}</b>
+        {% else %}
+          {% if product.price == 0 %}
+            <b class="pc-price">Grátis</b>
           {% else %}
-            {% if product.comparison and product.comparison > 0 and product.price < product.comparison %}
-              <div class="flex items-center gap-1.5">
-                <p class="text-xs text-neutral-600 line-through truncate">
-                  {{ product.comparison | priceFormatter }}
-                </p>
-                {% if product.discount_percentage and product.discount_percentage > 0 %}
-                  <span class="text-[10px] sm:text-xs font-bold text-green-400 px-0.5 py-0.5 rounded-md">
-                    -{{ product.discount_percentage }}%
-                  </span>
-                {% endif %}
-              </div>
-            {% endif %}
-
-            <div class="flex justify-between gap-2">
-              <p class="text-base sm:text-xl font-extrabold text-white truncate">
-                {% if product.price == 0 %}
-                  <span class="text-neutral-300">Grátis</span>
-                {% else %}
-                  {{ product.price | priceFormatter }}
-                {% endif %}
-              </p>
-
-              <!-- Estoque -->
-              <div class="text-right flex-shrink-0">
-                {% unless product.type == 'variante' %}
-                  {% if  product.type != 'texto' %}
-                    {% if product.stock_amount > 0 %}
-                      <span class="text-[10px] sm:text-xs text-neutral-400 font-medium">
-                        {{- product.stock_amount }} estoque</span
-                      >
-                    {% else %}
-                      <span class="text-[10px] sm:text-xs text-neutral-500 font-medium">Indisponível</span>
-                    {% endif %}
-                  {% else %}
-                    <span class="text-[10px] sm:text-xs text-neutral-400 font-medium">Disponível</span>
-                  {% endif %}
-                {% endunless %}
-              </div>
-            </div>
+            <b class="pc-price">{{ product.price | priceFormatter }}</b>
           {% endif %}
-        </div>
-      </div>
-
-      <!-- Botão comprar -->
-      {% if product.type == 'variante' %}
-        <button
-          type="button"
-          class="mt-2.5 sm:mt-4 w-full py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 bg-white hover:bg-neutral-200 text-black hover:shadow-md hover:shadow-black/20"
-        >
-          Ver Detalhes
-        </button>
-      {% else %}
-        <button
-          type="button"
-          class="
-            mt-2.5 sm:mt-4 w-full py-2 sm:py-2.5 px-3 sm:px-4 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200
-            {% if product.stock_amount > 0 %}
-              bg-white hover:bg-neutral-200 text-black hover:shadow-md hover:shadow-black/20
-            {% else %}
-              bg-neutral-900 text-neutral-600 cursor-not-allowed border border-neutral-800
-            {% endif %}
-          "
-          {% if product.stock_amount == 0 %}
-            disabled
+          {% if product.comparison and product.comparison > 0 and product.price < product.comparison %}
+            <s class="pc-old">{{ product.comparison | priceFormatter }}</s>
           {% endif %}
-        >
-          {% if product.stock_amount > 0 %}Comprar Agora{% else %}Sem estoque{% endif %}
-        </button>
-      {% endif %}
-    </div>
-  </div>
+        {% endif %}
+        {% if esgotado %}<span class="pc-out">Esgotado</span>{% endif %}
+      </span>
+    </span>
+    <span class="pc-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+  </span>
 </a>

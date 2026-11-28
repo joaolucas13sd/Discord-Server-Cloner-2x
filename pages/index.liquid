@@ -9,32 +9,25 @@
 
   <style>
     #produtos > div > div { content-visibility: auto; contain-intrinsic-size: auto 760px; }
-    /* O destaque ocupa o topo inteiro e passa por trás do header de vidro */
+
+    /* Destaque: arte de ponta a ponta, por trás do header; faixa de vitrine na base */
     .nh {
       position: relative; margin-top: -64px; height: clamp(560px, 82vh, 780px);
-      overflow: hidden; isolation: isolate; color: #fff; touch-action: pan-y;
+      overflow: hidden; isolation: isolate; color: #fff; touch-action: pan-y; --nh-band: 150px;
     }
     .nh-slides { position: absolute; inset: 0; }
     .nh-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .9s ease, visibility 0s linear .9s; }
     .nh-slide.is-active { opacity: 1; visibility: visible; z-index: 1; transition: opacity .9s ease; }
-
-    /* Arte: se dissolve no fundo do site embaixo */
-    .nh-media {
-      position: absolute; inset: 0;
-      -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, rgba(0,0,0,.55) 78%, transparent 100%);
-              mask-image: linear-gradient(180deg, #000 0%, #000 55%, rgba(0,0,0,.55) 78%, transparent 100%);
-    }
+    .nh-media { position: absolute; inset: 0; }
     .nh-bg {
       position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 68% 28%;
       opacity: 0; transition: opacity .7s ease;
     }
     .nh-bg.is-ready { opacity: 1; }
-    /* zoom lento só no computador (no celular pesa) */
     @media (min-width: 1024px) and (hover: hover) {
       .nh-slide:not(.is-movie) .nh-bg { transform: scale(1.04); transition: opacity .7s ease, transform 8s cubic-bezier(.2,.6,.2,1); }
       .nh-slide.is-active:not(.is-movie) .nh-bg { transform: scale(1); }
     }
-    /* filmes no mesmo formato dos jogos: arte à direita, sumindo no fundo */
     .nh-slide.is-movie .nh-bg { filter: blur(22px) saturate(1.4) brightness(.5); transform: scale(1.2); }
     .nh-art {
       position: absolute; top: 0; bottom: 0; right: max(0px, calc((100vw - 80rem) / 2)); height: 100%; width: auto; aspect-ratio: 2 / 3;
@@ -45,64 +38,68 @@
     .nh-art.is-ready { opacity: 1; }
     .nh-shade {
       position: absolute; inset: 0; pointer-events: none;
-      -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 50%, rgba(0,0,0,.5) 76%, transparent 100%);
-              mask-image: linear-gradient(180deg, #000 0%, #000 50%, rgba(0,0,0,.5) 76%, transparent 100%);
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.84) 0%, rgba(0,0,0,.58) 30%, rgba(0,0,0,.14) 56%, rgba(0,0,0,0) 72%),
-        linear-gradient(180deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 22%),
-        radial-gradient(ellipse 55% 65% at 0% 88%, rgba(255,66,42,.30), rgba(255,66,42,0) 70%);
+      background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 22%), linear-gradient(0deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 46%);
     }
 
-    /* Conteúdo alinhado com o logo do header */
-    .nh-inner {
-      position: absolute; inset: 0; max-width: 80rem; margin: 0 auto;
-      padding: 120px 32px 108px; display: flex; align-items: center;
+    /* Faixa */
+    .nh-band {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; height: var(--nh-band);
+      background: linear-gradient(180deg, rgba(10,6,5,.6), rgba(10,6,5,.76));
+      border-top: 1px solid rgba(255,255,255,.12);
     }
-    .nh-content { position: relative; z-index: 2; max-width: 560px; }
+    @media (min-width: 1024px) and (hover: hover) {
+      .nh-band { background: linear-gradient(180deg, rgba(10,6,5,.44), rgba(10,6,5,.62)); -webkit-backdrop-filter: blur(12px) saturate(150%); backdrop-filter: blur(12px) saturate(150%); }
+    }
+    .nh-band-in { height: 100%; max-width: 80rem; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+    .nh-txt { min-width: 0; flex: 1; }
     .nh-label {
-      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px;
-      font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.9);
-      text-shadow: 0 1px 14px rgba(0,0,0,.8);
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 8px;
+      font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.88);
     }
-    .nh-label .fc-brand { height: 18px; width: auto; display: block; flex-shrink: 0; }
-    .nh-label .fc-brand-hbo { height: 13px; }
-    .nh-label .fc-brand-img { height: 20px; filter: brightness(0) invert(1); }
+    .nh-label .fc-brand { height: 17px; width: auto; display: block; flex-shrink: 0; }
+    .nh-label .fc-brand-hbo { height: 12px; }
+    .nh-label .fc-brand-img { height: 19px; filter: brightness(0) invert(1); }
     .nh-label .nh-dot-sep { width: 4px; height: 4px; border-radius: 9999px; background: #FF422A; box-shadow: 0 0 10px #FF422A; }
-    .nh-h { margin: 0; line-height: 0; }
-    .nh-h .nh-title { display: block; line-height: 1.02; }
-    .nh-logo-box {
-      position: relative; display: block; overflow: hidden; width: min(var(--lw, 340px), 82%); margin-bottom: 22px;
-      filter: drop-shadow(0 8px 26px rgba(0,0,0,.55));
+    .nh-name {
+      margin: 0; font-size: clamp(30px, 3.4vw, 48px); font-weight: 900; line-height: 1; letter-spacing: -.02em; text-transform: uppercase;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 4px 24px rgba(0,0,0,.4);
     }
-    .nh-logo { position: absolute; display: block; max-width: none; height: auto; opacity: 0; transition: opacity .5s ease; }
-    .nh-logo.is-ready { opacity: 1; }
-    .nh-title {
-      margin: 0 0 16px; font-size: clamp(34px, 4.4vw, 62px); font-weight: 900; line-height: 1.02; letter-spacing: -.025em;
-      text-shadow: 0 6px 34px rgba(0,0,0,.5);
-      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; padding-bottom: .06em;
+    .nh-name.is-long { font-size: clamp(22px, 2.3vw, 34px); line-height: 1.04; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .nh-name.is-long + .nh-desc { display: none; }
+    .nh-desc { margin: 8px 0 0; max-width: 720px; font-size: 14px; color: rgba(255,255,255,.76); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nh-acts { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nh-cta, .nh-alt {
+      position: relative; display: inline-flex; align-items: center; gap: 12px; height: 52px; border-radius: 8px;
+      color: #fff; font-size: 14px; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; white-space: nowrap;
     }
-    .nh-desc { margin: 0 0 28px; max-width: 450px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,.82); text-shadow: 0 1px 14px rgba(0,0,0,.75); }
-    .nh-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-    .nh-btn {
-      position: relative; display: inline-flex; align-items: center; gap: 9px;
-      height: 50px; padding: 0 26px; border-radius: 9999px;
-      color: #fff; font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap;
+    .nh-cta {
+      padding: 0 10px 0 22px;
+      background: linear-gradient(135deg, #FF8A3D 0%, #FF422A 55%, #D92F1A 100%);
+      box-shadow: inset 0 1px 1px rgba(255,255,255,.5), 0 14px 30px -12px rgba(255,66,42,.8);
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .25s ease;
     }
-    .nh-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
-    .nh-btn-ghost { padding: 0 22px; }
-    .nh-btn-ghost .fc-brand { height: 18px; width: auto; display: block; }
-    .nh-btn-ghost .fc-brand-hbo { height: 13px; }
+    .nh-cta:hover { transform: translateY(-2px); box-shadow: inset 0 1px 1px rgba(255,255,255,.6), 0 18px 36px -12px rgba(255,66,42,.95); }
+    .nh-sq { width: 32px; height: 32px; border: 1.5px solid rgba(255,255,255,.92); border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; transition: transform .3s ease; }
+    .nh-sq svg { width: 16px; height: 16px; }
+    .nh-cta:hover .nh-sq { transform: translateX(3px); }
+    .nh-alt { padding: 0 20px; gap: 10px; }
+    .nh-alt svg, .nh-alt .fc-brand { position: relative; z-index: 2; width: auto; height: 18px; display: block; flex-shrink: 0; }
+    .nh-alt > svg { width: 18px; }
+    .nh-alt .fc-brand-hbo { height: 13px; }
+    .nh-alt-txt { position: relative; z-index: 2; }
 
-    /* Entrada suave do conteúdo a cada troca */
-    .nh-slide.is-active .nh-content > * { animation: nhUp .9s cubic-bezier(.2,.8,.2,1) both; }
-    .nh-slide.is-active .nh-content > :nth-child(2) { animation-delay: .08s; }
-    .nh-slide.is-active .nh-content > :nth-child(3) { animation-delay: .16s; }
-    .nh-slide.is-active .nh-content > :nth-child(4) { animation-delay: .24s; }
-    @keyframes nhUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+    /* Entrada suave a cada troca */
+    .nh-slide.is-active .nh-txt > *, .nh-slide.is-active .nh-acts { animation: nhUp .8s cubic-bezier(.2,.8,.2,1) both; }
+    .nh-slide.is-active .nh-txt > :nth-child(2) { animation-delay: .06s; }
+    .nh-slide.is-active .nh-txt > :nth-child(3) { animation-delay: .12s; }
+    .nh-slide.is-active .nh-acts { animation-delay: .16s; }
+    @keyframes nhUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
 
-
-    /* Indicadores com barra de progresso */
-    .nh-dots { position: absolute; left: 0; right: 0; bottom: 30px; z-index: 3; display: flex; justify-content: center; gap: 6px; }
+    /* Indicadores logo acima da faixa */
+    .nh-dots {
+      position: absolute; z-index: 3; left: 0; right: 0; bottom: calc(var(--nh-band) + 14px);
+      max-width: 80rem; margin: 0 auto; padding: 0 32px; display: flex; gap: 6px;
+    }
     .nh-dot { position: relative; width: 30px; height: 22px; padding: 0; border: 0; background: none; cursor: pointer; transition: width .45s var(--lg-spring, ease); }
     .nh-dot .bar { position: absolute; left: 0; right: 0; top: 50%; height: 4px; margin-top: -2px; border-radius: 9999px; overflow: hidden; background: rgba(255,255,255,.3); box-shadow: inset 0 1px 0 rgba(255,255,255,.2); }
     .nh-dot .fill { position: absolute; inset: 0; border-radius: inherit; transform-origin: left; transform: scaleX(0); background: linear-gradient(90deg, #FF8A3D, #FF422A); box-shadow: 0 0 10px rgba(255,66,42,.8); }
@@ -113,38 +110,34 @@
     @keyframes nhFill { to { transform: scaleX(1); } }
     @media (prefers-reduced-motion: reduce) {
       .nh-dot.is-active .fill { animation: none; transform: scaleX(1); }
-      .nh-slide.is-active .nh-content > * { animation: none; }
+      .nh-slide.is-active .nh-txt > *, .nh-slide.is-active .nh-acts { animation: none; }
       .nh-slide:not(.is-movie) .nh-bg { transform: none !important; }
     }
 
     @media (min-width: 640px) and (max-width: 1023px) {
-      .nh { height: clamp(500px, 70vh, 620px); }
-      .nh-inner { padding: 104px 24px 96px; }
-      .nh-logo-box { width: min(calc(var(--lw, 340px) * .82), 76%); }
+      .nh { height: clamp(500px, 70vh, 620px); --nh-band: 140px; }
+      .nh-band-in, .nh-dots { padding-left: 24px; padding-right: 24px; }
+      .nh-desc { display: none; }
     }
 
-    /* Celular: banner nativo, conteúdo embaixo */
+    /* Celular: faixa com título em até 2 linhas e botões embaixo */
     @media (max-width: 639px) {
-      .nh { height: clamp(400px, calc(64px + 88vw), 540px); }
-      .nh-inner { padding: 84px 16px 54px; align-items: flex-end; }
-      .nh-content { max-width: 100%; }
-      .nh-shade { background:
-        linear-gradient(0deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.66) 48%, rgba(0,0,0,.22) 72%, rgba(0,0,0,0) 86%),
-        linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 26%),
-        radial-gradient(ellipse 80% 50% at 0% 100%, rgba(255,66,42,.3), rgba(255,66,42,0) 70%); }
+      .nh { height: clamp(440px, calc(64px + 100vw), 600px); --nh-band: 156px; }
       .nh-bg { object-position: 72% 30%; }
       .nh-art { right: -10%; }
-      .nh-label { font-size: 10px; letter-spacing: .12em; gap: 7px; margin-bottom: 10px; }
+      .nh-band-in { padding: 14px 16px; flex-direction: column; align-items: stretch; justify-content: center; gap: 12px; }
+      .nh-txt { flex: none; }
+      .nh-label { font-size: 10px; letter-spacing: .12em; gap: 7px; margin-bottom: 6px; }
       .nh-label .fc-brand { height: 14px; } .nh-label .fc-brand-hbo { height: 10px; } .nh-label .fc-brand-img { height: 15px; }
-      .nh-logo-box { width: min(var(--lwm, 200px), 64%); margin-bottom: 12px; }
-      .nh-title { font-size: 28px; margin-bottom: 8px; max-width: 62%; }
-      .nh-desc { font-size: 13px; line-height: 1.5; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-      .nh-actions { gap: 8px; }
-      .nh-btn { height: 42px; padding: 0 18px; font-size: 13.5px; gap: 7px; }
-      .nh-btn-ghost { padding: 0 15px; }
-      .nh-btn svg { width: 16px; height: 16px; }
-      .nh-btn-ghost .fc-brand { height: 15px; }
-      .nh-dots { bottom: 18px; }
+      .nh-name { font-size: 22px; line-height: 1.02; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+      .nh-name.is-long { font-size: 19px; }
+      .nh-desc { display: none; }
+      .nh-acts { gap: 8px; }
+      .nh-cta { flex: 1; height: 42px; padding: 0 8px 0 16px; font-size: 12.5px; justify-content: space-between; }
+      .nh-sq { width: 26px; height: 26px; } .nh-sq svg { width: 13px; height: 13px; }
+      .nh-alt { width: 42px; height: 42px; padding: 0; justify-content: center; }
+      .nh-alt-txt { display: none; }
+      .nh-dots { bottom: calc(var(--nh-band) + 10px); padding: 0 16px; }
       .nh-dot { width: 22px; } .nh-dot.is-active { width: 40px; }
     }
   </style>
@@ -161,13 +154,13 @@
     var STEAM = 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/';
     var TMDB = 'https://image.tmdb.org/t/p/w780/';
     var JOGOS = [
-      { id: 1174180, crop: [0.0, 0.1722, 1.0, 0.6569], nome: 'Red Dead Redemption 2', tag: 'Mais vendido na Steam',
+      { id: 1174180, nome: 'Red Dead Redemption 2', tag: 'Mais vendido na Steam',
         texto: 'Arthur Morgan e a gangue Van der Linde em fuga pelo coração da América. Um dos jogos mais vendidos da Steam agora.', link: '/categories' },
-      { id: 1091500, crop: [0.1297, 0.3472, 0.7937, 0.375], nome: 'Cyberpunk 2077', tag: 'Em alta na Steam',
+      { id: 1091500, nome: 'Cyberpunk 2077', tag: 'Em alta na Steam',
         texto: 'Um RPG de ação em mundo aberto em Night City, a megalópole obcecada por poder, glamour e modificações corporais.', link: '/categories' },
-      { id: 3240220, crop: [0.2711, 0.0542, 0.4945, 0.8917], nome: 'Grand Theft Auto V Enhanced', tag: 'Mais vendido na Steam',
+      { id: 3240220, nome: 'Grand Theft Auto V Enhanced', tag: 'Mais vendido na Steam',
         texto: 'Grand Theft Auto V e GTA Online, agora com visuais aprimorados para a nova geração.', link: '/categories' },
-      { id: 1593500, crop: [0.0297, 0.2694, 0.9359, 0.375], nome: 'God of War', tag: 'Em alta na Steam',
+      { id: 1593500, nome: 'God of War', tag: 'Em alta na Steam',
         texto: 'Kratos e Atreus em uma jornada pelos reinos nórdicos, enfrentando deuses e monstros.', link: '/categories' }
     ];
 
@@ -288,13 +281,6 @@
 
     function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
     function tmdb(u, size) { return esc(String(u).replace(/\/t\/p\/[^/]+\//, '/t/p/' + size + '/')); }
-    function logoBox(s) {
-      var c = s.crop || [0, 0, 1, 1], ar = (c[2] * 16) / (c[3] * 9);
-      function fit(area, maxW, maxH) { var w = Math.min(maxW, Math.sqrt(area * ar)); if (w / ar > maxH) w = maxH * ar; return Math.round(w); }
-      var src = STEAM + s.id + '/logo.png', src2 = STEAM + s.id + '/logo_2x.png';
-      return '<span class="nh-logo-box" style="aspect-ratio:' + ar.toFixed(4) + ';--lw:' + fit(44000, 470, 170) + 'px;--lwm:' + fit(15000, 250, 96) + 'px">' +
-        '<img class="nh-logo" data-src="' + src + '" data-srcset="' + src + ' 1x, ' + src2 + ' 2x" alt="' + esc(s.nome) + '" decoding="async" style="width:' + (100 / c[2]).toFixed(3) + '%;left:' + (-100 * c[0] / c[2]).toFixed(3) + '%;top:' + (-100 * c[1] / c[3]).toFixed(3) + '%"></span>';
-    }
     function soSimbolo(app) { return marca(app).replace(/<span>[^<]*<\/span>/g, ''); }
     var ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
     var ICON_GRID = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>';
@@ -315,26 +301,23 @@
         ? 'data-src="' + tmdb(s.poster, 'w92') + '"'
         : 'data-src="' + STEAM + s.id + '/library_hero.jpg" data-srcset="' + STEAM + s.id + '/library_hero.jpg 1920w, ' + STEAM + s.id + '/library_hero_2x.jpg 3840w" sizes="100vw"';
       var secundario = movie
-        ? '<a class="nh-btn nh-btn-ghost lg-glass" href="/categories">' + ICON_GRID + 'Ver todos os planos</a>'
-        : '<a class="nh-btn nh-btn-ghost lg-glass" href="https://store.steampowered.com/app/' + s.id + '/" target="_blank" rel="noopener">' + soSimbolo('Steam') + 'Ver na Steam</a>';
+        ? '<a class="nh-alt lg-glass" href="/categories" aria-label="Ver todos os planos">' + ICON_GRID + '<span class="nh-alt-txt">Todos os planos</span></a>'
+        : '<a class="nh-alt lg-glass" href="https://store.steampowered.com/app/' + s.id + '/" target="_blank" rel="noopener" aria-label="Ver na Steam">' + soSimbolo('Steam') + '<span class="nh-alt-txt">Ver na Steam</span></a>';
       el.innerHTML =
         '<div class="nh-media"><img class="nh-bg" ' + bg + ' alt="" decoding="async">' +
           (movie ? '<img class="nh-art" data-src="' + tmdb(s.poster, 'w780') + '" data-srcset="' + tmdb(s.poster, 'w342') + ' 342w, ' + tmdb(s.poster, 'w500') + ' 500w, ' + tmdb(s.poster, 'w780') + ' 780w, ' + tmdb(s.poster, 'w1280') + ' 1280w" sizes="(max-width: 639px) 60vw, 34vw" alt="Pôster de ' + esc(s.nome) + '" decoding="async">' : '') +
         '</div>' +
         '<div class="nh-shade"></div>' +
-        '<div class="nh-inner">' +
-          '<div class="nh-content">' +
+        '<div class="nh-band"><div class="nh-band-in">' +
+          '<div class="nh-txt">' +
             '<span class="nh-label">' + soSimbolo(app) + '<i class="nh-dot-sep"></i>' + esc(s.tag) + '</span>' +
-            (movie
-              ? '<h2 class="nh-title">' + esc(s.nome) + '</h2>'
-              : '<h2 class="nh-h">' + logoBox(s) + '</h2>') +
+            '<h2 class="nh-name' + (s.nome.length > 26 ? ' is-long' : '') + '">' + esc(s.nome) + '</h2>' +
             '<p class="nh-desc">' + esc(s.texto) + '</p>' +
-            '<div class="nh-actions">' +
-              '<a class="nh-btn nh-btn-primary lg-glass lg-tinted" href="' + esc(s.link || '/categories') + '">' + esc(s.cta || 'Ver ofertas') + ICON_ARROW + '</a>' +
-              secundario +
-            '</div>' +
           '</div>' +
-        '</div>';
+          '<div class="nh-acts">' + secundario +
+            '<a class="nh-cta" href="' + esc(s.link || '/categories') + '">' + esc(s.cta || 'Ver ofertas') + '<span class="nh-sq">' + ICON_ARROW + '</span></a>' +
+          '</div>' +
+        '</div></div>';
       wrap.appendChild(el);
 
       var d = document.createElement('button');
@@ -451,54 +434,14 @@
       .cat-nav-btn.swiper-button-lock { display: none; }
       .categories-swiper { padding: 6px 2px 16px !important; margin: -6px -2px 0 !important; }
 
-      /* Card de categoria: imagem + faixa com nome, quantidade e seta */
-      .cat-card {
-        position: relative; display: block; aspect-ratio: 4 / 5; border-radius: 22px; overflow: hidden; isolation: isolate; text-decoration: none;
-        background: radial-gradient(120% 80% at 50% 0%, rgba(255,66,42,.25), rgba(255,66,42,0) 62%), linear-gradient(180deg, #24140f 0%, #0d0807 100%);
-        border: 1px solid rgba(255,255,255,.10);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 18px 40px -24px rgba(0,0,0,.85);
-        transition: transform .5s cubic-bezier(.34,1.56,.64,1), border-color .3s ease, box-shadow .3s ease;
-      }
-      .cat-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,.22); box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 26px 50px -24px rgba(255,66,42,.55); }
-      .cat-media { position: absolute; inset: 0; display: block; }
-      .cat-img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; transition: transform .7s cubic-bezier(.2,.8,.2,1); }
-      .cat-card:hover .cat-img { transform: scale(1.06); }
-      .cat-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10,6,5,0) 42%, rgba(10,6,5,.5) 68%, rgba(10,6,5,.92) 100%); }
-      .cat-info {
-        position: absolute; left: 8px; right: 8px; bottom: 8px; z-index: 1; display: flex; align-items: center; gap: 8px;
-        padding: 10px 8px 10px 12px; border-radius: 16px;
-        background: linear-gradient(180deg, rgba(34,20,16,.88) 0%, rgba(16,10,9,.94) 100%);
-        border: 1px solid rgba(255,255,255,.09);
-        box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 8px 20px -10px rgba(0,0,0,.7);
-      }
-      .cat-text { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 2px; }
-      .cat-name { color: #fff; font-size: 14px; font-weight: 700; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .cat-count { color: rgba(255,255,255,.58); font-size: 11.5px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-      .cat-go {
-        flex-shrink: 0; width: 34px; height: 34px; border-radius: 9999px; display: inline-flex; align-items: center; justify-content: center; color: #fff;
-        background: linear-gradient(135deg, #FF8A3D 0%, #FF422A 55%, #C42415 100%);
-        box-shadow: inset 0 1px 1px rgba(255,255,255,.55), 0 6px 16px -6px rgba(255,66,42,.85);
-        transition: transform .45s cubic-bezier(.34,1.56,.64,1);
-      }
-      .cat-go svg { width: 16px; height: 16px; }
-      .cat-card:hover .cat-go { transform: rotate(-45deg) scale(1.08); }
-      @media (max-width: 639px) {
-        .cat-card { border-radius: 18px; }
-        .cat-info { left: 6px; right: 6px; bottom: 6px; padding: 8px 6px 8px 10px; border-radius: 13px; gap: 6px; }
-        .cat-name { font-size: 13.5px; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
-        .cat-count { font-size: 10.5px; }
-        .cat-go { width: 28px; height: 28px; }
-        .cat-go svg { width: 14px; height: 14px; }
-      }
-
       /* Antes do Swiper carregar */
       .categories-swiper:not(.swiper-initialized) .swiper-wrapper { display: flex; gap: 12px; overflow: hidden; }
-      .categories-swiper:not(.swiper-initialized) .swiper-slide { flex-shrink: 0; width: calc((100% - 12px * .75) / 1.75); }
-      @media (min-width: 480px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 14px * 1.4) / 2.4); } }
-      @media (min-width: 640px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 16px * 2.3) / 3.3); } }
-      @media (min-width: 768px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 16px * 2.6) / 3.6); } }
-      @media (min-width: 1024px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 18px * 3.5) / 4.5); } }
-      @media (min-width: 1280px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 18px * 4) / 5); } }
+      .categories-swiper:not(.swiper-initialized) .swiper-slide { flex-shrink: 0; width: calc((100% - 12px * .6) / 1.6); }
+      @media (min-width: 480px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 14px * 1.2) / 2.2); } }
+      @media (min-width: 640px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 16px * 1.8) / 2.8); } }
+      @media (min-width: 768px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 16px * 2.2) / 3.2); } }
+      @media (min-width: 1024px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 16px * 3.2) / 4.2); } }
+      @media (min-width: 1280px) { .categories-swiper:not(.swiper-initialized) .swiper-slide { width: calc((100% - 16px * 4) / 5); } }
     </style>
 
     <section id="categorias" class="py-10 sm:py-14 sm:pb-0 pb-0 bg-black">
@@ -541,16 +484,16 @@
       (function initCategoriesSwiper() {
         if (typeof Swiper === 'undefined') return setTimeout(initCategoriesSwiper, 50);
         new Swiper('.categories-swiper', {
-          slidesPerView: 1.75,
+          slidesPerView: 1.6,
           spaceBetween: 12,
           grabCursor: true,
           watchOverflow: true,
           breakpoints: {
-            480: { slidesPerView: 2.4, spaceBetween: 14 },
-            640: { slidesPerView: 3.3, spaceBetween: 16 },
-            768: { slidesPerView: 3.6, spaceBetween: 16 },
-            1024: { slidesPerView: 4.5, spaceBetween: 18 },
-            1280: { slidesPerView: 5, spaceBetween: 18 },
+            480: { slidesPerView: 2.2, spaceBetween: 14 },
+            640: { slidesPerView: 2.8, spaceBetween: 16 },
+            768: { slidesPerView: 3.2, spaceBetween: 16 },
+            1024: { slidesPerView: 4.2, spaceBetween: 16 },
+            1280: { slidesPerView: 5, spaceBetween: 16 },
           },
           navigation: {
             prevEl: '.categories-nav-prev',
