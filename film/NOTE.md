@@ -1,6 +1,6 @@
 # NOTE: Rei Dos Nitros, "Uma compra puxa a próxima"
 
-`final.mp4`: 1080×1920 (9:16), 30 fps, 20,0 s, **sem som** (não há chave da ElevenLabs). Fonte editável: `index.html` com o runtime `runtime/` da skill motionmaxxing.
+`final.mp4`: 1080×1920 (9:16), 30 fps, 20,0 s, **com efeitos sonoros** (adicionados em 28/11; sem música, a pedido). Fonte editável: `index.html` com o runtime `runtime/` da skill motionmaxxing. A mixagem dos efeitos é refeita com `python3 audio/sfx_mix.py` (ver "Som" abaixo).
 
 ## A ideia e por que esta
 Mostrar uma compra real do início ao fim, usando só o que é da loja. O feed de banners da própria loja freia no **Discord Nitro (R$ 8,99)**. Um toque no "+" leva ao **Pix na hora**, o raio da **Entrega automática** traz o banner e os **4% de cashback** viram uma moeda que soma **R$ 0,36** e "vira saldo para a próxima", pousando no **Impulsos Servidor**. A câmera recua e o **logo do rei na caixa NITRU** chega.
@@ -60,8 +60,35 @@ Histórico: o primeiro render final reprovou no G3 (repouso de 1,47 s), porque o
 ## Auto-teste de seek (runtime)
 `Motion.selfTest`: 24 saltos aleatórios e 709 elementos, com 20 divergências nos quadros 0, 48 e 76. Todas são equivalentes na imagem: `transform: none` contra a matriz identidade, ou `--b` ausente contra `--b:0px`, em elementos ocultos. No meio do trabalho foi encontrado e corrigido um defeito real: o quadro 0 saía sem as transformações iniciais, porque a timeline é montada depois que as fontes carregam. A correção força um seek ao fim da montagem.
 
+## Som (efeitos sonoros, 28/11)
+Todos os efeitos foram gerados na ElevenLabs (eleven_text_to_sound_v3) e posicionados pelos eventos do próprio render (`final.mp4.events.json`), quadro a quadro. Lista completa com horários em `audio/sfx_mix.py`.
+
+| Tempo | O que acontece na tela | Efeito |
+|---|---|---|
+| 0,6 s | o feed dispara | whoosh longo |
+| 2,8 s | o feed assenta no Nitro | slam bem baixo |
+| 2,8–3,2 s | a câmera entra no card | whoosh invertido |
+| 4,60 s | toque no "+" | toque na tela |
+| 4,7–5,2 s | a câmera empurra para o Pix | whoosh invertido |
+| 5,20 s | o QR do Pix cai de 3,5× | slam |
+| 7,0 s | o QR se desfaz | glitch |
+| 7,13 s | o raio desce | zap elétrico |
+| 8,53 s | o banner do Nitro cai | slam + impacto grave |
+| 9,6 s | a linha do cashback entra | toque leve |
+| 10,45–11,0 s | o ícone cresce até virar moeda | whoosh invertido |
+| 11,0 s | a moeda aparece | moeda tilintando |
+| 11,27–12,07 s | R$ 0,00 → R$ 0,36 | tiques de contador |
+| 13,53 s | chicote da câmera | whoosh (levemente à esquerda) |
+| 14,57 s | a moeda pousa no Impulsos | moeda caindo |
+| 14,9–15,5 s | recuo | whoosh invertido + whoosh longo |
+| 16,8 s | o logo chega | impacto do logo |
+
+Embaixo de tudo há uma ambiência baixa e contínua (`audio/bed.wav`, feita com o trecho estável de `audio/amb1.mp3`), para não ficar silêncio digital entre um efeito e outro. Na primeira mixagem, o look.py acusou 6 buracos de silêncio e 2,2 s mudos no final.
+
+Números do `look.py final.mp4 --expect 20 --expect-audio`: G0 PASS (20,00 s, áudio presente), G2 PASS, G3 PASS (repouso final de 1,03 s; último plano 13%); áudio em 99% da duração; **-20,5 LUFS**, LRA 10,0, pico verdadeiro -3,3 dBFS; 4 de 8 cortes caem a até ±80 ms de um ataque sonoro (50%; em filmes profissionais, cerca de 35%). O look.py marca -20,5 LUFS como longe do alvo de -14 LUFS: sem música, uma faixa só de efeitos fica naturalmente mais baixa. Testei normalizar para -16 LUFS e subir a ambiência, mas os golpes perderam o ataque (a sincronia caiu para 12–25%), então mantive a versão mais dinâmica.
+
 ## O que eu ainda melhoraria
-- **Som.** Com uma chave da ElevenLabs: uma trilha seca, o toque no "+" e a moeda pousando, com silêncio antes do R$ 0,36.
+- **Música.** O filme tem só efeitos, como pedido. Uma trilha (por exemplo, o mesmo funk da prévia v2) deixaria o volume no padrão de -14 LUFS.
 - **Banners do feed em alta resolução.** Os do feed vêm dos prints e ficam levemente moles na cena 1 e no recuo.
 - **Repetição de cards no recuo.** Com mais produtos e preços, o feed deixaria de repetir cards.
 - **A moeda.** Ela é 2,5D (CSS). Uma moeda 3D de verdade (hero3d) daria mais peso à cena principal.
