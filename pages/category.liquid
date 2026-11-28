@@ -330,19 +330,7 @@
             <div class="flex flex-col gap-10">
               {% for sub in current_category.sub_categories %}
                 <div>
-                  <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
-                    <div>
-                      <p class="text-neutral-500 text-xs font-bold uppercase tracking-[0.2em] mb-1">Catálogo</p>
-                      <h2 class="text-xl sm:text-2xl font-extrabold text-white">{{ sub.name | default: 'Sem nome' }}</h2>
-                      <p class="mt-1 text-neutral-400 text-sm">Confira nossa seleção especial de produtos.</p>
-                    </div>
-                    <span class="inline-flex items-center gap-1.5 text-xs sm:text-sm text-neutral-500 flex-shrink-0">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                        <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
-                      </svg>
-                      {{ sub.products | size }} produtos
-                    </span>
-                  </div>
+                  <h2 class="sec-title">{{ sub.name | default: 'Sem nome' }}</h2>
 
                   {% if sub.products.size > 0 %}
                     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">

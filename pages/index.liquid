@@ -8,7 +8,8 @@
   </section>
 
   <style>
-    #produtos > div > div { content-visibility: auto; contain-intrinsic-size: auto 760px; }
+    /* cada categoria só é desenhada perto da tela; o recuo dá espaço ao brilho do título */
+    #produtos > div > div { content-visibility: auto; contain-intrinsic-size: auto 760px; padding: 24px 16px 0; margin: -24px -16px 0; }
 
     /* Destaque: arte de ponta a ponta, por trás do header; faixa de vitrine na base */
     .nh {
@@ -447,10 +448,7 @@
     <section id="categorias" class="py-10 sm:py-14 sm:pb-0 pb-0 bg-black">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="cat-head mb-6 sm:mb-9">
-          <div>
-            <p class="text-neutral-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Explore</p>
-            <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Categorias</h2>
-          </div>
+          <h2 class="sec-title">Categorias</h2>
           <div class="cat-actions">
             <a href="/categories" class="cat-all">Ver todas
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -514,21 +512,7 @@
       <!-- Título da seção -->
       {% for category in catalog.categories %}
         <div>
-          <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-6 sm:mb-10 gap-3 sm:gap-4">
-            <div>
-              <p class="text-neutral-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Catálogo</p>
-              <h2 class="text-xl sm:text-2xl font-extrabold text-white">{{ category.name | default: 'Sem nome' }}</h2>
-              <p class="mt-1 sm:mt-2 text-sm sm:text-base text-neutral-400">
-                Confira nossa seleção especial de produtos.
-              </p>
-            </div>
-            <span class="whitespace-nowrap inline-flex items-center gap-1.5 text-xs sm:text-sm text-neutral-500">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
-              </svg>
-              {{ category.products | size }} produtos
-            </span>
-          </div>
+          <h2 class="sec-title">{{ category.name | default: 'Sem nome' }}</h2>
 
           <!-- Grid de produtos -->
           <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">

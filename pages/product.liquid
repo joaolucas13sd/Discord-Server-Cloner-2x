@@ -645,22 +645,7 @@
 
           {% if related_count > 0 %}
             <div>
-              <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-6 sm:mb-10 gap-3 sm:gap-4">
-                <div>
-                  <p class="text-neutral-500 text-xs sm:text-sm font-semibold uppercase tracking-widest mb-1">Catálogo</p>
-                  <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Produtos Relacionados</h2>
-                </div>
-                <span class="inline-flex items-center gap-1.5 text-sm text-neutral-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-4 w-4"
-                    viewBox="0 0 20 20"
-                    fill="currentColor">
-                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z" />
-                  </svg>
-                  {{ related_count }} produtos
-                </span>
-              </div>
+              <h2 class="sec-title">Produtos Relacionados</h2>
 
               <!-- Slider de produtos da mesma categoria -->
               <div class="related-products-nav-wrapper">
