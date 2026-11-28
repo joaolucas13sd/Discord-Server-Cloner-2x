@@ -1,0 +1,77 @@
+[
+ {
+  "fala": "Comprou e ficou na dúvida?",
+  "de": 0.45,
+  "ate": 2.067
+ },
+ {
+  "fala": "Quanto tempo leva pra receber?",
+  "de": 2.78,
+  "ate": 4.402
+ },
+ {
+  "fala": "Como eu pago?",
+  "de": 4.62,
+  "ate": 5.541
+ },
+ {
+  "fala": "Deu problema, e agora?",
+  "de": 5.55,
+  "ate": 7.292
+ },
+ {
+  "fala": "É confiável?",
+  "de": 7.38,
+  "ate": 8.331
+ },
+ {
+  "fala": "Relaxa.",
+  "de": 9.27,
+  "ate": 10.084
+ },
+ {
+  "fala": "Funciona assim:",
+  "de": 10.14,
+  "ate": 11.035
+ },
+ {
+  "fala": "Pix na hora, com aprovação rápida.",
+  "de": 11.53,
+  "ate": 13.627
+ },
+ {
+  "fala": "Entrega automática, na maioria dos itens.",
+  "de": 14.3,
+  "ate": 17.048
+ },
+ {
+  "fala": "Suporte humano, no WhatsApp e no Discord.",
+  "de": 17.55,
+  "ate": 20.063
+ },
+ {
+  "fala": "Garantia de sete dias, tá tudo nas regras.",
+  "de": 20.95,
+  "ate": 23.853
+ },
+ {
+  "fala": "E ainda: de quatro até vinte por cento de volta, em saldo.",
+  "de": 24.3,
+  "ate": 28.386
+ },
+ {
+  "fala": "Olha os destaques de hoje.",
+  "de": 28.65,
+  "ate": 29.928
+ },
+ {
+  "fala": "O que você procura hoje?",
+  "de": 31.38,
+  "ate": 32.703
+ },
+ {
+  "fala": "Vem pra Rei Dos Nitros.",
+  "de": 33.8,
+  "ate": 35.119
+ }
+]

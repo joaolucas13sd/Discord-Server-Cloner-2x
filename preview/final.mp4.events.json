@@ -1,0 +1,248 @@
+[
+ {
+  "t": 0.1,
+  "frame": 3,
+  "type": "enter",
+  "label": "Olha"
+ },
+ {
+  "t": 0.1,
+  "frame": 3,
+  "type": "word",
+  "label": "Olha"
+ },
+ {
+  "t": 0.2333,
+  "frame": 7,
+  "type": "enter",
+  "label": "como"
+ },
+ {
+  "t": 0.2333,
+  "frame": 7,
+  "type": "word",
+  "label": "como"
+ },
+ {
+  "t": 0.4,
+  "frame": 12,
+  "type": "enter",
+  "label": "tá"
+ },
+ {
+  "t": 0.4,
+  "frame": 12,
+  "type": "word",
+  "label": "tá"
+ },
+ {
+  "t": 0.6,
+  "frame": 18,
+  "type": "enter",
+  "label": "ficando"
+ },
+ {
+  "t": 0.6,
+  "frame": 18,
+  "type": "word",
+  "label": "ficando"
+ },
+ {
+  "t": 0.7333,
+  "frame": 22,
+  "type": "enter",
+  "label": "o"
+ },
+ {
+  "t": 0.7333,
+  "frame": 22,
+  "type": "word",
+  "label": "o"
+ },
+ {
+  "t": 0.8667,
+  "frame": 26,
+  "type": "enter",
+  "label": "site"
+ },
+ {
+  "t": 0.8667,
+  "frame": 26,
+  "type": "word",
+  "label": "site"
+ },
+ {
+  "t": 1.0333,
+  "frame": 31,
+  "type": "enter",
+  "label": "novo"
+ },
+ {
+  "t": 1.0333,
+  "frame": 31,
+  "type": "word",
+  "label": "novo"
+ },
+ {
+  "t": 1.7333,
+  "frame": 52,
+  "type": "exit",
+  "label": "#h1a"
+ },
+ {
+  "t": 1.8,
+  "frame": 54,
+  "type": "exit",
+  "label": "#h1b"
+ },
+ {
+  "t": 6,
+  "frame": 180,
+  "type": "cut",
+  "label": "hide #s1 show #s2"
+ },
+ {
+  "t": 10,
+  "frame": 300,
+  "type": "cut",
+  "label": "hide #s2 show #s3"
+ },
+ {
+  "t": 14,
+  "frame": 420,
+  "type": "cut",
+  "label": "hide #s3 show #s4"
+ },
+ {
+  "t": 17.5,
+  "frame": 525,
+  "type": "cut",
+  "label": "hide #s4 show #s5"
+ },
+ {
+  "t": 20,
+  "frame": 600,
+  "type": "cut",
+  "label": "hide #s5 show #s6"
+ },
+ {
+  "t": 20.2,
+  "frame": 606,
+  "type": "enter",
+  "label": "Isso"
+ },
+ {
+  "t": 20.2,
+  "frame": 606,
+  "type": "word",
+  "label": "Isso"
+ },
+ {
+  "t": 20.3333,
+  "frame": 610,
+  "type": "enter",
+  "label": "é"
+ },
+ {
+  "t": 20.3333,
+  "frame": 610,
+  "type": "word",
+  "label": "é"
+ },
+ {
+  "t": 20.4667,
+  "frame": 614,
+  "type": "enter",
+  "label": "só"
+ },
+ {
+  "t": 20.4667,
+  "frame": 614,
+  "type": "word",
+  "label": "só"
+ },
+ {
+  "t": 20.6333,
+  "frame": 619,
+  "type": "enter",
+  "label": "uma"
+ },
+ {
+  "t": 20.6333,
+  "frame": 619,
+  "type": "word",
+  "label": "uma"
+ },
+ {
+  "t": 20.8,
+  "frame": 624,
+  "type": "enter",
+  "label": "prévia."
+ },
+ {
+  "t": 20.8,
+  "frame": 624,
+  "type": "word",
+  "label": "prévia."
+ },
+ {
+  "t": 21.3333,
+  "frame": 640,
+  "type": "exit",
+  "label": "#t7a"
+ },
+ {
+  "t": 21.4667,
+  "frame": 644,
+  "type": "enter",
+  "label": "#logo"
+ },
+ {
+  "t": 21.8667,
+  "frame": 656,
+  "type": "enter",
+  "label": "Mais"
+ },
+ {
+  "t": 21.8667,
+  "frame": 656,
+  "type": "word",
+  "label": "Mais"
+ },
+ {
+  "t": 22.0333,
+  "frame": 661,
+  "type": "enter",
+  "label": "prévias"
+ },
+ {
+  "t": 22.0333,
+  "frame": 661,
+  "type": "word",
+  "label": "prévias"
+ },
+ {
+  "t": 22.2667,
+  "frame": 668,
+  "type": "enter",
+  "label": "em"
+ },
+ {
+  "t": 22.2667,
+  "frame": 668,
+  "type": "word",
+  "label": "em"
+ },
+ {
+  "t": 22.4333,
+  "frame": 673,
+  "type": "enter",
+  "label": "breve"
+ },
+ {
+  "t": 22.4333,
+  "frame": 673,
+  "type": "word",
+  "label": "breve"
+ }
+]

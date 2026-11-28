@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Comprar no Discord</title>
+<meta name="viewport" content="width=1080, height=1920">
+<link rel="stylesheet" href="../comofunciona/runtime/fonts.css">
+<style>
+@font-face { font-family: "Baloo 2"; src: url("../comofunciona/assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-display: block; }
+:root { --g: #21F167; --ink: #04210f; --head: "Baloo 2", system-ui, sans-serif; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#main { position: absolute; inset: 0; overflow: hidden; background: #06070b; color: #fff; font-family: "Inter", system-ui, sans-serif; }
+#shake, #punch { position: absolute; inset: 0; transform-origin: 540px 960px; }
+.full { position: absolute; inset: 0; }
+/* a gravação do celular (864x1920) é a tela; a câmera aproxima e anda sobre ela */
+.scr { position: absolute; left: 0; top: 0; width: 864px; height: 1920px; transform-origin: 0 0; }
+.scr > img { position: absolute; left: 0; top: 0; width: 864px; height: 1920px; }
+.soft { filter: blur(var(--b, 0px)) brightness(var(--l, 1)); }
+/* destaque do botão que a voz cita e toque do dedo */
+.hl { position: absolute; border-radius: 18px; border: 6px solid var(--g); box-shadow: 0 0 34px rgba(33,241,103,.75), inset 0 0 24px rgba(33,241,103,.25); }
+.tap { position: absolute; width: 0; height: 0; }
+.tap .dot { position: absolute; left: -46px; top: -46px; width: 92px; height: 92px; border-radius: 50%; background: rgba(255,255,255,.55); border: 4px solid #fff; box-shadow: 0 6px 24px rgba(0,0,0,.5); }
+.rip { position: absolute; width: 100px; height: 100px; border-radius: 50%; border: 6px solid #fff; box-shadow: 0 0 30px rgba(33,241,103,.7); }
+/* faixa do título do passo, por cima da barra do app */
+#band { position: absolute; left: 0; top: 0; width: 1080px; height: 470px; background: linear-gradient(#06070b 0%, rgba(6,7,11,.92) 52%, rgba(6,7,11,0) 100%); }
+.hd { position: absolute; left: 0; top: 118px; width: 1080px; text-align: center; font: 800 104px/120px var(--head); letter-spacing: -1px; white-space: pre; }
+.gr { color: var(--g); }
+.head { position: absolute; left: 0; width: 1080px; text-align: center; font-family: var(--head); font-weight: 800; white-space: pre; letter-spacing: -1px; }
+#ok { position: absolute; left: 400px; top: 300px; width: 280px; height: 280px; }
+#flare { position: absolute; left: -260px; top: 856px; width: 1600px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, rgba(33,241,103,0), rgba(190,255,215,.95) 46%, #fff 50%, rgba(190,255,215,.95) 54%, rgba(33,241,103,0)); box-shadow: 0 0 40px 12px rgba(33,241,103,.45); transform-origin: 800px 4px; }
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; } #gflash { position: absolute; inset: 0; background: #b8ffd4; opacity: 0; mix-blend-mode: screen; }
+.vig { position: absolute; inset: 0; pointer-events: none; background: radial-gradient(120% 80% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.55) 100%); }
+</style>
+</head>
+<body>
+<div id="main">
+ <div id="shake"><div id="punch">
+  <div id="screens" class="full"></div>
+  <div class="vig"></div>
+  <div id="band"></div>
+  <div id="heads" class="full"></div>
+  <!-- abertura -->
+  <div id="intro" class="full">
+    <div id="t1" class="head" style="top:700px;font-size:150px;line-height:160px">Comprar no</div>
+    <div id="t2" class="head" style="top:860px;font-size:150px;line-height:160px">Discord</div>
+    <div id="t3" class="head" style="top:1060px;font-size:96px;line-height:110px">é <span class="gr">rapidinho.</span></div>
+  </div>
+  <svg id="ok" viewBox="0 0 190 190"><circle cx="95" cy="95" r="84" fill="#21F167"/><path id="okp" d="M54 98 L84 128 L138 70" fill="none" stroke="#04210f" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="130" stroke-dashoffset="130"/></svg>
+  <!-- logo -->
+  <section id="end" class="full" style="background:#030405">
+    <div style="position:absolute;left:-15%;top:20%;width:130%;height:60%;border-radius:50%;background:radial-gradient(closest-side, rgba(33,241,103,.30), rgba(33,241,103,0))"></div>
+    <div id="lock" class="full" style="transform-origin:540px 900px">
+      <img id="logo" src="../comofunciona/assets/logo.jpg" style="position:absolute;left:320px;top:640px;width:440px;height:440px;border-radius:56px;box-shadow:0 40px 120px rgba(0,0,0,.8),0 0 140px rgba(33,241,103,.3)">
+      <div id="lname" class="head" style="top:1130px;font-size:124px;line-height:140px">Rei Dos Nitros</div>
+    </div>
+    <div id="flare"></div>
+  </section>
+  <div id="ripples" class="full"></div>
+ </div></div>
+ <div id="gflash"></div><div id="flash"></div>
+</div>
+<script src="../comofunciona/runtime/vendor/gsap.min.js"></script>
+<script src="../comofunciona/runtime/motion.js"></script>
+<script>
+const M = Motion.film({ fps: 30, duration: 30.8, width: 1080, height: 1920, clock: 'smooth' });
+/* A NARRAÇÃO manda (audio/vo.mp3, voz Fernanda): a fala começa em 0,4 s do filme e corre inteira; V(t) = quadro em que a voz diz a palavra do segundo t do arquivo. */
+const V = t => Math.round(30 * (t + 0.4));
+const px = v => v + 'px', $ = s => document.querySelector(s);
+/* telas: [id, arquivo, destaques {nome: [x, y, w, h]} em pixels da gravação] */
+const SCR = {
+  s0: ['s0_canal', { bar: [135, 1540, 708, 95] }],
+  s1: ['s1_planos', { tres: [30, 1150, 806, 120] }],
+  s2: ['s2_carrinho', { msg: [110, 1448, 640, 50], btn: [128, 1503, 310, 80] }],
+  s3: ['s3_revisao', { rev: [110, 965, 600, 50] }],
+  s4: ['s4_total', { cupom: [130, 1556, 250, 80], pag: [130, 1470, 340, 80] }],
+  s5: ['s5_forma', { pix: [130, 1302, 162, 80], ltc: [288, 1302, 152, 80], card: [130, 1386, 408, 80], saldo: [130, 1470, 362, 80] }],
+  s6: ['s6_pix', { qr: [165, 635, 646, 648], cc: [130, 1380, 336, 84], conf: [468, 1380, 314, 84] }],
+  s7: ['s7_aprovado', { conf: [150, 868, 420, 52], canal: [128, 745, 690, 70] }],
+};
+$('#screens').innerHTML = Object.entries(SCR).map(([id, [f, hls]]) => `<div class="scr" id="${id}"><div class="full soft" id="${id}i"><img src="assets/${f}.png"></div>` +
+  Object.entries(hls).map(([k, [x, y, w, h]]) => `<div class="hl" id="${id}_${k}" style="left:${x - 6}px;top:${y - 6}px;width:${w + 12}px;height:${h + 12}px"></div>`).join('') +
+  `<div class="tap" id="${id}_tap"><div class="dot" id="${id}_dot"></div></div></div>`).join('');
+const HEADS = [['h1', 'Escolha o <span class="gr">plano</span>'], ['h2', 'Vá para o <span class="gr">carrinho</span>'], ['h3', 'Confira o <span class="gr">pedido</span>'],
+  ['h4', 'Escolha como <span class="gr">pagar</span>'], ['h5', 'Pague e <span class="gr">confirme</span>'], ['h6', '<span class="gr">Pronto!</span>']];
+$('#heads').innerHTML = HEADS.map(([id, t]) => `<div class="hd" id="${id}">${t}</div>`).join('');
+
+function build() {
+  const rip = [];
+  // câmera: o ponto (px, py) da gravação vai para (cx, cy) da tela, na escala s (s >= 1,25 para cobrir a largura)
+  const cam = (id, keys) => {
+    const xs = [[0, keys[0][1].x]], ys = [[0, keys[0][1].y]], ss = [[0, keys[0][1].s]];
+    keys.forEach(([f, c, e]) => { xs.push([f, c.x, e]); ys.push([f, c.y, e]); ss.push([f, c.s, e]); });
+    M.kf('#' + id, 'x', xs); M.kf('#' + id, 'y', ys); M.kf('#' + id, 'scale', ss);
+  };
+  const on = (s, px_, py, cx, cy) => ({ s, x: Math.min(0, Math.max(1080 - 864 * s, cx - px_ * s)), y: Math.min(0, Math.max(1920 - 1920 * s, cy - py * s)) });
+  const hl = (id, f, off) => { M.enter('#' + id, { at: f, frames: 8, ease: 'softLand', from: { scale: 1.25, opacity: 0 } }); if (off) M.hide('#' + id, off); };
+  const tap = (sid, x, y, f) => {                              // o dedo aparece 5 quadros antes, afunda no toque e some
+    gsap.set('#' + sid + '_tap', { x, y });
+    M.enter('#' + sid + '_dot', { at: f - 6, frames: 6, ease: 'softLand', from: { scale: 1.8, opacity: 0 } });
+    M.kf('#' + sid + '_dot', 'scale', [[0, 1], [f, 1], [f + 2, .78, 'cruise'], [f + 6, 1, 'softLand']]);
+    M.exit('#' + sid + '_dot', { at: f + 7, frames: 6, ease: 'accelExit', to: { scale: 1.3, opacity: 0 }, hide: true });
+    rip.push([sid, x, y, f + 1]);
+  };
+  const cut = (from, to, f) => { M.hide('#' + from, f); M.show('#' + to, f); };
+  Object.keys(SCR).forEach(id => M.hide('#' + id, 0));
+  M.show('#s0', 0);
+
+  /* ===== ABERTURA: "Comprar no Discord da Rei Dos Nitros é rapidinho. Olha só." ===== */
+  cam('s0', [[0, on(1.25, 432, 960, 540, 960)], [V(3.44), on(1.32, 432, 960, 540, 960), 'cruise'], [V(3.44) + 14, on(1.25, 432, 1587, 540, 1500), 'softInOut'], [V(6.0), on(1.32, 432, 1587, 540, 1500), 'cruise']]);
+  M.kf('#s0i', '--b', [[0, 16], [V(3.44), 16], [V(3.44) + 12, 0, 'softInOut']], { fmt: px });
+  M.kf('#s0i', '--l', [[0, .4], [V(3.44), .4], [V(3.44) + 12, 1, 'softInOut']]);
+  M.words('#t1', { at: V(0.0), mech: 'shrink', dist: 1.8, frames: 8, gaps: [V(0.44) - V(0)] });
+  M.words('#t2', { at: V(0.56), mech: 'shrink', dist: 1.8, frames: 8 });
+  M.words('#t3', { at: V(1.92), mech: 'shrink', dist: 1.8, frames: 8, gaps: [V(2.08) - V(1.92)] });
+  M.exit('#intro', { at: V(3.44), frames: 9, ease: 'accelExit', to: { y: -260, scale: .8, blur: 12 }, hide: true });
+  M.kf('#band', 'opacity', [[0, 0], [V(3.44), 0], [V(3.44) + 10, 1, 'softInOut']]);
+
+  /* ===== títulos dos passos: entram com a fala e saem no corte seguinte ===== */
+  const H = [['h1', V(4.0), V(6.8)], ['h2', V(6.8), V(11.28)], ['h3', V(11.28), V(15.44)], ['h4', V(15.44), V(19.84)], ['h5', V(19.84), V(23.92)], ['h6', V(23.92), V(28.24)]];
+  H.forEach(([id, a, b]) => { M.enter('#' + id, { at: a, frames: 9, ease: 'softLand', from: { scale: 1.6, blur: 10 } }); M.exit('#' + id, { at: b - 3, frames: 6, ease: 'accelExit', to: { y: -150, blur: 10 }, hide: true }); });
+
+  /* ===== 1 "Entra no canal do produto e escolhe o plano." ===== */
+  hl('s0_bar', V(5.6)); tap('s0', 489, 1587, V(5.84) + 4);
+  cut('s0', 's1', V(5.84) + 7);
+  cam('s1', [[V(5.84) + 7, on(1.25, 432, 1210, 540, 1250)], [V(6.8), on(1.34, 432, 1210, 540, 1250), 'cruise']]);
+  hl('s1_tres', V(6.0)); tap('s1', 432, 1212, V(6.4) + 6);
+
+  /* ===== 2 "O bot cria um carrinho só seu. Toca em ir para o carrinho." ===== */
+  cut('s1', 's2', V(6.8));
+  cam('s2', [[V(6.8), on(1.6, 432, 1480, 540, 1180)], [V(11.28), on(1.68, 432, 1480, 540, 1180), 'cruise']]);
+  hl('s2_msg', V(7.64), V(9.2)); hl('s2_btn', V(9.2)); tap('s2', 283, 1544, V(10.4));
+
+  /* ===== 3 "Confere o pedido, usa um cupom se tiver, e vai pro pagamento." ===== */
+  cut('s2', 's3', V(11.28));
+  cam('s3', [[V(11.28), on(1.25, 432, 1000, 540, 980)], [V(12.56), on(1.32, 432, 1000, 540, 980), 'cruise']]);
+  hl('s3_rev', V(11.96));
+  cut('s3', 's4', V(12.56));
+  cam('s4', [[V(12.56), on(1.4, 432, 1450, 540, 1180)], [V(15.44), on(1.46, 432, 1450, 540, 1180), 'cruise']]);
+  hl('s4_cupom', V(12.92), V(14.0)); hl('s4_pag', V(14.16)); tap('s4', 300, 1510, V(14.56) + 6);
+
+  /* ===== 4 "Escolhe como pagar: Pix, cripto, cartão ou saldo." (cada botão acende quando é dito) ===== */
+  cut('s4', 's5', V(15.44));
+  cam('s5', [[V(15.44), on(1.4, 432, 1250, 540, 1100)], [V(19.84), on(1.48, 432, 1250, 540, 1100), 'cruise']]);
+  hl('s5_pix', V(17.12)); hl('s5_ltc', V(17.52), V(19.5)); hl('s5_card', V(18.24), V(19.5)); hl('s5_saldo', V(19.04), V(19.5));
+  tap('s5', 211, 1342, V(19.64));
+
+  /* ===== 5 "Paga o Pix pelo QR Code ou copia e cola, e confirma." (o QR e o código estão borrados) ===== */
+  cut('s5', 's6', V(19.84));
+  cam('s6', [[V(19.84), on(1.25, 432, 1050, 540, 1000)], [V(23.92), on(1.31, 432, 1050, 540, 1000), 'cruise']]);
+  hl('s6_qr', V(20.72), V(21.76)); hl('s6_cc', V(21.76), V(22.84)); hl('s6_conf', V(22.84)); tap('s6', 625, 1422, V(22.96) + 8);
+
+  /* ===== 6 "Pronto! Pagamento aprovado, e a entrega chega no mesmo canal." ===== */
+  cut('s6', 's7', V(23.92));
+  cam('s7', [[V(23.92), on(1.3, 480, 1000, 540, 1080)], [V(28.24), on(1.36, 480, 1000, 540, 1080), 'cruise']]);
+  M.enter('#ok', { at: V(23.92), frames: 10, ease: 'snapSettle', from: { scale: 2.6, blur: 10 } });
+  M.kf('#okp', 'strokeDashoffset', [[0, 130], [V(23.92) + 4, 130], [V(23.92) + 13, 0, 'softLand']]);
+  M.exit('#ok', { at: V(24.56) - 2, frames: 8, ease: 'accelExit', to: { scale: .5, y: -40, opacity: 0 }, hide: true });
+  hl('s7_conf', V(24.56)); hl('s7_canal', V(27.16));
+  M.hide('#s7', V(28.24) - 1); M.hide('#heads', V(28.24));
+
+  /* ===== LOGO: "Rei Dos Nitros." — a música para seco aqui ===== */
+  const L = V(28.24) - 1;
+  M.show('#end', L); M.hide('#end', 0); M.show('#end', L);
+  M.enter('#logo', { at: L, frames: 12, ease: 'snapSettle', from: { scale: 3.5, blur: 14 } });
+  M.show('#flare', L, L + 26); M.kf('#flare', 'scaleX', [[0, .1], [L, .1], [L + 8, 1, 'softLand']]); M.kf('#flare', 'opacity', [[0, 1], [L + 8, 1], [L + 26, 0, 'softInOut']]);
+  M.words('#lname', { at: V(28.24), mech: 'rise', dist: 70, frames: 10, gaps: [V(28.52) - V(28.24), V(28.72) - V(28.52)] });
+  M.kf('#lock', 'scale', [[0, 1], [V(28.72) + 4, 1], [V(28.72) + 22, .97, 'softInOut']]);
+
+  /* ondas dos toques (dentro da tela, andam com a câmera) e efeitos de batida */
+  rip.forEach(([sid, x, y, f], i) => {
+    const el = document.createElement('div'); el.className = 'rip'; el.id = 'rip' + i;
+    el.style.left = (x - 50) + 'px'; el.style.top = (y - 50) + 'px'; $('#' + sid).appendChild(el);
+    M.show(el, f, f + 16); M.kf(el, 'scale', [[0, .3], [f, .3], [f + 16, 2.6, 'softLand']]); M.kf(el, 'opacity', [[0, .95], [f, .95], [f + 16, 0, 'cruise']]);
+  });
+  const cuts = [V(5.84) + 7, V(6.8), V(11.28), V(12.56), V(15.44), V(19.84), V(23.92)];
+  const pk = [[0, 1]]; cuts.concat([L]).forEach((f, i) => { const a = i === cuts.length ? .06 : .025; pk.push([f, 1], [f + 1, 1 + a, 'cruise'], [f + 8, 1, 'softLand']); }); M.kf('#punch', 'scale', pk);
+  const gf = [[0, 0]]; cuts.forEach(f => gf.push([f, 0], [f, .16], [f + 5, 0, 'softLand'])); M.kf('#gflash', 'opacity', gf);
+  M.kf('#flash', 'opacity', [[0, 0], [L, 0], [L, .9], [L + 6, 0, 'softLand']]);
+  const PX = [1, -.75, .55, -.95, .7, -.45, .35, -.6, .3, -.2, .15, -.1, .05], PY = [-.6, .9, -.8, .4, -.7, .55, -.35, .25, -.3, .2, -.1, .08, -.04];
+  const sx = [[0, 0], [L, 0]], sy = [[0, 0], [L, 0]];
+  for (let k = 1; k < 13; k++) { const d = 22 * Math.pow(.82, k); sx.push([L + k, d * PX[k]]); sy.push([L + k, d * PY[k]]); }
+  sx.push([L + 13, 0]); sy.push([L + 13, 0]); M.kf('#shake', 'x', sx); M.kf('#shake', 'y', sy);
+}
+window.__ready = Motion.loaded().then(() => { build(); window.__seek(M.duration - 1 / 30); window.__seek(M.f(1)); window.__seek(0); if (/selftest/.test(location.search)) return Motion.selfTest(M, { samples: 24 }); });
+</script>
+</body>
+</html>

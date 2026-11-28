@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Rei Dos Nitros: como funciona narrado</title>
+<meta name="viewport" content="width=1080, height=1920">
+<link rel="stylesheet" href="../runtime/fonts.css">
+<style>
+@font-face { font-family: "Baloo 2"; src: url("../assets/fonts/baloo-2-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-display: block; }
+/* COR = significado. Vermelho/cinza = dúvida (o problema). Verde #21F167 = a loja resolve. */
+:root { --g: #21F167; --r: #ff3b52; --ink: #04210f; --head: "Baloo 2", system-ui, sans-serif; --ui: "Inter", system-ui, sans-serif; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+#main { position: absolute; inset: 0; overflow: hidden; background: #06070b; color: #fff; font-family: var(--ui); }
+#shake, #punch { position: absolute; inset: 0; transform-origin: 540px 960px; }
+.full { position: absolute; inset: 0; }
+.soft { filter: blur(var(--b, 0px)); }
+/* mundo: grade sutil + luz (vermelha na dúvida, verde na solução) */
+#bg { position: absolute; inset: 0; background: radial-gradient(120% 75% at 50% 42%, #0e1a17 0%, #07090d 55%, #040508 100%); }
+#grid { position: absolute; left: -10%; top: -10%; width: 120%; height: 130%; opacity: .55;
+  background-image: linear-gradient(rgba(255,255,255,.045) 2px, transparent 2px), linear-gradient(90deg, rgba(255,255,255,.045) 2px, transparent 2px);
+  background-size: 90px 90px; -webkit-mask-image: radial-gradient(70% 55% at 50% 50%, #000 30%, transparent 100%); }
+.glow { position: absolute; left: -15%; top: 10%; width: 130%; height: 80%; border-radius: 50%; opacity: 0; }
+#glowR { background: radial-gradient(closest-side, rgba(255,59,82,.42), rgba(255,59,82,0)); }
+#glowG { background: radial-gradient(closest-side, rgba(33,241,103,.30), rgba(33,241,103,0)); }
+.breath { position: absolute; left: -10%; top: 15%; width: 120%; height: 70%; border-radius: 50%; opacity: 0; }
+#breathR { background: radial-gradient(closest-side, rgba(255,59,82,.30), rgba(255,59,82,0)); } #breathG { background: radial-gradient(closest-side, rgba(33,241,103,.24), rgba(33,241,103,0)); }
+.head { position: absolute; left: 0; width: 1080px; text-align: center; font-family: var(--head); font-weight: 800; white-space: pre; letter-spacing: -1px; }
+/* linhas do FAQ remontadas do site (texto real); a sanfona abre como no site */
+.row { position: absolute; left: 40px; width: 1000px; height: 140px; border-radius: 34px; background: #121519; border: 2px solid #262a30; overflow: hidden; box-shadow: 0 24px 60px rgba(0,0,0,.45); }
+.row .qt { position: absolute; left: 44px; top: 0; height: 136px; font: 600 50px/136px var(--ui); color: #fff; white-space: pre; }
+.row .pl { position: absolute; right: 36px; top: 38px; width: 60px; height: 60px; color: #9aa0a6; }
+.pl i { position: absolute; display: block; background: currentColor; border-radius: 3px; }
+.pl .h { left: 6px; top: 27.5px; width: 48px; height: 5px; } .pl .v { left: 27.5px; top: 6px; width: 5px; height: 48px; }
+.row.prob { box-shadow: 0 24px 60px rgba(0,0,0,.45), 0 0 70px rgba(255,59,82,.10); }
+.row.q { border-color: rgba(33,241,103,.6); box-shadow: 0 0 80px rgba(33,241,103,.16), 0 24px 60px rgba(0,0,0,.5); }
+.row.q .pl { color: var(--g); }
+.row .dv { position: absolute; left: 44px; right: 44px; top: 138px; height: 2px; background: #262a30; transform-origin: 0 50%; }
+.row .ib { position: absolute; left: 410px; top: 186px; width: 180px; height: 180px; border-radius: 44px; background: rgba(33,241,103,.10); border: 3px solid rgba(33,241,103,.45); color: var(--g); }
+.ib .ibi { position: absolute; inset: 0; }
+.ib .fill { position: absolute; inset: -3px; border-radius: 44px; background: var(--g); opacity: 0; box-shadow: 0 0 60px rgba(33,241,103,.55); }
+.ib .ico { position: absolute; left: 37px; top: 37px; width: 100px; height: 100px; } .ib .ico svg { width: 100px; height: 100px; display: block; }
+.ib .ok { position: absolute; left: 22px; top: 22px; width: 130px; height: 130px; }
+.row .sp { position: absolute; left: 380px; top: 156px; width: 240px; height: 240px; }
+.row .bt { position: absolute; left: 0; width: 1000px; top: 396px; text-align: center; font: 800 88px/100px var(--ui); letter-spacing: -1px; white-space: pre; }
+.row .bs { position: absolute; left: 0; width: 1000px; top: 502px; text-align: center; font: 500 56px/66px var(--ui); color: #8d9298; white-space: pre; }
+/* faixa de vantagens do site, remontada */
+.tile { position: absolute; left: 40px; width: 1000px; height: 200px; border-radius: 40px; background: #101317; border: 2px solid #23272d; box-shadow: 0 30px 80px rgba(0,0,0,.55), 0 0 90px rgba(33,241,103,.08); }
+.tile .ic { position: absolute; left: 34px; top: 32px; width: 132px; height: 132px; border-radius: 34px; background: rgba(33,241,103,.10); border: 2px solid rgba(33,241,103,.38); color: var(--g); }
+.tile .ic svg { position: absolute; left: 27px; top: 27px; width: 74px; height: 74px; }
+.tile .tt { position: absolute; left: 200px; top: 34px; font: 700 66px/1.1 var(--ui); white-space: pre; }
+.tile .ts { position: absolute; left: 200px; top: 114px; font: 500 46px/1.1 var(--ui); color: #8d9298; white-space: pre; }
+.tile .tg { position: absolute; inset: -2px; border-radius: 40px; border: 3px solid var(--g); box-shadow: 0 0 50px rgba(33,241,103,.45), inset 0 0 30px rgba(33,241,103,.12); opacity: 0; }
+.tile .tk { position: absolute; right: 40px; top: 56px; width: 88px; height: 88px; }
+/* cards recortados do site + camada do botão (afunda no clique) */
+.cw { position: absolute; } .cd, .c3 { position: absolute; inset: 0; }
+.c3 > img.card { position: absolute; left: 0; top: 0; border-radius: 40px; box-shadow: 0 50px 110px rgba(0,0,0,.7), 0 0 120px rgba(33,241,103,.14); }
+.btnl { position: absolute; }
+.hl { position: absolute; border-radius: 10px; background: rgba(33,241,103,.42); mix-blend-mode: screen; transform-origin: 0 50%; }
+.shine { position: absolute; inset: 0; border-radius: 40px; overflow: hidden; }
+.shine i { position: absolute; top: -25%; left: 0; width: 260px; height: 150%; background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,.1) 30%, rgba(255,255,255,.3) 50%, rgba(255,255,255,.1) 70%, rgba(255,255,255,0)); filter: blur(10px); rotate: 14deg; transform: translateX(-600px); }
+.vh { position: absolute; left: 0; width: 1080px; text-align: center; font: 800 110px/120px var(--head); letter-spacing: -1px; white-space: pre; }
+.gr { color: var(--g); }
+/* clique: ondas e halo na ponta do cursor */
+.rip { position: absolute; width: 100px; height: 100px; border-radius: 50%; border: 6px solid rgba(255,255,255,.9); box-shadow: 0 0 30px rgba(33,241,103,.6); }
+.cursor { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+.cursor .art { position: absolute; left: 0; top: 0; transform-origin: 0 0; filter: drop-shadow(0 8px 12px rgba(0,0,0,.6)); }
+.cursor .halo { position: absolute; left: -66px; top: -66px; width: 132px; height: 132px; border-radius: 50%; background: radial-gradient(closest-side, rgba(255,255,255,.55), rgba(255,255,255,0)); opacity: 0; }
+/* a virada: a tela pinta de verde a partir do clique (superfície com luz e grade, não um chapado) */
+#flood { position: absolute; inset: 0; clip-path: circle(var(--r, 0px) at 989px 1005px); background: radial-gradient(90% 62% at 50% 46%, #52ff92 0%, #21F167 52%, #10b648 100%); }
+#fgrid { position: absolute; inset: -10%; background-image: linear-gradient(rgba(4,33,15,.10) 2px, transparent 2px), linear-gradient(90deg, rgba(4,33,15,.10) 2px, transparent 2px); background-size: 90px 90px; }
+#flare { position: absolute; left: -260px; top: 856px; width: 1600px; height: 8px; border-radius: 4px; background: linear-gradient(90deg, rgba(33,241,103,0), rgba(190,255,215,.95) 46%, #fff 50%, rgba(190,255,215,.95) 54%, rgba(33,241,103,0)); box-shadow: 0 0 40px 12px rgba(33,241,103,.45); transform-origin: 800px 4px; }
+#flash { position: absolute; inset: 0; background: #fff; opacity: 0; } #gflash { position: absolute; inset: 0; background: #b8ffd4; opacity: 0; mix-blend-mode: screen; } #rflash { position: absolute; inset: 0; background: #ff3b52; opacity: 0; mix-blend-mode: screen; }
+</style>
+</head>
+<body>
+<div id="main">
+ <div id="shake"><div id="punch">
+  <div id="bg"><div id="grid"></div><div id="glowR" class="glow"></div><div id="glowG" class="glow"></div><div id="breathR" class="breath"></div><div id="breathG" class="breath"></div></div>
+
+  <!-- 1 DÚVIDA (0-221): a intro tensa da música -->
+  <section id="s1" class="full">
+    <div id="hook" class="full" style="transform-origin:540px 900px">
+      <div id="pillDuv" style="position:absolute;height:150px;border-radius:24px;background:var(--r);box-shadow:0 0 60px rgba(255,59,82,.5);transform-origin:0 50%"></div>
+      <div id="h1a" class="head" style="top:756px;font-size:128px;line-height:140px">Comprou e ficou</div>
+      <div id="h1b" class="head" style="top:896px;font-size:150px;line-height:150px">na dúvida?</div>
+    </div>
+    <div id="faq" class="full"></div>
+  </section>
+
+  <!-- 2 VIRADA (221-285) -->
+  <div id="flood"><div id="fgrid"></div>
+    <div id="ftxt" class="full" style="transform-origin:540px 960px">
+      <div id="rel" class="head" style="top:630px;font-size:240px;line-height:250px;color:var(--ink)">Relaxa.</div>
+      <div id="fun" class="head" style="top:940px;font-size:150px;line-height:160px;color:var(--ink)">Funciona</div>
+      <div id="ass" class="head" style="top:1090px;font-size:150px;line-height:160px;color:var(--ink)">assim.</div>
+      <svg id="und" width="440" height="40" viewBox="0 0 440 40" style="position:absolute;left:320px;top:1248px"><path id="undp" d="M8 28 C 120 8, 300 8, 432 22" fill="none" stroke="#04210f" stroke-width="14" stroke-linecap="round" stroke-dasharray="460" stroke-dashoffset="460"/></svg>
+    </div>
+  </div>
+
+  <!-- 3 RESPOSTAS (276-622): cada resposta rola para cima como a página -->
+  <section id="s3" class="full"></section>
+  <!-- 4 VITRINE e "O que você procura hoje?" (622-788) -->
+  <section id="s4" class="full"></section>
+  <!-- 5 LOGO na parada seca da música (788-840) -->
+  <section id="s6" class="full" style="background:#030405">
+    <div class="glow" style="opacity:1;background:radial-gradient(closest-side, rgba(33,241,103,.30), rgba(33,241,103,0));top:20%;height:60%"></div>
+    <div id="lock" class="full" style="transform-origin:540px 900px">
+      <img id="logo" src="../assets/logo.jpg" style="position:absolute;left:320px;top:640px;width:440px;height:440px;border-radius:56px;box-shadow:0 40px 120px rgba(0,0,0,.8),0 0 140px rgba(33,241,103,.3)">
+      <div id="lname" class="head" style="top:1130px;font-size:124px;line-height:140px">Rei Dos Nitros</div>
+    </div>
+    <div id="flare"></div>
+  </section>
+
+  <div id="ripples" class="full"></div>
+  <div id="cur" class="cursor"><div class="halo" id="curHalo"></div><div class="art" id="curArt"><svg width="72" height="100" viewBox="0 0 29 40" style="position:absolute;left:-4px;top:-4px"><path d="M1.5 1.5 L1.5 32 L9.2 25 L14.2 37.2 L19.6 34.9 L14.6 23 L24.8 23 Z" fill="#fff" stroke="#0a0a0a" stroke-width="2.2" stroke-linejoin="round"/></svg></div></div>
+  <div id="hand" class="cursor"><div class="halo" id="handHalo"></div><div class="art" id="handArt"><svg width="92" height="92" viewBox="0 0 24 24" style="position:absolute;left:-40px;top:-5px"><path d="M9.2 2.6c0-.9.6-1.6 1.4-1.6s1.4.7 1.4 1.6v7.2h.4V8.9c0-.8.6-1.4 1.4-1.4s1.4.6 1.4 1.4v1.4h.4V9.6c0-.8.6-1.4 1.4-1.4s1.4.6 1.4 1.4v1.3h.3c0-.8.6-1.3 1.3-1.3s1.3.6 1.3 1.3v4.9c0 3.7-3 6.6-6.6 6.6h-1.4c-2 0-3.5-.7-4.8-2L3.6 16.3c-.6-.6-.6-1.5 0-2.1s1.5-.6 2.1 0l3.5 3.2z" fill="#fff" stroke="#0a0a0a" stroke-width="1.1" stroke-linejoin="round"/><path d="M12 9.8v2.4M15 10.3v2.1M17.9 10.9v1.8" stroke="#0a0a0a" stroke-width="1" stroke-linecap="round"/></svg></div></div>
+ </div></div>
+ <div id="rflash"></div><div id="gflash"></div><div id="flash"></div>
+</div>
+
+<script src="../runtime/vendor/gsap.min.js"></script>
+<script src="../runtime/motion.js"></script>
+<script>
+const M = Motion.film({ fps: 30, duration: 36, width: 1080, height: 1920, clock: 'smooth' });
+/* funk (versão 2) esticado com compassos repetidos (audio/edit_music.py): batida k = 0,4326 s + 0,46147 s × k; drop na batida 19 (9,20 s),
+   último golpe na 71 e parada seca na 72 (33,66 s). A NARRAÇÃO manda: cada palavra e cada pergunta entram quando a voz fala (audio/mix.py). */
+const B = k => Math.round(30 * (0.4326 + 0.46147 * k));
+const px = v => v + 'px', $ = s => document.querySelector(s);
+const META = { regras: { w: 905, h: 782 }, cashback: { w: 902, h: 782 }, whats: { w: 982, h: 600 }, spider: { w: 912, h: 864 }, uncharted: { w: 914, h: 864 }, poppy: { w: 912, h: 864 }, fortnite: { w: 986, h: 743 }, valorant: { w: 986, h: 743 } };
+/* ícones da faixa de vantagens do site (QR, raio, moedas, fone) */
+const ICON = {
+  qr: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>',
+  zap: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/></svg>',
+  coins: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>',
+  head: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></svg>' };
+const plus = id => `<div class="pl" id="${id}pl"><i class="h"></i><i class="v" id="${id}v"></i></div>`;
+const row = (id, txt, top, cls) => `<div class="row ${cls}" id="${id}" style="top:${top}px"><div class="qt">${txt}</div>${plus(id)}</div>`;
+const acc = (id, txt, top, ic, tt, ts, spin) => `<div class="row q" id="${id}" style="top:${top}px"><div class="qt">${txt}</div>${plus(id)}<div class="dv" id="${id}dv"></div>` +
+  (spin ? `<svg class="sp" id="${id}sp" viewBox="0 0 240 240"><circle cx="120" cy="120" r="112" fill="none" stroke="rgba(255,255,255,.10)" stroke-width="8"/><circle cx="120" cy="120" r="112" fill="none" stroke="#21F167" stroke-width="8" stroke-linecap="round" stroke-dasharray="190 520"/></svg>` : '') +
+  `<div class="ib" id="${id}ib"><div class="ibi" id="${id}ibi"><div class="fill" id="${id}fill"></div><div class="ico" id="${id}ico">${ICON[ic]}</div>` +
+  `<svg class="ok" viewBox="0 0 130 130"><path id="${id}okp" d="M34 68 L56 90 L98 44" fill="none" stroke="#04210f" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="96" stroke-dashoffset="96"/></svg></div></div>` +
+  `<div class="bt" id="${id}bt">${tt}</div><div class="bs" id="${id}bs">${ts}</div></div>`;
+const tile = (id, ic, tt, ts, top, chk) => `<div class="tile" id="${id}" style="top:${top}px"><div class="tg" id="${id}g"></div><div class="ic">${ICON[ic]}</div><div class="tt">${tt}</div><div class="ts">${ts}</div>` +
+  (chk ? `<svg class="tk" id="${id}k" viewBox="0 0 88 88"><circle cx="44" cy="44" r="40" fill="#21F167"/><path id="${id}kp" d="M26 46 L38 58 L62 32" fill="none" stroke="#04210f" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="60" stroke-dashoffset="60"/></svg>` : '') + `</div>`;
+const card = (id, k, left, top, extra = '') => { const m = META[k]; return `<div class="cw" id="cw_${id}" style="left:${left}px;top:${top}px;width:${m.w}px;height:${m.h}px"><div class="cd" id="cd_${id}"><div class="c3" id="c3_${id}"><img class="card" src="../assets/card_${k}.png" width="${m.w}" height="${m.h}">${extra}<div class="shine"><i id="sh_${id}"></i></div></div></div></div>`; };
+
+/* ---- montagem: posições calculadas para centrar cada bloco na altura (ver NOTE.md) ---- */
+$('#faq').innerHTML = row('fA', 'Quanto tempo leva para eu receber?', 770, 'prob') + row('fB', 'Como eu pago?', 934, 'prob') + row('fC', 'Deu problema. E agora?', 1098, 'prob') + row('fD', 'A Rei dos Nitros é confiável?', 1262, 'prob');
+$('#s3').innerHTML =
+  `<div id="b1" class="full">${acc('q1', 'Como eu pago?', 642, 'qr', 'Pix na hora', 'Aprovação rápida')}</div>` +
+  `<div id="b2" class="full">${acc('q2', 'Quanto tempo leva para eu receber?', 642, 'zap', 'Entrega automática', 'Na maioria dos itens', true)}</div>` +
+  `<div id="b3" class="full">${row('q3', 'Deu problema. E agora?', 450, 'q')}` +
+    card('whats', 'whats', 49, 630, `<img class="btnl" id="bl_whats" src="../assets/btn_whats.png" style="left:34.4px;top:464.4px;width:913px;height:101px">`) + tile('tSup', 'head', 'Suporte humano', 'WhatsApp e Discord', 1270) + `</div>` +
+  `<div id="b4" class="full">${row('q4', 'A Rei dos Nitros é confiável?', 479, 'q')}` +
+    card('regras', 'regras', 87.5, 659, `<div class="hl" id="hl_reg" style="left:192px;top:436.8px;width:360px;height:52.8px"></div><img class="btnl" id="bl_reg" src="../assets/btn_regras.png" style="left:48px;top:592.8px;width:806px;height:142px">`) + `</div>` +
+  `<div id="b5" class="full"><div id="ainda" style="position:absolute;left:340px;top:489px;width:400px;height:120px;border-radius:60px;background:var(--g);color:var(--ink);font:800 70px/124px var(--head);text-align:center;box-shadow:0 0 60px rgba(33,241,103,.35)">E ainda:</div>` +
+    card('cash', 'cashback', 89, 649, `<div class="hl" id="hl_c4" style="left:657.6px;top:379.2px;width:184.8px;height:52.8px"></div><div class="hl" id="hl_c20" style="left:38.4px;top:436.8px;width:259.2px;height:52.8px"></div><img class="btnl" id="bl_cash" src="../assets/btn_cashback.png" style="left:48px;top:592.8px;width:809px;height:142px">`) + `</div>`;
+$('#s4').innerHTML =
+  `<div id="v1" class="full"><div class="vh" id="vh1" style="top:443px">Em destaque <span class="gr">hoje</span></div>` +
+    card('spider', 'spider', 84, 613) + card('unch', 'uncharted', 83, 613) + card('poppy', 'poppy', 84, 613) + `</div>` +
+  `<div id="v2" class="full"><div class="vh" id="vh2" style="top:503px">Skins em alta <span class="gr">hoje</span></div>` + card('fort', 'fortnite', 47, 673) + card('valo', 'valorant', 47, 673) + `</div>` +
+  `<div id="procura" class="full soft" style="transform-origin:548px 1132px"><div id="p1" class="head" style="top:725px;font-size:120px;line-height:140px">O que você</div><div id="p2" class="head" style="top:865px;font-size:120px;line-height:140px">procura hoje?</div>` +
+    `<div id="ver" style="position:absolute;left:320px;top:1065px;width:440px;height:130px"><div id="verIn" style="position:absolute;inset:0;border-radius:65px;background:#0d0f12;border:2px solid #2c3036;font:600 50px/126px var(--ui);text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.5)">Ver todas →</div></div></div>`;
+
+function build() {
+  gsap.set('.c3', { transformPerspective: 1700 });
+  gsap.set(['#q1v', '#q3v', '#q4v'], { scaleY: 0 });          // perguntas já abertas mostram "−"
+  gsap.set('#cd_regras', { transformOrigin: '452.5px 76px' }); gsap.set('#cd_cash', { transformOrigin: '451px 96px' });
+  const S = t => Math.round(30 * t);                            // segundo em que a voz diz a palavra -> quadro
+  const rip = [];                                               // [x, y, quadro, escala final, cor]
+  const D = 1920, SF = 9;                                       // rolagem: a página inteira sobe em 9 quadros
+  const blk = (id, fin, fout) => {
+    const k = [[0, fin == null ? 0 : D]];
+    if (fin != null) k.push([fin, D], [fin + SF, 0, 'softLand']);
+    if (fout != null) k.push([fout, 0], [fout + SF, -D, 'softLand']);
+    M.kf(id, 'y', k);
+    if (fin != null) M.show(id, fin);
+    if (fout != null) M.hide(id, fout + SF);
+  };
+
+  /* ===== 1 DÚVIDA: cada palavra e cada pergunta entram quando a voz fala ===== */
+  M.kf('#grid', 'y', [[0, 0], [1080, -230]], { ease: 'cruise' });
+  M.kf('#grid', 'scale', [[0, 1.14], [B(19), 1, 'softInOut']]);
+  const pulse = (k, base, peak, fs) => { fs.forEach(f => k.push([f, base], [f, peak], [f + 10, base, 'softLand'])); return k; };
+  M.kf('#glowR', 'opacity', pulse([[0, .3], [B(0), .55, 'softInOut']], .55, .9, [B(5), B(9), B(11), B(15)]).concat([[B(16), .55], [B(16), 1], [B(19), 1], [B(19), 0]]));
+  // "Comprou e ficou / na dúvida?": palavras nos tempos da fala (0,45 / 0,94 / 1,05 / 1,27 / 1,42 s)
+  const br = (id, k0, k1, lo, hi) => { const k = [[0, 0], [B(k0), 0]]; for (let j = k0; j <= k1; j += 2) k.push([B(j), (j - k0) % 4 ? hi : lo, 'softInOut']); k.push([B(k1 + 1), 0, 'softInOut']); M.kf(id, 'opacity', k); };
+  br('#breathR', 0, 18, .25, .95); br('#breathG', 23, 70, .2, .9);   // a luz respira no compasso enquanto a voz fala
+  M.words('#h1a', { at: S(0.45), mech: 'shrink', dist: 1.8, frames: 8, gaps: [S(0.94) - S(0.45), S(1.05) - S(0.94)] });
+  M.words('#h1b', { at: S(1.27), mech: 'shrink', dist: 1.8, frames: 8, gaps: [S(1.42) - S(1.27)] });
+  const w = $('#h1b').querySelectorAll('.mw')[1], host = $('#h1b'), pd = $('#pillDuv');
+  pd.style.left = (host.offsetLeft + w.offsetLeft - 22) + 'px'; pd.style.top = (host.offsetTop + w.offsetTop - 4) + 'px'; pd.style.width = (w.offsetWidth + 44) + 'px';
+  M.show('#pillDuv', S(1.42) + 4); M.kf('#pillDuv', 'scaleX', [[0, 0], [S(1.42) + 4, 0], [S(1.42) + 11, 1, 'softLand']]);
+  M.kf('#hook', 'y', [[0, 0], [B(4), 0], [B(4) + 12, -292, 'softInOut']]);
+  M.kf('#hook', 'scale', [[0, 1], [B(4), 1], [B(4) + 12, .62, 'softInOut']]);
+  M.kf('#s1', 'scale', [[0, 1], [B(4), 1], [B(16), 1.035, 'cruise']]);   // empurrão lento até o clique (o "+" vai de 974,1004 a 989,1005)
+  // as 4 perguntas entram 1 quadro antes da voz perguntar (2,78 / 4,62 / 5,55 / 7,38 s)
+  [['#fA', 5, 1], ['#fB', 9, -1], ['#fC', 11, 1], ['#fD', 15, -1]].forEach(([id, b, d]) =>
+    M.enter(id, { at: B(b), frames: 9, ease: 'softLand', from: { x: d * 1100, rotation: d * 4 } }));
+  // glitch em "confiável?"
+  M.kf('#s1', 'x', [[0, 0], [B(16), 0], [B(16) + 1, 18], [B(16) + 2, -14], [B(16) + 3, 10], [B(16) + 4, -5], [B(16) + 5, 0]]);
+  M.kf('#s1', 'skewX', [[0, 0], [B(16), 0], [B(16) + 1, 4], [B(16) + 2, -3], [B(16) + 3, 0]]);
+  M.kf('#rflash', 'opacity', [[0, 0], [B(16), 0], [B(16), .3], [B(16) + 6, 0, 'softLand']]);
+  // a seta estaciona no "+" de "Como eu pago?" e clica na batida 18; o "+" vira "−"
+  M.cursor('#cur', { keys: [[B(15) + 4, 1250, 1900, 2.4, -16], [B(17), 989, 1005, 1, 0], [B(19) + 2, 989, 1005, 1, 0]], ease: 'glide' });
+  M.hide('#cur', B(19) + 3);
+  M.kf('#curHalo', 'opacity', [[0, 0], [B(17) - 2, 0], [B(17) + 3, .85], [B(18), .85], [B(18) + 1, 1], [B(18) + 8, .4, 'softLand']]);
+  M.press('#curArt', '#fBpl', { at: B(18), frames: 3, lag: 1, cursorDepth: .8, targetDepth: .8, label: 'clique no + de "Como eu pago?"' });
+  M.kf('#fBpl', 'rotation', [[0, 0], [B(18) + 1, 0], [B(18) + 9, 180, 'softLand']]);
+  M.kf('#fBv', 'scaleY', [[0, 1], [B(18) + 1, 1], [B(18) + 6, 0, 'softLand']]);
+  M.kf('#fBpl', 'color', [[0, '#9aa0a6'], [B(18) + 1, '#9aa0a6'], [B(18) + 1, '#21F167']]);
+  M.kf('#fB', 'borderColor', [[0, '#262a30'], [B(18) + 1, '#262a30'], [B(18) + 1, '#21F167']]);
+  rip.push([989, 1005, B(18) + 1, 2.8]);
+
+  /* ===== 2 VIRADA: no drop, verde a partir do clique; "Relaxa." (9,27 s) "Funciona" (10,14) "assim." (10,63) ===== */
+  M.show('#flood', B(19));
+  M.kf('#flood', '--r', [[0, 0], [B(19), 0], [B(19) + 9, 1450, 'softLand']], { fmt: px });
+  M.hide('#s1', B(19) + 9);
+  M.words('#rel', { at: S(9.27), mech: 'shrink', dist: 2.2, frames: 9 });
+  M.kf('#rel', 'y', [[0, 205], [B(21) - 3, 205], [B(21) + 7, 0, 'softInOut']]);
+  M.words('#fun', { at: S(10.14), mech: 'shrink', dist: 1.7, frames: 8 });
+  M.words('#ass', { at: S(10.63), mech: 'shrink', dist: 1.7, frames: 8 });
+  M.kf('#undp', 'strokeDashoffset', [[0, 460], [S(10.63) + 3, 460], [S(10.63) + 12, 0, 'softLand']]);
+  M.kf('#ftxt', 'scale', [[0, 1], [B(19), 1], [B(23), 1.04, 'cruise']]);
+  blk('#flood', null, B(23));
+
+  /* ===== 3 RESPOSTAS: a resposta aparece quando a voz começa a dizê-la ===== */
+  M.kf('#glowG', 'opacity', [[0, 0], [B(23), 0], [B(23) + 6, .6, 'softInOut'], [B(71), .6], [B(72), 0]]);
+  const open = (id, f) => {
+    M.kf('#' + id, 'height', [[0, 140], [f, 140], [f + 9, 636, 'softLand']], { fmt: px });
+    M.kf('#' + id + 'dv', 'scaleX', [[0, 0], [f, 0], [f + 8, 1, 'softLand']]);
+    M.enter('#' + id + 'ib', { at: f + 1, frames: 9, ease: 'softLand', from: { scale: .5, y: -30 } });
+    M.enter('#' + id + 'bt', { at: f + 2, frames: 9, ease: 'softLand', from: { y: 50 } });
+    M.enter('#' + id + 'bs', { at: f + 5, frames: 9, ease: 'softLand', from: { y: 40 } });
+  };
+  const done = (id, f) => {
+    M.kf('#' + id + 'fill', 'opacity', [[0, 0], [f, 0], [f + 3, 1, 'softLand']]);
+    M.kf('#' + id + 'ico', 'scale', [[0, 1], [f, 1], [f + 4, .3, 'accelExit']]);
+    M.kf('#' + id + 'ico', 'opacity', [[0, 1], [f, 1], [f + 4, 0]]);
+    M.kf('#' + id + 'okp', 'strokeDashoffset', [[0, 96], [f + 2, 96], [f + 10, 0, 'softLand']]);
+    M.kf('#' + id + 'ibi', 'scale', [[0, 1], [f, 1], [f + 2, 1.14, 'cruise'], [f + 11, 1, 'softLand']]);
+    rip.push([540, 918, f + 1, 3.4, '#21F167']);
+  };
+  // R1 "Pix na hora, com aprovação rápida." (11,53 s): abre na batida 24; o check cai em "aprovação" (batida 26)
+  blk('#b1', B(23), B(29)); open('q1', B(24)); done('q1', B(26));
+  M.kf('#b1', 'scale', [[0, 1], [B(24) + 9, 1], [B(29), 1.04, 'cruise']]);
+  // R2 "Entrega automática, na maioria dos itens." (14,30 s): abre sozinha na 30, carrega e aprova em "itens" (35)
+  blk('#b2', B(29), B(36));
+  M.kf('#q2v', 'scaleY', [[0, 1], [B(30), 1], [B(30) + 6, 0, 'softLand']]);
+  M.kf('#q2pl', 'rotation', [[0, 0], [B(30), 0], [B(30) + 8, 180, 'softLand']]);
+  open('q2', B(30));
+  M.show('#q2sp', B(33), B(35)); M.kf('#q2sp', 'rotation', [[0, 0], [B(33), 0], [B(35), 520]], { ease: 'cruise' });
+  done('q2', B(35));
+  M.kf('#b2', 'scale', [[0, 1], [B(30) + 9, 1], [B(36), 1.04, 'cruise']]);
+  // R3 "Suporte humano, no WhatsApp e no Discord." (17,55 s): card na 37, "Suporte humano" em "humano" (38), clique em "WhatsApp" (40)
+  blk('#b3', B(36), B(43));
+  M.enter('#cw_whats', { at: B(37), frames: 10, ease: 'softLand', from: { y: 300, scale: .92 } });
+  M.kf('#c3_whats', 'rotationX', [[0, 30], [B(37), 30], [B(37) + 11, 0, 'softLand']]);
+  gsap.set('#cd_whats', { transformOrigin: '491px 300px' }); M.kf('#cd_whats', 'scale', [[0, 1], [B(37) + 10, 1], [B(43), 1.03, 'cruise']]);
+  M.enter('#tSup', { at: B(38), frames: 9, ease: 'softLand', from: { y: 280, scale: .95 } });
+  // R4 "Garantia de sete dias, tá tudo nas regras." (20,95 s): o marca-texto corre junto com "garantia de sete dias"; clique em "regras" (50)
+  blk('#b4', B(43), B(51));
+  M.enter('#cw_regras', { at: B(44), frames: 10, ease: 'softLand', from: { y: 300, scale: .92 } });
+  M.kf('#c3_regras', 'rotationY', [[0, -28], [B(44), -28], [B(44) + 11, 0, 'softLand']]);
+  M.kf('#cd_regras', 'scale', [[0, 1], [B(45), 1], [B(45) + 10, 1.25, 'softInOut'], [B(51), 1.27, 'cruise']]);
+  M.show('#hl_reg', S(20.95)); M.kf('#hl_reg', 'scaleX', [[0, 0], [S(20.95), 0], [S(22.37), 1, 'cruise']]);
+  // R5 "E ainda: de quatro até vinte por cento de volta, em saldo." (24,30 s): marca-texto em "de quatro até" e em "vinte por cento"; clique em "saldo" (60)
+  blk('#b5', B(51), B(61));
+  M.enter('#cw_cash', { at: B(53), frames: 10, ease: 'softLand', from: { y: 300, scale: .92 } });
+  M.kf('#c3_cash', 'rotationY', [[0, 28], [B(53), 28], [B(53) + 11, 0, 'softLand']]);
+  M.kf('#cd_cash', 'scale', [[0, 1], [B(53), 1], [B(53) + 10, 1.25, 'softInOut'], [B(61), 1.27, 'cruise']]);
+  M.show('#hl_c4', S(25.23)); M.kf('#hl_c4', 'scaleX', [[0, 0], [S(25.23), 0], [S(25.95), 1, 'cruise']]);
+  M.show('#hl_c20', S(26.17)); M.kf('#hl_c20', 'scaleX', [[0, 0], [S(26.17), 0], [S(27.0), 1, 'cruise']]);
+
+  /* ===== 4 VITRINE: "Olha os destaques de hoje." (28,65 s) e o carrossel, um card por batida ===== */
+  blk('#v1', B(61), null); M.hide('#v1', B(64) + 8);
+  M.kf('#c3_spider', 'rotationX', [[0, 34], [B(61), 34], [B(61) + 11, 0, 'softLand']]);
+  const car = (k, fin, fout) => {
+    if (fin != null) M.enter('#cw_' + k, { at: fin, frames: 9, ease: 'softLand', from: { x: 1150 } });
+    if (fout != null) M.exit('#cw_' + k, { at: fout, frames: 7, ease: 'accelExit', to: { x: -1150 }, hide: true });
+    const r = [[0, fin != null ? 40 : 0]];
+    if (fin != null) r.push([fin, 40], [fin + 10, 0, 'softLand']);
+    if (fout != null) r.push([fout, 0], [fout + 7, -40, 'accelExit']);
+    M.kf('#c3_' + k, 'rotationY', r);
+  };
+  car('spider', null, B(62)); car('unch', B(62), B(63)); car('poppy', B(63), B(64));
+  M.exit('#vh1', { at: B(64), frames: 7, ease: 'accelExit', to: { y: -220, blur: 10 }, hide: true });
+  M.show('#v2', B(64));
+  M.enter('#vh2', { at: B(64), frames: 9, ease: 'softLand', from: { y: 220, blur: 10 } });
+  car('fort', B(64), B(65)); car('valo', B(65), null);
+  blk('#v2', null, B(67) - 3);
+  // "O que você procura hoje?" palavra por palavra com a voz (31,38 / 31,49 / 31,57 / 31,87 / 32,24 s); clique em "Ver todas" no último golpe (71)
+  M.show('#procura', B(67));
+  M.words('#p1', { at: S(31.38), mech: 'shrink', dist: 1.8, frames: 8, gaps: [S(31.49) - S(31.38), S(31.57) - S(31.49)] });
+  M.words('#p2', { at: S(31.87), mech: 'shrink', dist: 1.8, frames: 8, gaps: [S(32.24) - S(31.87)] });
+  M.enter('#ver', { at: B(69), frames: 9, ease: 'softLand', from: { scale: .6, y: 40 } });
+  M.kf('#procura', 'scale', [[0, 1], [B(67), 1], [B(71) + 3, 1.03, 'cruise'], [B(72), 6, 'gentleIn']]);
+  M.kf('#procura', '--b', [[0, 0], [B(71) + 3, 0], [B(72), 24, 'gentleIn']], { fmt: px });
+  M.kf('#procura', 'opacity', [[0, 1], [B(72) - 4, 1], [B(72), 0]]);
+  M.hide('#s4', B(72));
+
+  /* ===== 5 LOGO na parada seca; "Vem pra Rei Dos Nitros." (33,80 s): o nome entra com "Rei" (34,17) "Dos" (34,29) "Nitros" (34,55) ===== */
+  M.show('#s6', B(72));
+  M.enter('#logo', { at: B(72), frames: 12, ease: 'snapSettle', from: { scale: 3.5, blur: 14 } });
+  M.show('#flare', B(72), B(72) + 26); M.kf('#flare', 'scaleX', [[0, .1], [B(72), .1], [B(72) + 8, 1, 'softLand']]); M.kf('#flare', 'opacity', [[0, 1], [B(72) + 8, 1], [B(72) + 26, 0, 'softInOut']]);
+  M.words('#lname', { at: S(34.17), mech: 'rise', dist: 70, frames: 10, gaps: [S(34.29) - S(34.17), S(34.55) - S(34.29)] });
+  M.kf('#lock', 'scale', [[0, 1], [S(34.55) + 3, 1], [S(34.55) + 22, .97, 'softInOut']]);
+  rip.push([540, 860, B(72) + 2, 9, '#21F167']);
+
+  /* ===== MÃOZINHA: estaciona ~1 batida e clica na palavra ===== */
+  const H = [ // [aparece, some, chaves, clique, alvo, x, y]
+    [B(37) + 2, B(43), [[B(37) + 2, 1180, 1980, 2.2, -12], [B(39), 540, 1148, 1, 0], [B(40) + 8, 540, 1148, 1, 0], [B(43), 1200, 1950, 1.6, -10]], B(40), '#bl_whats', 540, 1148],
+    [B(48), B(51) + 7, [[B(48), -160, 1800, 2.2, 12], [B(49), 538, 1479, 1, 0], [B(50) + 8, 538, 1479, 1, 0], [B(51) + 7, -160, 1960, 1.6, 12]], B(50), '#bl_reg', 538, 1479],
+    [B(58), B(61) + 6, [[B(58), 1180, 1980, 2.2, -12], [B(59), 542, 1464, 1, 0], [B(60) + 8, 542, 1464, 1, 0], [B(61) + 6, 1200, 1960, 1.6, -10]], B(60), '#bl_cash', 542, 1464],
+    [B(69), B(71) + 5, [[B(69), 1180, 1900, 2.2, -12], [B(70), 548, 1132, 1, 0], [B(71) + 4, 548, 1132, 1, 0]], B(71), '#verIn', 548, 1132],
+  ];
+  M.cursor('#hand', { keys: H.flatMap(h => h[2]), ease: 'glide' });
+  const halo = [[0, 0]];
+  H.forEach(([show, hide, keys, at, tgt, x, y], i) => {
+    if (i > 0) M.show('#hand', show);
+    M.hide('#hand', hide);
+    const park = keys[1][0];
+    halo.push([park - 2, 0], [park + 3, .85], [at, .85], [at + 1, 1], [at + 8, 0, 'softLand']);
+    M.press('#handArt', tgt, { at, frames: 3, lag: 1, hold: 1, cursorDepth: .82, targetDepth: tgt === '#verIn' ? .93 : .965, targetStep: { filter: 'brightness(1.3)' }, label: 'clique ' + tgt });
+    rip.push([x, y, at + 1, 2.8]);
+  });
+  M.kf('#handHalo', 'opacity', halo);
+
+  rip.forEach(([x, y, f, s, col], i) => {
+    const el = document.createElement('div'); el.className = 'rip'; el.id = 'rip' + i;
+    el.style.left = (x - 50) + 'px'; el.style.top = (y - 50) + 'px'; if (col) el.style.borderColor = col;
+    $('#ripples').appendChild(el);
+    M.show(el, f, f + 18); M.kf(el, 'scale', [[0, .3], [f, .3], [f + 18, s, 'softLand']]); M.kf(el, 'opacity', [[0, .95], [f, .95], [f + 18, 0, 'cruise']]);
+  });
+  Object.entries({ whats: B(37) + 8, regras: B(44) + 8, cash: B(53) + 8, spider: B(61) + 6, unch: B(62) + 4, poppy: B(63) + 4, fort: B(64) + 5, valo: B(65) + 5 })
+    .forEach(([k, f]) => M.kf('#sh_' + k, 'x', [[0, -600], [f, -600], [f + 10, 1100, 'softInOut']]));
+
+  /* na batida: punch, tremida, clarões */
+  const punches = [[B(5), .012], [B(9), .012], [B(11), .012], [B(15), .012], [B(18), .01], [B(19), .05], [B(21), .02], [B(23), .02], [B(24), .025], [B(26), .02],
+    [B(29), .02], [B(30), .025], [B(35), .02], [B(36), .02], [B(37), .03], [B(40), .012], [B(43), .02], [B(44), .03], [B(50), .012], [B(51), .02], [B(53), .03],
+    [B(60), .012], [B(61), .03], [B(62), .03], [B(63), .03], [B(64), .03], [B(65), .03], [B(67), .02], [B(69), .015], [B(71), .02], [B(72), .06]];
+  const pk = [[0, 1]]; punches.forEach(([f, a]) => pk.push([f, 1], [f + 1, 1 + a, 'cruise'], [f + 8, 1, 'softLand'])); M.kf('#punch', 'scale', pk);
+  const shakes = [[B(16), 9, 6], [B(19), 16, 10], [B(61), 6, 5], [B(72), 22, 13]];
+  const PX = [1, -.75, .55, -.95, .7, -.45, .35, -.6, .3, -.2, .15, -.1, .05], PY = [-.6, .9, -.8, .4, -.7, .55, -.35, .25, -.3, .2, -.1, .08, -.04];
+  const sx = [[0, 0]], sy = [[0, 0]];
+  shakes.forEach(([f, a, n]) => { sx.push([f, 0]); sy.push([f, 0]); for (let k = 1; k < n; k++) { const d = a * Math.pow(.82, k); sx.push([f + k, d * PX[k % 13]]); sy.push([f + k, d * PY[k % 13]]); } sx.push([f + n, 0]); sy.push([f + n, 0]); });
+  M.kf('#shake', 'x', sx); M.kf('#shake', 'y', sy);
+  const fl = [[0, 0]]; [[B(71) + 4, .25], [B(72), .95]].forEach(([f, a]) => fl.push([f, 0], [f, a], [f + 6, 0, 'softLand'])); M.kf('#flash', 'opacity', fl);
+  const gf = [[0, 0]]; [B(24), B(30), B(37), B(44), B(53), B(61), B(62), B(63), B(64), B(65)].forEach(f => gf.push([f, 0], [f, .2], [f + 5, 0, 'softLand'])); M.kf('#gflash', 'opacity', gf);
+}
+
+window.__ready = Motion.loaded().then(() => { build(); window.__seek(M.duration - 1 / 30); window.__seek(M.f(1)); window.__seek(0); /* visita o fim antes: todo tween inicializado, quadro 0 igual em ordem e em salto */ if (/selftest/.test(location.search)) return Motion.selfTest(M, { samples: 24 }); });
+</script>
+</body>
+</html>
