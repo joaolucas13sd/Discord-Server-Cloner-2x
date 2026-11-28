@@ -1,161 +1,146 @@
 <div class="min-h-screen bg-black text-white">
-  <!-- ===================== DESTAQUES: JOGOS STEAM + FILMES ===================== -->
-  <section class="fc-wrap" aria-label="Destaques do momento">
-    <div class="fc-viewport">
-      <div class="fc-track" id="fc-track"></div>
-      <button class="fc-arrow fc-prev" id="fc-prev" aria-label="Destaque anterior">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
-      </button>
-      <button class="fc-arrow fc-next" id="fc-next" aria-label="Próximo destaque">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
-      </button>
-    </div>
-    <div class="fc-dots" id="fc-dots" role="tablist" aria-label="Escolher destaque"></div>
+  <!-- ===================== DESTAQUES (HERO NATIVO): JOGOS STEAM + FILMES ===================== -->
+  <section class="nh" id="nh" aria-roledescription="carrossel" aria-label="Destaques do momento">
+    <div class="nh-slides" id="nh-slides"></div>
+    <div class="nh-dots" id="nh-dots" role="tablist" aria-label="Escolher destaque"></div>
   </section>
 
   <style>
-    .fc-wrap { max-width: 80rem; margin: 0 auto; padding: 20px 16px 8px; }
-    @media (min-width: 640px) { .fc-wrap { padding: 28px 24px 8px; } }
-    @media (min-width: 1024px) { .fc-wrap { padding: 32px 32px 8px; } }
-    .fc-viewport { position: relative; }
-    .fc-track {
-      display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
-      scroll-behavior: smooth; scrollbar-width: none; border-radius: 28px;
+    /* O destaque ocupa o topo inteiro e passa por trás do header de vidro */
+    .nh {
+      position: relative; margin-top: -64px; height: clamp(560px, 82vh, 780px);
+      overflow: hidden; isolation: isolate; color: #fff; touch-action: pan-y;
     }
-    .fc-track::-webkit-scrollbar { display: none; }
-    .fc-slide {
-      position: relative; flex: 0 0 100%; scroll-snap-align: center; overflow: hidden;
-      height: 400px; border-radius: 28px; isolation: isolate;
-      border: 1px solid rgba(255,255,255,.08); background: #0c0908;
-      transition: opacity .4s, transform .4s;
-    }
-    @media (min-width: 640px) { .fc-slide { height: 360px; } }
-    @media (min-width: 1024px) { .fc-slide { height: 400px; } }
+    .nh-slides { position: absolute; inset: 0; }
+    .nh-slide { position: absolute; inset: 0; opacity: 0; visibility: hidden; transition: opacity .9s ease, visibility 0s linear .9s; }
+    .nh-slide.is-active { opacity: 1; visibility: visible; z-index: 1; transition: opacity .9s ease; }
 
-    .fc-bg { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; transform: translateZ(0); backface-visibility: hidden; transition: transform 7s ease-out, opacity .6s; }
-    .fc-slide.is-active:not(.is-movie) .fc-bg { transform: scale(1.03) translateZ(0); }
-    .fc-slide.is-movie .fc-bg { filter: blur(32px) saturate(1.35) brightness(.5); transform: scale(1.3); }
-    .fc-bg.is-loading, .fc-poster.is-loading, .fc-logo.is-loading { opacity: 0; }
-    .fc-slide { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-    .fc-slide::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; box-shadow: inset 0 1px 0 rgba(255,255,255,.12), inset 0 0 0 1px rgba(255,255,255,.04); }
-    .fc-poster, .fc-logo { transition: opacity .5s; }
-    .fc-shade {
-      position: absolute; inset: 0; z-index: -2;
+    /* Arte: se dissolve no fundo do site embaixo */
+    .nh-media {
+      position: absolute; inset: 0;
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 55%, rgba(0,0,0,.55) 78%, transparent 100%);
+              mask-image: linear-gradient(180deg, #000 0%, #000 55%, rgba(0,0,0,.55) 78%, transparent 100%);
+    }
+    .nh-bg {
+      position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 68% 28%;
+      opacity: 0; transform: scale(1.07); transition: opacity .7s ease, transform 9s cubic-bezier(.2,.6,.2,1);
+    }
+    .nh-bg.is-ready { opacity: 1; }
+    .nh-slide.is-active .nh-bg { transform: scale(1); }
+    .nh-slide.is-movie .nh-bg { filter: blur(42px) saturate(1.45) brightness(.55); transform: scale(1.35); }
+    .nh-shade {
+      position: absolute; inset: 0; pointer-events: none;
+      -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 50%, rgba(0,0,0,.5) 76%, transparent 100%);
+              mask-image: linear-gradient(180deg, #000 0%, #000 50%, rgba(0,0,0,.5) 76%, transparent 100%);
       background:
-        linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.55) 45%, rgba(0,0,0,.05) 75%),
-        linear-gradient(0deg, rgba(0,0,0,.85) 0%, transparent 45%),
-        radial-gradient(ellipse 60% 80% at 0% 100%, rgba(255,66,42,.35), transparent 70%);
-    }
-    /* faixas diagonais de luz, como na referência */
-    .fc-shade::after {
-      content: ""; position: absolute; inset: 0;
-      background: repeating-linear-gradient(115deg, transparent 0 60px, rgba(255,138,61,.07) 60px 64px, transparent 64px 140px);
-      mix-blend-mode: screen; pointer-events: none;
+        linear-gradient(90deg, rgba(0,0,0,.84) 0%, rgba(0,0,0,.58) 30%, rgba(0,0,0,.14) 56%, rgba(0,0,0,0) 72%),
+        linear-gradient(180deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 22%),
+        radial-gradient(ellipse 55% 65% at 0% 88%, rgba(255,66,42,.30), rgba(255,66,42,0) 70%);
     }
 
-    .fc-poster {
-      position: absolute; z-index: -1; right: 6%; bottom: -8%; height: 112%;
-      aspect-ratio: 2 / 3; border-radius: 18px; object-fit: cover;
-      transform: rotate(6deg); box-shadow: 0 30px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.12);
+    /* Conteúdo alinhado com o logo do header */
+    .nh-inner {
+      position: absolute; inset: 0; max-width: 80rem; margin: 0 auto;
+      padding: 120px 32px 108px; display: flex; align-items: center;
     }
-    @media (min-width: 768px) { .fc-poster { right: 250px; } }
+    .nh-content { position: relative; z-index: 2; max-width: 560px; }
+    .nh-label {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 18px;
+      font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.9);
+      text-shadow: 0 1px 14px rgba(0,0,0,.8);
+    }
+    .nh-label .fc-brand { height: 18px; width: auto; display: block; flex-shrink: 0; }
+    .nh-label .fc-brand-hbo { height: 13px; }
+    .nh-label .fc-brand-img { height: 20px; filter: brightness(0) invert(1); }
+    .nh-label .nh-dot-sep { width: 4px; height: 4px; border-radius: 9999px; background: #FF422A; box-shadow: 0 0 10px #FF422A; }
+    .nh-h { margin: 0; line-height: 0; }
+    .nh-logo {
+      display: block; max-width: min(440px, 82%); max-height: 150px; width: auto; height: auto;
+      object-fit: contain; object-position: left bottom; margin-bottom: 20px;
+      filter: drop-shadow(0 8px 28px rgba(0,0,0,.55));
+    }
+    .nh-title {
+      margin: 0 0 16px; font-size: clamp(34px, 4.4vw, 62px); font-weight: 900; line-height: 1.02; letter-spacing: -.025em;
+      text-shadow: 0 6px 34px rgba(0,0,0,.5);
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; padding-bottom: .06em;
+    }
+    .nh-desc { margin: 0 0 28px; max-width: 450px; font-size: 15px; line-height: 1.6; color: rgba(255,255,255,.82); text-shadow: 0 1px 14px rgba(0,0,0,.75); }
+    .nh-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .nh-btn {
+      position: relative; display: inline-flex; align-items: center; gap: 9px;
+      height: 50px; padding: 0 26px; border-radius: 9999px;
+      color: #fff; font-size: 15px; font-weight: 700; text-decoration: none; white-space: nowrap;
+    }
+    .nh-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+    .nh-btn-ghost { padding: 0 22px; }
+    .nh-btn-ghost .fc-brand { height: 18px; width: auto; display: block; }
+    .nh-btn-ghost .fc-brand-hbo { height: 13px; }
 
-    .fc-content {
-      position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center;
-      padding: 28px 22px 84px; max-width: 620px;
-    }
-    @media (min-width: 640px) { .fc-content { padding: 30px 44px 84px; } }
-    @media (min-width: 768px) { .fc-content { padding-left: 80px; } }
-    .fc-logo { max-height: 64px; max-width: 220px; width: auto; object-fit: contain; object-position: left; margin-bottom: 18px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.6)); }
-    @media (min-width: 640px) { .fc-logo { max-height: 60px; max-width: 220px; margin-bottom: 14px; } }
-    @media (min-width: 1024px) { .fc-logo { max-height: 72px; max-width: 260px; } }
-    .fc-tag {
-      align-self: flex-start; display: inline-flex; align-items: center; gap: 6px;
-      padding: 5px 12px; margin-bottom: 14px; border-radius: 9999px;
-      font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #fff;
-      background: linear-gradient(120deg, #FF8A3D, #FF422A 55%, #C42415);
-      box-shadow: 0 6px 18px -6px rgba(255,66,42,.8);
-    }
-    .fc-title {
-      color: #fff; font-weight: 900; line-height: 1.02; letter-spacing: -.02em;
-      font-size: 32px; margin: 0; text-shadow: 0 4px 24px rgba(0,0,0,.5);
-    }
-    @media (min-width: 640px) { .fc-title { font-size: 44px; } }
-    @media (min-width: 1024px) { .fc-title { font-size: 52px; } }
-    .fc-title { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; padding-bottom: .06em; }
-    .fc-content > * { flex-shrink: 0; } /* nada encolhe: evita título cortado */
-    @media (min-width: 640px) { .is-movie .fc-title { font-size: 40px; } }
-    .fc-sub { color: #d6d0cf; font-size: 14px; margin: 14px 0 0; max-width: 440px; line-height: 1.5; }
+    /* Entrada suave do conteúdo a cada troca */
+    .nh-slide.is-active .nh-content > * { animation: nhUp .9s cubic-bezier(.2,.8,.2,1) both; }
+    .nh-slide.is-active .nh-content > :nth-child(2) { animation-delay: .08s; }
+    .nh-slide.is-active .nh-content > :nth-child(3) { animation-delay: .16s; }
+    .nh-slide.is-active .nh-content > :nth-child(4) { animation-delay: .24s; }
+    @keyframes nhUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
 
-    .fc-bottom {
-      position: absolute; left: 22px; right: 22px; bottom: 22px;
-      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    /* Pôster do filme em moldura de vidro */
+    .nh-poster-wrap {
+      position: absolute; z-index: 1; right: 32px; top: 50%; height: 68%; aspect-ratio: 2 / 3;
+      padding: 7px; border-radius: 24px; transform: translateY(-44%) rotate(4deg);
     }
-    @media (min-width: 640px) { .fc-bottom { left: 44px; right: 32px; bottom: 26px; } }
-    @media (min-width: 768px) { .fc-bottom { left: 80px; right: 80px; } }
-    .fc-platform {
-      display: inline-flex; align-items: center; gap: 10px; color: #fff; font-size: 13px; font-weight: 600;
-      min-width: 0;
-    }
-    .fc-brand { height: 20px; width: auto; flex-shrink: 0; display: block; }
-    .fc-brand-primevideo, .fc-brand-appletv { height: 19px; }
-    .fc-brand-hbo { height: 14px; margin-right: -4px; }
-    .fc-brand-img { height: 22px; filter: brightness(0) invert(1); }
-    .fc-platform .fc-sep { width: 1px; height: 18px; background: rgba(255,255,255,.3); }
-    .fc-platform .fc-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .fc-cta {
-      flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px;
-      height: 44px; padding: 0 20px; border-radius: 9999px;
-      color: #fff; font-weight: 700; font-size: 14px; text-decoration: none;
-      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.25);
-      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-      transition: background .2s, border-color .2s, transform .15s;
-    }
-    .fc-cta:hover { background: #fff; color: #000; border-color: #fff; }
-    .fc-cta:active { transform: scale(.96); }
-    .fc-cta svg { width: 16px; height: 16px; }
+    .nh-poster-wrap.lg-glass, .nh-poster-wrap.lg-glass:hover, .nh-poster-wrap.lg-glass:active { transform: translateY(-44%) rotate(4deg); }
+    .nh-poster { display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 17px; box-shadow: 0 30px 60px -24px rgba(0,0,0,.85); opacity: 0; transition: opacity .7s; }
+    .nh-poster.is-ready { opacity: 1; }
+    @media (min-width: 1024px) { .nh-poster-wrap { right: 7%; } }
 
-    .fc-arrow {
-      position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
-      width: 44px; height: 44px; border-radius: 9999px; display: none; align-items: center; justify-content: center;
-      color: #fff; background: rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.2);
-      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: background .2s, border-color .2s;
+    /* Indicadores com barra de progresso */
+    .nh-dots { position: absolute; left: 0; right: 0; bottom: 30px; z-index: 3; display: flex; justify-content: center; gap: 6px; }
+    .nh-dot { position: relative; width: 30px; height: 22px; padding: 0; border: 0; background: none; cursor: pointer; transition: width .45s var(--lg-spring, ease); }
+    .nh-dot .bar { position: absolute; left: 0; right: 0; top: 50%; height: 4px; margin-top: -2px; border-radius: 9999px; overflow: hidden; background: rgba(255,255,255,.3); box-shadow: inset 0 1px 0 rgba(255,255,255,.2); }
+    .nh-dot .fill { position: absolute; inset: 0; border-radius: inherit; transform-origin: left; transform: scaleX(0); background: linear-gradient(90deg, #FF8A3D, #FF422A); box-shadow: 0 0 10px rgba(255,66,42,.8); }
+    .nh-dot.is-active { width: 52px; }
+    .nh-dot.is-active .fill { animation: nhFill var(--nh-dur, 7s) linear forwards; }
+    .nh.is-paused .nh-dot.is-active .fill { animation-play-state: paused; }
+    .nh-dot:focus-visible { outline: 2px solid #FF422A; outline-offset: 2px; border-radius: 6px; }
+    @keyframes nhFill { to { transform: scaleX(1); } }
+    @media (prefers-reduced-motion: reduce) {
+      .nh-dot.is-active .fill { animation: none; transform: scaleX(1); }
+      .nh-slide.is-active .nh-content > * { animation: none; }
+      .nh-bg { transition: opacity .3s; transform: none !important; }
     }
-    .fc-arrow:hover { background: #FF422A; border-color: #FF422A; }
-    .fc-arrow svg { width: 20px; height: 20px; }
-    .fc-prev { left: 14px; } .fc-next { right: 14px; }
-    @media (min-width: 768px) { .fc-arrow { display: inline-flex; } }
 
-    .fc-dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
-    .fc-dot {
-      width: 8px; height: 8px; border-radius: 9999px; background: rgba(255,255,255,.3);
-      border: 0; padding: 0; transition: width .3s, background .3s;
+    @media (min-width: 640px) and (max-width: 1023px) {
+      .nh { height: clamp(500px, 70vh, 620px); }
+      .nh-inner { padding: 104px 24px 96px; }
+      .nh-logo { max-height: 110px; }
+      .nh-poster-wrap { height: 58%; right: 24px; }
     }
-    .fc-dot[aria-selected="true"] { width: 28px; background: linear-gradient(90deg, #FF422A, #FF8A3D); }
-    /* ── Celular: continua sendo um banner horizontal ── */
+
+    /* Celular: banner nativo, conteúdo embaixo */
     @media (max-width: 639px) {
-      .fc-wrap { padding: 14px 12px 4px; }
-      .fc-track, .fc-slide { border-radius: 20px; }
-      .fc-slide { height: auto; aspect-ratio: 16 / 9; min-height: 200px; }
-      .fc-content { padding: 16px 16px 52px; max-width: 64%; justify-content: center; }
-      .fc-logo { max-height: 30px; max-width: 120px; margin-bottom: 8px; }
-      .fc-tag { font-size: 9px; padding: 3px 9px; margin-bottom: 8px; letter-spacing: .06em; }
-      .fc-title { font-size: 19px; line-height: 1.08; }
-      .fc-title br { display: none; }
-      .fc-sub { display: none; }
-      .fc-bottom { left: 16px; right: 12px; bottom: 12px; }
-      .fc-platform { font-size: 11px; gap: 6px; }
-      .fc-brand { height: 16px; } .fc-brand-hbo { height: 11px; } .fc-brand-primevideo, .fc-brand-appletv { height: 15px; } .fc-brand-img { height: 17px; }
-      .fc-platform .fc-sep, .fc-platform .fc-name { display: none; }
-      .fc-cta { height: 32px; padding: 0 12px; font-size: 12px; gap: 5px; }
-      .fc-cta svg { width: 13px; height: 13px; }
-      .fc-slide:not(.is-movie) .fc-bg { object-position: 72% center; }
-      .fc-poster { right: 5%; top: 8%; bottom: auto; height: 84%; opacity: 1; border-radius: 10px; transform: rotate(5deg); }
-      .fc-shade { background:
-        linear-gradient(90deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.6) 50%, rgba(0,0,0,.05) 85%),
-        linear-gradient(0deg, rgba(0,0,0,.8) 0%, transparent 50%),
-        radial-gradient(ellipse 70% 90% at 0% 100%, rgba(255,66,42,.35), transparent 70%); }
-      .fc-dots { margin-top: 10px; }
+      .nh { height: clamp(400px, calc(64px + 88vw), 540px); }
+      .nh-inner { padding: 84px 16px 54px; align-items: flex-end; }
+      .nh-content { max-width: 100%; }
+      .nh-shade { background:
+        linear-gradient(0deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.66) 48%, rgba(0,0,0,.22) 72%, rgba(0,0,0,0) 86%),
+        linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 26%),
+        radial-gradient(ellipse 80% 50% at 0% 100%, rgba(255,66,42,.3), rgba(255,66,42,0) 70%); }
+      .nh-bg { object-position: 72% 30%; }
+      .nh-label { font-size: 10px; letter-spacing: .12em; gap: 7px; margin-bottom: 10px; }
+      .nh-label .fc-brand { height: 14px; } .nh-label .fc-brand-hbo { height: 10px; } .nh-label .fc-brand-img { height: 15px; }
+      .nh-logo { max-height: 70px; max-width: 64%; margin-bottom: 10px; }
+      .nh-title { font-size: 28px; margin-bottom: 8px; max-width: 62%; }
+      .nh-desc { font-size: 13px; line-height: 1.5; margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+      .nh-actions { gap: 8px; }
+      .nh-btn { height: 42px; padding: 0 18px; font-size: 13.5px; gap: 7px; }
+      .nh-btn-ghost { padding: 0 15px; }
+      .nh-btn svg { width: 16px; height: 16px; }
+      .nh-btn-ghost .fc-brand { height: 15px; }
+      .nh-poster-wrap { right: 16px; top: 78px; height: 39%; padding: 5px; border-radius: 16px; transform: rotate(4deg); }
+      .nh-poster-wrap.lg-glass, .nh-poster-wrap.lg-glass:hover, .nh-poster-wrap.lg-glass:active { transform: rotate(4deg); }
+      .nh-poster { border-radius: 12px; }
+      .nh-dots { bottom: 18px; }
+      .nh-dot { width: 22px; } .nh-dot.is-active { width: 40px; }
     }
   </style>
 
@@ -163,7 +148,7 @@
   (function () {
     /* ============================================================
        EDITE AQUI os destaques.
-       JOGOS: aparecem sempre (mais vendidos da Steam).
+       JOGOS: aparecem sempre (mais vendidos da Steam). "id" é o número do jogo na Steam.
        FILMES: só aparecem os do app de streaming que a loja VENDE.
          O carrossel procura no catálogo um produto com o nome do app
          (ex.: "Netflix", "Disney+") e liga o botão a esse produto.
@@ -171,18 +156,14 @@
     var STEAM = 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/';
     var TMDB = 'https://image.tmdb.org/t/p/w780/';
     var JOGOS = [
-      { nome: 'Red Dead Redemption 2', tag: 'Mais vendido na Steam',
-        titulo: 'O Velho Oeste<br>te chama', texto: 'Um dos jogos mais vendidos da Steam neste momento.',
-        imagem: STEAM + '1174180/library_hero.jpg', logo: STEAM + '1174180/logo.png', link: '/categories' },
-      { nome: 'Cyberpunk 2077', tag: 'Em alta na Steam',
-        titulo: 'Night City<br>te espera', texto: 'Cyberpunk 2077 está entre os mais vendidos da Steam.',
-        imagem: STEAM + '1091500/library_hero.jpg', logo: STEAM + '1091500/logo.png', link: '/categories' },
-      { nome: 'Grand Theft Auto V Enhanced', tag: 'Mais vendido na Steam',
-        titulo: 'Los Santos<br>nunca para', texto: 'Grand Theft Auto V Enhanced, sucesso absoluto na Steam.',
-        imagem: STEAM + '3240220/library_hero.jpg', logo: STEAM + '3240220/logo.png', link: '/categories' },
-      { nome: 'God of War', tag: 'Em alta na Steam',
-        titulo: 'A jornada de<br>Kratos', texto: 'God of War, um dos favoritos da comunidade Steam.',
-        imagem: STEAM + '1593500/library_hero.jpg', logo: STEAM + '1593500/logo.png', link: '/categories' }
+      { id: 1174180, nome: 'Red Dead Redemption 2', tag: 'Mais vendido na Steam',
+        texto: 'Arthur Morgan e a gangue Van der Linde em fuga pelo coração da América. Um dos jogos mais vendidos da Steam agora.', link: '/categories' },
+      { id: 1091500, nome: 'Cyberpunk 2077', tag: 'Em alta na Steam',
+        texto: 'Um RPG de ação em mundo aberto em Night City, a megalópole obcecada por poder, glamour e modificações corporais.', link: '/categories' },
+      { id: 3240220, nome: 'Grand Theft Auto V Enhanced', tag: 'Mais vendido na Steam',
+        texto: 'Grand Theft Auto V e GTA Online, agora com visuais aprimorados para a nova geração.', link: '/categories' },
+      { id: 1593500, nome: 'God of War', tag: 'Em alta na Steam',
+        texto: 'Kratos e Atreus em uma jornada pelos reinos nórdicos, enfrentando deuses e monstros.', link: '/categories' }
     ];
 
     /* Palavras usadas para reconhecer cada app no nome dos produtos */
@@ -256,7 +237,7 @@
       var link = '/product/' + (p.slug || p.id);
       porApp.push(FILMES[app].map(function (f) {
         return { tipo: 'filme', app: app, nome: f.nome, tag: 'Disponível no ' + app,
-          titulo: f.nome, texto: 'Assista agora no ' + app + '. Assinatura disponível aqui na loja.',
+          titulo: f.nome, texto: 'Assista agora no ' + app + '. A assinatura está disponível aqui na loja.',
           poster: f.poster, link: link, cta: 'Assinar ' + app };
       }));
     });
@@ -299,96 +280,117 @@
         default:            return ICON_PLAY + '<span>' + esc(app) + '</span>';
       }
     }
-    var ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 
-    var track = document.getElementById('fc-track');
-    var dots = document.getElementById('fc-dots');
-    if (!track) return;
-    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-
-    function hd(u) { return String(u).replace(/(library_hero|logo)\.(jpg|png)$/, '$1_2x.$2'); }
+    function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
     function tmdb(u, size) { return esc(String(u).replace(/\/t\/p\/[^/]+\//, '/t/p/' + size + '/')); }
-    function lazy(i) { return i < 2 ? (i ? 'loading="eager"' : 'loading="eager" fetchpriority="high"') : 'loading="lazy"'; }
+    function soSimbolo(app) { return marca(app).replace(/<span>[^<]*<\/span>/g, ''); }
+    var ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    var ICON_GRID = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>';
+
+    var root = document.getElementById('nh');
+    var wrap = document.getElementById('nh-slides');
+    var dots = document.getElementById('nh-dots');
+    if (!root || !SLIDES.length) { if (root) root.remove(); return; }
 
     SLIDES.forEach(function (s, i) {
       var movie = s.tipo === 'filme';
+      var app = movie ? s.app : 'Steam';
       var el = document.createElement('article');
-      el.className = 'fc-slide' + (movie ? ' is-movie' : '');
+      el.className = 'nh-slide' + (movie ? ' is-movie' : '');
       el.setAttribute('aria-roledescription', 'slide');
       el.setAttribute('aria-label', (i + 1) + ' de ' + SLIDES.length + ': ' + s.nome);
+      var bg = movie
+        ? 'data-src="' + tmdb(s.poster, 'w342') + '"'
+        : 'data-src="' + STEAM + s.id + '/library_hero.jpg" data-srcset="' + STEAM + s.id + '/library_hero.jpg 1920w, ' + STEAM + s.id + '/library_hero_2x.jpg 3840w" sizes="(max-width: 639px) 330vw, max(100vw, 255vh)"';
+      var secundario = movie
+        ? '<a class="nh-btn nh-btn-ghost lg-glass" href="/categories">' + ICON_GRID + 'Ver todos os planos</a>'
+        : '<a class="nh-btn nh-btn-ghost lg-glass" href="https://store.steampowered.com/app/' + s.id + '/" target="_blank" rel="noopener">' + soSimbolo('Steam') + 'Ver na Steam</a>';
       el.innerHTML =
-        (movie
-          ? '<img class="fc-bg is-loading" src="' + tmdb(s.poster, 'w342') + '" alt="" decoding="async" ' + lazy(i) + '>'
-          : '<img class="fc-bg is-loading" src="' + esc(s.imagem) + '" srcset="' + esc(s.imagem) + ' 1920w, ' + esc(hd(s.imagem)) + ' 3840w" sizes="(max-width: 639px) 180vw, (max-width: 1280px) 100vw, 1280px" alt="" decoding="async" ' + lazy(i) + '>') +
-        '<div class="fc-shade"></div>' +
-        (movie ? '<img class="fc-poster is-loading" src="' + tmdb(s.poster, 'w780') + '" srcset="' + tmdb(s.poster, 'w500') + ' 500w, ' + tmdb(s.poster, 'w780') + ' 780w, ' + tmdb(s.poster, 'w1280') + ' 1280w, ' + tmdb(s.poster, 'original') + ' 2000w" sizes="(max-width: 639px) 120px, 300px" alt="Pôster de ' + esc(s.nome) + '" decoding="async" ' + lazy(i) + '>' : '') +
-        '<div class="fc-content">' +
-          (s.logo ? '<img class="fc-logo is-loading" src="' + esc(s.logo) + '" srcset="' + esc(s.logo) + ' 1x, ' + esc(hd(s.logo)) + ' 2x" alt="' + esc(s.nome) + '" decoding="async" ' + lazy(i) + ' onerror="this.remove()">' : '') +
-          '<span class="fc-tag">' + esc(s.tag) + '</span>' +
-          '<h2 class="fc-title">' + (movie ? esc(s.titulo) : s.titulo.replace(/<br>/g, ' <br>')) + '</h2>' +
-          '<p class="fc-sub">' + esc(s.texto) + '</p>' +
-        '</div>' +
-        '<div class="fc-bottom">' +
-          '<span class="fc-platform">' + marca(movie ? s.app : 'Steam') + '<span class="fc-sep"></span><span class="fc-name">' + esc(s.nome) + '</span></span>' +
-          '<a class="fc-cta" href="' + esc(s.link || '/categories') + '">' + esc(s.cta || 'Ver ofertas') + ' ' + ICON_ARROW + '</a>' +
+        '<div class="nh-media"><img class="nh-bg" ' + bg + ' alt="" decoding="async"></div>' +
+        '<div class="nh-shade"></div>' +
+        '<div class="nh-inner">' +
+          '<div class="nh-content">' +
+            '<span class="nh-label">' + soSimbolo(app) + '<i class="nh-dot-sep"></i>' + esc(s.tag) + '</span>' +
+            (movie
+              ? '<h2 class="nh-title">' + esc(s.nome) + '</h2>'
+              : '<h2 class="nh-h"><img class="nh-logo" data-src="' + STEAM + s.id + '/logo.png" data-srcset="' + STEAM + s.id + '/logo.png 1x, ' + STEAM + s.id + '/logo_2x.png 2x" alt="' + esc(s.nome) + '" decoding="async"></h2>') +
+            '<p class="nh-desc">' + esc(s.texto) + '</p>' +
+            '<div class="nh-actions">' +
+              '<a class="nh-btn nh-btn-primary lg-glass lg-tinted" href="' + esc(s.link || '/categories') + '">' + esc(s.cta || 'Ver ofertas') + ICON_ARROW + '</a>' +
+              secundario +
+            '</div>' +
+          '</div>' +
+          (movie ? '<div class="nh-poster-wrap lg-glass"><img class="nh-poster" data-src="' + tmdb(s.poster, 'w780') + '" data-srcset="' + tmdb(s.poster, 'w500') + ' 500w, ' + tmdb(s.poster, 'w780') + ' 780w, ' + tmdb(s.poster, 'w1280') + ' 1280w" sizes="(max-width: 639px) 140px, 360px" alt="Pôster de ' + esc(s.nome) + '" decoding="async"></div>' : '') +
         '</div>';
-      track.appendChild(el);
+      wrap.appendChild(el);
 
       var d = document.createElement('button');
-      d.className = 'fc-dot'; d.type = 'button';
+      d.type = 'button'; d.className = 'nh-dot';
       d.setAttribute('role', 'tab');
-      d.setAttribute('aria-label', 'Ir para ' + s.nome);
-      d.addEventListener('click', function () { go(i); restart(); });
+      d.setAttribute('aria-label', 'Destaque ' + (i + 1) + ': ' + s.nome);
+      d.innerHTML = '<span class="bar"><span class="fill"></span></span>';
+      d.addEventListener('click', function () { show(i); });
+      d.querySelector('.fill').addEventListener('animationend', function () { if (i === cur) show(cur + 1); });
       dots.appendChild(d);
     });
 
-    track.querySelectorAll('img.is-loading').forEach(function (img) {
-      function done() { img.classList.remove('is-loading'); }
-      if (img.complete && img.naturalWidth) done(); else { img.addEventListener('load', done); img.addEventListener('error', done); }
-    });
-    var slides = track.children, current = 0, timer = null;
-    function preload(i) {
-      var el = slides[(i + slides.length) % slides.length];
-      if (el) el.querySelectorAll('img[loading="lazy"]').forEach(function (img) { img.loading = 'eager'; });
-    }
-    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var slides = wrap.children, n = slides.length, cur = -1;
 
-    function mark(i) {
-      current = i;
-      preload(i + 1); preload(i - 1);
-      for (var k = 0; k < slides.length; k++) {
-        slides[k].classList.toggle('is-active', k === i);
-        dots.children[k].setAttribute('aria-selected', k === i ? 'true' : 'false');
+    function hydrate(i) {
+      var el = slides[(i + n) % n];
+      if (!el || el.__ok) return;
+      el.__ok = 1;
+      el.querySelectorAll('img[data-src]').forEach(function (img) {
+        img.addEventListener('load', function () { img.classList.add('is-ready'); });
+        img.addEventListener('error', function () { if (img.classList.contains('nh-logo')) img.remove(); else img.classList.add('is-ready'); });
+        if (img.dataset.srcset) img.srcset = img.dataset.srcset;
+        img.src = img.dataset.src;
+        if (img.complete && img.naturalWidth) img.classList.add('is-ready');
+      });
+    }
+    function show(i) {
+      i = (i + n) % n;
+      if (i === cur) return;
+      if (cur > -1) {
+        slides[cur].classList.remove('is-active');
+        slides[cur].setAttribute('aria-hidden', 'true');
+        dots.children[cur].classList.remove('is-active');
+        dots.children[cur].setAttribute('aria-selected', 'false');
       }
+      cur = i;
+      hydrate(i); hydrate(i + 1); hydrate(i - 1);
+      slides[i].classList.add('is-active');
+      slides[i].removeAttribute('aria-hidden');
+      dots.children[i].classList.add('is-active');
+      dots.children[i].setAttribute('aria-selected', 'true');
     }
-    function go(i) {
-      i = (i + slides.length) % slides.length;
-      track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
-      mark(i);
-    }
-    var t;
-    track.addEventListener('scroll', function () {
-      clearTimeout(t);
-      t = setTimeout(function () {
-        var i = Math.round(track.scrollLeft / (slides[0].offsetWidth + 14));
-        if (i !== current) mark(Math.max(0, Math.min(slides.length - 1, i)));
-      }, 80);
+    for (var j = 0; j < n; j++) slides[j].setAttribute('aria-hidden', 'true');
+    var first = slides[0].querySelector('.nh-bg'); if (first) first.setAttribute('fetchpriority', 'high');
+    show(0);
+
+    // pausa ao passar o mouse, focar ou trocar de aba
+    function pause(on) { root.classList.toggle('is-paused', on); }
+    root.addEventListener('mouseenter', function () { pause(true); });
+    root.addEventListener('mouseleave', function () { pause(false); });
+    root.addEventListener('focusin', function () { pause(true); });
+    root.addEventListener('focusout', function () { pause(false); });
+    document.addEventListener('visibilitychange', function () { pause(document.hidden); });
+
+    // deslizar com o dedo
+    var sx = 0, sy = 0, tracking = false;
+    root.addEventListener('touchstart', function (e) { var t = e.touches[0]; sx = t.clientX; sy = t.clientY; tracking = true; pause(true); }, { passive: true });
+    root.addEventListener('touchend', function (e) {
+      if (!tracking) return; tracking = false; pause(false);
+      var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3) show(cur + (dx < 0 ? 1 : -1));
     }, { passive: true });
+    // setas do teclado
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { show(cur + 1); e.preventDefault(); }
+      if (e.key === 'ArrowLeft') { show(cur - 1); e.preventDefault(); }
+    });
 
-    function restart() {
-      clearInterval(timer);
-      if (!reduce) timer = setInterval(function () { go(current + 1); }, 6000);
-    }
-    document.getElementById('fc-prev').addEventListener('click', function () { go(current - 1); restart(); });
-    document.getElementById('fc-next').addEventListener('click', function () { go(current + 1); restart(); });
-    var vp = track.parentNode;
-    vp.addEventListener('mouseenter', function () { clearInterval(timer); });
-    vp.addEventListener('mouseleave', restart);
-    track.addEventListener('touchstart', function () { clearInterval(timer); }, { passive: true });
-    track.addEventListener('touchend', restart, { passive: true });
-    document.addEventListener('visibilitychange', function () { document.hidden ? clearInterval(timer) : restart(); });
-
-    mark(0); restart();
+    if (window.lgScan) window.lgScan();
   })();
   </script>
 
