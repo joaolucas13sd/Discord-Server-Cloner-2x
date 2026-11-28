@@ -224,4 +224,80 @@
 
   /* scrollbar */
   * { scrollbar-color: var(--color-bg-faint) transparent; }
+
+  /* ================================================================
+     V2 — botões em pílula, mais branco e mistura de cores
+     ================================================================ */
+
+  /* Botões e chips em formato pílula (como na referência) */
+  :is(a, button, span)[class*="px-"][class*="py-"]:is(.bg-white, .bg-neutral-900, .bg-neutral-950, .bg-neutral-800, .bg-neutral-900\/50, .inline-flex):not(.sort-option),
+  button[class*="py-"].rounded-xl,
+  button[class*="py-"].rounded-lg,
+  input[class*="rounded-"]:not([type="checkbox"]):not([type="radio"]) {
+    border-radius: 9999px !important;
+  }
+
+  /* Gradiente do CTA mais rico: laranja → vermelho → vinho */
+  :root {
+    --gradient-accent:       linear-gradient(120deg, #FF8A3D 0%, #FF422A 50%, #C42415 100%);
+    --gradient-accent-hover: linear-gradient(120deg, #FFA15C 0%, #FF5A45 50%, #E5361F 100%);
+  }
+
+  /* Botões secundários: vidro com borda branca (mais branco) */
+  :is(a, button)[class*="py-"]:is(.bg-neutral-900, .bg-neutral-950, .bg-neutral-900\/50).border {
+    background-color: rgba(255,255,255,0.06) !important;
+    border-color: rgba(255,255,255,0.22) !important;
+    color: #ffffff !important;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+  :is(a, button)[class*="py-"]:is(.bg-neutral-900, .bg-neutral-950, .bg-neutral-900\/50).border:hover {
+    background-color: rgba(255,255,255,0.12) !important;
+    border-color: rgba(255,255,255,0.45) !important;
+  }
+
+  /* Bolinhas/ícones redondos em branco puro com texto preto */
+  .bg-white.rounded-full:not([class*="px-"]) {
+    background-color: #ffffff !important;
+    background-image: none !important;
+    color: #000000 !important;
+    box-shadow: 0 0 0 3px rgba(255,66,42,0.25), 0 6px 18px rgba(255,66,42,0.35) !important;
+  }
+  .bg-white.rounded-full:not([class*="px-"]) .text-black,
+  .bg-white.rounded-full:not([class*="px-"]).text-black { color: #000000 !important; }
+
+  /* Barras de avaliação: vermelho → laranja → branco */
+  .h-full.bg-white.rounded-full {
+    background-image: linear-gradient(90deg, #FF422A 0%, #FF8A3D 60%, #ffffff 100%) !important;
+    box-shadow: none !important;
+  }
+
+  /* Títulos de seção: branco com acento vermelho */
+  main h2.font-extrabold { position: relative; }
+  main h2.font-extrabold::after {
+    content: ""; display: block; width: 2.25rem; height: 3px; margin-top: .5rem;
+    border-radius: 9999px; background: linear-gradient(90deg, #FF422A, #ffffff);
+  }
+  main h1 {
+    background: linear-gradient(100deg, #ffffff 0%, #ffffff 55%, #FF8A3D 80%, #FF422A 100%);
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Cards: fundo com leve degradê vermelho → preto e borda clara */
+  .bg-neutral-950.border, .rounded-2xl.border.bg-neutral-950 {
+    background-image: linear-gradient(145deg, rgba(255,66,42,0.10) 0%, rgba(255,255,255,0.02) 40%, transparent 70%) !important;
+    border-color: rgba(255,255,255,0.09) !important;
+  }
+
+  /* Segundo brilho no rodapé da página (laranja), misturando as cores */
+  main.bg-black {
+    background-image:
+      radial-gradient(ellipse 90% 55% at 50% -12%, rgba(255,66,42,0.30), rgba(255,66,42,0.06) 45%, transparent 75%),
+      radial-gradient(ellipse 70% 40% at 100% 100%, rgba(255,138,61,0.14), transparent 70%),
+      radial-gradient(ellipse 60% 35% at 0% 60%, rgba(255,255,255,0.04), transparent 70%) !important;
+  }
+
+  /* Ícones de redes do rodapé: hover branco */
+  footer a.rounded-full:hover { background-color: #ffffff !important; color: #000000 !important; }
 </style>
