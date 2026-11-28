@@ -56,23 +56,19 @@
     .nh-art.is-ready { opacity: 1; }
     .nh-shade {
       position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,0) 22%), linear-gradient(0deg, rgba(0,0,0,.5) 0%, rgba(0,0,0,0) 46%);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 20%),
+        linear-gradient(0deg, rgba(0,0,0,.84) 0%, rgba(0,0,0,.7) 9%, rgba(0,0,0,.5) 18%, rgba(0,0,0,.3) 27%, rgba(0,0,0,.14) 36%, rgba(0,0,0,.04) 45%, rgba(0,0,0,0) 52%),
+        radial-gradient(ellipse 62% 42% at 0% 100%, rgba(0,0,0,.42) 0%, rgba(0,0,0,0) 72%);
     }
 
-    /* Faixa */
-    .nh-band {
-      position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; height: var(--nh-band);
-      background: linear-gradient(180deg, rgba(10,6,5,.6), rgba(10,6,5,.76));
-      border-top: 1px solid rgba(255,255,255,.12);
-    }
-    @media (min-width: 1024px) and (hover: hover) {
-      .nh-band { background: linear-gradient(180deg, rgba(10,6,5,.44), rgba(10,6,5,.62)); -webkit-backdrop-filter: blur(12px) saturate(150%); backdrop-filter: blur(12px) saturate(150%); }
-    }
+    /* Área do texto: sem caixa, o texto fica direto sobre a arte do jogo */
+    .nh-band { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; height: var(--nh-band); }
     .nh-band-in { height: 100%; max-width: 80rem; margin: 0 auto; padding: 0 32px var(--nh-tear); display: flex; align-items: center; justify-content: space-between; gap: 28px; }
     .nh-txt { min-width: 0; flex: 1; }
     .nh-label {
       display: inline-flex; align-items: center; gap: 10px; margin-bottom: 8px;
-      font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.88);
+      font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.92); text-shadow: 0 1px 10px rgba(0,0,0,.7);
     }
     .nh-label .fc-brand { height: 17px; width: auto; display: block; flex-shrink: 0; }
     .nh-label .fc-brand-hbo { height: 12px; }
@@ -80,11 +76,11 @@
     .nh-label .nh-dot-sep { width: 4px; height: 4px; border-radius: 9999px; background: #FF422A; box-shadow: 0 0 10px #FF422A; }
     .nh-name {
       margin: 0; font-size: clamp(30px, 3.4vw, 48px); font-weight: 900; line-height: 1; letter-spacing: -.02em; text-transform: uppercase;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 4px 24px rgba(0,0,0,.4);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 2px 6px rgba(0,0,0,.35), 0 6px 28px rgba(0,0,0,.55);
     }
     .nh-name.is-long { font-size: clamp(22px, 2.3vw, 34px); line-height: 1.04; white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
     .nh-name.is-long + .nh-desc { display: none; }
-    .nh-desc { margin: 8px 0 0; max-width: 720px; font-size: 14px; color: rgba(255,255,255,.76); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nh-desc { margin: 8px 0 0; max-width: 720px; font-size: 14px; color: rgba(255,255,255,.82); text-shadow: 0 1px 10px rgba(0,0,0,.75); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .nh-acts { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
     .nh-cta, .nh-alt {
       position: relative; display: inline-flex; align-items: center; gap: 12px; height: 52px; border-radius: 8px;
@@ -115,7 +111,7 @@
 
     /* Indicadores logo acima da faixa */
     .nh-dots {
-      position: absolute; z-index: 3; left: 0; right: 0; bottom: calc(var(--nh-band) + 14px);
+      position: absolute; z-index: 3; left: 0; right: 0; bottom: calc(var(--nh-band) - 6px);
       max-width: 80rem; margin: 0 auto; padding: 0 32px; display: flex; gap: 6px;
     }
     .nh-dot { position: relative; width: 30px; height: 22px; padding: 0; border: 0; background: none; cursor: pointer; transition: width .45s var(--lg-spring, ease); }
@@ -142,6 +138,9 @@
     @media (max-width: 639px) {
       .nh { height: clamp(460px, calc(64px + 108vw), 620px); --nh-tear: 22px; --nh-band: calc(156px + var(--nh-tear)); }
       .nh-bg { object-position: 72% 30%; }
+      .nh-shade { background:
+        linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,0) 22%),
+        linear-gradient(0deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.76) 14%, rgba(0,0,0,.54) 28%, rgba(0,0,0,.3) 40%, rgba(0,0,0,.12) 52%, rgba(0,0,0,0) 64%); }
       .nh-art { right: -10%; }
       .nh-band-in { padding: 14px 16px calc(14px + var(--nh-tear)); flex-direction: column; align-items: stretch; justify-content: center; gap: 12px; }
       .nh-txt { flex: none; }
@@ -155,7 +154,7 @@
       .nh-sq { width: 26px; height: 26px; } .nh-sq svg { width: 13px; height: 13px; }
       .nh-alt { width: 42px; height: 42px; padding: 0; justify-content: center; }
       .nh-alt-txt { display: none; }
-      .nh-dots { bottom: calc(var(--nh-band) + 10px); padding: 0 16px; }
+      .nh-dots { bottom: calc(var(--nh-band) - 2px); padding: 0 16px; }
       .nh-dot { width: 22px; } .nh-dot.is-active { width: 40px; }
     }
   </style>
