@@ -119,18 +119,117 @@
   })();
 </script>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+  /* ── Header: vidro escuro ─────────────────────────────── */
+  header.sticky.bg-black {
+    background-color: rgba(0,0,0,0.72) !important;
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255,255,255,0.08) !important;
+  }
+
+  /* ── Título da loja (segunda fonte, piscando) ─────────── */
+  .brand-title {
+    font-family: 'Unbounded', system-ui, sans-serif;
+    font-weight: 900; text-transform: uppercase; letter-spacing: .03em; line-height: 1;
+    font-size: 15px; white-space: nowrap;
+    background: linear-gradient(90deg, #ffffff 0%, #FF8A3D 25%, #FF422A 50%, #ffffff 75%, #FF8A3D 100%);
+    background-size: 300% 100%;
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+    animation: brandShift 5s linear infinite, brandBlink 2.6s ease-in-out infinite;
+  }
+  @media (min-width: 640px) { .brand-title { font-size: 20px; } }
+  @keyframes brandShift { to { background-position: 300% 0; } }
+  @keyframes brandBlink {
+    0%, 100% { opacity: 1;   filter: drop-shadow(0 0 8px rgba(255,66,42,.75)); }
+    40%      { opacity: 1;   filter: drop-shadow(0 0 14px rgba(255,138,61,.9)); }
+    48%      { opacity: .45; filter: drop-shadow(0 0 0 rgba(255,66,42,0)); }
+    52%      { opacity: 1;   filter: drop-shadow(0 0 10px rgba(255,255,255,.6)); }
+    56%      { opacity: .6;  filter: drop-shadow(0 0 2px rgba(255,66,42,.3)); }
+    62%      { opacity: 1;   filter: drop-shadow(0 0 8px rgba(255,66,42,.75)); }
+  }
+  @media (prefers-reduced-motion: reduce) { .brand-title { animation: none; } }
+
+  /* ── Botões do header (estilo pílula com borda) ───────── */
+  .hdr-ico { width: 20px; height: 20px; flex-shrink: 0; transition: transform .2s; }
+  .hdr-btn {
+    position: relative; display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    height: 42px; min-width: 42px; padding: 0 .75rem; border-radius: 9999px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14);
+    color: #ffffff; font-size: .875rem; font-weight: 600;
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    transition: background .2s, border-color .2s, box-shadow .2s, transform .15s;
+  }
+  .hdr-btn:hover { background: rgba(255,255,255,0.11); border-color: rgba(255,255,255,0.4); }
+  .hdr-btn:hover .hdr-ico { transform: scale(1.1); }
+  .hdr-btn:active { transform: scale(.96); }
+  .hdr-btn:focus-visible { outline: 2px solid #FF422A; outline-offset: 2px; }
+  .hdr-btn.is-icon { padding: 0; width: 42px; }
+  @media (min-width: 640px) { #mobile-search-btn { display: none; } }
+  @media (min-width: 640px) { .hdr-btn { padding: 0 1.1rem; } .hdr-btn.is-icon { padding: 0; } }
+
+  .hdr-btn.is-accent {
+    border-color: transparent;
+    background: linear-gradient(120deg, #FF8A3D 0%, #FF422A 50%, #C42415 100%);
+    box-shadow: 0 8px 22px -6px rgba(255,66,42,.65), inset 0 1px 0 rgba(255,255,255,.25);
+  }
+  .hdr-btn.is-accent:hover {
+    background: linear-gradient(120deg, #FFA15C 0%, #FF5A45 50%, #E5361F 100%);
+    box-shadow: 0 10px 28px -6px rgba(255,66,42,.85), inset 0 1px 0 rgba(255,255,255,.3);
+  }
+  .hdr-btn .hdr-avatar {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 28px; height: 28px; border-radius: 9999px; background: #fff; color: #000;
+    margin-left: -.35rem;
+  }
+  .hdr-btn .hdr-badge {
+    position: absolute; top: -5px; right: -5px; min-width: 20px; height: 20px; padding: 0 5px;
+    border-radius: 9999px; background: #ffffff !important; background-image: none !important; color: #000 !important;
+    font-size: 10px; font-weight: 800; align-items: center; justify-content: center;
+    border: 2px solid #000; box-shadow: 0 0 0 2px rgba(255,66,42,.35) !important;
+  }
+
+  /* ── Busca: pílula com atalho "/" ─────────────────────── */
+  #search-input {
+    height: 42px; border-radius: 9999px !important;
+    background: rgba(255,255,255,0.05) !important; border-color: rgba(255,255,255,0.14) !important;
+    color: #fff; padding-left: 2.75rem !important; padding-right: 2.75rem !important;
+  }
+  #search-input:focus { border-color: #FF422A !important; box-shadow: 0 0 0 3px rgba(255,66,42,.2); }
+  .search-kbd {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    min-width: 22px; height: 22px; padding: 0 6px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-family: ui-monospace, monospace; color: #a8a3a2;
+    border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.04);
+    pointer-events: none;
+  }
+  #search-input:focus ~ .search-kbd,
+  #search-input:not(:placeholder-shown) ~ .search-kbd { display: none; }
+</style>
+
+<script>
+  // Atalho "/" foca a busca
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+    var t = e.target; if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    var i = document.getElementById('search-input');
+    if (i && i.offsetParent !== null) { e.preventDefault(); i.focus(); }
+    else { var m = document.getElementById('mobile-search-btn'); if (m) { e.preventDefault(); m.click(); } }
+  });
+</script>
+
 <header class="bg-black border-b border-neutral-800 shadow-lg sticky top-0 z-40">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between h-16">
       <div class="flex">
         <div class="flex items-center">
-          <a href="/" class="flex items-center gap-2 pr-4">
-            {% if store.icon %}
-              <img src="{{ store.icon }}" alt="{{ store.name }}" class="w-7 h-7 rounded-lg object-cover flex-shrink-0">
-            {% endif %}
-            <span class="text-[12px] sm:text-[16px] text-white line-clamp-2">
-              {{- store.name | default: 'nome da loja' -}}
-            </span>
+          <a href="/" class="flex items-center pr-4" aria-label="{{ store.name | default: 'nome da loja' }}">
+            <span class="brand-title">{{- store.name | default: 'nome da loja' -}}</span>
           </a>
         </div>
       </div>
@@ -140,23 +239,17 @@
           <label for="search" class="sr-only">Pesquisar produtos</label>
           <div class="relative text-neutral-400 focus-within:text-white transition-all duration-300">
             <div class="pointer-events-none absolute inset-y-0 left-0 pl-3 flex items-center">
-              <svg
-                class="w-5 h-5 text-neutral-500 group-focus-within:text-white transition-colors"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-              </svg>
+              <svg class="hdr-ico text-neutral-400" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             </div>
             <input
               id="search-input"
               name="search"
               class="block w-full bg-neutral-900/50 border border-neutral-800 rounded-xl py-2 pl-10 pr-10 text-sm placeholder-neutral-500 focus:outline-none focus:ring-1 focus:ring-white/30 focus:border-white/50 focus:bg-black transition-all"
-              placeholder="Pesquisar produtos..."
+              placeholder="Buscar produtos..."
               type="text"
               autocomplete="off"
             >
+            <span class="search-kbd">/</span>
             <button
               id="search-clear"
               class="hidden absolute inset-y-0 right-0 pr-3 flex items-center text-neutral-500 hover:text-white transition-colors"
@@ -197,33 +290,16 @@
 
       <div class="flex items-center gap-2 sm:gap-3">
         <!-- Mobile Search Button -->
-        <button
-          id="mobile-search-btn"
-          class="sm:hidden p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-800/80 transition-all duration-200"
-          aria-label="Pesquisar"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-          </svg>
+        <button id="mobile-search-btn" class="sm:hidden hdr-btn is-icon" aria-label="Pesquisar">
+          <svg class="hdr-ico" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
         </button>
         <!-- Wishlist Button -->
         <div class="relative" id="wishlist-wrapper" style="display:none">
-          <button
-            id="wishlist-btn"
-            class="relative group p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-800/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-neutral-600"
-            aria-label="Favoritos"
-          >
-            <svg
-              class="w-6 h-6 transition-transform duration-200 group-hover:scale-110"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-            </svg>
+          <button id="wishlist-btn" class="hdr-btn is-icon" aria-label="Favoritos">
+            <svg class="hdr-ico" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
             <span
               id="wishlist-badge"
-              class="hidden absolute -top-1 -right-1 items-center justify-center w-5 h-5 text-[10px] font-extrabold text-black bg-white rounded-full shadow-lg shadow-white/20 border-2 border-black"
+              class="hidden hdr-badge"
               >0</span
             >
           </button>
@@ -277,22 +353,12 @@
 
         <!-- Cart Button (wrapper for dropdown positioning) -->
         <div class="relative" id="cart-wrapper">
-          <button
-            id="cart-btn"
-            class="relative group p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-800/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-neutral-600"
-            aria-label="Carrinho"
-          >
-            <svg
-              class="w-6 h-6 transition-transform duration-200 group-hover:scale-110"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
-            </svg>
+          <button id="cart-btn" class="hdr-btn is-accent" aria-label="Carrinho">
+            <svg class="hdr-ico" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+            <span class="hidden sm:inline">Carrinho</span>
             <span
               id="cart-badge"
-              class="hidden absolute -top-1 -right-1 items-center justify-center w-5 h-5 text-[10px] font-extrabold text-black bg-white rounded-full shadow-lg shadow-white/20 border-2 border-black"
+              class="hidden hdr-badge"
               >0</span
             >
           </button>
@@ -372,16 +438,12 @@
           <div class="relative" id="user-wrapper">
             <button
               id="user-btn"
-              class="flex items-center gap-2 p-1.5 sm:pl-2 sm:pr-2.5 rounded-xl text-neutral-300 hover:text-white hover:bg-neutral-800/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-neutral-600"
+              class="hdr-btn"
               aria-label="Perfil"
               aria-haspopup="menu"
               aria-expanded="false"
             >
-              <span class="flex items-center justify-center w-7 h-7 bg-white text-black rounded-full flex-shrink-0">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                </svg>
-              </span>
+              <span class="hdr-avatar"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg></span>
               <span class="hidden sm:flex flex-col items-start leading-tight min-w-0">
                 <span class="text-[10px] font-bold uppercase tracking-widest text-neutral-500">Perfil</span>
                 <span class="text-xs font-semibold text-white truncate max-w-[140px]">{{ user.name }}</span>
@@ -504,21 +566,9 @@
             })();
           </script>
         {% else %}
-          <!-- Mobile: login icon (links direto p/ /login) -->
-          <a
-            href="/login"
-            class="sm:hidden p-2 rounded-xl text-neutral-400 hover:text-white hover:bg-neutral-800/80 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-neutral-600"
-            aria-label="Entrar"
-          >
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
-            </svg>
-          </a>
-          <!-- Desktop: botão "Entrar" -->
-          <a href="/login" class="hidden sm:flex sm:items-center">
-            <button class="bg-white p-1 rounded-full text-black hover:bg-neutral-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black focus:ring-white px-4 py-2 text-sm transition-colors font-semibold">
-              Entrar
-            </button>
+          <a href="/login" class="hdr-btn" aria-label="Entrar">
+            <svg class="hdr-ico" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+            <span class="hidden sm:inline">Entrar</span>
           </a>
         {% endif %}
       </div>
