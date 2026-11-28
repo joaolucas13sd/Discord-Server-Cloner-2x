@@ -31,6 +31,11 @@ html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; backgro
 #bglow { position: absolute; left: -10%; top: 10%; width: 120%; height: 80%; background: radial-gradient(closest-side, rgba(33,241,103,.42), rgba(33,241,103,0)); mix-blend-mode: screen; opacity: 0; pointer-events: none; }
 #flash { position: absolute; inset: 0; background: #ffffff; opacity: 0; pointer-events: none; }
 #gflash { position: absolute; inset: 0; background: #b8ffd4; opacity: 0; mix-blend-mode: screen; pointer-events: none; }
+/* cursor de mouse (ponta no 0,0) e destaque do alvo no clique */
+#cur { position: absolute; left: 0; top: 0; width: 0; height: 0; }
+#curArt { position: absolute; left: 0; top: 0; transform-origin: 0 0; filter: drop-shadow(0 6px 10px rgba(0,0,0,.6)); }
+#curArt svg { position: absolute; left: -3px; top: -3px; }
+.hit { position: absolute; background-color: rgba(255,255,255,0); pointer-events: none; }
 #ring { position: absolute; left: 290px; top: 540px; width: 500px; height: 500px; border-radius: 50%; border: 14px solid rgba(33,241,103,.9); box-shadow: 0 0 60px rgba(33,241,103,.6), inset 0 0 60px rgba(33,241,103,.4); }
 </style>
 </head>
@@ -51,14 +56,14 @@ html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; backgro
   </section>
 
   <!-- DROP (111): Black Friday em foco -->
-  <section id="s2" class="scene"><div id="cam2" class="cam"><video class="rec" src="clips/k1.webm" data-start="3.7" muted playsinline preload="auto"></video></div><div class="vig"></div></section>
+  <section id="s2" class="scene"><div id="cam2" class="cam"><video class="rec" src="clips/k1.webm" data-start="3.7" muted playsinline preload="auto"></video><div id="hit_cupom" class="hit" style="left:78px;top:886px;width:923px;height:112px;border-radius:56px"></div></div><div class="vig"></div></section>
   <!-- contagem do próximo cupom (138-194) -->
   <section id="s3" class="scene"><div id="cam3" class="cam"><video class="rec" src="clips/k2.webm" data-start="4.6" muted playsinline preload="auto"></video></div><div class="vig"></div></section>
   <!-- tour de 2 em 2 batidas -->
-  <section id="s4" class="scene"><div id="wh4" class="soft"><div id="cam4" class="cam"><video class="rec" src="clips/k3.webm" data-start="6.466667" muted playsinline preload="auto"></video></div></div><div class="vig"></div></section>
-  <section id="s5" class="scene"><div id="wh5" class="soft"><div id="cam5" class="cam"><img class="rec" src="assets/stills/whats.jpg"></div></div><div class="vig"></div></section>
+  <section id="s4" class="scene"><div id="wh4" class="soft"><div id="cam4" class="cam"><video class="rec" src="clips/k3.webm" data-start="6.466667" muted playsinline preload="auto"></video><div id="hit_discord" class="hit" style="left:83px;top:1384px;width:774px;height:123px;border-radius:22px"></div></div></div><div class="vig"></div></section>
+  <section id="s5" class="scene"><div id="wh5" class="soft"><div id="cam5" class="cam"><img class="rec" src="assets/stills/whats.jpg"><div id="hit_whats" class="hit" style="left:223px;top:787px;width:773px;height:124px;border-radius:22px"></div></div></div><div class="vig"></div></section>
   <section id="s6" class="scene"><div id="wh6" class="soft"><div id="cam6" class="cam"><video class="rec" src="clips/k5.webm" data-start="8.3" muted playsinline preload="auto"></video></div></div><div class="vig"></div></section>
-  <section id="s7" class="scene"><div id="wh7" class="soft"><div id="cam7" class="cam"><video class="rec" src="clips/k6.webm" data-start="9.233333" muted playsinline preload="auto"></video></div></div><div class="vig"></div></section>
+  <section id="s7" class="scene"><div id="wh7" class="soft"><div id="cam7" class="cam"><video class="rec" src="clips/k6.webm" data-start="9.233333" muted playsinline preload="auto"></video><div id="hit_ver" class="hit" style="left:690px;top:614px;width:322px;height:102px;border-radius:51px"></div></div></div><div class="vig"></div></section>
 
   <!-- PAUSA (305-332): a página congela e o card do Nitro se solta -->
   <section id="s8" class="scene">
@@ -93,6 +98,8 @@ html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; backgro
     <div id="t10a" class="head" style="top:1085px;font-size:118px;line-height:130px">Mais prévias</div>
     <div id="t10b" class="head green" style="top:1215px;font-size:160px;line-height:170px">em breve</div>
   </div>
+  <!-- mouse -->
+  <div id="cur"><div id="curArt"><svg width="58" height="80" viewBox="0 0 29 40"><path d="M1.5 1.5 L1.5 32 L9.2 25 L14.2 37.2 L19.6 34.9 L14.6 23 L24.8 23 Z" fill="#ffffff" stroke="#0a0a0a" stroke-width="2.2" stroke-linejoin="round"/></svg></div></div>
 
  </div></div>
  <div id="gflash"></div>
@@ -125,6 +132,8 @@ document.querySelector('#cards').innerHTML = Object.entries(CARDS).map(([k, r]) 
 
 function build() {
   gsap.set('.c3', { transformPerspective: 1700 });
+  document.querySelector('#c3_nitro').insertAdjacentHTML('beforeend', '<div id="hit_nitro" class="hit" style="left:608px;top:956px;width:84px;height:84px;border-radius:18px"></div>');
+  document.querySelector('#c3_spiderman').insertAdjacentHTML('beforeend', '<div id="hit_trailer" class="hit" style="left:72px;top:90px;width:81px;height:81px;border-radius:50%"></div>');
 
   /* ===== GANCHO (batidas -8..-1) ===== */
   M.kf('#cam1', 'scale', [[0, 1.25], [B(-1), 1.4], [B(0), 2.1, 'gentleIn']]);
@@ -137,7 +146,7 @@ function build() {
 
   /* ===== DROP: Black Friday (batidas 0-1) ===== */
   M.cut(B(0), { hide: ['#s1'], show: ['#s2'] });
-  cam('#cam2', [[B(0), on(1.42, 434, 800)], [B(0) + 12, on(1.18, 540, 900), 'softLand'], [B(2), on(1.2, 540, 900), 'cruise']]);
+  cam('#cam2', [[B(0), on(1.42, 434, 800)], [B(0) + 12, on(1.18, 540, 900), 'softLand'], [B(2), on(1.18, 540, 900), 'cruise']]);
 
   /* contagem do cupom dourado (batidas 2-5): close nos dígitos, depois recua para os dias */
   M.cut(B(2), { hide: ['#s2'], show: ['#s3'] });
@@ -148,7 +157,7 @@ function build() {
   const tour = [['#s4', '#cam4', B(6), on(1.35, 467, 1164), on(1.42, 467, 1164), 1, '#wh4'],
                 ['#s5', '#cam5', B(8), on(1.3, 616, 782), on(1.4, 616, 782), -1, '#wh5'],
                 ['#s6', '#cam6', B(10), on(1.1, 540, 917), on(1.16, 540, 917), 1, '#wh6'],
-                ['#s7', '#cam7', B(12), on(1.12, 500, 985), on(1.17, 500, 985), -1, '#wh7']];
+                ['#s7', '#cam7', B(12), on(1.06, 540, 960), on(1.1, 540, 960), -1, '#wh7']];
   const prevScene = ['#s3', '#s4', '#s5', '#s6'];
   tour.forEach(([sc, cm, f, a, b, d, wh], i) => {
     M.cut(f, { hide: [prevScene[i]], show: [sc] });
@@ -175,7 +184,7 @@ function build() {
   M.kf('#cam9', 'scale', [[B(16), 1.15], [B(30), 1.22]], { ease: 'cruise' });
   M.kf('#cam9', 'y', [[B(16), 0], [B(30), -300]], { ease: 'cruise' });
   // Nitro: golpe no drop da volta, depois close no preço
-  M.kf('#c3_nitro', 'scale', [[0, 1], [B(17), 1], [B(17) + 10, 1.17, 'softLand']]);
+  M.kf('#c3_nitro', 'scale', [[0, 1], [B(17) + 1, 1], [B(17) + 11, 1.17, 'softLand']]);  // o clique na seta leva ao preço
   M.exit('#cw_nitro', { at: B(18), frames: 7, ease: 'accelExit', to: { x: -1150, rotation: -10 }, smear: { axis: 'x', px: 70, frames: 3 } });
   const seq = [['impulsos', 18, 1], ['decoracoes', 19, -1], ['netflix', 20, 1], ['youtube', 21, -1], ['canva', 22, 1],
                ['combo', 23, -1], ['steamkey', 24, 1], ['steamjogos', 25, -1]];
@@ -257,6 +266,23 @@ function build() {
   gl.push([B(29) + 12, .14], [B(30), .1]);
   pulse(B(32), 1, .3); pulse(B(33), .5, .3); pulse(B(34), .55, .3);
   M.kf('#bglow', 'opacity', gl);
+
+  /* ===== MOUSE: 6 cliques, cada um numa batida (entra grande e girado, estaciona, clica, sai) ===== */
+  // [aparece, some, chaves [quadro, x, y, escala, rotação], quadro do clique, alvo, cor do destaque]
+  const CLK = [
+    [B(0), B(2), [[B(0), 1240, 2150, 2.4, -16], [B(0) + 11, 600, 1005, 1, 0], [B(1) + 3, 600, 1005, 1, 0], [B(2) - 1, 760, 1180, 1, 0]], B(1), '#hit_cupom', 'rgba(255,255,255,.3)'],
+    [B(6) + 3, B(8), [[B(6) + 3, 1150, 1900, 2.0, -12], [B(7) - 3, 560, 1352, 1, 0], [B(7) + 6, 562, 1356, 1, 0], [B(8) - 1, 720, 1520, 1, 0]], B(7), '#hit_discord', 'rgba(255,255,255,.26)'],
+    [B(8) + 3, B(10), [[B(8) + 3, -150, 1400, 2.0, 10], [B(9) - 2, 548, 1052, 1, 0], [B(9) + 7, 549, 1053, 1, 0], [B(10) - 1, 400, 1220, 1, 0]], B(9), '#hit_whats', 'rgba(255,255,255,.3)'],
+    [B(12) + 3, B(14), [[B(12) + 3, 1200, 1100, 2.0, -12], [B(13) - 3, 872, 642, 1, 0], [B(13) + 6, 873, 643, 1, 0], [B(14) - 1, 1000, 820, 1, 0]], B(13), '#hit_ver', 'rgba(255,255,255,.24)'],
+    [B(16) + 2, B(18) + 2, [[B(16) + 2, 1250, 2150, 2.4, -16], [B(17) - 3, 790, 1385, 1, 0], [B(17) + 1, 790, 1385, 1, 0], [B(17) + 11, 833, 1403, 1, 0], [B(18) + 1, 1180, 2050, 1.4, 0]], B(17), '#hit_nitro', 'rgba(33,241,103,.5)'],
+    [B(26) + 5, B(28), [[B(26) + 5, -150, 1100, 2.2, 12], [B(27) - 2, 170, 572, 1, 0], [B(27) + 4, 168, 570, 1, 0], [B(27) + 9, 158, 560, 1, 0], [B(28) - 1, -120, 900, 1.6, 0]], B(27), '#hit_trailer', 'rgba(33,241,103,.55)'],
+  ];
+  M.cursor('#cur', { keys: CLK.flatMap(c => c[2]), ease: 'glide' });
+  CLK.forEach(([show, hide, , at, tgt, col], i) => {
+    if (i > 0) M.show('#cur', show);
+    M.hide('#cur', hide);
+    M.press('#curArt', tgt, { at, frames: 3, lag: 1, hold: 2, cursorDepth: .8, targetDepth: .96, targetStep: { backgroundColor: col }, label: 'clique ' + tgt });
+  });
 }
 
 window.__ready = Motion.loaded().then(() => { build(); window.__seek(M.f(1)); window.__seek(0); if (/selftest/.test(location.search)) return Motion.selfTest(M, { samples: 24 }); });

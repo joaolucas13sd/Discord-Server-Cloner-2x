@@ -6,7 +6,8 @@ F = lambda fr: fr / 30
 at('whoosh.mp3', F(18), -7, 0, 'atempo=0.55', 0.05)            # o feed dispara
 at('slam.mp3', F(84), -14, 0, '', 0.05)                          # o feed assenta no Nitro (leve)
 at('whoosh.mp3', F(96) - 0.45, -9, 0, 'areverse,atempo=1.5')     # a câmera entra no card
-at('tap.mp3', F(138), 2, 0.25, '', 0.02)                         # toque no "+"
+at('click.mp3', F(138), 8, 0.25, '', 0.105)                      # clique do mouse no "+"
+at('chime.mp3', F(140), -6, 0.25, '', 0.03)                      # "à vista no Pix" acende em verde
 at('whoosh.mp3', F(156) - 0.5, -8, 0, 'areverse,atempo=1.36')    # empurrão para o Pix
 at('slam.mp3', F(156), -3, 0, '', 0.05)                          # o QR do Pix cai
 at('glitch.mp3', F(209), -5, 0)                                  # o QR se desfaz
@@ -22,6 +23,15 @@ at('coinland.mp3', F(437), 3, -0.35)                             # a moeda pousa
 at('whoosh.mp3', F(466) - 0.6, -9, 0, 'areverse,atempo=1.13')    # recuo
 at('whoosh.mp3', F(466), -12, 0, 'atempo=0.5', 0.05)             # o feed se afasta
 at('impact_logo.mp3', F(504), 0, 0, '', 0.16)                    # o logo chega
+# ---- mais efeitos (28/11): pops nas palavras, ka-ching no saldo, brilho ----
+for fr in (2, 6, 10, 15, 20): at('pop.mp3', F(fr), -13, 0, '', 0.015)          # "O que você procura hoje?"
+for fr in (163, 168, 173): at('pop.mp3', F(fr), -12, 0, '', 0.015)             # "Pix na hora."
+for fr in (222, 228): at('pop.mp3', F(fr), -12, 0, '', 0.015)                  # "Entrega automática."
+for fr in (368, 373, 379, 383, 388): at('pop.mp3', F(fr), -15, 0, '', 0.015)   # "Vira saldo para a próxima."
+for fr in (520, 524, 528): at('pop.mp3', F(fr), -10, 0, '', 0.015)             # "Rei Dos Nitros"
+at('kaching.mp3', F(362), -2, 0, '', 0.025)                                    # o contador fecha em R$ 0,36
+at('sparkle.mp3', F(330), 3, 0, 'atrim=0:0.5,afade=t=out:st=0.38:d=0.12', 0.195)   # a moeda aparece
+at('sparkle.mp3', F(504), 2, 0, '', 0.195)                                     # o logo chega
 DUR = 20.0
 inputs = ['-f', 'lavfi', '-t', str(DUR), '-i', 'anullsrc=r=48000:cl=stereo']
 fc, labels = [], ['[0:a]']

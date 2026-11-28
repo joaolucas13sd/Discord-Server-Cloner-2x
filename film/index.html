@@ -67,7 +67,10 @@ svg { display: block; overflow: visible; }
     <div class="maze"><div class="glow" style="left:-10%;top:15%;width:120%;height:70%;background:radial-gradient(closest-side,rgba(214,46,160,.42),rgba(214,46,160,0))"></div></div>
     <div id="cam2" class="cam"><div id="c2w" class="full"><div id="card2host"></div></div></div>
     <div id="finger" style="position:absolute;left:0;top:0;width:0;height:0">
-      <div style="position:absolute;left:-58px;top:-58px;width:116px;height:116px;border-radius:50%;border:7px solid rgba(255,255,255,.92);background:rgba(255,255,255,.16);box-shadow:0 10px 40px rgba(0,0,0,.5)"></div>
+      <!-- cursor de mouse: ponta da seta no ponto (0,0) -->
+      <div id="fingerArt" style="position:absolute;left:0;top:0;transform-origin:0 0;filter:drop-shadow(0 8px 12px rgba(0,0,0,.6))">
+        <svg width="72" height="100" viewBox="0 0 29 40" style="position:absolute;left:-4px;top:-4px"><path d="M1.5 1.5 L1.5 32 L9.2 25 L14.2 37.2 L19.6 34.9 L14.6 23 L24.8 23 Z" fill="#ffffff" stroke="#0a0a0a" stroke-width="2.2" stroke-linejoin="round"/></svg>
+      </div>
     </div>
   </section>
 
@@ -211,7 +214,7 @@ function build() {
   M.cut(96, { hide: ['#s1'], show: ['#s2'] });
   M.kf('#c2w', 'scale', [[96, .94], [112, 1, 'softLand']]);
   M.cursor('#finger', { keys: [[106, 1240, 2250, 3, -18], [132, fx, fy, 1, 0], [148, fx, fy, 1, 0], [158, fx + 260, fy + 760, 1.8, 0]], ease: 'glide' });
-  M.press('#finger', '#plus2', { at: 138, frames: 3 });
+  M.press('#fingerArt', '#plus2', { at: 138, frames: 3, lag: 1, cursorDepth: .8 });   // clique do mouse no "+"
   M.kf('#sub2', 'color', [[0, '#8B8D93'], [140, '#8B8D93'], [140, ACCENT]]);
   M.kf('#plus2', 'color', [[0, '#FFFFFF'], [140, '#FFFFFF'], [140, ACCENT]]);
   M.mark(140, 'press', 'à vista no Pix acende');

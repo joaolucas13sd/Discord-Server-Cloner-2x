@@ -7,7 +7,34 @@
 - **Cortes:** todos caem na batida. Mediu-se o andamento exato (130,0 BPM, desvio médio de 9 ms nas batidas), e o filme é montado sobre essa grade. Planos de 2 batidas (0,92 s) no tour e de 1 batida (0,46 s) no desfile de produtos.
 - **Produtos separados:** 11 cards reais do site novo, recortados um a um da gravação e mostrados sozinhos, um por batida, como no filme de lançamento. O Discord Nitro **se solta da página** na pausa da música.
 - **Mais animação e efeitos:** palavras que batem no ritmo; mergulho do texto na câmera antes do drop; flash e tremida nos golpes; zoom de impacto nas batidas; chicotes com borrão direcional; giro em 3D dos cards; brilho passando em cada card; pulsos de luz verde; onda de choque no logo; blur de obturador e grão no render.
-- **Som:** 26 efeitos sincronizados às batidas, com panorâmica para o lado de onde cada card entra.
+- **Som:** 26 efeitos sincronizados às batidas, com panorâmica para o lado de onde cada card entra (56 na v2.1, ver acima).
+
+## v2.1 (28/11): mouse clicando e mais efeitos sonoros
+Um cursor de mouse passa a navegar pelo site, sempre clicando **na batida**. Ele entra grande (2 a 2,4×) e inclinado, estaciona 2 a 3 quadros antes, afunda para 0,8× no clique, e o alvo responde 1 quadro depois acendendo (destaque branco nos botões do site e verde nos dos cards).
+
+| Batida | Quadro | O mouse clica em | O que acontece | Som |
+|---|---|---|---|---|
+| 1 | 125 | "Pegar o cupom dourado" | o botão acende; corte seco para a contagem do próximo cupom | clique |
+| 7 | 208 | "Entrar no servidor" | o botão acende | clique |
+| 9 | 235 | "Falar no WhatsApp" | o botão acende | clique |
+| 13 | 291 | "Ver todas" | a pílula acende; na pausa seguinte a vitrine congela e o Nitro se solta | clique |
+| 17 | 346 | a seta verde do card do Discord Nitro | a seta acende verde e a câmera vai ao preço R$ 8,99 | clique + "ka-ching" |
+| 27 | 485 | "▶ Trailer" do Spider-Man | o botão acende verde | clique |
+
+Mais efeitos, de 26 para **56** no total (lista em `audio/mix.py`):
+- 6 cliques de mouse, com panorâmica pela posição do cursor;
+- pops nas palavras ("Olha como tá ficando o site", "Isso é só uma prévia.", "Mais prévias") e um golpe em "novo";
+- tique de relógio nas 4 batidas da contagem do cupom;
+- "ka-ching" quando o preço do Nitro cresce;
+- brilho quando o reflexo passa no Nitro e no Resident Evil 3;
+- "ding" de confirmação em "em breve".
+
+Para os cliques não sumirem no funk, o brilho, o glitch e o whoosh que tocam perto deles foram encurtados. Cada clique fica pelo menos 10 dB acima, nos agudos, do que toca 120 ms antes.
+
+Ajustes de imagem para os cliques:
+- o trecho das categorias agora começa em 10,2 s da gravação, para o clique em "Ver todas" cair na janela em que a página fica parada (10,6–11,0 s);
+- esse plano foi aberto para 1,06×, para o botão não ficar cortado na borda;
+- a câmera da Black Friday fica parada durante o clique.
 
 ## O que cada trecho faz acreditar
 | Quadros | Trecho | Faz acreditar que… |
@@ -21,7 +48,7 @@
 
 ## O que é real e o que foi feito para o filme
 - **Real:** toda a interface vem das duas gravações de tela de 27/11: os vídeos da Black Friday, comunidade, vantagens e categorias, e os quadros parados da vitrine, do WhatsApp e do FAQ. Os 11 cards de produto são recortes desses quadros, sem nenhum texto ou preço redesenhado. O logo é o enviado antes.
-- **Feito para o filme:** câmera, cortes, chicotes, giros em 3D, brilho, flashes, tremidas, pulsos de luz, onda de choque e as frases em Baloo 2 ("Olha como tá ficando o site novo", "Isso é só uma prévia.", "Mais prévias em breve").
+- **Feito para o filme:** o cursor do mouse e os destaques de clique, câmera, cortes, chicotes, giros em 3D, brilho, flashes, tremidas, pulsos de luz, onda de choque e as frases em Baloo 2 ("Olha como tá ficando o site novo", "Isso é só uma prévia.", "Mais prévias em breve").
 - **Ampliação:** os cards foram ampliados 2,2× a partir da gravação de 864 px de largura, com nitidez leve. O texto fica legível, mas não tão nítido quanto uma captura em alta resolução.
 - **Retoque:** no quadro parado da pausa, o card vizinho "Conta Nitrada" foi desfocado e escurecido (`blur_excluded.py`), porque revenda de contas fica fora do filme.
 - **Quadro parado:** o plano do WhatsApp usa um quadro parado da gravação (6,85 s), porque o carrossel desliza no meio do plano e misturava os cards.

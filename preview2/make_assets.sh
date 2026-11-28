@@ -13,7 +13,7 @@ k "$A" 3.40 2.1 k2    # contagem do próximo cupom + dias
 k "$A" 4.30 1.15 k3   # Comunidade no Discord
 # (WhatsApp: quadro parado assets/stills/whats.jpg, ver abaixo)
 k "$A" 8.00 1.15 k5   # vantagens (Pix, entrega, cashback, suporte)
-k "$A" 10.55 1.15 k6  # "O que você procura hoje?" + categorias
+k "$A" 10.2 1.15 k6   # "O que você procura hoje?" + categorias (clique em "Ver todas" na janela parada 10,6-11,0 s)
 s(){ ffmpeg -v error -y -ss "$2" -i "$1" -frames:v 1 -vf "$VF" -q:v 2 "assets/stills/$3.jpg"; }
 s "$A" 0.5 bf; s "$A" 19.2 grid_nitro; s "$A" 22.6 grid_stream; s "$B" 29.0 faq
 s "$A" 6.85 whats

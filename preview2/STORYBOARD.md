@@ -28,6 +28,9 @@ Grade: batida *i* = 3,6926 s + 0,46157 s × *i* (i = 0 é o drop). Quadro = arre
 | 30–31 | 526–554 | PAUSA 2: "Isso é só / uma prévia." | palavras em colcheias | — |
 | 32–37 | 554–630 | GOLPE FINAL: logo cai de 3,5×, onda de choque verde; "Mais prévias / **em breve**" | o conjunto recua até 0,97× e para | flash branco + maior tremida |
 
+## Mouse (v2.1)
+Seis cliques, cada um numa batida: cupom dourado (batida 1), "Entrar no servidor" (7), "Falar no WhatsApp" (9), "Ver todas" (13), a seta do card do Nitro (17, que leva ao close do preço) e "▶ Trailer" (27). O cursor fica numa camada própria acima do site, entra grande, estaciona e clica; o alvo acende 1 quadro depois. Cada clique tem som de clique de mouse (ver NOTE.md).
+
 ## Sistema
 - 1080×1920, 30 fps, 21,0 s. Blur de obturador de 180° (8 subquadros) e grão de 0,03.
 - Tipografia Baloo 2 ExtraBold (a dos títulos do site). Verde `#21F167` só para o que é novo ou está chegando ("novo", "em breve").
