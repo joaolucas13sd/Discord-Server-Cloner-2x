@@ -1,5 +1,243 @@
 <div class="min-h-screen bg-black text-white">
-  {% comment %} HERO removido a pedido — para voltar, troque por: include 'hero-banner' {% endcomment %}
+  <!-- ===================== DESTAQUES: JOGOS STEAM + FILMES ===================== -->
+  <section class="fc-wrap" aria-label="Destaques do momento">
+    <div class="fc-viewport">
+      <div class="fc-track" id="fc-track"></div>
+      <button class="fc-arrow fc-prev" id="fc-prev" aria-label="Destaque anterior">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button class="fc-arrow fc-next" id="fc-next" aria-label="Próximo destaque">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+    <div class="fc-dots" id="fc-dots" role="tablist" aria-label="Escolher destaque"></div>
+  </section>
+
+  <style>
+    .fc-wrap { max-width: 80rem; margin: 0 auto; padding: 20px 16px 8px; }
+    @media (min-width: 640px) { .fc-wrap { padding: 28px 24px 8px; } }
+    @media (min-width: 1024px) { .fc-wrap { padding: 32px 32px 8px; } }
+    .fc-viewport { position: relative; }
+    .fc-track {
+      display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+      scroll-behavior: smooth; scrollbar-width: none; border-radius: 28px;
+    }
+    .fc-track::-webkit-scrollbar { display: none; }
+    .fc-slide {
+      position: relative; flex: 0 0 100%; scroll-snap-align: center; overflow: hidden;
+      height: 400px; border-radius: 28px; isolation: isolate;
+      border: 1px solid rgba(255,255,255,.08); background: #0c0908;
+      transition: opacity .4s, transform .4s;
+    }
+    @media (min-width: 640px) { .fc-slide { height: 360px; } }
+    @media (min-width: 1024px) { .fc-slide { height: 400px; } }
+
+    .fc-bg { position: absolute; inset: 0; z-index: -3; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 6s ease-out; }
+    .fc-slide.is-active .fc-bg { transform: scale(1.12); }
+    .fc-slide.is-movie .fc-bg { filter: blur(28px) saturate(1.3) brightness(.55); transform: scale(1.25); }
+    .fc-shade {
+      position: absolute; inset: 0; z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.88) 0%, rgba(0,0,0,.55) 45%, rgba(0,0,0,.05) 75%),
+        linear-gradient(0deg, rgba(0,0,0,.85) 0%, transparent 45%),
+        radial-gradient(ellipse 60% 80% at 0% 100%, rgba(255,66,42,.35), transparent 70%);
+    }
+    /* faixas diagonais de luz, como na referência */
+    .fc-shade::after {
+      content: ""; position: absolute; inset: 0;
+      background: repeating-linear-gradient(115deg, transparent 0 60px, rgba(255,138,61,.07) 60px 64px, transparent 64px 140px);
+      mix-blend-mode: screen; pointer-events: none;
+    }
+
+    .fc-poster {
+      position: absolute; z-index: -1; right: 6%; bottom: -8%; height: 112%;
+      aspect-ratio: 2 / 3; border-radius: 18px; object-fit: cover;
+      transform: rotate(6deg); box-shadow: 0 30px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.12);
+    }
+    @media (min-width: 768px) { .fc-poster { right: 250px; } }
+    @media (max-width: 639px) { .fc-poster { right: -14%; height: 78%; bottom: 22%; opacity: .55; } }
+
+    .fc-content {
+      position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center;
+      padding: 28px 22px 84px; max-width: 620px;
+    }
+    @media (min-width: 640px) { .fc-content { padding: 40px 44px 90px; } }
+    @media (min-width: 768px) { .fc-content { padding-left: 80px; } }
+    .fc-logo { max-height: 64px; max-width: 220px; width: auto; object-fit: contain; object-position: left; margin-bottom: 18px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.6)); }
+    @media (min-width: 640px) { .fc-logo { max-height: 84px; max-width: 280px; } }
+    .fc-tag {
+      align-self: flex-start; display: inline-flex; align-items: center; gap: 6px;
+      padding: 5px 12px; margin-bottom: 14px; border-radius: 9999px;
+      font-size: 11px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: #fff;
+      background: linear-gradient(120deg, #FF8A3D, #FF422A 55%, #C42415);
+      box-shadow: 0 6px 18px -6px rgba(255,66,42,.8);
+    }
+    .fc-title {
+      color: #fff; font-weight: 900; line-height: 1.02; letter-spacing: -.02em;
+      font-size: 32px; margin: 0; text-shadow: 0 4px 24px rgba(0,0,0,.5);
+    }
+    @media (min-width: 640px) { .fc-title { font-size: 44px; } }
+    @media (min-width: 1024px) { .fc-title { font-size: 52px; } }
+    .fc-sub { color: #d6d0cf; font-size: 14px; margin: 14px 0 0; max-width: 440px; line-height: 1.5; }
+
+    .fc-bottom {
+      position: absolute; left: 22px; right: 22px; bottom: 22px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    }
+    @media (min-width: 640px) { .fc-bottom { left: 44px; right: 32px; bottom: 26px; } }
+    @media (min-width: 768px) { .fc-bottom { left: 80px; right: 80px; } }
+    @media (max-width: 639px) { .fc-platform .fc-sep, .fc-platform .fc-name { display: none; } .fc-slide:not(.is-movie) .fc-bg { object-position: 72% center; } }
+    .fc-platform {
+      display: inline-flex; align-items: center; gap: 10px; color: #fff; font-size: 13px; font-weight: 600;
+      min-width: 0;
+    }
+    .fc-platform svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .fc-platform .fc-sep { width: 1px; height: 18px; background: rgba(255,255,255,.3); }
+    .fc-platform .fc-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .fc-cta {
+      flex-shrink: 0; display: inline-flex; align-items: center; gap: 8px;
+      height: 44px; padding: 0 20px; border-radius: 9999px;
+      color: #fff; font-weight: 700; font-size: 14px; text-decoration: none;
+      background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.25);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      transition: background .2s, border-color .2s, transform .15s;
+    }
+    .fc-cta:hover { background: #fff; color: #000; border-color: #fff; }
+    .fc-cta:active { transform: scale(.96); }
+    .fc-cta svg { width: 16px; height: 16px; }
+
+    .fc-arrow {
+      position: absolute; top: 50%; transform: translateY(-50%); z-index: 5;
+      width: 44px; height: 44px; border-radius: 9999px; display: none; align-items: center; justify-content: center;
+      color: #fff; background: rgba(0,0,0,.45); border: 1px solid rgba(255,255,255,.2);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); transition: background .2s, border-color .2s;
+    }
+    .fc-arrow:hover { background: #FF422A; border-color: #FF422A; }
+    .fc-arrow svg { width: 20px; height: 20px; }
+    .fc-prev { left: 14px; } .fc-next { right: 14px; }
+    @media (min-width: 768px) { .fc-arrow { display: inline-flex; } }
+
+    .fc-dots { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+    .fc-dot {
+      width: 8px; height: 8px; border-radius: 9999px; background: rgba(255,255,255,.3);
+      border: 0; padding: 0; transition: width .3s, background .3s;
+    }
+    .fc-dot[aria-selected="true"] { width: 28px; background: linear-gradient(90deg, #FF422A, #FF8A3D); }
+  </style>
+
+  <script>
+  (function () {
+    /* ============================================================
+       EDITE AQUI os destaques. Para cada item:
+       tipo: 'jogo' ou 'filme'
+       imagem: fundo (jogos: arte da Steam) | poster: pôster do filme
+       link: para onde o botão leva (ex.: '/categories' ou a página do produto)
+       ============================================================ */
+    var STEAM = 'https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/';
+    var TMDB = 'https://image.tmdb.org/t/p/w780/';
+    var SLIDES = [
+      { tipo: 'jogo', nome: 'Red Dead Redemption 2', tag: 'Mais vendido na Steam',
+        titulo: 'O Velho Oeste<br>te chama', texto: 'Um dos jogos mais vendidos da Steam neste momento.',
+        imagem: STEAM + '1174180/library_hero.jpg', logo: STEAM + '1174180/logo.png', link: '/categories' },
+      { tipo: 'filme', nome: 'Jogos Vorazes: Amanhecer na Colheita', tag: 'Em cartaz',
+        titulo: 'Que os jogos<br>comecem', texto: 'Jogos Vorazes: Amanhecer na Colheita — nos cinemas desde 20 de novembro.',
+        poster: TMDB + 'ibZ6GSHtCeC7fLDJ2uyXNemgYwr.jpg', link: '/categories' },
+      { tipo: 'jogo', nome: 'Cyberpunk 2077', tag: 'Em alta na Steam',
+        titulo: 'Night City<br>te espera', texto: 'Cyberpunk 2077 está entre os mais vendidos da Steam.',
+        imagem: STEAM + '1091500/library_hero.jpg', logo: STEAM + '1091500/logo.png', link: '/categories' },
+      { tipo: 'filme', nome: 'Enfeitiçadas: Bem-vindos a Hexe', tag: 'Estreia da semana',
+        titulo: 'Magia para<br>toda a família', texto: 'Enfeitiçadas: Bem-vindos a Hexe — estreia em 25 de novembro.',
+        poster: TMDB + 'lhDdE2Uvis4Khtr1o366cAbnb57.jpg', link: '/categories' },
+      { tipo: 'jogo', nome: 'Grand Theft Auto V Enhanced', tag: 'Mais vendido na Steam',
+        titulo: 'Los Santos<br>nunca para', texto: 'Grand Theft Auto V Enhanced, sucesso absoluto na Steam.',
+        imagem: STEAM + '3240220/library_hero.jpg', logo: STEAM + '3240220/logo.png', link: '/categories' },
+      { tipo: 'filme', nome: 'Godzilla Minus Zero', tag: 'Em cartaz',
+        titulo: 'O rei dos<br>monstros voltou', texto: 'Godzilla Minus Zero — nos cinemas desde 6 de novembro.',
+        poster: TMDB + 'ebVZ8n64rtHsSItTei4EgTKzPVu.jpg', link: '/categories' },
+      { tipo: 'jogo', nome: 'God of War', tag: 'Em alta na Steam',
+        titulo: 'A jornada de<br>Kratos', texto: 'God of War, um dos favoritos da comunidade Steam.',
+        imagem: STEAM + '1593500/library_hero.jpg', logo: STEAM + '1593500/logo.png', link: '/categories' }
+    ];
+
+    var ICON_GAME = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11h4M8 9v4M15 12h.01M18 10h.01"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59l-.9 8.25A2.5 2.5 0 0 0 4.29 19.6c.86 0 1.67-.43 2.13-1.16L8 16h8l1.58 2.44c.46.73 1.27 1.16 2.13 1.16a2.5 2.5 0 0 0 2.49-2.76l-.9-8.25A4 4 0 0 0 17.32 5Z"/></svg>';
+    var ICON_FILM = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.5"/><path d="M7 2v20M17 2v20M2 12h20M2 7h5M2 17h5M17 17h5M17 7h5"/></svg>';
+    var ICON_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+    var track = document.getElementById('fc-track');
+    var dots = document.getElementById('fc-dots');
+    if (!track) return;
+    function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+    SLIDES.forEach(function (s, i) {
+      var movie = s.tipo === 'filme';
+      var el = document.createElement('article');
+      el.className = 'fc-slide' + (movie ? ' is-movie' : '');
+      el.setAttribute('aria-roledescription', 'slide');
+      el.setAttribute('aria-label', (i + 1) + ' de ' + SLIDES.length + ': ' + s.nome);
+      el.innerHTML =
+        '<img class="fc-bg" src="' + esc(movie ? s.poster : s.imagem) + '" alt="" ' + (i ? 'loading="lazy"' : 'fetchpriority="high"') + '>' +
+        '<div class="fc-shade"></div>' +
+        (movie ? '<img class="fc-poster" src="' + esc(s.poster) + '" alt="Pôster de ' + esc(s.nome) + '" loading="lazy">' : '') +
+        '<div class="fc-content">' +
+          (s.logo ? '<img class="fc-logo" src="' + esc(s.logo) + '" alt="' + esc(s.nome) + '" loading="lazy" onerror="this.remove()">' : '') +
+          '<span class="fc-tag">' + esc(s.tag) + '</span>' +
+          '<h2 class="fc-title">' + s.titulo + '</h2>' +
+          '<p class="fc-sub">' + esc(s.texto) + '</p>' +
+        '</div>' +
+        '<div class="fc-bottom">' +
+          '<span class="fc-platform">' + (movie ? ICON_FILM : ICON_GAME) + '<span>' + (movie ? 'Cinema' : 'Steam') + '</span><span class="fc-sep"></span><span class="fc-name">' + esc(s.nome) + '</span></span>' +
+          '<a class="fc-cta" href="' + esc(s.link || '/categories') + '">Ver ofertas ' + ICON_ARROW + '</a>' +
+        '</div>';
+      track.appendChild(el);
+
+      var d = document.createElement('button');
+      d.className = 'fc-dot'; d.type = 'button';
+      d.setAttribute('role', 'tab');
+      d.setAttribute('aria-label', 'Ir para ' + s.nome);
+      d.addEventListener('click', function () { go(i); restart(); });
+      dots.appendChild(d);
+    });
+
+    var slides = track.children, current = 0, timer = null;
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function mark(i) {
+      current = i;
+      for (var k = 0; k < slides.length; k++) {
+        slides[k].classList.toggle('is-active', k === i);
+        dots.children[k].setAttribute('aria-selected', k === i ? 'true' : 'false');
+      }
+    }
+    function go(i) {
+      i = (i + slides.length) % slides.length;
+      track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+      mark(i);
+    }
+    var t;
+    track.addEventListener('scroll', function () {
+      clearTimeout(t);
+      t = setTimeout(function () {
+        var i = Math.round(track.scrollLeft / (slides[0].offsetWidth + 14));
+        if (i !== current) mark(Math.max(0, Math.min(slides.length - 1, i)));
+      }, 80);
+    }, { passive: true });
+
+    function restart() {
+      clearInterval(timer);
+      if (!reduce) timer = setInterval(function () { go(current + 1); }, 6000);
+    }
+    document.getElementById('fc-prev').addEventListener('click', function () { go(current - 1); restart(); });
+    document.getElementById('fc-next').addEventListener('click', function () { go(current + 1); restart(); });
+    var vp = track.parentNode;
+    vp.addEventListener('mouseenter', function () { clearInterval(timer); });
+    vp.addEventListener('mouseleave', restart);
+    track.addEventListener('touchstart', function () { clearInterval(timer); }, { passive: true });
+    track.addEventListener('touchend', restart, { passive: true });
+    document.addEventListener('visibilitychange', function () { document.hidden ? clearInterval(timer) : restart(); });
+
+    mark(0); restart();
+  })();
+  </script>
 
   <!-- ===================== CATEGORIAS MASTER ===================== -->
 
